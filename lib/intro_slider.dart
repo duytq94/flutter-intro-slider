@@ -5,13 +5,16 @@ class IntroSlider extends StatefulWidget {
   final List<Slide> slides;
 
   // Skip button
+  final Widget renderSkipBtn;
   final Function onSkipPress;
   final TextStyle styleNameSkipBtn;
   final int colorSkipBtn;
   final int highlightColorSkipBtn;
   final bool isShowSkipBtn;
 
-  // Done button
+  // Next, Done button
+  final Widget renderNextBtn;
+  final Widget renderDoneBtn;
   final Function onDonePress;
   final TextStyle styleNameDoneBtn;
   final int colorDoneBtn;
@@ -29,6 +32,8 @@ class IntroSlider extends StatefulWidget {
     @required this.slides,
 
     // Skip button
+    this.renderSkipBtn,
+    this.renderDoneBtn,
     this.onSkipPress,
     this.styleNameSkipBtn,
     this.colorSkipBtn,
@@ -36,6 +41,7 @@ class IntroSlider extends StatefulWidget {
     this.isShowSkipBtn,
 
     // Done button
+    this.renderNextBtn,
     this.onDonePress,
     this.styleNameDoneBtn,
     this.colorDoneBtn,
@@ -54,6 +60,7 @@ class IntroSlider extends StatefulWidget {
         slides: this.slides,
 
         // Skip button
+        renderSkipBtn: this.renderSkipBtn,
         onSkipPress: this.onSkipPress,
         styleNameSkipBtn: this.styleNameSkipBtn,
         colorSkipBtn: this.colorSkipBtn,
@@ -61,6 +68,8 @@ class IntroSlider extends StatefulWidget {
         isShowSkipBtn: this.isShowSkipBtn,
 
         // Done button
+        renderNextBtn: this.renderNextBtn,
+        renderDoneBtn: this.renderDoneBtn,
         onDonePress: this.onDonePress,
         styleNameDoneBtn: this.styleNameDoneBtn,
         colorDoneBtn: this.colorDoneBtn,
@@ -79,6 +88,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   final List<Slide> slides;
 
   // Skip button
+  Widget renderSkipBtn;
   Function onSkipPress;
   TextStyle styleNameSkipBtn;
   int colorSkipBtn;
@@ -86,6 +96,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   bool isShowSkipBtn;
 
   // Done button
+  Widget renderNextBtn;
+  Widget renderDoneBtn;
   Function onDonePress;
   TextStyle styleNameDoneBtn;
   int colorDoneBtn;
@@ -103,6 +115,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     @required this.slides,
 
     // Skip button
+    @required this.renderSkipBtn,
     @required this.onSkipPress,
     @required this.styleNameSkipBtn,
     @required this.colorSkipBtn,
@@ -110,6 +123,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     @required this.isShowSkipBtn,
 
     // Done button
+    @required this.renderNextBtn,
+    @required this.renderDoneBtn,
     @required this.onDonePress,
     @required this.styleNameDoneBtn,
     @required this.colorDoneBtn,
@@ -189,29 +204,40 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   }
 
   Widget renderBottom() {
-    return // Bottom
+    return
+        // Bottom
         Positioned(
       child: Row(
         children: <Widget>[
           // Skip button
           (tabController.index + 1 != slides.length && isShowSkipBtn)
               ? Container(
-                  child: FlatButton(
-                    onPressed: onSkipPress,
-                    child: Text(
-                      "SKIP",
-                      style: styleNameSkipBtn ?? TextStyle(color: Colors.white),
-                    ),
-                    color: colorSkipBtn != null ? Color(colorSkipBtn) : Colors.transparent,
-                    highlightColor:
-                        highlightColorSkipBtn != null ? Color(highlightColorSkipBtn) : Colors.white.withOpacity(0.3),
-                  ),
+                  child: renderSkipBtn != null
+                      ? FlatButton(
+                          child: renderSkipBtn,
+                          onPressed: onSkipPress,
+                          color: colorSkipBtn != null ? Color(colorSkipBtn) : Colors.transparent,
+                          highlightColor: highlightColorSkipBtn != null
+                              ? Color(highlightColorSkipBtn)
+                              : Colors.white.withOpacity(0.3),
+                        )
+                      : FlatButton(
+                          onPressed: onSkipPress,
+                          child: Text(
+                            "SKIP",
+                            style: styleNameSkipBtn ?? TextStyle(color: Colors.white),
+                          ),
+                          color: colorSkipBtn != null ? Color(colorSkipBtn) : Colors.transparent,
+                          highlightColor: highlightColorSkipBtn != null
+                              ? Color(highlightColorSkipBtn)
+                              : Colors.white.withOpacity(0.3),
+                        ),
                   width: 70.0,
-                  height: 40.0,
+                  height: 70.0,
                 )
               : Container(
                   width: 70.0,
-                  height: 40.0,
+                  height: 70.0,
                 ),
 
           // Dot indicator
@@ -226,24 +252,53 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
           // Next, Done button
           Container(
-            child: FlatButton(
-              onPressed: () {
-                if (tabController.index + 1 < slides.length) {
-                  tabController.animateTo(tabController.index + 1);
-                } else {
-                  onDonePress();
-                }
-              },
-              child: Text(
-                tabController.index + 1 != slides.length ? "NEXT" : "DONE",
-                style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
-              ),
-              color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
-              highlightColor:
-                  highlightColorDoneBtn != null ? Color(highlightColorDoneBtn) : Colors.white.withOpacity(0.3),
-            ),
+            child: tabController.index + 1 == slides.length
+                ? (renderDoneBtn != null
+                    ? FlatButton(
+                        child: renderDoneBtn,
+                        onPressed: onDonePress,
+                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
+                        highlightColor: highlightColorDoneBtn != null
+                            ? Color(highlightColorDoneBtn)
+                            : Colors.white.withOpacity(0.3),
+                      )
+                    : FlatButton(
+                        onPressed: onDonePress,
+                        child: Text(
+                          "DONE",
+                          style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
+                        ),
+                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
+                        highlightColor: highlightColorDoneBtn != null
+                            ? Color(highlightColorDoneBtn)
+                            : Colors.white.withOpacity(0.3),
+                      ))
+                : (renderNextBtn != null
+                    ? FlatButton(
+                        onPressed: () {
+                          tabController.animateTo(tabController.index + 1);
+                        },
+                        child: renderNextBtn,
+                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
+                        highlightColor: highlightColorDoneBtn != null
+                            ? Color(highlightColorDoneBtn)
+                            : Colors.white.withOpacity(0.3),
+                      )
+                    : FlatButton(
+                        onPressed: () {
+                          tabController.animateTo(tabController.index + 1);
+                        },
+                        child: Text(
+                          "NEXT",
+                          style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
+                        ),
+                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
+                        highlightColor: highlightColorDoneBtn != null
+                            ? Color(highlightColorDoneBtn)
+                            : Colors.white.withOpacity(0.3),
+                      )),
             width: 70.0,
-            height: 40.0,
+            height: 70.0,
           ),
         ],
       ),
