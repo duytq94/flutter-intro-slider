@@ -17,27 +17,39 @@ class _MyAppState extends State<MyApp> {
 
     slides.add(
       new Slide(
-        title: "ERASER",
+        title: "SCHOOL",
+        styleTitle:
+            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
-        pathImage: "images/photo_eraser.png",
-        backgroundColor: 0xfff5a623,
+        styleDescription:
+            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        pathImage: "images/photo_school.png",
+        backgroundColor: 0xFFFFDEAD,
       ),
     );
     slides.add(
       new Slide(
-        title: "PENCIL",
+        title: "MUSEUM",
+        styleTitle:
+            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description: "Ye indulgence unreserved connection alteration appearance",
-        pathImage: "images/photo_pencil.png",
-        backgroundColor: 0xff203152,
+        styleDescription:
+            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        pathImage: "images/photo_museum.png",
+        backgroundColor: 0xffFFFACD,
       ),
     );
     slides.add(
       new Slide(
-        title: "RULER",
+        title: "COFFEE",
+        styleTitle:
+            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        pathImage: "images/photo_ruler.png",
-        backgroundColor: 0xff9932CC,
+        styleDescription:
+            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        pathImage: "images/photo_coffee_shop.png",
+        backgroundColor: 0xffFFF8DC,
       ),
     );
   }
@@ -53,7 +65,7 @@ class _MyAppState extends State<MyApp> {
   Widget renderNextBtn() {
     return Icon(
       Icons.navigate_next,
-      color: Colors.white,
+      color: Color(0xffD02090),
       size: 35.0,
     );
   }
@@ -61,28 +73,40 @@ class _MyAppState extends State<MyApp> {
   Widget renderDoneBtn() {
     return Icon(
       Icons.done,
-      color: Colors.white,
+      color: Color(0xffD02090),
     );
   }
 
   Widget renderSkipBtn() {
     return Icon(
       Icons.skip_next,
-      color: Colors.white,
+      color: Color(0xffD02090),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return new IntroSlider(
+      // List slides
       slides: this.slides,
-      onDonePress: this.onDonePress,
+
+      // Skip button
+      renderSkipBtn: this.renderSkipBtn(),
       onSkipPress: this.onSkipPress,
+      colorSkipBtn: 0x33000000,
+      highlightColorSkipBtn: 0xff000000,
+
+      // Next, Done button
+      onDonePress: this.onDonePress,
       renderNextBtn: this.renderNextBtn(),
       renderDoneBtn: this.renderDoneBtn(),
       colorDoneBtn: 0x33000000,
-      renderSkipBtn: this.renderSkipBtn(),
-      colorSkipBtn: 0x33000000,
+      highlightColorDoneBtn: 0xff000000,
+
+      // Dot indicator
+      colorDot: 0x33D02090,
+      colorActiveDot: 0xffD02090,
+      sizeDot: 13.0,
     );
   }
 }
