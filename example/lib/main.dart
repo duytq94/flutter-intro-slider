@@ -43,17 +43,18 @@ class _MyAppState extends State<MyApp> {
   }
 
   void onDonePress() {
-    print('on button done press');
+    // TODO: go to next screen
   }
 
   void onSkipPress() {
-    print('on button skip press');
+    // TODO: go to next screen
   }
 
   Widget renderNextBtn() {
     return Icon(
       Icons.navigate_next,
       color: Colors.white,
+      size: 35.0,
     );
   }
 
@@ -79,7 +80,9 @@ class _MyAppState extends State<MyApp> {
       onSkipPress: this.onSkipPress,
       renderNextBtn: this.renderNextBtn(),
       renderDoneBtn: this.renderDoneBtn(),
+      colorDoneBtn: 0x33000000,
       renderSkipBtn: this.renderSkipBtn(),
+      colorSkipBtn: 0x33000000,
     );
   }
 }

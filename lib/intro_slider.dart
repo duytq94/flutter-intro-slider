@@ -204,9 +204,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   }
 
   Widget renderBottom() {
-    return
-        // Bottom
-        Positioned(
+    return Positioned(
       child: Row(
         children: <Widget>[
           // Skip button
@@ -220,6 +218,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                           highlightColor: highlightColorSkipBtn != null
                               ? Color(highlightColorSkipBtn)
                               : Colors.white.withOpacity(0.3),
+                          shape: new CircleBorder(),
                         )
                       : FlatButton(
                           onPressed: onSkipPress,
@@ -261,6 +260,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
+                        shape: new CircleBorder(),
                       )
                     : FlatButton(
                         onPressed: onDonePress,
@@ -283,6 +283,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
+                        shape: new CircleBorder(),
                       )
                     : FlatButton(
                         onPressed: () {
@@ -376,7 +377,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           Container(
             child: Text(
               description ?? "",
-              style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 20.0),
+              style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
               maxLines: 3,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
