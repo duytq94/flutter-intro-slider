@@ -1,6 +1,6 @@
 name: intro_slider
 description: Simple and configurable app introduction slider for Flutter
-author:
+authors:
   - Duy Tran <tranquangduy7994@gmail.com>
 homepage: https://github.com/duytq94/flutter-intro-slider
 version: 0.0.1
