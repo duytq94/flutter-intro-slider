@@ -12,9 +12,6 @@ Import
 import 'package:intro_slider/intro_slider.dart';
 ```
 
-| | |
-|-|-|
-
 <h2 align="center">Demo</h2>
 
 ![Button example gif](screenshots/default.gif) | ![Custom layout example gif](screenshots/custom.gif)
