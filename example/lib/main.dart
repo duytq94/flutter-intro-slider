@@ -123,7 +123,8 @@ class _MyAppState extends State<MyApp> {
     slides.add(
       new Slide(
         title: "ERASER",
-        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        description:
+            "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         pathImage: "images/photo_eraser.png",
         backgroundColor: 0xfff5a623,
       ),
@@ -131,7 +132,8 @@ class _MyAppState extends State<MyApp> {
     slides.add(
       new Slide(
         title: "PENCIL",
-        description: "Ye indulgence unreserved connection alteration appearance",
+        description:
+            "Ye indulgence unreserved connection alteration appearance",
         pathImage: "images/photo_pencil.png",
         backgroundColor: 0xff203152,
       ),

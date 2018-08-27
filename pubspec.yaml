@@ -3,7 +3,7 @@ description: Simple and configurable app introduction slider for Flutter
 authors:
   - Duy Tran <tranquangduy7994@gmail.com>
 homepage: https://github.com/duytq94/flutter-intro-slider
-version: 0.0.1
+version: 1.0.1
 
 dependencies:
   flutter:

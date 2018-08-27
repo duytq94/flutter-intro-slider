@@ -1,13 +1,16 @@
 <h1 align="center">FLUTTER INTRO SLIDER</h1>
 
-<p align="center">Help you make intro screens to show the major features of your app</p>
+<p align="center">A plugin to help you make intro screens to show the major features of your app. You can change image, button, text style, color... as you want. Create intro screen is never been so quick and easy</p>
 
 Add to pubspec.yaml file
+
 ```sh
 dependencies:
-  intro_slider: ^0.0.1
+  intro_slider: ^1.0.1
 ```
+
 Import
+
 ```sh
 import 'package:intro_slider/intro_slider.dart';
 ```
@@ -15,7 +18,6 @@ import 'package:intro_slider/intro_slider.dart';
 <h2 align="center">Demo</h2>
 
 ![Button example gif](screenshots/default.gif) | ![Custom layout example gif](screenshots/custom.gif)
-
 
 <h2 align="center">Example</h2>
 
@@ -75,7 +77,6 @@ class _MyAppState extends State<MyApp> {
     );
   }
 }
-
 ```
 
 ### Custom config
@@ -191,41 +192,40 @@ class _MyAppState extends State<MyApp> {
 
 ### Slide object attributes
 
-Name             | Type         | Default                                 | Description
------------------|--------------|-----------------------------------------|--------------
-title            | `String`     | ""                                      | Change text title at top
-styleTitle       | `TextStyle`  | White color, bold and font size is 30.0 | Style for text title
-marginTitle      | `EdgeInsets` | top: 70.0, bottom: 50.0                 | Margin for text title
-pathImage        | `String`     | ""                                      | Path to your local image
-widthImage       | `double`     | 250.0                                   | Width of image
-heightImage      | `double`     | 250.0                                   | Height of image
-description      | `String`     | ""                                      | Change text description at bottom
-styleDescription | `TextStyle`  | White and font size is 18.0             | Style for text description
-marginDescription| `EdgeInsets` | left, right = 20.0, top, bottom = 50.0  | Margin for text description
-backgroundColor  | `int`        | 0xfff5a623                              | Background color each page
-
+| Name              | Type         | Default                                 | Description                       |
+| ----------------- | ------------ | --------------------------------------- | --------------------------------- |
+| title             | `String`     | ""                                      | Change text title at top          |
+| styleTitle        | `TextStyle`  | White color, bold and font size is 30.0 | Style for text title              |
+| marginTitle       | `EdgeInsets` | top: 70.0, bottom: 50.0                 | Margin for text title             |
+| pathImage         | `String`     | ""                                      | Path to your local image          |
+| widthImage        | `double`     | 250.0                                   | Width of image                    |
+| heightImage       | `double`     | 250.0                                   | Height of image                   |
+| description       | `String`     | ""                                      | Change text description at bottom |
+| styleDescription  | `TextStyle`  | White and font size is 18.0             | Style for text description        |
+| marginDescription | `EdgeInsets` | left, right = 20.0, top, bottom = 50.0  | Margin for text description       |
+| backgroundColor   | `int`        | 0xfff5a623                              | Background color each page        |
 
 ### IntroSlider widget attributes
 
-Name             | Type         | Default                                 | Description
------------------|--------------|-----------------------------------------|--------------
-slides           | `Slide`      | No default, required                    | An array of Slide object
-renderSkipBtn    | `Widget`     | Button with text SKIP                   | Render your own Skip button
-onSkipPress      | `Function`   | Do nothing                              | Fire when press Skip button
-nameSkipBtn      | `String`     | "SKIP"                                  | Change SKIP to any text you want
-styleNameSkipBtn | `TextStyle`  | White color                             | Style for text at Skip button
-colorSkipBtn     | `int`        | transparent                             | Color for Skip button
-highlightColorSkipBtn| `int`    | 0x4dffffff                              | Color for Skip button when press
-isShowSkipBtn    | `bool`       | true                                    | Show or hide Skip button
-renderNextBtn    | `Widget`     | Button with text NEXT                   | Render your own Next button
-renderDoneBtn    | `Widget`     | Button with text DONE                   | Render your own Done button
-onDonePress      | `Function`   | Do nothing                              | Fire when press Skip button
-nameNextBtn      | `String`     | "NEXT"                                  | Change SKIP to any text you want
-nameDoneBtn      | `String`     | "DONE"                                  | Style for text at Skip button
-styleNameDoneBtn | `TextStyle`  | White color                             | Color for Skip button
-colorDoneBtn     | `int`        | transparent                             | Color for Skip button when press
-highlightColorDoneBtn| `int`    | 0x4dffffff                              | Show or hide Skip button
-isShowDotIndicator| `bool`      | true                                    | Show or hide dot indicator
-colorDot         | `int`        | 0x80000000                              | Color for dot when passive
-colorActiveDot   | `int`        | 0xffffffff                              | Color for dot when active
-sizeDot          | `double`     | 8.0                                     | Size of each dot
+| Name                  | Type        | Default               | Description                      |
+| --------------------- | ----------- | --------------------- | -------------------------------- |
+| slides                | `Slide`     | No default, required  | An array of Slide object         |
+| renderSkipBtn         | `Widget`    | Button with text SKIP | Render your own Skip button      |
+| onSkipPress           | `Function`  | Do nothing            | Fire when press Skip button      |
+| nameSkipBtn           | `String`    | "SKIP"                | Change SKIP to any text you want |
+| styleNameSkipBtn      | `TextStyle` | White color           | Style for text at Skip button    |
+| colorSkipBtn          | `int`       | transparent           | Color for Skip button            |
+| highlightColorSkipBtn | `int`       | 0x4dffffff            | Color for Skip button when press |
+| isShowSkipBtn         | `bool`      | true                  | Show or hide Skip button         |
+| renderNextBtn         | `Widget`    | Button with text NEXT | Render your own Next button      |
+| renderDoneBtn         | `Widget`    | Button with text DONE | Render your own Done button      |
+| onDonePress           | `Function`  | Do nothing            | Fire when press Skip button      |
+| nameNextBtn           | `String`    | "NEXT"                | Change SKIP to any text you want |
+| nameDoneBtn           | `String`    | "DONE"                | Style for text at Skip button    |
+| styleNameDoneBtn      | `TextStyle` | White color           | Color for Skip button            |
+| colorDoneBtn          | `int`       | transparent           | Color for Skip button when press |
+| highlightColorDoneBtn | `int`       | 0x4dffffff            | Show or hide Skip button         |
+| isShowDotIndicator    | `bool`      | true                  | Show or hide dot indicator       |
+| colorDot              | `int`       | 0x80000000            | Color for dot when passive       |
+| colorActiveDot        | `int`       | 0xffffffff            | Color for dot when active        |
+| sizeDot               | `double`    | 8.0                   | Size of each dot                 |
