@@ -12,204 +12,216 @@ dependencies:
 |-|-|
 ![Button example gif](screenshots/default.gif) | ![Custom layout example gif](screenshots/custom.gif)
 
-## Table of contents
-  * [Usage](#usage)
-    * [Basic Example](#basic-example)
-    * [Configuring Buttons](#configuring-buttons)
-    * [Custom Slide Layout](#custom-slide-layout)
-  * [Props and options](#props-and-options)
-    * [Configure behaviour](#configure-behaviour)
-    * [Configure looks](#configure-looks)
-  * [Example](#example)
-
-<h2 align="center">Usage</h2>
-
-### Default example
-
-```javascript
-import React from 'react';
-import { StyleSheet } from 'react-native';
-import AppIntroSlider from 'react-native-app-intro-slider';
-
-const styles = StyleSheet.create({
-  image: {
-    width: 320,
-    height: 320,
-  }
-});
-
-const slides = [
-  {
-    key: 'somethun',
-    title: 'Title 1',
-    text: 'Description.\nSay something cool',
-    image: require('./assets/1.jpg'),
-    imageStyle: styles.image,
-    backgroundColor: '#59b2ab',
-  },
-  {
-    key: 'somethun-dos',
-    title: 'Title 2',
-    text: 'Other cool stuff',
-    image: require('./assets/2.jpg'),
-    imageStyle: styles.image,
-    backgroundColor: '#febe29',
-  },
-  {
-    key: 'somethun1',
-    title: 'Rocket guy',
-    text: 'I\'m already out of descriptions\n\nLorem ipsum bla bla bla',
-    image: require('./assets/3.jpg'),
-    imageStyle: styles.image,
-    backgroundColor: '#22bcb5',
-  }
-];
-
-export default class App extends React.Component {
-  this.state = {
-    showRealApp: false
-  }
-  _onDone = () => {
-    // User finished the introduction. Show real app through
-    // navigation or simply by controlling state
-    this.setState({ showRealApp: true });
-  }
-  render() {
-    if (this.state.showRealApp) {
-      return <App />;
-    } else {
-      return <AppIntroSlider slides={slides} onDone={this._onDone}/>;
-    }
-  }
-}
-```
-
-### Custom example
-
-![Button example gif](Images/button-example.gif)
-
-```javascript
-import React from 'react';
-import { Ionicons } from '@expo/vector-icons';
-import { StyleSheet, View } from 'react-native';
-import AppIntroSlider from 'react-native-app-intro-slider';
-
-const styles = StyleSheet.create({
-  buttonCircle: {
-    width: 40,
-    height: 40,
-    backgroundColor: 'rgba(0, 0, 0, .2)',
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  image: {
-    width: 320,
-    height: 320,
-  }
-});
-
-// slides = [...]
-
-export default class App extends React.Component {
-  _renderNextButton = () => {
-    return (
-      <View style={styles.buttonCircle}>
-        <Ionicons
-          name="md-arrow-round-forward"
-          color="rgba(255, 255, 255, .9)"
-          size={24}
-          style={{ backgroundColor: 'transparent' }}
-        />
-      </View>
-    );
-  }
-  _renderDoneButton = () => {
-    return (
-      <View style={styles.buttonCircle}>
-        <Ionicons
-          name="md-checkmark"
-          color="rgba(255, 255, 255, .9)"
-          size={24}
-          style={{ backgroundColor: 'transparent' }}
-        />
-      </View>
-    );
-  }
-  render() {
-    return (
-      <AppIntroSlider
-        slides={slides}
-        renderDoneButton={this._renderDoneButton}
-        renderNextButton={this._renderNextButton}
-      />
-    );
-  }
-}
-```
-
-Here a custom `renderItem` is supplied and the `bottomButton`-props has been set to `true`. Notice how the setup of `slides` has been configured to support icons and gradient backgrounds.
-
-<h2 align="center">Props and options</h2>
-
-The component extends `FlatList` so all FlatList-props are valid.
-
-### Configure looks
-
-Name             | Type       | Default                   | Description
------------------|------------|---------------------------|--------------
-skipLabel        | `string`   | `Skip`                    | Custom label for Skip button
-doneLabel        | `string`   | `Done`                    | Custom label for Done button
-nextLabel        | `string`   | `Next`                    | Custom label for Next button
-prevLabel        | `string`   | `Back`                    | Custom label for Prev button
-bottomButton     | `boolean`  | `false`                   | Enable to show a full-width button under pagination
-buttonStyle      | `style`    | `null`                    | Styling of outer button component
-buttonTextStyle  | `style`    | `null`                    | Styling of button text component
-dotStyle         | `style`    | {backgroundColor: 'rgba(0, 0, 0, .2)'} | Style of inactive pagination dots
-activeDotStyle   | `style`    | {backgroundColor: 'rgba(255, 255, 255, .9)'} | Style of active pagination dot
-hidePagination   | `boolean`  | `false`                   | Enable to hide the pagination
-renderNextButton | `function` | renders a Text-component  | Use to supply your own next button
-renderPrevButton | `function` | renders a Text-component  | Use to supply your own prev button
-renderDoneButton | `function` | renders a Text-component  | Use to supply your own done button
-renderSkipButton | `function` | renders a Text-component  | Use to supply your own skip button
-renderItem       | `function` | renders `DefaultSlide`    | Function returning a slide. The function is passed the slide object as wells as `{ topSpacer: Number, bottomSpacer: Number }`. These show the "safe-space" where other UI is not interfering - take a look at `DefaultSlide.js` too see how they are set up.
-
-### Configure behavior
-
-Name             | Type       | Default                   | Description
------------------|------------|---------------------------|--------------
-slides           | `object`   | No default, required      | An array of [slide-objects](#slide-object)
-showSkipButton   | `boolean`  | `false`                   | Enable to show a skip button to the left of pagination dots. When `bottomButton == true` the skip button is a small text under the full-width next button
-showPrevButton   | `boolean`  | `false`                   | Enable to show a previous button. If `showSkipButton` is true, the skip button will be displayed on the first page and prev button on subsequent one
-hideNextButton   | `boolean`  | `false`                   | Enable to hide the next button
-hideDoneButton   | `boolean`  | `false`                   | Enable to hide the done button
-onSlideChange    | `function` | `void`                    | Called when user goes changes slide (by swiping or pressing next/prev). Function called with arguments `index: number, lastIndex: number`
-onDone           | `function` | `void`                    | Called when user ends the introduction by pressing the done button
-onSkip           | `function` | `void`                    | Called when user presses the skip button
-
-#### slide object
-Each slide object should contain at least a unique `key`. If you use the default layouts your object should furthermore contain:
-
-Name             | Type                | Note           
------------------|---------------------|---------------------
-title            | `string`            | The title
-titleStyle       | `Style`-prop        | Styling for the title (e.g color, fontSize)
-text             | `string`            | Main text of slide
-textStyle        | `Style`-prop        | Styling for the text (e.g color, fontSize)
-image            | `Image`-source prop | Slide image
-imageStyle       | `Style`-prop        | Styling for the image (e.g. size)
-backgroundColor  | `string`            | Slide background color
-
-If you use a custom `renderItem`-method you can design your slide objects as you see fit.
 
 <h2 align="center">Example</h2>
 
-You can run the example Expo-app by cloning the repo:
+### Default config
 
+![default config image](screenshots/default.jpg)
 
-```sh
-git clone https://github.com/Jacse/react-native-app-intro-slider.git
-cd react-native-app-intro-slider/Example
-yarn
-yarn start
+```dart
+class _MyAppState extends State<MyApp> {
+  List<Slide> slides = new List();
+
+  @override
+  void initState() {
+    super.initState();
+
+    slides.add(
+      new Slide(
+        title: "ERASER",
+        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        pathImage: "images/photo_eraser.png",
+        backgroundColor: 0xfff5a623,
+      ),
+    );
+    slides.add(
+      new Slide(
+        title: "PENCIL",
+        description: "Ye indulgence unreserved connection alteration appearance",
+        pathImage: "images/photo_pencil.png",
+        backgroundColor: 0xff203152,
+      ),
+    );
+    slides.add(
+      new Slide(
+        title: "RULER",
+        description:
+            "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
+        pathImage: "images/photo_ruler.png",
+        backgroundColor: 0xff9932CC,
+      ),
+    );
+  }
+
+  void onDonePress() {
+    // TODO: go to next screen
+  }
+
+  void onSkipPress() {
+    // TODO: go to next screen
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new IntroSlider(
+      slides: this.slides,
+      onDonePress: this.onDonePress,
+      onSkipPress: this.onSkipPress,
+    );
+  }
+}
+
 ```
+
+### Custom config
+
+![custom config image](screenshots/custom.jpg)
+
+```dart
+class _MyAppState extends State<MyApp> {
+  List<Slide> slides = new List();
+
+  @override
+  void initState() {
+    super.initState();
+
+    slides.add(
+      new Slide(
+        title: "SCHOOL",
+        styleTitle:
+            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        styleDescription:
+            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        pathImage: "images/photo_school.png",
+        backgroundColor: 0xFFFFDEAD,
+      ),
+    );
+    slides.add(
+      new Slide(
+        title: "MUSEUM",
+        styleTitle:
+            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        description: "Ye indulgence unreserved connection alteration appearance",
+        styleDescription:
+            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        pathImage: "images/photo_museum.png",
+        backgroundColor: 0xffFFFACD,
+      ),
+    );
+    slides.add(
+      new Slide(
+        title: "COFFEE",
+        styleTitle:
+            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        description:
+            "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
+        styleDescription:
+            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        pathImage: "images/photo_coffee_shop.png",
+        backgroundColor: 0xffFFF8DC,
+      ),
+    );
+  }
+
+  void onDonePress() {
+    // TODO: go to next screen
+  }
+
+  void onSkipPress() {
+    // TODO: go to next screen
+  }
+
+  Widget renderNextBtn() {
+    return Icon(
+      Icons.navigate_next,
+      color: Color(0xffD02090),
+      size: 35.0,
+    );
+  }
+
+  Widget renderDoneBtn() {
+    return Icon(
+      Icons.done,
+      color: Color(0xffD02090),
+    );
+  }
+
+  Widget renderSkipBtn() {
+    return Icon(
+      Icons.skip_next,
+      color: Color(0xffD02090),
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new IntroSlider(
+      // List slides
+      slides: this.slides,
+
+      // Skip button
+      renderSkipBtn: this.renderSkipBtn(),
+      onSkipPress: this.onSkipPress,
+      colorSkipBtn: 0x33000000,
+      highlightColorSkipBtn: 0xff000000,
+
+      // Next, Done button
+      onDonePress: this.onDonePress,
+      renderNextBtn: this.renderNextBtn(),
+      renderDoneBtn: this.renderDoneBtn(),
+      colorDoneBtn: 0x33000000,
+      highlightColorDoneBtn: 0xff000000,
+
+      // Dot indicator
+      colorDot: 0x33D02090,
+      colorActiveDot: 0xffD02090,
+      sizeDot: 13.0,
+    );
+  }
+}
+```
+
+<h2 align="center">Options</h2>
+
+### Slide object attributes
+
+Name             | Type         | Default                                 | Description
+-----------------|--------------|-----------------------------------------|--------------
+title            | `String`     | ""                                      | Change text title at top
+styleTitle       | `TextStyle`  | White color, bold and font size is 30.0 | Style for text title
+marginTitle      | `EdgeInsets` | top: 70.0, bottom: 50.0                 | Margin for text title
+pathImage        | `String`     | ""                                      | Path to your local image
+widthImage       | `double`     | 250.0                                   | Width of image
+heightImage      | `double`     | 250.0                                   | Height of image
+description      | `String`     | ""                                      | Change text description at bottom
+styleDescription | `TextStyle`  | White and font size is 18.0             | Style for text description
+marginDescription| `EdgeInsets` | left, right = 20.0, top, bottom = 50.0  | Margin for text description
+backgroundColor  | `int`        | 0xfff5a623                              | Background color each page
+
+
+### IntroSlider widget attributes
+
+Name             | Type         | Default                                 | Description
+-----------------|--------------|-----------------------------------------|--------------
+slides           | `Slide`      | No default, required                    | An array of Slide object
+renderSkipBtn    | `Widget`     | Button with text SKIP                   | Render your own Skip button
+onSkipPress      | `Function`   | Print to console log                    | Fire when press Skip button
+nameSkipBtn      | `String`     | "SKIP"                                  | Change SKIP to any text you want
+styleNameSkipBtn | `TextStyle`  | White color                             | Style for text at Skip button
+colorSkipBtn     | `int`        | transparent                             | Color for Skip button
+highlightColorSkipBtn| `int`    | 0x4dffffff                              | Color for Skip button when press
+isShowSkipBtn    | `bool`       | true                                    | Show or hide Skip button
+renderNextBtn    | `Widget`     | Button with text NEXT                   | Render your own Next button
+renderDoneBtn    | `Widget`     | Button with text DONE                   | Render your own Done button
+onDonePress      | `Function`   | Print to console log                    | Fire when press Skip button
+nameNextBtn      | `String`     | "NEXT"                                  | Change SKIP to any text you want
+nameDoneBtn      | `String`     | "DONE"                                  | Style for text at Skip button
+styleNameDoneBtn | `TextStyle`  | White color                             | Color for Skip button
+colorDoneBtn     | `int`        | transparent                             | Color for Skip button when press
+highlightColorDoneBtn| `int`    | 0x4dffffff                              | Show or hide Skip button
+isShowDotIndicator| `bool`      | true                                    | Show or hide dot indicator
+colorDot         | `int`        | 0x80000000                              | Color for dot when passive
+colorActiveDot   | `int`        | 0xffffffff                              | Color for dot when active
+sizeDot          | `double`     | 8.0                                     | Size of each dot

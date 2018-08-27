@@ -7,6 +7,7 @@ class IntroSlider extends StatefulWidget {
   // Skip button
   final Widget renderSkipBtn;
   final Function onSkipPress;
+  final String nameSkipBtn;
   final TextStyle styleNameSkipBtn;
   final int colorSkipBtn;
   final int highlightColorSkipBtn;
@@ -16,6 +17,8 @@ class IntroSlider extends StatefulWidget {
   final Widget renderNextBtn;
   final Widget renderDoneBtn;
   final Function onDonePress;
+  final String nameNextBtn;
+  final String nameDoneBtn;
   final TextStyle styleNameDoneBtn;
   final int colorDoneBtn;
   final int highlightColorDoneBtn;
@@ -33,8 +36,8 @@ class IntroSlider extends StatefulWidget {
 
     // Skip button
     this.renderSkipBtn,
-    this.renderDoneBtn,
     this.onSkipPress,
+    this.nameSkipBtn,
     this.styleNameSkipBtn,
     this.colorSkipBtn,
     this.highlightColorSkipBtn,
@@ -42,7 +45,10 @@ class IntroSlider extends StatefulWidget {
 
     // Done button
     this.renderNextBtn,
+    this.renderDoneBtn,
     this.onDonePress,
+    this.nameNextBtn,
+    this.nameDoneBtn,
     this.styleNameDoneBtn,
     this.colorDoneBtn,
     this.highlightColorDoneBtn,
@@ -62,6 +68,7 @@ class IntroSlider extends StatefulWidget {
         // Skip button
         renderSkipBtn: this.renderSkipBtn,
         onSkipPress: this.onSkipPress,
+        nameSkipBtn: this.nameSkipBtn,
         styleNameSkipBtn: this.styleNameSkipBtn,
         colorSkipBtn: this.colorSkipBtn,
         highlightColorSkipBtn: this.highlightColorSkipBtn,
@@ -71,6 +78,8 @@ class IntroSlider extends StatefulWidget {
         renderNextBtn: this.renderNextBtn,
         renderDoneBtn: this.renderDoneBtn,
         onDonePress: this.onDonePress,
+        nameNextBtn: this.nameNextBtn,
+        nameDoneBtn: this.nameDoneBtn,
         styleNameDoneBtn: this.styleNameDoneBtn,
         colorDoneBtn: this.colorDoneBtn,
         highlightColorDoneBtn: this.highlightColorDoneBtn,
@@ -90,6 +99,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   // Skip button
   Widget renderSkipBtn;
   Function onSkipPress;
+  String nameSkipBtn;
   TextStyle styleNameSkipBtn;
   int colorSkipBtn;
   int highlightColorSkipBtn;
@@ -99,6 +109,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   Widget renderNextBtn;
   Widget renderDoneBtn;
   Function onDonePress;
+  String nameNextBtn;
+  String nameDoneBtn;
   TextStyle styleNameDoneBtn;
   int colorDoneBtn;
   int highlightColorDoneBtn;
@@ -117,6 +129,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     // Skip button
     @required this.renderSkipBtn,
     @required this.onSkipPress,
+    @required this.nameSkipBtn,
     @required this.styleNameSkipBtn,
     @required this.colorSkipBtn,
     @required this.highlightColorSkipBtn,
@@ -126,6 +139,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     @required this.renderNextBtn,
     @required this.renderDoneBtn,
     @required this.onDonePress,
+    @required this.nameNextBtn,
+    @required this.nameDoneBtn,
     @required this.styleNameDoneBtn,
     @required this.colorDoneBtn,
     @required this.highlightColorDoneBtn,
@@ -223,7 +238,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                       : FlatButton(
                           onPressed: onSkipPress,
                           child: Text(
-                            "SKIP",
+                            nameSkipBtn ?? "SKIP",
                             style: styleNameSkipBtn ?? TextStyle(color: Colors.white),
                           ),
                           color: colorSkipBtn != null ? Color(colorSkipBtn) : Colors.transparent,
@@ -265,7 +280,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                     : FlatButton(
                         onPressed: onDonePress,
                         child: Text(
-                          "DONE",
+                          nameDoneBtn ?? "DONE",
                           style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
                         ),
                         color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
@@ -290,7 +305,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                           tabController.animateTo(tabController.index + 1);
                         },
                         child: Text(
-                          "NEXT",
+                          nameNextBtn ?? "NEXT",
                           style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
                         ),
                         color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
@@ -462,18 +477,6 @@ class Slide {
 
     // Background color
     int backgroundColor,
-
-    // Skip button
-    String nameSkipBtn,
-    TextStyle styleNameSkipBtn,
-    int colorSkipBtn,
-    int highlightColorSkipBtn,
-
-    // Done button
-    String nameDoneBtn,
-    TextStyle styleNameDoneBtn,
-    int colorDoneBtn,
-    int highlightColorDoneBtn,
   }) {
     // Title
     this.title = title;
