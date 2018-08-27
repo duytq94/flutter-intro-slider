@@ -5,11 +5,18 @@
 Add to pubspec.yaml file
 ```sh
 dependencies:
-  intro_slider: [version]
+  intro_slider: ^0.0.1
+```
+Import
+```sh
+import 'package:intro_slider/intro_slider.dart';
 ```
 
 | | |
 |-|-|
+
+<h2 align="center">Demo</h2>
+
 ![Button example gif](screenshots/default.gif) | ![Custom layout example gif](screenshots/custom.gif)
 
 
@@ -207,7 +214,7 @@ Name             | Type         | Default                                 | Desc
 -----------------|--------------|-----------------------------------------|--------------
 slides           | `Slide`      | No default, required                    | An array of Slide object
 renderSkipBtn    | `Widget`     | Button with text SKIP                   | Render your own Skip button
-onSkipPress      | `Function`   | Print to console log                    | Fire when press Skip button
+onSkipPress      | `Function`   | Do nothing                              | Fire when press Skip button
 nameSkipBtn      | `String`     | "SKIP"                                  | Change SKIP to any text you want
 styleNameSkipBtn | `TextStyle`  | White color                             | Style for text at Skip button
 colorSkipBtn     | `int`        | transparent                             | Color for Skip button
@@ -215,7 +222,7 @@ highlightColorSkipBtn| `int`    | 0x4dffffff                              | Colo
 isShowSkipBtn    | `bool`       | true                                    | Show or hide Skip button
 renderNextBtn    | `Widget`     | Button with text NEXT                   | Render your own Next button
 renderDoneBtn    | `Widget`     | Button with text DONE                   | Render your own Done button
-onDonePress      | `Function`   | Print to console log                    | Fire when press Skip button
+onDonePress      | `Function`   | Do nothing                              | Fire when press Skip button
 nameNextBtn      | `String`     | "NEXT"                                  | Change SKIP to any text you want
 nameDoneBtn      | `String`     | "DONE"                                  | Style for text at Skip button
 styleNameDoneBtn | `TextStyle`  | White color                             | Color for Skip button

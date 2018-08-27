@@ -8,6 +8,7 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => new _MyAppState();
 }
 
+// Custom config
 //class _MyAppState extends State<MyApp> {
 //  List<Slide> slides = new List();
 //
@@ -111,6 +112,7 @@ class MyApp extends StatefulWidget {
 //  }
 //}
 
+// Default config
 class _MyAppState extends State<MyApp> {
   List<Slide> slides = new List();
 
