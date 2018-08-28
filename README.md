@@ -23,7 +23,7 @@ import 'package:intro_slider/intro_slider.dart';
 
 ### Default config
 
-![default config image](screenshots/default.jpg)
+![default config image](screenshots/default.png)
 
 ```dart
 class _MyAppState extends State<MyApp> {
@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> {
 
 ### Custom config
 
-![custom config image](screenshots/custom.jpg)
+![custom config image](screenshots/custom.png)
 
 ```dart
 class _MyAppState extends State<MyApp> {
