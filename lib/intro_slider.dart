@@ -236,7 +236,8 @@ class IntroSliderState extends State<IntroSlider>
                           highlightColor: highlightColorSkipBtn != null
                               ? Color(highlightColorSkipBtn)
                               : Colors.white.withOpacity(0.3),
-                          shape: new CircleBorder(),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
                         )
                       : FlatButton(
                           onPressed: onSkipPress,
@@ -251,12 +252,14 @@ class IntroSliderState extends State<IntroSlider>
                           highlightColor: highlightColorSkipBtn != null
                               ? Color(highlightColorSkipBtn)
                               : Colors.white.withOpacity(0.3),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(30.0)),
                         ),
                   width: 70.0,
                   height: 70.0,
                 )
               : Container(
-                  width: 70.0,
+                  width: 80.0,
                   height: 70.0,
                 ),
 
@@ -283,7 +286,8 @@ class IntroSliderState extends State<IntroSlider>
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
-                        shape: new CircleBorder(),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
                       )
                     : FlatButton(
                         onPressed: onDonePress,
@@ -298,6 +302,8 @@ class IntroSliderState extends State<IntroSlider>
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
                       ))
                 : (renderNextBtn != null
                     ? FlatButton(
@@ -311,7 +317,8 @@ class IntroSliderState extends State<IntroSlider>
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
-                        shape: new CircleBorder(),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
                       )
                     : FlatButton(
                         onPressed: () {
@@ -328,8 +335,10 @@ class IntroSliderState extends State<IntroSlider>
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
                       )),
-            width: 70.0,
+            width: 80.0,
             height: 70.0,
           ),
         ],

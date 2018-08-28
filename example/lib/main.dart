@@ -112,7 +112,7 @@ class MyApp extends StatefulWidget {
 //  }
 //}
 
-// Default config
+//Default config
 class _MyAppState extends State<MyApp> {
   List<Slide> slides = new List();
 
@@ -124,7 +124,7 @@ class _MyAppState extends State<MyApp> {
       new Slide(
         title: "ERASER",
         description:
-            "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         pathImage: "images/photo_eraser.png",
         backgroundColor: 0xfff5a623,
       ),
@@ -133,7 +133,7 @@ class _MyAppState extends State<MyApp> {
       new Slide(
         title: "PENCIL",
         description:
-            "Ye indulgence unreserved connection alteration appearance",
+        "Ye indulgence unreserved connection alteration appearance",
         pathImage: "images/photo_pencil.png",
         backgroundColor: 0xff203152,
       ),
@@ -142,7 +142,7 @@ class _MyAppState extends State<MyApp> {
       new Slide(
         title: "RULER",
         description:
-            "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
+        "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
         pathImage: "images/photo_ruler.png",
         backgroundColor: 0xff9932CC,
       ),
