@@ -229,3 +229,6 @@ class _MyAppState extends State<MyApp> {
 | colorDot              | `int`       | 0x80000000            | Color for dot when passive       |
 | colorActiveDot        | `int`       | 0xffffffff            | Color for dot when active        |
 | sizeDot               | `double`    | 8.0                   | Size of each dot                 |
+
+
+## Pull request and feedback are always appreciated
