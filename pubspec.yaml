@@ -1,9 +1,9 @@
 name: intro_slider
-description: Simple and configurable app introduction slider for Flutter
+description: A plugin to help you make intro screens to show the major features of your app. You can change the image, button, text style, color... as you want. Create intro screens is never been so quick and easy.
 authors:
   - Duy Tran <tranquangduy7994@gmail.com>
 homepage: https://github.com/duytq94/flutter-intro-slider
-version: 1.0.1
+version: 1.0.2
 
 dependencies:
   flutter:
