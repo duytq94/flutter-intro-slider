@@ -12,6 +12,7 @@ class IntroSlider extends StatefulWidget {
   final int colorSkipBtn;
   final int highlightColorSkipBtn;
   final bool isShowSkipBtn;
+  final double borderRadiusSkipBtn;
 
   // Next, Done button
   final Widget renderNextBtn;
@@ -22,6 +23,8 @@ class IntroSlider extends StatefulWidget {
   final TextStyle styleNameDoneBtn;
   final int colorDoneBtn;
   final int highlightColorDoneBtn;
+  final double borderRadiusNextBtn;
+  final double borderRadiusDoneBtn;
 
   // Dot indicator
   final bool isShowDotIndicator;
@@ -42,6 +45,7 @@ class IntroSlider extends StatefulWidget {
     this.colorSkipBtn,
     this.highlightColorSkipBtn,
     this.isShowSkipBtn,
+    this.borderRadiusSkipBtn,
 
     // Done button
     this.renderNextBtn,
@@ -52,6 +56,8 @@ class IntroSlider extends StatefulWidget {
     this.styleNameDoneBtn,
     this.colorDoneBtn,
     this.highlightColorDoneBtn,
+    this.borderRadiusNextBtn,
+    this.borderRadiusDoneBtn,
 
     // Dot indicator
     this.isShowDotIndicator,
@@ -73,6 +79,7 @@ class IntroSlider extends StatefulWidget {
         colorSkipBtn: this.colorSkipBtn,
         highlightColorSkipBtn: this.highlightColorSkipBtn,
         isShowSkipBtn: this.isShowSkipBtn,
+        borderRadiusSkipBtn: this.borderRadiusSkipBtn,
 
         // Done button
         renderNextBtn: this.renderNextBtn,
@@ -83,6 +90,8 @@ class IntroSlider extends StatefulWidget {
         styleNameDoneBtn: this.styleNameDoneBtn,
         colorDoneBtn: this.colorDoneBtn,
         highlightColorDoneBtn: this.highlightColorDoneBtn,
+        borderRadiusNextBtn: this.borderRadiusNextBtn,
+        borderRadiusDoneBtn: this.borderRadiusDoneBtn,
 
         // Dot indicator
         isShowDotIndicator: this.isShowDotIndicator,
@@ -92,8 +101,7 @@ class IntroSlider extends StatefulWidget {
       );
 }
 
-class IntroSliderState extends State<IntroSlider>
-    with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
   // List slides
   final List<Slide> slides;
 
@@ -105,6 +113,7 @@ class IntroSliderState extends State<IntroSlider>
   int colorSkipBtn;
   int highlightColorSkipBtn;
   bool isShowSkipBtn;
+  double borderRadiusSkipBtn;
 
   // Done button
   Widget renderNextBtn;
@@ -115,6 +124,8 @@ class IntroSliderState extends State<IntroSlider>
   TextStyle styleNameDoneBtn;
   int colorDoneBtn;
   int highlightColorDoneBtn;
+  double borderRadiusNextBtn;
+  double borderRadiusDoneBtn;
 
   // Dot indicator
   bool isShowDotIndicator = true;
@@ -135,6 +146,7 @@ class IntroSliderState extends State<IntroSlider>
     @required this.colorSkipBtn,
     @required this.highlightColorSkipBtn,
     @required this.isShowSkipBtn,
+    @required this.borderRadiusSkipBtn,
 
     // Done button
     @required this.renderNextBtn,
@@ -145,6 +157,8 @@ class IntroSliderState extends State<IntroSlider>
     @required this.styleNameDoneBtn,
     @required this.colorDoneBtn,
     @required this.highlightColorDoneBtn,
+    @required this.borderRadiusNextBtn,
+    @required this.borderRadiusDoneBtn,
 
     // Dot indicator
     @required this.isShowDotIndicator,
@@ -230,30 +244,25 @@ class IntroSliderState extends State<IntroSlider>
                       ? FlatButton(
                           child: renderSkipBtn,
                           onPressed: onSkipPress,
-                          color: colorSkipBtn != null
-                              ? Color(colorSkipBtn)
-                              : Colors.transparent,
+                          color: colorSkipBtn != null ? Color(colorSkipBtn) : Colors.transparent,
                           highlightColor: highlightColorSkipBtn != null
                               ? Color(highlightColorSkipBtn)
                               : Colors.white.withOpacity(0.3),
                           shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0)),
+                              borderRadius: new BorderRadius.circular(borderRadiusSkipBtn ?? 30.0)),
                         )
                       : FlatButton(
                           onPressed: onSkipPress,
                           child: Text(
                             nameSkipBtn ?? "SKIP",
-                            style: styleNameSkipBtn ??
-                                TextStyle(color: Colors.white),
+                            style: styleNameSkipBtn ?? TextStyle(color: Colors.white),
                           ),
-                          color: colorSkipBtn != null
-                              ? Color(colorSkipBtn)
-                              : Colors.transparent,
+                          color: colorSkipBtn != null ? Color(colorSkipBtn) : Colors.transparent,
                           highlightColor: highlightColorSkipBtn != null
                               ? Color(highlightColorSkipBtn)
                               : Colors.white.withOpacity(0.3),
                           shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(30.0)),
+                              borderRadius: new BorderRadius.circular(borderRadiusSkipBtn ?? 30.0)),
                         ),
                   width: 70.0,
                   height: 70.0,
@@ -280,30 +289,25 @@ class IntroSliderState extends State<IntroSlider>
                     ? FlatButton(
                         child: renderDoneBtn,
                         onPressed: onDonePress,
-                        color: colorDoneBtn != null
-                            ? Color(colorDoneBtn)
-                            : Colors.transparent,
+                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0)),
+                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
                       )
                     : FlatButton(
                         onPressed: onDonePress,
                         child: Text(
                           nameDoneBtn ?? "DONE",
-                          style: styleNameDoneBtn ??
-                              TextStyle(color: Colors.white),
+                          style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
                         ),
-                        color: colorDoneBtn != null
-                            ? Color(colorDoneBtn)
-                            : Colors.transparent,
+                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0)),
+                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
                       ))
                 : (renderNextBtn != null
                     ? FlatButton(
@@ -311,14 +315,12 @@ class IntroSliderState extends State<IntroSlider>
                           tabController.animateTo(tabController.index + 1);
                         },
                         child: renderNextBtn,
-                        color: colorDoneBtn != null
-                            ? Color(colorDoneBtn)
-                            : Colors.transparent,
+                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0)),
+                            borderRadius: new BorderRadius.circular(borderRadiusNextBtn ?? 30.0)),
                       )
                     : FlatButton(
                         onPressed: () {
@@ -326,17 +328,14 @@ class IntroSliderState extends State<IntroSlider>
                         },
                         child: Text(
                           nameNextBtn ?? "NEXT",
-                          style: styleNameDoneBtn ??
-                              TextStyle(color: Colors.white),
+                          style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
                         ),
-                        color: colorDoneBtn != null
-                            ? Color(colorDoneBtn)
-                            : Colors.transparent,
+                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
                         highlightColor: highlightColorDoneBtn != null
                             ? Color(highlightColorDoneBtn)
                             : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(30.0)),
+                            borderRadius: new BorderRadius.circular(borderRadiusNextBtn ?? 30.0)),
                       )),
             width: 80.0,
             height: 70.0,
@@ -417,14 +416,12 @@ class IntroSliderState extends State<IntroSlider>
           Container(
             child: Text(
               description ?? "",
-              style: styleDescription ??
-                  TextStyle(color: Colors.white, fontSize: 18.0),
+              style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
               maxLines: 3,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
             ),
-            margin: marginDescription ??
-                EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+            margin: marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
           ),
         ],
       ),
@@ -447,8 +444,7 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget renderDot(double radius, int color) {
     return Container(
-      decoration: BoxDecoration(
-          color: Color(color), borderRadius: BorderRadius.circular(radius / 2)),
+      decoration: BoxDecoration(color: Color(color), borderRadius: BorderRadius.circular(radius / 2)),
       width: radius,
       height: radius,
       margin: EdgeInsets.all(radius / 2),

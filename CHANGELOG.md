@@ -1,3 +1,7 @@
+## 1.0.5
+
+* Add more attribute
+
 ## 1.0.4
 
 * Update info

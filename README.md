@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.0.4
+  intro_slider: ^1.0.5
 ```
 
 Import
@@ -217,6 +217,7 @@ class _MyAppState extends State<MyApp> {
 | colorSkipBtn          | `int`       | transparent           | Color for Skip button            |
 | highlightColorSkipBtn | `int`       | 0x4dffffff            | Color for Skip button when press |
 | isShowSkipBtn         | `bool`      | true                  | Show or hide Skip button         |
+| borderRadiusSkipBtn   | `double`    | 30.0                  | Rounded Skip button              |
 | renderNextBtn         | `Widget`    | Button with text NEXT | Render your own Next button      |
 | renderDoneBtn         | `Widget`    | Button with text DONE | Render your own Done button      |
 | onDonePress           | `Function`  | Do nothing            | Fire when press Skip button      |
@@ -225,6 +226,8 @@ class _MyAppState extends State<MyApp> {
 | styleNameDoneBtn      | `TextStyle` | White color           | Color for Skip button            |
 | colorDoneBtn          | `int`       | transparent           | Color for Skip button when press |
 | highlightColorDoneBtn | `int`       | 0x4dffffff            | Show or hide Skip button         |
+| borderRadiusNextBtn   | `double`    | 30.0                  | Rounded Next button              |
+| borderRadiusDoneBtn   | `double`    | 30.0                  | Rounded Done button              |
 | isShowDotIndicator    | `bool`      | true                  | Show or hide dot indicator       |
 | colorDot              | `int`       | 0x80000000            | Color for dot when passive       |
 | colorActiveDot        | `int`       | 0xffffffff            | Color for dot when active        |
