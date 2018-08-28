@@ -1,12 +1,12 @@
 <h1 align="center">FLUTTER INTRO SLIDER</h1>
 
-<p align="center">A plugin to help you make intro screens to show the major features of your app. You can change the image, button, text style, color and more things. Create intro screens is never been so quick and easy</p>
+<p align="center">A plugin to help you make intro screens to show the major features of your app. You can change the image, button, text style, color and more things. Create intro screens is never been more quick and easy than this</p>
 
 Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.0.3
+  intro_slider: ^1.0.4
 ```
 
 Import

@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Update info
+
 ## 1.0.3
 
 * Update info

@@ -3,7 +3,7 @@ description: A plugin to help you make intro screens to show the major features 
 authors:
   - Duy Tran <tranquangduy7994@gmail.com>
 homepage: https://github.com/duytq94/flutter-intro-slider
-version: 1.0.3
+version: 1.0.4
 
 dependencies:
   flutter:
