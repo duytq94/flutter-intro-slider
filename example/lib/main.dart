@@ -20,10 +20,17 @@ class _MyAppState extends State<MyApp> {
       new Slide(
           title: "SCHOOL",
           styleTitle: TextStyle(
-              color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
-          description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
-          styleDescription:
-              TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+              color: Color(0xffD02090),
+              fontSize: 30.0,
+              fontWeight: FontWeight.bold,
+              fontFamily: 'RobotoMono'),
+          description:
+              "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+          styleDescription: TextStyle(
+              color: Color(0xffD02090),
+              fontSize: 20.0,
+              fontStyle: FontStyle.italic,
+              fontFamily: 'Raleway'),
           pathImage: "images/photo_school.png",
           colorBegin: 0xffFFDAB9,
           colorEnd: 0xff40E0D0,
@@ -33,11 +40,18 @@ class _MyAppState extends State<MyApp> {
     slides.add(
       new Slide(
         title: "MUSEUM",
-        styleTitle:
-            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
-        description: "Ye indulgence unreserved connection alteration appearance",
-        styleDescription:
-            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleTitle: TextStyle(
+            color: Color(0xffD02090),
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'RobotoMono'),
+        description:
+            "Ye indulgence unreserved connection alteration appearance",
+        styleDescription: TextStyle(
+            color: Color(0xffD02090),
+            fontSize: 20.0,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Raleway'),
         pathImage: "images/photo_museum.png",
         colorBegin: 0xffFFFACD,
         colorEnd: 0xffFF6347,
@@ -48,12 +62,18 @@ class _MyAppState extends State<MyApp> {
     slides.add(
       new Slide(
         title: "COFFEE",
-        styleTitle:
-            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        styleTitle: TextStyle(
+            color: Color(0xffD02090),
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'RobotoMono'),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription:
-            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleDescription: TextStyle(
+            color: Color(0xffD02090),
+            fontSize: 20.0,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Raleway'),
         pathImage: "images/photo_coffee_shop.png",
         colorBegin: 0xffFFA500,
         colorEnd: 0xff7FFFD4,
