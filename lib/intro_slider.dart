@@ -363,6 +363,10 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           slides[i].widthImage,
           slides[i].heightImage,
           slides[i].backgroundColor,
+          slides[i].colorBegin,
+          slides[i].colorEnd,
+          slides[i].directionColorBegin,
+          slides[i].directionColorEnd,
         ),
       );
     }
@@ -370,21 +374,40 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   }
 
   Widget renderTab(
+    // Title
     String title,
     TextStyle styleTitle,
     EdgeInsets marginTitle,
+
+    // Description
     String description,
     TextStyle styleDescription,
     EdgeInsets marginDescription,
+
+    // Image
     String pathImage,
     double widthImage,
     double heightImage,
+
+    // Background color
     int backgroundColor,
+    int colorBegin,
+    int colorEnd,
+    AlignmentGeometry directionColorBegin,
+    AlignmentGeometry directionColorEnd,
   ) {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      color: Color(backgroundColor ?? 0xfff5a623),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: backgroundColor != null
+              ? [Color(backgroundColor), Color(backgroundColor)]
+              : [Color(colorBegin), Color(colorEnd)],
+          begin: directionColorBegin ?? Alignment.topLeft,
+          end: directionColorEnd ?? Alignment.bottomRight,
+        ),
+      ),
       child: Column(
         children: <Widget>[
           Container(
@@ -470,6 +493,10 @@ class Slide {
 
   // Background color
   int backgroundColor;
+  int colorBegin;
+  int colorEnd;
+  AlignmentGeometry directionColorBegin;
+  AlignmentGeometry directionColorEnd;
 
   // Skip button
   String nameSkipBtn;
@@ -501,6 +528,10 @@ class Slide {
 
     // Background color
     int backgroundColor,
+    int colorBegin,
+    int colorEnd,
+    AlignmentGeometry directionColorBegin,
+    AlignmentGeometry directionColorEnd,
   }) {
     // Title
     this.title = title;
@@ -519,6 +550,10 @@ class Slide {
 
     // Background color
     this.backgroundColor = backgroundColor;
+    this.colorBegin = colorBegin;
+    this.colorEnd = colorEnd;
+    this.directionColorBegin = directionColorBegin;
+    this.directionColorEnd = directionColorEnd;
 
     // Skip button
     this.nameSkipBtn = nameSkipBtn;

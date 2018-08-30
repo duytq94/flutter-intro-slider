@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.0.5
+  intro_slider: ^1.0.6
 ```
 
 Import
@@ -190,26 +190,37 @@ class _MyAppState extends State<MyApp> {
 
 <h2 align="center">Options</h2>
 
-### Slide object attributes
+## Slide object attributes
 
-| Name              | Type         | Default                                 | Description                       |
-| ----------------- | ------------ | --------------------------------------- | --------------------------------- |
-| title             | `String`     | ""                                      | Change text title at top          |
-| styleTitle        | `TextStyle`  | White color, bold and font size is 30.0 | Style for text title              |
-| marginTitle       | `EdgeInsets` | top: 70.0, bottom: 50.0                 | Margin for text title             |
-| pathImage         | `String`     | ""                                      | Path to your local image          |
-| widthImage        | `double`     | 250.0                                   | Width of image                    |
-| heightImage       | `double`     | 250.0                                   | Height of image                   |
-| description       | `String`     | ""                                      | Change text description at bottom |
-| styleDescription  | `TextStyle`  | White and font size is 18.0             | Style for text description        |
-| marginDescription | `EdgeInsets` | left, right = 20.0, top, bottom = 50.0  | Margin for text description       |
-| backgroundColor   | `int`        | 0xfff5a623                              | Background color each page        |
+| Name              | Type                | Default                                 | Description                       |
+| ----------------- | ------------        | --------------------------------------- | --------------------------------- |
+| <b>Title</b>      |                     |                                         |                                   |
+| title             | `String`            | ""                                      | Change text title at top          |
+| styleTitle        | `TextStyle`         | White color, bold and font size is 30.0 | Style for text title              |
+| marginTitle       | `EdgeInsets`        | top: 70.0, bottom: 50.0                 | Margin for text title             |
+| <b>Image</b>      |                     |                                         |                                   |
+| pathImage         | `String`            | ""                                      | Path to your local image          |
+| widthImage        | `double`            | 250.0                                   | Width of image                    |
+| heightImage       | `double`            | 250.0                                   | Height of image                   |
+| <b>Description</b>|                     |                                         |                                   |
+| description       | `String`            | ""                                      | Change text description at bottom |
+| styleDescription  | `TextStyle`         | White and font size is 18.0             | Style for text description        |
+| marginDescription | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description       |
+| <b>Background</b> |                     |                                         |                                   |
+| backgroundColor   | `int`               | 0xfff5a623                              | Background tab color              |
+| colorBegin        | `int`               | null                                    | Gradient tab color begin          |
+| colorEnd          | `int`               | null                                    | Gradient tab color end            |
+|directionColorBegin| `AlignmentGeometry` | null                                    | Direction color begin             |
+| directionColorEnd | `AlignmentGeometry` | null                                    | Direction color end               |
 
-### IntroSlider widget attributes
+
+## IntroSlider widget attributes
 
 | Name                  | Type        | Default               | Description                      |
 | --------------------- | ----------- | --------------------- | -------------------------------- |
+| <b>Slide</b>          |             |                       |                                  |
 | slides                | `Slide`     | No default, required  | An array of Slide object         |
+| <b>Skip Button</b>    |             |                       |                                  |
 | renderSkipBtn         | `Widget`    | Button with text SKIP | Render your own Skip button      |
 | onSkipPress           | `Function`  | Do nothing            | Fire when press Skip button      |
 | nameSkipBtn           | `String`    | "SKIP"                | Change SKIP to any text you want |
@@ -218,16 +229,19 @@ class _MyAppState extends State<MyApp> {
 | highlightColorSkipBtn | `int`       | 0x4dffffff            | Color for Skip button when press |
 | isShowSkipBtn         | `bool`      | true                  | Show or hide Skip button         |
 | borderRadiusSkipBtn   | `double`    | 30.0                  | Rounded Skip button              |
+| <b>Next Button</b>    |             |                       |                                  |
 | renderNextBtn         | `Widget`    | Button with text NEXT | Render your own Next button      |
+| nameNextBtn           | `String`    | "NEXT"                | Change SKIP to any text you want |
+| borderRadiusNextBtn   | `double`    | 30.0                  | Rounded Next button              |
+| <b>Done Button</b>    |             |                       |                                  |
 | renderDoneBtn         | `Widget`    | Button with text DONE | Render your own Done button      |
 | onDonePress           | `Function`  | Do nothing            | Fire when press Skip button      |
-| nameNextBtn           | `String`    | "NEXT"                | Change SKIP to any text you want |
 | nameDoneBtn           | `String`    | "DONE"                | Style for text at Skip button    |
 | styleNameDoneBtn      | `TextStyle` | White color           | Color for Skip button            |
 | colorDoneBtn          | `int`       | transparent           | Color for Skip button when press |
 | highlightColorDoneBtn | `int`       | 0x4dffffff            | Show or hide Skip button         |
-| borderRadiusNextBtn   | `double`    | 30.0                  | Rounded Next button              |
 | borderRadiusDoneBtn   | `double`    | 30.0                  | Rounded Done button              |
+| <b>Dot Indicator</b>  |             |                       |                                  |
 | isShowDotIndicator    | `bool`      | true                  | Show or hide dot indicator       |
 | colorDot              | `int`       | 0x80000000            | Color for dot when passive       |
 | colorActiveDot        | `int`       | 0xffffffff            | Color for dot when active        |

@@ -1,3 +1,7 @@
+## 1.0.6
+
+* Add gradient background color
+
 ## 1.0.5
 
 * Add more attribute

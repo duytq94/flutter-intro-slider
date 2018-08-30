@@ -18,15 +18,17 @@ class _MyAppState extends State<MyApp> {
 
     slides.add(
       new Slide(
-        title: "SCHOOL",
-        styleTitle:
-            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
-        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
-        styleDescription:
-            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
-        pathImage: "images/photo_school.png",
-        backgroundColor: 0xFFFFDEAD,
-      ),
+          title: "SCHOOL",
+          styleTitle: TextStyle(
+              color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+          description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+          styleDescription:
+              TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+          pathImage: "images/photo_school.png",
+          colorBegin: 0xffFFDAB9,
+          colorEnd: 0xff40E0D0,
+          directionColorBegin: Alignment.topLeft,
+          directionColorEnd: Alignment.bottomRight),
     );
     slides.add(
       new Slide(
@@ -37,7 +39,10 @@ class _MyAppState extends State<MyApp> {
         styleDescription:
             TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
         pathImage: "images/photo_museum.png",
-        backgroundColor: 0xffFFFACD,
+        colorBegin: 0xffFFFACD,
+        colorEnd: 0xffFF6347,
+        directionColorBegin: Alignment.topRight,
+        directionColorEnd: Alignment.bottomLeft,
       ),
     );
     slides.add(
@@ -50,7 +55,10 @@ class _MyAppState extends State<MyApp> {
         styleDescription:
             TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
         pathImage: "images/photo_coffee_shop.png",
-        backgroundColor: 0xffFFF8DC,
+        colorBegin: 0xffFFA500,
+        colorEnd: 0xff7FFFD4,
+        directionColorBegin: Alignment.topCenter,
+        directionColorEnd: Alignment.bottomCenter,
       ),
     );
   }
