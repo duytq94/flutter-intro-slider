@@ -464,7 +464,6 @@ class IntroSliderState extends State<IntroSlider>
               style: styleDescription ??
                   TextStyle(color: Colors.white, fontSize: 18.0),
               textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
             ),
             margin: marginDescription ??
                 EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
