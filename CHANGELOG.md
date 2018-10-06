@@ -1,3 +1,7 @@
+## 1.0.7
+
+* Add onCLickImage and maxLines text description
+
 ## 1.0.6
 
 * Add gradient background color

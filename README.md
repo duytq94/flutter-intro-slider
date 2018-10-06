@@ -1,12 +1,12 @@
 <h1 align="center">FLUTTER INTRO SLIDER</h1>
 
-<p align="center">A plugin to help you make intro screens to show the major features of your app. You can change the image, button, text style, color and more things. Create intro screens is never been more quick and easy than this</p>
+<p align="center">A plugin to help you make intro screens to show the major features of your app. You can change the image, button, text style, color, and more things. Create intro screens is never been more quick and easy than this</p>
 
 Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.0.6
+  intro_slider: ^1.0.7
 ```
 
 Import
@@ -202,8 +202,10 @@ class _MyAppState extends State<MyApp> {
 | pathImage         | `String`            | ""                                      | Path to your local image          |
 | widthImage        | `double`            | 250.0                                   | Width of image                    |
 | heightImage       | `double`            | 250.0                                   | Height of image                   |
+| onImagePress      | `Function`          | Do nothing                              | Fire when press image             |
 | <b>Description</b>|                     |                                         |                                   |
 | description       | `String`            | ""                                      | Change text description at bottom |
+| maxLineTextDescription| `String`        | 100                                     | Maximum line of text description  |
 | styleDescription  | `TextStyle`         | White and font size is 18.0             | Style for text description        |
 | marginDescription | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description       |
 | <b>Background</b> |                     |                                         |                                   |
