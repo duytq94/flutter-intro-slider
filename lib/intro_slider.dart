@@ -9,8 +9,8 @@ class IntroSlider extends StatefulWidget {
   final Function onSkipPress;
   final String nameSkipBtn;
   final TextStyle styleNameSkipBtn;
-  final int colorSkipBtn;
-  final int highlightColorSkipBtn;
+  final Color colorSkipBtn;
+  final Color highlightColorSkipBtn;
   final bool isShowSkipBtn;
   final double borderRadiusSkipBtn;
 
@@ -21,15 +21,15 @@ class IntroSlider extends StatefulWidget {
   final String nameNextBtn;
   final String nameDoneBtn;
   final TextStyle styleNameDoneBtn;
-  final int colorDoneBtn;
-  final int highlightColorDoneBtn;
+  final Color colorDoneBtn;
+  final Color highlightColorDoneBtn;
   final double borderRadiusNextBtn;
   final double borderRadiusDoneBtn;
 
   // Dot indicator
   final bool isShowDotIndicator;
-  final int colorDot;
-  final int colorActiveDot;
+  final Color colorDot;
+  final Color colorActiveDot;
   final double sizeDot;
 
   // Constructor
@@ -110,8 +110,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   Function onSkipPress;
   String nameSkipBtn;
   TextStyle styleNameSkipBtn;
-  int colorSkipBtn;
-  int highlightColorSkipBtn;
+  Color colorSkipBtn;
+  Color highlightColorSkipBtn;
   bool isShowSkipBtn;
   double borderRadiusSkipBtn;
 
@@ -122,15 +122,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   String nameNextBtn;
   String nameDoneBtn;
   TextStyle styleNameDoneBtn;
-  int colorDoneBtn;
-  int highlightColorDoneBtn;
+  Color colorDoneBtn;
+  Color highlightColorDoneBtn;
   double borderRadiusNextBtn;
   double borderRadiusDoneBtn;
 
   // Dot indicator
   bool isShowDotIndicator = true;
-  int colorDot;
-  int colorActiveDot;
+  Color colorDot;
+  Color colorActiveDot;
   double sizeDot = 8.0;
 
   // Constructor
@@ -200,10 +200,10 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       isShowDotIndicator = true;
     }
     if (colorDot == null) {
-      colorDot = 0x80000000;
+      colorDot = Color(0x80000000);
     }
     if (colorActiveDot == null) {
-      colorActiveDot = 0xffffffff;
+      colorActiveDot = Color(0xffffffff);
     }
     if (sizeDot == null) {
       sizeDot = 8.0;
@@ -244,10 +244,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                       ? FlatButton(
                           child: renderSkipBtn,
                           onPressed: onSkipPress,
-                          color: colorSkipBtn != null ? Color(colorSkipBtn) : Colors.transparent,
-                          highlightColor: highlightColorSkipBtn != null
-                              ? Color(highlightColorSkipBtn)
-                              : Colors.white.withOpacity(0.3),
+                          color: colorSkipBtn != null ? colorSkipBtn : Colors.transparent,
+                          highlightColor:
+                              highlightColorSkipBtn != null ? highlightColorSkipBtn : Colors.white.withOpacity(0.3),
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(borderRadiusSkipBtn ?? 30.0)),
                         )
@@ -257,10 +256,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                             nameSkipBtn ?? "SKIP",
                             style: styleNameSkipBtn ?? TextStyle(color: Colors.white),
                           ),
-                          color: colorSkipBtn != null ? Color(colorSkipBtn) : Colors.transparent,
-                          highlightColor: highlightColorSkipBtn != null
-                              ? Color(highlightColorSkipBtn)
-                              : Colors.white.withOpacity(0.3),
+                          color: colorSkipBtn != null ? colorSkipBtn : Colors.transparent,
+                          highlightColor:
+                              highlightColorSkipBtn != null ? highlightColorSkipBtn : Colors.white.withOpacity(0.3),
                           shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(borderRadiusSkipBtn ?? 30.0)),
                         ),
@@ -289,10 +287,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                     ? FlatButton(
                         child: renderDoneBtn,
                         onPressed: onDonePress,
-                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
-                        highlightColor: highlightColorDoneBtn != null
-                            ? Color(highlightColorDoneBtn)
-                            : Colors.white.withOpacity(0.3),
+                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
                       )
@@ -302,10 +299,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                           nameDoneBtn ?? "DONE",
                           style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
                         ),
-                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
-                        highlightColor: highlightColorDoneBtn != null
-                            ? Color(highlightColorDoneBtn)
-                            : Colors.white.withOpacity(0.3),
+                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
                       ))
@@ -315,10 +311,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                           tabController.animateTo(tabController.index + 1);
                         },
                         child: renderNextBtn,
-                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
-                        highlightColor: highlightColorDoneBtn != null
-                            ? Color(highlightColorDoneBtn)
-                            : Colors.white.withOpacity(0.3),
+                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(borderRadiusNextBtn ?? 30.0)),
                       )
@@ -330,10 +325,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                           nameNextBtn ?? "NEXT",
                           style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
                         ),
-                        color: colorDoneBtn != null ? Color(colorDoneBtn) : Colors.transparent,
-                        highlightColor: highlightColorDoneBtn != null
-                            ? Color(highlightColorDoneBtn)
-                            : Colors.white.withOpacity(0.3),
+                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(borderRadiusNextBtn ?? 30.0)),
                       )),
@@ -394,9 +388,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     Function onImagePress,
 
     // Background color
-    int backgroundColor,
-    int colorBegin,
-    int colorEnd,
+    Color backgroundColor,
+    Color colorBegin,
+    Color colorEnd,
     AlignmentGeometry directionColorBegin,
     AlignmentGeometry directionColorEnd,
   ) {
@@ -405,9 +399,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       height: double.infinity,
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: backgroundColor != null
-              ? [Color(backgroundColor), Color(backgroundColor)]
-              : [Color(colorBegin), Color(colorEnd)],
+          colors: backgroundColor != null ? [backgroundColor, backgroundColor] : [colorBegin, colorEnd],
           begin: directionColorBegin ?? Alignment.topLeft,
           end: directionColorEnd ?? Alignment.bottomRight,
         ),
@@ -433,7 +425,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
           // Image
           GestureDetector(
-            child:  Image.asset(
+            child: Image.asset(
               pathImage ?? "",
               width: widthImage ?? 250.0,
               height: heightImage ?? 250.0,
@@ -441,7 +433,6 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             ),
             onTap: onImagePress,
           ),
-
 
           // Description
           Container(
@@ -462,7 +453,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   List<Widget> renderListDots() {
     dots.clear();
     for (int i = 0; i < slides.length; i++) {
-      int currentColor;
+      Color currentColor;
       if (tabController.index == i) {
         currentColor = colorActiveDot;
       } else {
@@ -473,9 +464,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     return dots;
   }
 
-  Widget renderDot(double radius, int color) {
+  Widget renderDot(double radius, Color color) {
     return Container(
-      decoration: BoxDecoration(color: Color(color), borderRadius: BorderRadius.circular(radius / 2)),
+      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius / 2)),
       width: radius,
       height: radius,
       margin: EdgeInsets.all(radius / 2),
@@ -502,23 +493,23 @@ class Slide {
   EdgeInsets marginDescription;
 
   // Background color
-  int backgroundColor;
-  int colorBegin;
-  int colorEnd;
+  Color backgroundColor;
+  Color colorBegin;
+  Color colorEnd;
   AlignmentGeometry directionColorBegin;
   AlignmentGeometry directionColorEnd;
 
   // Skip button
   String nameSkipBtn;
   TextStyle styleNameSkipBtn;
-  int colorSkipBtn;
-  int highlightColorSkipBtn;
+  Color colorSkipBtn;
+  Color highlightColorSkipBtn;
 
   // Done button
   String nameDoneBtn;
   TextStyle styleNameDoneBtn;
-  int colorDoneBtn;
-  int highlightColorDoneBtn;
+  Color colorDoneBtn;
+  Color highlightColorDoneBtn;
 
   Slide({
     // Title
@@ -539,9 +530,9 @@ class Slide {
     EdgeInsets marginDescription,
 
     // Background color
-    int backgroundColor,
-    int colorBegin,
-    int colorEnd,
+    Color backgroundColor,
+    Color colorBegin,
+    Color colorEnd,
     AlignmentGeometry directionColorBegin,
     AlignmentGeometry directionColorEnd,
   }) {

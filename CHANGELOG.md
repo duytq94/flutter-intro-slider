@@ -1,3 +1,7 @@
+## 1.0.8
+
+* Change color options to be instances of `Color` instead `int` 
+
 ## 1.0.7
 
 * Add onCLickImage and maxLines text description

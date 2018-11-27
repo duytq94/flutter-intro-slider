@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.0.7
+  intro_slider: ^1.0.8
 ```
 
 Import
@@ -209,9 +209,9 @@ class _MyAppState extends State<MyApp> {
 | styleDescription  | `TextStyle`         | White and font size is 18.0             | Style for text description        |
 | marginDescription | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description       |
 | <b>Background</b> |                     |                                         |                                   |
-| backgroundColor   | `int`               | 0xfff5a623                              | Background tab color              |
-| colorBegin        | `int`               | null                                    | Gradient tab color begin          |
-| colorEnd          | `int`               | null                                    | Gradient tab color end            |
+| backgroundColor   | `Color`             | Color(0xfff5a623)                       | Background tab color              |
+| colorBegin        | `Color`             | null                                    | Gradient tab color begin          |
+| colorEnd          | `Color`             | null                                    | Gradient tab color end            |
 |directionColorBegin| `AlignmentGeometry` | null                                    | Direction color begin             |
 | directionColorEnd | `AlignmentGeometry` | null                                    | Direction color end               |
 
@@ -227,8 +227,8 @@ class _MyAppState extends State<MyApp> {
 | onSkipPress           | `Function`  | Do nothing            | Fire when press Skip button      |
 | nameSkipBtn           | `String`    | "SKIP"                | Change SKIP to any text you want |
 | styleNameSkipBtn      | `TextStyle` | White color           | Style for text at Skip button    |
-| colorSkipBtn          | `int`       | transparent           | Color for Skip button            |
-| highlightColorSkipBtn | `int`       | 0x4dffffff            | Color for Skip button when press |
+| colorSkipBtn          | `Color`       | transparent           | Color for Skip button            |
+| highlightColorSkipBtn | `Color`     | Color(0x4dffffff)     | Color for Skip button when press |
 | isShowSkipBtn         | `bool`      | true                  | Show or hide Skip button         |
 | borderRadiusSkipBtn   | `double`    | 30.0                  | Rounded Skip button              |
 | <b>Next Button</b>    |             |                       |                                  |
@@ -240,13 +240,13 @@ class _MyAppState extends State<MyApp> {
 | onDonePress           | `Function`  | Do nothing            | Fire when press Skip button      |
 | nameDoneBtn           | `String`    | "DONE"                | Style for text at Skip button    |
 | styleNameDoneBtn      | `TextStyle` | White color           | Color for Skip button            |
-| colorDoneBtn          | `int`       | transparent           | Color for Skip button when press |
-| highlightColorDoneBtn | `int`       | 0x4dffffff            | Show or hide Skip button         |
+| colorDoneBtn          | `Color`     | transparent           | Color for Skip button when press |
+| highlightColorDoneBtn | `Color`     | Color(0x4dffffff)     | Show or hide Skip button         |
 | borderRadiusDoneBtn   | `double`    | 30.0                  | Rounded Done button              |
 | <b>Dot Indicator</b>  |             |                       |                                  |
 | isShowDotIndicator    | `bool`      | true                  | Show or hide dot indicator       |
-| colorDot              | `int`       | 0x80000000            | Color for dot when passive       |
-| colorActiveDot        | `int`       | 0xffffffff            | Color for dot when active        |
+| colorDot              | `Color`     | Color(0x80000000)     | Color for dot when passive       |
+| colorActiveDot        | `Color`     | Color(0xffffffff)     | Color for dot when active        |
 | sizeDot               | `double`    | 8.0                   | Size of each dot                 |
 
 
