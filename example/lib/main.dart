@@ -3,13 +3,25 @@ import 'package:intro_slider/intro_slider.dart';
 
 void main() => runApp(new MyApp());
 
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   @override
-  _MyAppState createState() => new _MyAppState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: MySplashScreen(),
+      debugShowCheckedModeBanner: false,
+    );
+  }
+}
+
+class MySplashScreen extends StatefulWidget {
+  MySplashScreen({Key key}) : super(key: key);
+
+  @override
+  MySplashScreenState createState() => new MySplashScreenState();
 }
 
 // Custom config
-class _MyAppState extends State<MyApp> {
+class MySplashScreenState extends State<MySplashScreen> {
   List<Slide> slides = new List();
 
   @override
@@ -124,7 +136,7 @@ class _MyAppState extends State<MyApp> {
 }
 
 //Default config
-//class _MyAppState extends State<MyApp> {
+//class MySplashScreenState extends State<MySplashScreen> {
 //  List<Slide> slides = new List();
 //
 //  @override

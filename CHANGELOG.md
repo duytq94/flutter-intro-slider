@@ -1,6 +1,10 @@
+## 1.0.9
+
+* Fix navigate example
+
 ## 1.0.8
 
-* Change color options to be instances of `Color` instead `int` 
+* Change color options to be instances of `Color` instead `int`
 
 ## 1.0.7
 
