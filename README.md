@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.0.9
+  intro_slider: ^1.1.0
 ```
 
 Import
@@ -124,7 +124,8 @@ class MySplashScreenState extends State<MySplashScreen> {
     );
     slides.add(
       new Slide(
-        title: "COFFEE",
+        title: "COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE",
+        maxLineTitle: 2,
         styleTitle:
             TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description:
@@ -207,6 +208,7 @@ class MySplashScreenState extends State<MySplashScreen> {
 | ----------------- | ------------        | --------------------------------------- | --------------------------------- |
 | <b>Title</b>      |                     |                                         |                                   |
 | title             | `String`            | ""                                      | Change text title at top          |
+| maxLineTitle      | `int`               | 1                                       | Change max number of lines title at top|
 | styleTitle        | `TextStyle`         | White color, bold and font size is 30.0 | Style for text title              |
 | marginTitle       | `EdgeInsets`        | top: 70.0, bottom: 50.0                 | Margin for text title             |
 | <b>Image</b>      |                     |                                         |                                   |

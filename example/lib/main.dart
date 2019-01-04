@@ -61,7 +61,8 @@ class MySplashScreenState extends State<MySplashScreen> {
     );
     slides.add(
       new Slide(
-        title: "COFFEE",
+        title: "COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE",
+        maxLineTitle: 2,
         styleTitle:
             TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description:

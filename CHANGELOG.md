@@ -1,3 +1,7 @@
+## 1.1.0
+
+* Add set max number of lines at title
+
 ## 1.0.9
 
 * Fix navigate example

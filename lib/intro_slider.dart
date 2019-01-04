@@ -348,6 +348,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       tabs.add(
         renderTab(
           slides[i].title,
+          slides[i].maxLineTitle,
           slides[i].styleTitle,
           slides[i].marginTitle,
           slides[i].description,
@@ -372,6 +373,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   Widget renderTab(
     // Title
     String title,
+    int maxLineTitle,
     TextStyle styleTitle,
     EdgeInsets marginTitle,
 
@@ -416,11 +418,11 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                     fontWeight: FontWeight.bold,
                     fontSize: 30.0,
                   ),
-              maxLines: 1,
+              maxLines: maxLineTitle != null ? maxLineTitle : 1,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
             ),
-            margin: marginTitle ?? EdgeInsets.only(top: 70.0, bottom: 50.0),
+            margin: marginTitle ?? EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20, right: 20),
           ),
 
           // Image
@@ -477,6 +479,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 class Slide {
   // Title
   String title;
+  int maxLineTitle;
   TextStyle styleTitle;
   EdgeInsets marginTitle;
 
@@ -514,6 +517,7 @@ class Slide {
   Slide({
     // Title
     String title,
+    int maxLineTitle,
     TextStyle styleTitle,
     EdgeInsets marginTitle,
 
@@ -538,6 +542,7 @@ class Slide {
   }) {
     // Title
     this.title = title;
+    this.maxLineTitle = maxLineTitle;
     this.styleTitle = styleTitle;
     this.marginTitle = marginTitle;
 
