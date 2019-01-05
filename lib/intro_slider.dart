@@ -537,7 +537,7 @@ class IntroSliderState extends State<IntroSlider>
                     height: heightImage ?? 250.0,
                     fit: BoxFit.contain,
                   )
-                : Center(child: centerWidget ?? ""),
+                : Center(child: centerWidget ?? Container()),
             onTap: onCenterItemPress,
           ),
 
