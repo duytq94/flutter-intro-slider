@@ -1,3 +1,7 @@
+## 1.1.1
+
+* Update docs and remove redundant attributes at slide
+
 ## 1.1.0
 
 * Add set max number of lines at title

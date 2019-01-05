@@ -1,43 +1,81 @@
 import 'package:flutter/material.dart';
 
 class IntroSlider extends StatefulWidget {
-  // List slides
+  /// An array of Slide object
   final List<Slide> slides;
 
-  // Skip button
+  // SKIP button
+  /// Render your own SKIP button
   final Widget renderSkipBtn;
+
+  /// Fire when press SKIP button
   final Function onSkipPress;
+
+  /// Change SKIP to any text you want
   final String nameSkipBtn;
+
+  /// Style for text at SKIP button
   final TextStyle styleNameSkipBtn;
+
+  /// Color for SKIP button
   final Color colorSkipBtn;
+
+  /// Color for Skip button when press
   final Color highlightColorSkipBtn;
+
+  /// Show or hide SKIP button
   final bool isShowSkipBtn;
+
+  /// Rounded SKIP button
   final double borderRadiusSkipBtn;
 
-  // Next, Done button
+  // NEXT, DONE button
+  /// Render your own NEXT button
   final Widget renderNextBtn;
+
+  /// Render your own DONE button
   final Widget renderDoneBtn;
+
+  /// Fire when press DONE button
   final Function onDonePress;
+
+  /// Change NEXT to any text you want
   final String nameNextBtn;
+
+  /// Change DONE to any text you want
   final String nameDoneBtn;
+
+  /// Style for text at DONE button
   final TextStyle styleNameDoneBtn;
+
+  /// Color for DONE button
   final Color colorDoneBtn;
+
+  /// Color for DONE button when press
   final Color highlightColorDoneBtn;
+
+  /// Rounded NEXT button
   final double borderRadiusNextBtn;
+
+  /// Rounded DONE button
   final double borderRadiusDoneBtn;
 
   // Dot indicator
+  /// Show or hide dot indicator
   final bool isShowDotIndicator;
+
+  /// Color for dot when passive
   final Color colorDot;
+
+  /// Color for dot when active
   final Color colorActiveDot;
+
+  /// Size of each dot
   final double sizeDot;
 
   // Constructor
   IntroSlider({
-    // List slides
     @required this.slides,
-
-    // Skip button
     this.renderSkipBtn,
     this.onSkipPress,
     this.nameSkipBtn,
@@ -46,8 +84,6 @@ class IntroSlider extends StatefulWidget {
     this.highlightColorSkipBtn,
     this.isShowSkipBtn,
     this.borderRadiusSkipBtn,
-
-    // Done button
     this.renderNextBtn,
     this.renderDoneBtn,
     this.onDonePress,
@@ -58,8 +94,6 @@ class IntroSlider extends StatefulWidget {
     this.highlightColorDoneBtn,
     this.borderRadiusNextBtn,
     this.borderRadiusDoneBtn,
-
-    // Dot indicator
     this.isShowDotIndicator,
     this.colorDot,
     this.colorActiveDot,
@@ -68,10 +102,7 @@ class IntroSlider extends StatefulWidget {
 
   @override
   IntroSliderState createState() => new IntroSliderState(
-        // List slides
         slides: this.slides,
-
-        // Skip button
         renderSkipBtn: this.renderSkipBtn,
         onSkipPress: this.onSkipPress,
         nameSkipBtn: this.nameSkipBtn,
@@ -80,8 +111,6 @@ class IntroSlider extends StatefulWidget {
         highlightColorSkipBtn: this.highlightColorSkipBtn,
         isShowSkipBtn: this.isShowSkipBtn,
         borderRadiusSkipBtn: this.borderRadiusSkipBtn,
-
-        // Done button
         renderNextBtn: this.renderNextBtn,
         renderDoneBtn: this.renderDoneBtn,
         onDonePress: this.onDonePress,
@@ -92,8 +121,6 @@ class IntroSlider extends StatefulWidget {
         highlightColorDoneBtn: this.highlightColorDoneBtn,
         borderRadiusNextBtn: this.borderRadiusNextBtn,
         borderRadiusDoneBtn: this.borderRadiusDoneBtn,
-
-        // Dot indicator
         isShowDotIndicator: this.isShowDotIndicator,
         colorDot: this.colorDot,
         colorActiveDot: this.colorActiveDot,
@@ -102,35 +129,76 @@ class IntroSlider extends StatefulWidget {
 }
 
 class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
-  // List slides
+  /// An array of Slide object
   final List<Slide> slides;
 
-  // Skip button
+  // SKIP button
+  /// Render your own SKIP button
   Widget renderSkipBtn;
+
+  /// Fire when press SKIP button
   Function onSkipPress;
+
+  /// Change SKIP to any text you want
   String nameSkipBtn;
+
+  /// Style for text at SKIP button
   TextStyle styleNameSkipBtn;
+
+  /// Color for SKIP button
   Color colorSkipBtn;
+
+  /// Color for SKIP button when press
   Color highlightColorSkipBtn;
+
+  /// Show or hide SKIP button
   bool isShowSkipBtn;
+
+  /// Rounded SKIP button
   double borderRadiusSkipBtn;
 
-  // Done button
+  // DONE, NEXT button
+  /// Render your own NEXT button
   Widget renderNextBtn;
+
+  /// Render your own DONE button
   Widget renderDoneBtn;
+
+  /// Fire when press DONE button
   Function onDonePress;
+
+  /// Change NEXT to any text you want
   String nameNextBtn;
+
+  /// Change DONE to any text you want
   String nameDoneBtn;
+
+  /// Style for text at DONE button
   TextStyle styleNameDoneBtn;
+
+  /// Color for DONE button
   Color colorDoneBtn;
+
+  /// Color for DONE button when press
   Color highlightColorDoneBtn;
+
+  /// Rounded NEXT button
   double borderRadiusNextBtn;
+
+  /// Rounded DONE button
   double borderRadiusDoneBtn;
 
   // Dot indicator
+  /// Show or hide dot indicator
   bool isShowDotIndicator = true;
+
+  /// Color for dot when passive
   Color colorDot;
+
+  /// Color for dot when active
   Color colorActiveDot;
+
+  /// Size of each dot
   double sizeDot = 8.0;
 
   // Constructor
@@ -478,41 +546,62 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
 class Slide {
   // Title
+  /// Change text title at top
   String title;
+
+  /// Change max number of lines title at top
   int maxLineTitle;
+
+  /// Style for text title
   TextStyle styleTitle;
+
+  /// Margin for text title
   EdgeInsets marginTitle;
 
+
   // Image
+  /// Path to your local image
   String pathImage;
+
+  /// Width of image
   double widthImage;
+
+  /// Height of image
   double heightImage;
+
+  /// Fire when press image
   Function onImagePress;
 
+
   // Description
+  /// Change text description at bottom
   String description;
+
+  /// Maximum line of text description
   int maxLineTextDescription;
+
+  /// Style for text description
   TextStyle styleDescription;
+
+  /// Margin for text description
   EdgeInsets marginDescription;
 
+
   // Background color
+  /// Background tab color
   Color backgroundColor;
+
+  /// Gradient tab color begin
   Color colorBegin;
+
+  /// Gradient tab color end
   Color colorEnd;
+
+  /// Direction color begin
   AlignmentGeometry directionColorBegin;
+
+  /// Direction color end
   AlignmentGeometry directionColorEnd;
-
-  // Skip button
-  String nameSkipBtn;
-  TextStyle styleNameSkipBtn;
-  Color colorSkipBtn;
-  Color highlightColorSkipBtn;
-
-  // Done button
-  String nameDoneBtn;
-  TextStyle styleNameDoneBtn;
-  Color colorDoneBtn;
-  Color highlightColorDoneBtn;
 
   Slide({
     // Title
@@ -564,17 +653,5 @@ class Slide {
     this.colorEnd = colorEnd;
     this.directionColorBegin = directionColorBegin;
     this.directionColorEnd = directionColorEnd;
-
-    // Skip button
-    this.nameSkipBtn = nameSkipBtn;
-    this.styleNameSkipBtn = styleNameSkipBtn;
-    this.colorSkipBtn = colorSkipBtn;
-    this.highlightColorSkipBtn = highlightColorSkipBtn;
-
-    // Done button
-    this.nameDoneBtn = nameDoneBtn;
-    this.styleNameDoneBtn = styleNameDoneBtn;
-    this.colorDoneBtn = colorDoneBtn;
-    this.highlightColorDoneBtn = highlightColorDoneBtn;
   }
 }

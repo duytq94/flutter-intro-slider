@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.1.0
+  intro_slider: ^1.1.1
 ```
 
 Import
@@ -236,26 +236,26 @@ class MySplashScreenState extends State<MySplashScreen> {
 | <b>Slide</b>          |             |                       |                                  |
 | slides                | `Slide`     | No default, required  | An array of Slide object         |
 | <b>Skip Button</b>    |             |                       |                                  |
-| renderSkipBtn         | `Widget`    | Button with text SKIP | Render your own Skip button      |
-| onSkipPress           | `Function`  | Do nothing            | Fire when press Skip button      |
+| renderSkipBtn         | `Widget`    | Button with text SKIP | Render your own SKIP button      |
+| onSkipPress           | `Function`  | Do nothing            | Fire when press SKIP button      |
 | nameSkipBtn           | `String`    | "SKIP"                | Change SKIP to any text you want |
-| styleNameSkipBtn      | `TextStyle` | White color           | Style for text at Skip button    |
-| colorSkipBtn          | `Color`       | transparent           | Color for Skip button            |
-| highlightColorSkipBtn | `Color`     | Color(0x4dffffff)     | Color for Skip button when press |
-| isShowSkipBtn         | `bool`      | true                  | Show or hide Skip button         |
-| borderRadiusSkipBtn   | `double`    | 30.0                  | Rounded Skip button              |
+| styleNameSkipBtn      | `TextStyle` | White color           | Style for text at SKIP button    |
+| colorSkipBtn          | `Color`     | transparent           | Color for SKIP button            |
+| highlightColorSkipBtn | `Color`     | Color(0x4dffffff)     | Color for SKIP button when press |
+| isShowSkipBtn         | `bool`      | true                  | Show or hide SKIP button         |
+| borderRadiusSkipBtn   | `double`    | 30.0                  | Rounded SKIP button              |
 | <b>Next Button</b>    |             |                       |                                  |
-| renderNextBtn         | `Widget`    | Button with text NEXT | Render your own Next button      |
-| nameNextBtn           | `String`    | "NEXT"                | Change SKIP to any text you want |
-| borderRadiusNextBtn   | `double`    | 30.0                  | Rounded Next button              |
+| renderNextBtn         | `Widget`    | Button with text NEXT | Render your own NEXT button      |
+| nameNextBtn           | `String`    | "NEXT"                | Change NEXT to any text you want |
+| borderRadiusNextBtn   | `double`    | 30.0                  | Rounded NEXT button              |
 | <b>Done Button</b>    |             |                       |                                  |
-| renderDoneBtn         | `Widget`    | Button with text DONE | Render your own Done button      |
-| onDonePress           | `Function`  | Do nothing            | Fire when press Skip button      |
-| nameDoneBtn           | `String`    | "DONE"                | Style for text at Skip button    |
-| styleNameDoneBtn      | `TextStyle` | White color           | Color for Skip button            |
-| colorDoneBtn          | `Color`     | transparent           | Color for Skip button when press |
-| highlightColorDoneBtn | `Color`     | Color(0x4dffffff)     | Show or hide Skip button         |
-| borderRadiusDoneBtn   | `double`    | 30.0                  | Rounded Done button              |
+| renderDoneBtn         | `Widget`    | Button with text DONE | Render your own DONE button      |
+| onDonePress           | `Function`  | Do nothing            | Fire when press DONE button      |
+| nameDoneBtn           | `String`    | "DONE"                | Change DONE to any text you want |
+| styleNameDoneBtn      | `TextStyle` | White color           | Style for text at DONE button    |
+| colorDoneBtn          | `Color`     | transparent           | Color for DONE button            |
+| highlightColorDoneBtn | `Color`     | Color(0x4dffffff)     | Color for DONE button when press |
+| borderRadiusDoneBtn   | `double`    | 30.0                  | Rounded DONE button              |
 | <b>Dot Indicator</b>  |             |                       |                                  |
 | isShowDotIndicator    | `bool`      | true                  | Show or hide dot indicator       |
 | colorDot              | `Color`     | Color(0x80000000)     | Color for dot when passive       |

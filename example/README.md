@@ -2,8 +2,6 @@
 
 ### Default config
 
-![default config image](screenshots/default.png)
-
 ```dart
 class MySplashScreenState extends State<MySplashScreen> {
   List<Slide> slides = new List();
@@ -59,8 +57,6 @@ class MySplashScreenState extends State<MySplashScreen> {
 ```
 
 ### Custom config
-
-![custom config image](screenshots/custom.png)
 
 ```dart
 class MySplashScreenState extends State<MySplashScreen> {
