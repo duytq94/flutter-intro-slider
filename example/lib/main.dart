@@ -36,12 +36,12 @@ class MySplashScreenState extends State<MySplashScreen> {
         description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         styleDescription:
             TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
-        pathImage: "images/photo_school.png",
+        centerWidget: Text("Replace this with a custom widget"),
         colorBegin: Color(0xffFFDAB9),
         colorEnd: Color(0xff40E0D0),
         directionColorBegin: Alignment.topLeft,
         directionColorEnd: Alignment.bottomRight,
-        onImagePress: () {},
+        onCenterItemPress: () {},
       ),
     );
     slides.add(
