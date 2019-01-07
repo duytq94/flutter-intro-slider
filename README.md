@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.1.1
+  intro_slider: ^1.1.2
 ```
 
 Import
@@ -215,7 +215,10 @@ class MySplashScreenState extends State<MySplashScreen> {
 | pathImage         | `String`            | ""                                      | Path to your local image          |
 | widthImage        | `double`            | 250.0                                   | Width of image                    |
 | heightImage       | `double`            | 250.0                                   | Height of image                   |
-| onImagePress      | `Function`          | Do nothing                              | Fire when press image             |
+| onCenterItemPress | `Function`          | Do nothing                              | Fire when press image             |
+| <b>Center widget</b>|                   |                                         |                                   |
+| centerWidget      | `Widget`            | null                                    | Your custom's widget              |
+| onCenterItemPress | `Function`          | Do nothing                              | Fire when press center widget     |
 | <b>Description</b>|                     |                                         |                                   |
 | description       | `String`            | ""                                      | Change text description at bottom |
 | maxLineTextDescription| `String`        | 100                                     | Maximum line of text description  |

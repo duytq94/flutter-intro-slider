@@ -1,3 +1,7 @@
+## 1.1.2
+
+* Add custom center widget
+
 ## 1.1.1
 
 * Update docs and remove redundant attributes at slide
