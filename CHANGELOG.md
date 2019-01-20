@@ -1,3 +1,7 @@
+## 1.1.3
+
+* Add background image
+
 ## 1.1.2
 
 * Add custom center widget

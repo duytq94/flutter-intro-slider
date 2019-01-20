@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.1.2
+  intro_slider: ^1.1.3
 ```
 
 Import
@@ -82,6 +82,7 @@ class MySplashScreenState extends State<MySplashScreen> {
 ### Custom config
 
 ![custom config image](screenshots/custom.png)
+![custom config image](screenshots/custom2.gif)
 
 ```dart
 class MySplashScreenState extends State<MySplashScreen> {
@@ -93,18 +94,23 @@ class MySplashScreenState extends State<MySplashScreen> {
 
     slides.add(
       new Slide(
-        title: "SCHOOL",
+        title:
+            "A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE",
+        maxLineTitle: 2,
         styleTitle:
-            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
-        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+            TextStyle(color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        description:
+            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,",
         styleDescription:
-            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
-        pathImage: "images/photo_school.png",
+            TextStyle(color: Colors.white, fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        marginDescription: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 70.0),
+        centerWidget: Text("Replace this with a custom widget", style: TextStyle(color: Colors.white)),
         colorBegin: Color(0xffFFDAB9),
         colorEnd: Color(0xff40E0D0),
+        backgroundImage: 'images/photo_eraser.png',
         directionColorBegin: Alignment.topLeft,
         directionColorEnd: Alignment.bottomRight,
-        onImagePress: () {},
+        onCenterItemPress: () {},
       ),
     );
     slides.add(
@@ -124,8 +130,7 @@ class MySplashScreenState extends State<MySplashScreen> {
     );
     slides.add(
       new Slide(
-        title: "COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE COFFEE",
-        maxLineTitle: 2,
+        title: "COFFEE",
         styleTitle:
             TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description:
@@ -204,38 +209,38 @@ class MySplashScreenState extends State<MySplashScreen> {
 
 ## Slide object attributes
 
-| Name              | Type                | Default                                 | Description                       |
-| ----------------- | ------------        | --------------------------------------- | --------------------------------- |
-| <b>Title</b>      |                     |                                         |                                   |
-| title             | `String`            | ""                                      | Change text title at top          |
-| maxLineTitle      | `int`               | 1                                       | Change max number of lines title at top|
-| styleTitle        | `TextStyle`         | White color, bold and font size is 30.0 | Style for text title              |
-| marginTitle       | `EdgeInsets`        | top: 70.0, bottom: 50.0                 | Margin for text title             |
-| <b>Image</b>      |                     |                                         |                                   |
-| pathImage         | `String`            | ""                                      | Path to your local image          |
-| widthImage        | `double`            | 250.0                                   | Width of image                    |
-| heightImage       | `double`            | 250.0                                   | Height of image                   |
-| onCenterItemPress | `Function`          | Do nothing                              | Fire when press image             |
-| <b>Center widget</b>|                   |                                         |                                   |
-| centerWidget      | `Widget`            | null                                    | Your custom's widget              |
-| onCenterItemPress | `Function`          | Do nothing                              | Fire when press center widget     |
-| <b>Description</b>|                     |                                         |                                   |
-| description       | `String`            | ""                                      | Change text description at bottom |
-| maxLineTextDescription| `String`        | 100                                     | Maximum line of text description  |
-| styleDescription  | `TextStyle`         | White and font size is 18.0             | Style for text description        |
-| marginDescription | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description       |
-| <b>Background</b> |                     |                                         |                                   |
-| backgroundColor   | `Color`             | Color(0xfff5a623)                       | Background tab color              |
-| colorBegin        | `Color`             | null                                    | Gradient tab color begin          |
-| colorEnd          | `Color`             | null                                    | Gradient tab color end            |
-|directionColorBegin| `AlignmentGeometry` | null                                    | Direction color begin             |
-| directionColorEnd | `AlignmentGeometry` | null                                    | Direction color end               |
-| <b>Background Image</b> |               |                                         |                                   |
-| backgroundImage   | `String`            | null                                    | Background tab image 				|
-| backgroundImageFit| `BoxFit`            | BoxFit.cover                            | Background tab image fit 	 		|
-| backgroundOpacity | `double`            | 0.5                             		| Background tab image filter opacity |
-| backgroundOpacityColor | `Color`		  | Colors.black							| Background tab image filter color |
-| backgroundBlendMode | `BlendMode`		  | BlendMode.darken						| Background tab image filter blend mode |
+| Name                      | Type                | Default                                 | Description                               |
+| -----------------         | ------------        | --------------------------------------- | ---------------------------------         |
+| <b>Title</b>              |                     |                                         |                                           |
+| title                     | `String`            | ""                                      | Change text title at top                  |
+| maxLineTitle              | `int`               | 1                                       | Change max number of lines title at top   |
+| styleTitle                | `TextStyle`         | White color, bold and font size is 30.0 | Style for text title                      |
+| marginTitle               | `EdgeInsets`        | top: 70.0, bottom: 50.0                 | Margin for text title                     |
+| <b>Image</b>              |                     |                                         |                                           |
+| pathImage                 | `String`            | ""                                      | Path to your local image                  |
+| widthImage                | `double`            | 250.0                                   | Width of image                            |
+| heightImage               | `double`            | 250.0                                   | Height of image                           |
+| onCenterItemPress         | `Function`          | Do nothing                              | Fire when press image                     |
+| <b>Center widget</b>      |                     |                                         |                                           |
+| centerWidget              | `Widget`            | null                                    | Your custom's widget                      |
+| onCenterItemPress         | `Function`          | Do nothing                              | Fire when press center widget             |
+| <b>Description</b>        |                     |                                         |                                           |
+| description               | `String`            | ""                                      | Change text description at bottom         |
+| maxLineTextDescription    | `String`            | 100                                     | Maximum line of text description          |
+| styleDescription          | `TextStyle`         | White and font size is 18.0             | Style for text description                |
+| marginDescription         | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description               |
+| <b>Background Color</b>   |                     |                                         |                                           |
+| backgroundColor           | `Color`             | Color(0xfff5a623)                       | Background tab color                      |
+| colorBegin                | `Color`             | null                                    | Gradient tab color begin                  |
+| colorEnd                  | `Color`             | null                                    | Gradient tab color end                    |
+| directionColorBegin       | `AlignmentGeometry` | null                                    | Direction color begin                     |
+| directionColorEnd         | `AlignmentGeometry` | null                                    | Direction color end                       |
+| <b>Background Image</b>   |                     |                                         |                                           |
+| backgroundImage           | `String`            | null                                    | Background tab image 				              |
+| backgroundImageFit        | `BoxFit`            | BoxFit.cover                            | Background tab image fit 	 	    	        |
+| backgroundOpacity         | `double`            | 0.5                                  		| Background tab image filter opacity       |
+| backgroundOpacityColor    | `Color`		          | Colors.black							              | Background tab image filter color         |
+| backgroundBlendMode       | `BlendMode`		      | BlendMode.darken						            | Background tab image filter blend mode    |
 
 
 ## IntroSlider widget attributes
