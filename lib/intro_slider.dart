@@ -433,6 +433,11 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           slides[i].colorEnd,
           slides[i].directionColorBegin,
           slides[i].directionColorEnd,
+          slides[i].backgroundImage,
+          slides[i].backgroundImageFit,
+          slides[i].backgroundOpacity,
+          slides[i].backgroundOpacityColor,
+          slides[i].backgroundBlendMode,
         ),
       );
     }
@@ -467,17 +472,35 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     Color colorEnd,
     AlignmentGeometry directionColorBegin,
     AlignmentGeometry directionColorEnd,
+
+    // Background image
+    String backgroundImage,
+    BoxFit backgroundImageFit,
+    double backgroundOpacity,
+    Color backgroundOpacityColor,
+    BlendMode backgroundBlendMode,
   ) {
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: backgroundColor != null ? [backgroundColor, backgroundColor] : [colorBegin, colorEnd],
-          begin: directionColorBegin ?? Alignment.topLeft,
-          end: directionColorEnd ?? Alignment.bottomRight,
+      decoration: backgroundImage != null ? 
+        BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage(backgroundImage),
+            fit: backgroundImageFit ?? BoxFit.cover,
+            colorFilter: ColorFilter.mode(
+              backgroundOpacityColor != null ? backgroundOpacityColor.withOpacity(backgroundOpacity ?? 0.5) : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
+              backgroundBlendMode ?? BlendMode.darken,
+            ),
+          ),
+        ) : 
+        BoxDecoration(
+          gradient: LinearGradient(
+            colors: backgroundColor != null ? [backgroundColor, backgroundColor] : [colorBegin, colorEnd],
+            begin: directionColorBegin ?? Alignment.topLeft,
+            end: directionColorEnd ?? Alignment.bottomRight,
+          ),
         ),
-      ),
       child: ListView(
         children: <Widget>[
           Container(
@@ -611,6 +634,13 @@ class Slide {
   /// Direction color end
   AlignmentGeometry directionColorEnd;
 
+  // Background image
+  String backgroundImage;
+  BoxFit backgroundImageFit;
+  double backgroundOpacity;
+  Color backgroundOpacityColor;
+  BlendMode backgroundBlendMode;
+
   Slide({
     // Title
     String title,
@@ -639,6 +669,13 @@ class Slide {
     Color colorEnd,
     AlignmentGeometry directionColorBegin,
     AlignmentGeometry directionColorEnd,
+
+    // Background image
+    String backgroundImage,
+    BoxFit backgroundImageFit,
+    double backgroundOpacity,
+    Color backgroundOpacityColor,
+    BlendMode backgroundBlendMode,
   }) {
     // Title
     this.title = title;
@@ -667,5 +704,12 @@ class Slide {
     this.colorEnd = colorEnd;
     this.directionColorBegin = directionColorBegin;
     this.directionColorEnd = directionColorEnd;
+
+    // background image
+    this.backgroundImage = backgroundImage;
+    this.backgroundImageFit = backgroundImageFit;
+    this.backgroundOpacity = backgroundOpacity;
+    this.backgroundOpacityColor = backgroundOpacityColor;
+    this.backgroundBlendMode = backgroundBlendMode;
   }
 }

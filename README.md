@@ -230,6 +230,12 @@ class MySplashScreenState extends State<MySplashScreen> {
 | colorEnd          | `Color`             | null                                    | Gradient tab color end            |
 |directionColorBegin| `AlignmentGeometry` | null                                    | Direction color begin             |
 | directionColorEnd | `AlignmentGeometry` | null                                    | Direction color end               |
+| <b>Background Image</b> |               |                                         |                                   |
+| backgroundImage   | `String`            | null                                    | Background tab image 				|
+| backgroundImageFit| `BoxFit`            | BoxFit.cover                            | Background tab image fit 	 		|
+| backgroundOpacity | `double`            | 0.5                             		| Background tab image filter opacity |
+| backgroundOpacityColor | `Color`		  | Colors.black							| Background tab image filter color |
+| backgroundBlendMode | `BlendMode`		  | BlendMode.darken						| Background tab image filter blend mode |
 
 
 ## IntroSlider widget attributes
