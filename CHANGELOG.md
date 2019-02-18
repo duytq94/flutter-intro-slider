@@ -1,4 +1,8 @@
-## 1.1.3
+## 1.1.5
+
+* Fix margin not a type of double
+
+## 1.1.4
 
 * Format code
 
