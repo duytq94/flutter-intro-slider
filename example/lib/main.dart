@@ -157,6 +157,7 @@ class MySplashScreenState extends State<MySplashScreen> {
       colorDot: Color(0x33D02090),
       colorActiveDot: Color(0xffD02090),
       sizeDot: 13.0,
+      locale: 'en',
     );
   }
 }

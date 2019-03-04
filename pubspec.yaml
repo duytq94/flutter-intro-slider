@@ -8,6 +8,8 @@ version: 1.1.5
 dependencies:
   flutter:
     sdk: flutter
+  flutter_localizations:
+          sdk: flutter
 
 flutter:
   plugin:
