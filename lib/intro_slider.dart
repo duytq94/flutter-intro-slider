@@ -327,46 +327,48 @@ class IntroSliderState extends State<IntroSlider>
       child: Row(
         children: <Widget>[
           // Skip button
-          (tabController.index + 1 != slides.length && isShowSkipBtn)
-              ? Container(
-                  child: renderSkipBtn != null
-                      ? FlatButton(
-                          child: renderSkipBtn,
-                          onPressed: onSkipPress,
-                          color: colorSkipBtn != null
-                              ? colorSkipBtn
-                              : Colors.transparent,
-                          highlightColor: highlightColorSkipBtn != null
-                              ? highlightColorSkipBtn
-                              : Colors.white.withOpacity(0.3),
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(
-                                  borderRadiusSkipBtn ?? 30.0)),
-                        )
-                      : FlatButton(
-                          onPressed: onSkipPress,
-                          child: Text(
-                            nameSkipBtn ?? "SKIP",
-                            style: styleNameSkipBtn ??
-                                TextStyle(color: Colors.white),
-                          ),
-                          color: colorSkipBtn != null
-                              ? colorSkipBtn
-                              : Colors.transparent,
-                          highlightColor: highlightColorSkipBtn != null
-                              ? highlightColorSkipBtn
-                              : Colors.white.withOpacity(0.3),
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(
-                                  borderRadiusSkipBtn ?? 30.0)),
-                        ),
-                  width: 70.0,
-                  height: 70.0,
-                )
-              : Container(
-                  width: 80.0,
-                  height: 70.0,
-                ),
+          Container(
+            alignment: Alignment.center,
+            child: Flex(direction: Axis.vertical, children: <Widget>[
+              (tabController.index + 1 != slides.length && isShowSkipBtn)
+                  ? Container(
+                      child: renderSkipBtn != null
+                          ? FlatButton(
+                              child: renderSkipBtn,
+                              onPressed: onSkipPress,
+                              color: colorSkipBtn != null
+                                  ? colorSkipBtn
+                                  : Colors.transparent,
+                              highlightColor: highlightColorSkipBtn != null
+                                  ? highlightColorSkipBtn
+                                  : Colors.white.withOpacity(0.3),
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(
+                                      borderRadiusSkipBtn ?? 30.0)),
+                            )
+                          : FlatButton(
+                              onPressed: onSkipPress,
+                              child: Text(
+                                nameSkipBtn ?? "SKIP",
+                                style: styleNameSkipBtn ??
+                                    TextStyle(color: Colors.white),
+                              ),
+                              color: colorSkipBtn != null
+                                  ? colorSkipBtn
+                                  : Colors.transparent,
+                              highlightColor: highlightColorSkipBtn != null
+                                  ? highlightColorSkipBtn
+                                  : Colors.white.withOpacity(0.3),
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(
+                                      borderRadiusSkipBtn ?? 30.0)),
+                            ),
+                      width: MediaQuery.of(context).size.width / 3,
+                    )
+                  : Container(),
+            ]),
+            width: MediaQuery.of(context).size.width / 3,
+          ),
 
           // Dot indicator
           Flexible(
@@ -380,75 +382,77 @@ class IntroSliderState extends State<IntroSlider>
 
           // Next, Done button
           Container(
-            child: tabController.index + 1 == slides.length
-                ? (renderDoneBtn != null
-                    ? FlatButton(
-                        child: renderDoneBtn,
-                        onPressed: onDonePress,
-                        color: colorDoneBtn != null
-                            ? colorDoneBtn
-                            : Colors.transparent,
-                        highlightColor: highlightColorDoneBtn != null
-                            ? highlightColorDoneBtn
-                            : Colors.white.withOpacity(0.3),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(
-                                borderRadiusDoneBtn ?? 30.0)),
-                      )
-                    : FlatButton(
-                        onPressed: onDonePress,
-                        child: Text(
-                          nameDoneBtn ?? "DONE",
-                          style: styleNameDoneBtn ??
-                              TextStyle(color: Colors.white),
-                        ),
-                        color: colorDoneBtn != null
-                            ? colorDoneBtn
-                            : Colors.transparent,
-                        highlightColor: highlightColorDoneBtn != null
-                            ? highlightColorDoneBtn
-                            : Colors.white.withOpacity(0.3),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(
-                                borderRadiusDoneBtn ?? 30.0)),
-                      ))
-                : (renderNextBtn != null
-                    ? FlatButton(
-                        onPressed: () {
-                          tabController.animateTo(tabController.index + 1);
-                        },
-                        child: renderNextBtn,
-                        color: colorDoneBtn != null
-                            ? colorDoneBtn
-                            : Colors.transparent,
-                        highlightColor: highlightColorDoneBtn != null
-                            ? highlightColorDoneBtn
-                            : Colors.white.withOpacity(0.3),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(
-                                borderRadiusNextBtn ?? 30.0)),
-                      )
-                    : FlatButton(
-                        onPressed: () {
-                          tabController.animateTo(tabController.index + 1);
-                        },
-                        child: Text(
-                          nameNextBtn ?? "NEXT",
-                          style: styleNameDoneBtn ??
-                              TextStyle(color: Colors.white),
-                        ),
-                        color: colorDoneBtn != null
-                            ? colorDoneBtn
-                            : Colors.transparent,
-                        highlightColor: highlightColorDoneBtn != null
-                            ? highlightColorDoneBtn
-                            : Colors.white.withOpacity(0.3),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(
-                                borderRadiusNextBtn ?? 30.0)),
-                      )),
-            width: 80.0,
-            height: 70.0,
+            alignment: Alignment.center,
+            child: Flex(direction: Axis.vertical, children: <Widget>[
+              tabController.index + 1 == slides.length
+                  ? (renderDoneBtn != null
+                      ? FlatButton(
+                          child: renderDoneBtn,
+                          onPressed: onDonePress,
+                          color: colorDoneBtn != null
+                              ? colorDoneBtn
+                              : Colors.transparent,
+                          highlightColor: highlightColorDoneBtn != null
+                              ? highlightColorDoneBtn
+                              : Colors.white.withOpacity(0.3),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(
+                                  borderRadiusDoneBtn ?? 30.0)),
+                        )
+                      : FlatButton(
+                          onPressed: onDonePress,
+                          child: Text(
+                            nameDoneBtn ?? "DONE",
+                            style: styleNameDoneBtn ??
+                                TextStyle(color: Colors.white),
+                          ),
+                          color: colorDoneBtn != null
+                              ? colorDoneBtn
+                              : Colors.transparent,
+                          highlightColor: highlightColorDoneBtn != null
+                              ? highlightColorDoneBtn
+                              : Colors.white.withOpacity(0.3),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(
+                                  borderRadiusDoneBtn ?? 30.0)),
+                        ))
+                  : (renderNextBtn != null
+                      ? FlatButton(
+                          onPressed: () {
+                            tabController.animateTo(tabController.index + 1);
+                          },
+                          child: renderNextBtn,
+                          color: colorDoneBtn != null
+                              ? colorDoneBtn
+                              : Colors.transparent,
+                          highlightColor: highlightColorDoneBtn != null
+                              ? highlightColorDoneBtn
+                              : Colors.white.withOpacity(0.3),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(
+                                  borderRadiusNextBtn ?? 30.0)),
+                        )
+                      : FlatButton(
+                          onPressed: () {
+                            tabController.animateTo(tabController.index + 1);
+                          },
+                          child: Text(
+                            nameNextBtn ?? "NEXT",
+                            style: styleNameDoneBtn ??
+                                TextStyle(color: Colors.white),
+                          ),
+                          color: colorDoneBtn != null
+                              ? colorDoneBtn
+                              : Colors.transparent,
+                          highlightColor: highlightColorDoneBtn != null
+                              ? highlightColorDoneBtn
+                              : Colors.white.withOpacity(0.3),
+                          shape: new RoundedRectangleBorder(
+                              borderRadius: new BorderRadius.circular(
+                                  borderRadiusNextBtn ?? 30.0)),
+                        )),
+            ]),
+            width: MediaQuery.of(context).size.width / 3,
           ),
         ],
       ),
