@@ -1,3 +1,8 @@
+## 1.1.6
+
+* Add option show or hide the status bar
+* Adding locale feature, adjust bottom navigation
+
 ## 1.1.5
 
 * Fix margin not a type of double

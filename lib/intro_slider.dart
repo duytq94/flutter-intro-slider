@@ -78,6 +78,9 @@ class IntroSlider extends StatefulWidget {
   /// Locale of view ('en' is the default) 'en' and 'ar' are supported
   final String locale;
 
+  /// Show or hide status bar
+  final bool shouldHideStatusBar;
+
   // Constructor
   IntroSlider({
     @required this.slides,
@@ -104,6 +107,7 @@ class IntroSlider extends StatefulWidget {
     this.colorActiveDot,
     this.sizeDot,
     this.locale,
+    this.shouldHideStatusBar,
   });
 
   @override
@@ -132,6 +136,7 @@ class IntroSlider extends StatefulWidget {
         colorActiveDot: this.colorActiveDot,
         sizeDot: this.sizeDot,
         locale: this.locale,
+        shouldHideStatusBar: this.shouldHideStatusBar,
       );
 }
 
@@ -212,6 +217,9 @@ class IntroSliderState extends State<IntroSlider>
   /// Locale of view ('en' is the default) 'en' and 'ar' are supported
   String locale;
 
+  /// Show or hide status bar
+  bool shouldHideStatusBar;
+
   // Constructor
   IntroSliderState({
     // List slides
@@ -245,6 +253,7 @@ class IntroSliderState extends State<IntroSlider>
     @required this.colorActiveDot,
     @required this.sizeDot,
     @required this.locale,
+    @required this.shouldHideStatusBar,
   });
 
   TabController tabController;
@@ -295,7 +304,9 @@ class IntroSliderState extends State<IntroSlider>
   @override
   Widget build(BuildContext context) {
     //Full screen view
-    SystemChrome.setEnabledSystemUIOverlays([]);
+    if (shouldHideStatusBar == true) {
+      SystemChrome.setEnabledSystemUIOverlays([]);
+    }
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
