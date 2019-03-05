@@ -200,6 +200,7 @@ class MySplashScreenState extends State<MySplashScreen> {
       colorDot: Color(0x33D02090),
       colorActiveDot: Color(0xffD02090),
       sizeDot: 13.0,
+	  locale: 'en'
     );
   }
 }
@@ -275,6 +276,8 @@ class MySplashScreenState extends State<MySplashScreen> {
 | colorDot              | `Color`     | Color(0x80000000)     | Color for dot when passive       |
 | colorActiveDot        | `Color`     | Color(0xffffffff)     | Color for dot when active        |
 | sizeDot               | `double`    | 8.0                   | Size of each dot                 |
+| <b>Locale</b>  |             |                       |                                  |
+| locale    | `String`      | 'en'                  | 'en' or 'ar' To set the default locale and adjust the direction of widgets       |
 
 
 ## Pull request and feedback are always appreciated
