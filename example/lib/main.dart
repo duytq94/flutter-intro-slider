@@ -146,10 +146,12 @@ class MySplashScreenState extends State<MySplashScreen> {
       colorSkipBtn: Color(0x33000000),
       highlightColorSkipBtn: Color(0xff000000),
 
-      // Next, Done button
-      onDonePress: this.onDonePress,
+      // Next button
       renderNextBtn: this.renderNextBtn(),
+
+      // Done button
       renderDoneBtn: this.renderDoneBtn(),
+      onDonePress: this.onDonePress,
       colorDoneBtn: Color(0x33000000),
       highlightColorDoneBtn: Color(0xff000000),
 

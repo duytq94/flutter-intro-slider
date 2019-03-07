@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.1.6
+  intro_slider: ^1.1.7
 ```
 
 Import
@@ -218,10 +218,12 @@ class MySplashScreenState extends State<MySplashScreen> {
       colorSkipBtn: Color(0x33000000),
       highlightColorSkipBtn: Color(0xff000000),
 
-      // Next, Done button
-      onDonePress: this.onDonePress,
+      // Next button
       renderNextBtn: this.renderNextBtn(),
+
+      // Done button
       renderDoneBtn: this.renderDoneBtn(),
+      onDonePress: this.onDonePress,
       colorDoneBtn: Color(0x33000000),
       highlightColorDoneBtn: Color(0xff000000),
 
@@ -286,6 +288,7 @@ class MySplashScreenState extends State<MySplashScreen> {
 | slides                | `Slide`     | No default, required  | An array of Slide object         |
 | <b>Skip Button</b>    |             |                       |                                  |
 | renderSkipBtn         | `Widget`    | Button with text SKIP | Render your own SKIP button      |
+| widthSkipBtn          | `double`    | 1/4 screen width      | Width of view wrapper SKIP button|
 | onSkipPress           | `Function`  | Do nothing            | Fire when press SKIP button      |
 | nameSkipBtn           | `String`    | "SKIP"                | Change SKIP to any text you want |
 | styleNameSkipBtn      | `TextStyle` | White color           | Style for text at SKIP button    |
@@ -293,12 +296,12 @@ class MySplashScreenState extends State<MySplashScreen> {
 | highlightColorSkipBtn | `Color`     | Color(0x4dffffff)     | Color for SKIP button when press |
 | isShowSkipBtn         | `bool`      | true                  | Show or hide SKIP button         |
 | borderRadiusSkipBtn   | `double`    | 30.0                  | Rounded SKIP button              |
-| <b>Next Button</b>    |             |                       |                                  |
+| <b>Next Button (other attibutes will have the same Done btn)</b>    |             |                       |                                  |
 | renderNextBtn         | `Widget`    | Button with text NEXT | Render your own NEXT button      |
 | nameNextBtn           | `String`    | "NEXT"                | Change NEXT to any text you want |
-| borderRadiusNextBtn   | `double`    | 30.0                  | Rounded NEXT button              |
 | <b>Done Button</b>    |             |                       |                                  |
 | renderDoneBtn         | `Widget`    | Button with text DONE | Render your own DONE button      |
+| widthDoneBtn          | `double`    | 1/4 screen width      | Width of view wrapper DONE button|
 | onDonePress           | `Function`  | Do nothing            | Fire when press DONE button      |
 | nameDoneBtn           | `String`    | "DONE"                | Change DONE to any text you want |
 | styleNameDoneBtn      | `TextStyle` | White color           | Style for text at DONE button    |

@@ -6,9 +6,12 @@ class IntroSlider extends StatefulWidget {
   /// An array of Slide object
   final List<Slide> slides;
 
-  // SKIP button
+  // ---------- SKIP button ----------
   /// Render your own SKIP button
   final Widget renderSkipBtn;
+
+  /// Width of view wrapper SKIP button
+  final double widthSkipBtn;
 
   /// Fire when press SKIP button
   final Function onSkipPress;
@@ -31,21 +34,25 @@ class IntroSlider extends StatefulWidget {
   /// Rounded SKIP button
   final double borderRadiusSkipBtn;
 
-  // NEXT, DONE button
+  // ---------- NEXT button ----------
   /// Render your own NEXT button
   final Widget renderNextBtn;
-
-  /// Render your own DONE button
-  final Widget renderDoneBtn;
-
-  /// Fire when press DONE button
-  final Function onDonePress;
 
   /// Change NEXT to any text you want
   final String nameNextBtn;
 
+  // ---------- DONE button ----------
   /// Change DONE to any text you want
   final String nameDoneBtn;
+
+  /// Render your own DONE button
+  final Widget renderDoneBtn;
+
+  /// Width of view wrapper DONE button
+  final double widthDoneBtn;
+
+  /// Fire when press DONE button
+  final Function onDonePress;
 
   /// Style for text at DONE button
   final TextStyle styleNameDoneBtn;
@@ -56,13 +63,10 @@ class IntroSlider extends StatefulWidget {
   /// Color for DONE button when press
   final Color highlightColorDoneBtn;
 
-  /// Rounded NEXT button
-  final double borderRadiusNextBtn;
-
   /// Rounded DONE button
   final double borderRadiusDoneBtn;
 
-  // Dot indicator
+  // ---------- Dot indicator ----------
   /// Show or hide dot indicator
   final bool isShowDotIndicator;
 
@@ -85,6 +89,7 @@ class IntroSlider extends StatefulWidget {
   IntroSlider({
     @required this.slides,
     this.renderSkipBtn,
+    this.widthSkipBtn,
     this.onSkipPress,
     this.nameSkipBtn,
     this.styleNameSkipBtn,
@@ -94,13 +99,13 @@ class IntroSlider extends StatefulWidget {
     this.borderRadiusSkipBtn,
     this.renderNextBtn,
     this.renderDoneBtn,
+    this.widthDoneBtn,
     this.onDonePress,
     this.nameNextBtn,
     this.nameDoneBtn,
     this.styleNameDoneBtn,
     this.colorDoneBtn,
     this.highlightColorDoneBtn,
-    this.borderRadiusNextBtn,
     this.borderRadiusDoneBtn,
     this.isShowDotIndicator,
     this.colorDot,
@@ -114,6 +119,7 @@ class IntroSlider extends StatefulWidget {
   IntroSliderState createState() => new IntroSliderState(
         slides: this.slides,
         renderSkipBtn: this.renderSkipBtn,
+        widthSkipBtn: this.widthSkipBtn,
         onSkipPress: this.onSkipPress,
         nameSkipBtn: this.nameSkipBtn,
         styleNameSkipBtn: this.styleNameSkipBtn,
@@ -123,13 +129,13 @@ class IntroSlider extends StatefulWidget {
         borderRadiusSkipBtn: this.borderRadiusSkipBtn,
         renderNextBtn: this.renderNextBtn,
         renderDoneBtn: this.renderDoneBtn,
+        widthDoneBtn: this.widthDoneBtn,
         onDonePress: this.onDonePress,
         nameNextBtn: this.nameNextBtn,
         nameDoneBtn: this.nameDoneBtn,
         styleNameDoneBtn: this.styleNameDoneBtn,
         colorDoneBtn: this.colorDoneBtn,
         highlightColorDoneBtn: this.highlightColorDoneBtn,
-        borderRadiusNextBtn: this.borderRadiusNextBtn,
         borderRadiusDoneBtn: this.borderRadiusDoneBtn,
         isShowDotIndicator: this.isShowDotIndicator,
         colorDot: this.colorDot,
@@ -140,14 +146,16 @@ class IntroSlider extends StatefulWidget {
       );
 }
 
-class IntroSliderState extends State<IntroSlider>
-    with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
   /// An array of Slide object
   final List<Slide> slides;
 
   // SKIP button
   /// Render your own SKIP button
   Widget renderSkipBtn;
+
+  /// Width of view wrapper SKIP button
+  double widthSkipBtn;
 
   /// Fire when press SKIP button
   Function onSkipPress;
@@ -177,6 +185,9 @@ class IntroSliderState extends State<IntroSlider>
   /// Render your own DONE button
   Widget renderDoneBtn;
 
+  /// Width of view wrapper DONE button
+  double widthDoneBtn;
+
   /// Fire when press DONE button
   Function onDonePress;
 
@@ -194,9 +205,6 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Color for DONE button when press
   Color highlightColorDoneBtn;
-
-  /// Rounded NEXT button
-  double borderRadiusNextBtn;
 
   /// Rounded DONE button
   double borderRadiusDoneBtn;
@@ -227,6 +235,7 @@ class IntroSliderState extends State<IntroSlider>
 
     // Skip button
     @required this.renderSkipBtn,
+    @required this.widthSkipBtn,
     @required this.onSkipPress,
     @required this.nameSkipBtn,
     @required this.styleNameSkipBtn,
@@ -238,13 +247,13 @@ class IntroSliderState extends State<IntroSlider>
     // Done button
     @required this.renderNextBtn,
     @required this.renderDoneBtn,
+    @required this.widthDoneBtn,
     @required this.onDonePress,
     @required this.nameNextBtn,
     @required this.nameDoneBtn,
     @required this.styleNameDoneBtn,
     @required this.colorDoneBtn,
     @required this.highlightColorDoneBtn,
-    @required this.borderRadiusNextBtn,
     @required this.borderRadiusDoneBtn,
 
     // Dot indicator
@@ -340,45 +349,31 @@ class IntroSliderState extends State<IntroSlider>
           // Skip button
           Container(
             alignment: Alignment.center,
-            child: Flex(direction: Axis.vertical, children: <Widget>[
-              (tabController.index + 1 != slides.length && isShowSkipBtn)
-                  ? Container(
-                      child: renderSkipBtn != null
-                          ? FlatButton(
-                              child: renderSkipBtn,
-                              onPressed: onSkipPress,
-                              color: colorSkipBtn != null
-                                  ? colorSkipBtn
-                                  : Colors.transparent,
-                              highlightColor: highlightColorSkipBtn != null
-                                  ? highlightColorSkipBtn
-                                  : Colors.white.withOpacity(0.3),
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(
-                                      borderRadiusSkipBtn ?? 30.0)),
-                            )
-                          : FlatButton(
-                              onPressed: onSkipPress,
-                              child: Text(
-                                nameSkipBtn ?? "SKIP",
-                                style: styleNameSkipBtn ??
-                                    TextStyle(color: Colors.white),
-                              ),
-                              color: colorSkipBtn != null
-                                  ? colorSkipBtn
-                                  : Colors.transparent,
-                              highlightColor: highlightColorSkipBtn != null
-                                  ? highlightColorSkipBtn
-                                  : Colors.white.withOpacity(0.3),
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(
-                                      borderRadiusSkipBtn ?? 30.0)),
-                            ),
-                      width: MediaQuery.of(context).size.width / 3,
-                    )
-                  : Container(),
-            ]),
-            width: MediaQuery.of(context).size.width / 3,
+            child: (tabController.index + 1 != slides.length && isShowSkipBtn)
+                ? renderSkipBtn != null
+                    ? FlatButton(
+                        child: renderSkipBtn,
+                        onPressed: onSkipPress,
+                        color: colorSkipBtn != null ? colorSkipBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorSkipBtn != null ? highlightColorSkipBtn : Colors.white.withOpacity(0.3),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn ?? 30.0)),
+                      )
+                    : FlatButton(
+                        onPressed: onSkipPress,
+                        child: Text(
+                          nameSkipBtn ?? "SKIP",
+                          style: styleNameSkipBtn ?? TextStyle(color: Colors.white),
+                        ),
+                        color: colorSkipBtn != null ? colorSkipBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorSkipBtn != null ? highlightColorSkipBtn : Colors.white.withOpacity(0.3),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn ?? 30.0)),
+                      )
+                : Container(),
+            width: widthSkipBtn ?? MediaQuery.of(context).size.width / 4,
           ),
 
           // Dot indicator
@@ -394,76 +389,56 @@ class IntroSliderState extends State<IntroSlider>
           // Next, Done button
           Container(
             alignment: Alignment.center,
-            child: Flex(direction: Axis.vertical, children: <Widget>[
-              tabController.index + 1 == slides.length
-                  ? (renderDoneBtn != null
-                      ? FlatButton(
-                          child: renderDoneBtn,
-                          onPressed: onDonePress,
-                          color: colorDoneBtn != null
-                              ? colorDoneBtn
-                              : Colors.transparent,
-                          highlightColor: highlightColorDoneBtn != null
-                              ? highlightColorDoneBtn
-                              : Colors.white.withOpacity(0.3),
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(
-                                  borderRadiusDoneBtn ?? 30.0)),
-                        )
-                      : FlatButton(
-                          onPressed: onDonePress,
-                          child: Text(
-                            nameDoneBtn ?? "DONE",
-                            style: styleNameDoneBtn ??
-                                TextStyle(color: Colors.white),
-                          ),
-                          color: colorDoneBtn != null
-                              ? colorDoneBtn
-                              : Colors.transparent,
-                          highlightColor: highlightColorDoneBtn != null
-                              ? highlightColorDoneBtn
-                              : Colors.white.withOpacity(0.3),
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(
-                                  borderRadiusDoneBtn ?? 30.0)),
-                        ))
-                  : (renderNextBtn != null
-                      ? FlatButton(
-                          onPressed: () {
-                            tabController.animateTo(tabController.index + 1);
-                          },
-                          child: renderNextBtn,
-                          color: colorDoneBtn != null
-                              ? colorDoneBtn
-                              : Colors.transparent,
-                          highlightColor: highlightColorDoneBtn != null
-                              ? highlightColorDoneBtn
-                              : Colors.white.withOpacity(0.3),
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(
-                                  borderRadiusNextBtn ?? 30.0)),
-                        )
-                      : FlatButton(
-                          onPressed: () {
-                            tabController.animateTo(tabController.index + 1);
-                          },
-                          child: Text(
-                            nameNextBtn ?? "NEXT",
-                            style: styleNameDoneBtn ??
-                                TextStyle(color: Colors.white),
-                          ),
-                          color: colorDoneBtn != null
-                              ? colorDoneBtn
-                              : Colors.transparent,
-                          highlightColor: highlightColorDoneBtn != null
-                              ? highlightColorDoneBtn
-                              : Colors.white.withOpacity(0.3),
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(
-                                  borderRadiusNextBtn ?? 30.0)),
-                        )),
-            ]),
-            width: MediaQuery.of(context).size.width / 3,
+            child: tabController.index + 1 == slides.length
+                ? (renderDoneBtn != null
+                    ? FlatButton(
+                        child: renderDoneBtn,
+                        onPressed: onDonePress,
+                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+                      )
+                    : FlatButton(
+                        onPressed: onDonePress,
+                        child: Text(
+                          nameDoneBtn ?? "DONE",
+                          style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
+                        ),
+                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+                      ))
+                : (renderNextBtn != null
+                    ? FlatButton(
+                        onPressed: () {
+                          tabController.animateTo(tabController.index + 1);
+                        },
+                        child: renderNextBtn,
+                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+                      )
+                    : FlatButton(
+                        onPressed: () {
+                          tabController.animateTo(tabController.index + 1);
+                        },
+                        child: Text(
+                          nameNextBtn ?? "NEXT",
+                          style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
+                        ),
+                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
+                        highlightColor:
+                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+                      )),
+            width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
           ),
         ],
       ),
@@ -552,8 +527,7 @@ class IntroSliderState extends State<IntroSlider>
                 fit: backgroundImageFit ?? BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   backgroundOpacityColor != null
-                      ? backgroundOpacityColor
-                          .withOpacity(backgroundOpacity ?? 0.5)
+                      ? backgroundOpacityColor.withOpacity(backgroundOpacity ?? 0.5)
                       : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
                   backgroundBlendMode ?? BlendMode.darken,
                 ),
@@ -561,62 +535,58 @@ class IntroSliderState extends State<IntroSlider>
             )
           : BoxDecoration(
               gradient: LinearGradient(
-                colors: backgroundColor != null
-                    ? [backgroundColor, backgroundColor]
-                    : [colorBegin, colorEnd],
+                colors: backgroundColor != null ? [backgroundColor, backgroundColor] : [colorBegin, colorEnd],
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
               ),
             ),
-      child: ListView(
-        children: <Widget>[
-          Container(
-            // Title
-            child: Text(
-              title ?? "",
-              style: styleTitle ??
-                  TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30.0,
-                  ),
-              maxLines: maxLineTitle != null ? maxLineTitle : 1,
-              textAlign: TextAlign.center,
-              overflow: TextOverflow.ellipsis,
+      child: Container(
+        margin: EdgeInsets.only(bottom: 60.0),
+        child: ListView(
+          children: <Widget>[
+            Container(
+              // Title
+              child: Text(
+                title ?? "",
+                style: styleTitle ??
+                    TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30.0,
+                    ),
+                maxLines: maxLineTitle != null ? maxLineTitle : 1,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+              margin: marginTitle ?? EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
             ),
-            margin: marginTitle ??
-                EdgeInsets.only(
-                    top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
-          ),
 
-          // Image or Center widget
-          GestureDetector(
-            child: pathImage != null
-                ? Image.asset(
-                    pathImage,
-                    width: widthImage ?? 200.0,
-                    height: heightImage ?? 200.0,
-                    fit: BoxFit.contain,
-                  )
-                : Center(child: centerWidget ?? Container()),
-            onTap: onCenterItemPress,
-          ),
-
-          // Description
-          Container(
-            child: Text(
-              description ?? "",
-              style: styleDescription ??
-                  TextStyle(color: Colors.white, fontSize: 18.0),
-              textAlign: TextAlign.center,
-              maxLines:
-                  maxLineTextDescription != null ? maxLineTextDescription : 100,
-              overflow: TextOverflow.ellipsis,
+            // Image or Center widget
+            GestureDetector(
+              child: pathImage != null
+                  ? Image.asset(
+                      pathImage,
+                      width: widthImage ?? 200.0,
+                      height: heightImage ?? 200.0,
+                      fit: BoxFit.contain,
+                    )
+                  : Center(child: centerWidget ?? Container()),
+              onTap: onCenterItemPress,
             ),
-            margin: marginDescription ??
-                EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
-          ),
-        ],
+
+            // Description
+            Container(
+              child: Text(
+                description ?? "",
+                style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
+                textAlign: TextAlign.center,
+                maxLines: maxLineTextDescription != null ? maxLineTextDescription : 100,
+                overflow: TextOverflow.ellipsis,
+              ),
+              margin: marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -637,8 +607,7 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget renderDot(double radius, Color color) {
     return Container(
-      decoration: BoxDecoration(
-          color: color, borderRadius: BorderRadius.circular(radius / 2)),
+      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius / 2)),
       width: radius,
       height: radius,
       margin: EdgeInsets.all(radius / 2),

@@ -1,3 +1,8 @@
+## 1.1.7
+
+* Fix content scroll overlain bottom view
+* Add set width of done, next button
+
 ## 1.1.6
 
 * Add option show or hide the status bar
