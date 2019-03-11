@@ -85,6 +85,10 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide status bar
   final bool shouldHideStatusBar;
 
+  // ---------- Behavior ----------
+  /// Whether or not the slider is scrollable (or controlled only by buttons)
+  final bool isScrollable;
+
   // Constructor
   IntroSlider({
     @required this.slides,
@@ -113,6 +117,7 @@ class IntroSlider extends StatefulWidget {
     this.sizeDot,
     this.locale,
     this.shouldHideStatusBar,
+    this.isScrollable,
   });
 
   @override
@@ -143,6 +148,7 @@ class IntroSlider extends StatefulWidget {
         sizeDot: this.sizeDot,
         locale: this.locale,
         shouldHideStatusBar: this.shouldHideStatusBar,
+        isScrollable: this.isScrollable,
       );
 }
 
@@ -228,6 +234,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   /// Show or hide status bar
   bool shouldHideStatusBar;
 
+  /// Allow the slider to scroll
+  bool isScrollable;
+
   // Constructor
   IntroSliderState({
     // List slides
@@ -263,6 +272,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     @required this.sizeDot,
     @required this.locale,
     @required this.shouldHideStatusBar,
+    
+    // Behavior
+    @required this.isScrollable,
   });
 
   TabController tabController;
@@ -307,6 +319,10 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       sizeDot = 8.0;
     }
 
+    if (isScrollable == null) {
+      isScrollable = true;
+    }
+
     renderListTabs();
   }
 
@@ -333,6 +349,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
               TabBarView(
                 children: tabs,
                 controller: tabController,
+                physics: isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics,
               ),
               renderBottom(),
             ],
