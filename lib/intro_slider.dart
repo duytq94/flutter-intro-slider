@@ -152,7 +152,8 @@ class IntroSlider extends StatefulWidget {
       );
 }
 
-class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider>
+    with SingleTickerProviderStateMixin {
   /// An array of Slide object
   final List<Slide> slides;
 
@@ -272,7 +273,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     @required this.sizeDot,
     @required this.locale,
     @required this.shouldHideStatusBar,
-    
+
     // Behavior
     @required this.isScrollable,
   });
@@ -349,7 +350,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
               TabBarView(
                 children: tabs,
                 controller: tabController,
-                physics: isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics,
+                physics: isScrollable
+                    ? ScrollPhysics()
+                    : NeverScrollableScrollPhysics(),
               ),
               renderBottom(),
             ],
@@ -371,23 +374,32 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                     ? FlatButton(
                         child: renderSkipBtn,
                         onPressed: onSkipPress,
-                        color: colorSkipBtn != null ? colorSkipBtn : Colors.transparent,
-                        highlightColor:
-                            highlightColorSkipBtn != null ? highlightColorSkipBtn : Colors.white.withOpacity(0.3),
+                        color: colorSkipBtn != null
+                            ? colorSkipBtn
+                            : Colors.transparent,
+                        highlightColor: highlightColorSkipBtn != null
+                            ? highlightColorSkipBtn
+                            : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn ?? 30.0)),
+                            borderRadius: new BorderRadius.circular(
+                                borderRadiusSkipBtn ?? 30.0)),
                       )
                     : FlatButton(
                         onPressed: onSkipPress,
                         child: Text(
                           nameSkipBtn ?? "SKIP",
-                          style: styleNameSkipBtn ?? TextStyle(color: Colors.white),
+                          style: styleNameSkipBtn ??
+                              TextStyle(color: Colors.white),
                         ),
-                        color: colorSkipBtn != null ? colorSkipBtn : Colors.transparent,
-                        highlightColor:
-                            highlightColorSkipBtn != null ? highlightColorSkipBtn : Colors.white.withOpacity(0.3),
+                        color: colorSkipBtn != null
+                            ? colorSkipBtn
+                            : Colors.transparent,
+                        highlightColor: highlightColorSkipBtn != null
+                            ? highlightColorSkipBtn
+                            : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn ?? 30.0)),
+                            borderRadius: new BorderRadius.circular(
+                                borderRadiusSkipBtn ?? 30.0)),
                       )
                 : Container(),
             width: widthSkipBtn ?? MediaQuery.of(context).size.width / 4,
@@ -411,23 +423,32 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                     ? FlatButton(
                         child: renderDoneBtn,
                         onPressed: onDonePress,
-                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
-                        highlightColor:
-                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
+                        color: colorDoneBtn != null
+                            ? colorDoneBtn
+                            : Colors.transparent,
+                        highlightColor: highlightColorDoneBtn != null
+                            ? highlightColorDoneBtn
+                            : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+                            borderRadius: new BorderRadius.circular(
+                                borderRadiusDoneBtn ?? 30.0)),
                       )
                     : FlatButton(
                         onPressed: onDonePress,
                         child: Text(
                           nameDoneBtn ?? "DONE",
-                          style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
+                          style: styleNameDoneBtn ??
+                              TextStyle(color: Colors.white),
                         ),
-                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
-                        highlightColor:
-                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
+                        color: colorDoneBtn != null
+                            ? colorDoneBtn
+                            : Colors.transparent,
+                        highlightColor: highlightColorDoneBtn != null
+                            ? highlightColorDoneBtn
+                            : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+                            borderRadius: new BorderRadius.circular(
+                                borderRadiusDoneBtn ?? 30.0)),
                       ))
                 : (renderNextBtn != null
                     ? FlatButton(
@@ -435,11 +456,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                           tabController.animateTo(tabController.index + 1);
                         },
                         child: renderNextBtn,
-                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
-                        highlightColor:
-                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
+                        color: colorDoneBtn != null
+                            ? colorDoneBtn
+                            : Colors.transparent,
+                        highlightColor: highlightColorDoneBtn != null
+                            ? highlightColorDoneBtn
+                            : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+                            borderRadius: new BorderRadius.circular(
+                                borderRadiusDoneBtn ?? 30.0)),
                       )
                     : FlatButton(
                         onPressed: () {
@@ -447,13 +472,18 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                         },
                         child: Text(
                           nameNextBtn ?? "NEXT",
-                          style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
+                          style: styleNameDoneBtn ??
+                              TextStyle(color: Colors.white),
                         ),
-                        color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
-                        highlightColor:
-                            highlightColorDoneBtn != null ? highlightColorDoneBtn : Colors.white.withOpacity(0.3),
+                        color: colorDoneBtn != null
+                            ? colorDoneBtn
+                            : Colors.transparent,
+                        highlightColor: highlightColorDoneBtn != null
+                            ? highlightColorDoneBtn
+                            : Colors.white.withOpacity(0.3),
                         shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+                            borderRadius: new BorderRadius.circular(
+                                borderRadiusDoneBtn ?? 30.0)),
                       )),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
           ),
@@ -544,7 +574,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 fit: backgroundImageFit ?? BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   backgroundOpacityColor != null
-                      ? backgroundOpacityColor.withOpacity(backgroundOpacity ?? 0.5)
+                      ? backgroundOpacityColor
+                          .withOpacity(backgroundOpacity ?? 0.5)
                       : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
                   backgroundBlendMode ?? BlendMode.darken,
                 ),
@@ -552,7 +583,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             )
           : BoxDecoration(
               gradient: LinearGradient(
-                colors: backgroundColor != null ? [backgroundColor, backgroundColor] : [colorBegin, colorEnd],
+                colors: backgroundColor != null
+                    ? [backgroundColor, backgroundColor]
+                    : [colorBegin, colorEnd],
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
               ),
@@ -575,7 +608,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),
-              margin: marginTitle ?? EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+              margin: marginTitle ??
+                  EdgeInsets.only(
+                      top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
             ),
 
             // Image or Center widget
@@ -595,12 +630,16 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             Container(
               child: Text(
                 description ?? "",
-                style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
+                style: styleDescription ??
+                    TextStyle(color: Colors.white, fontSize: 18.0),
                 textAlign: TextAlign.center,
-                maxLines: maxLineTextDescription != null ? maxLineTextDescription : 100,
+                maxLines: maxLineTextDescription != null
+                    ? maxLineTextDescription
+                    : 100,
                 overflow: TextOverflow.ellipsis,
               ),
-              margin: marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+              margin: marginDescription ??
+                  EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
             ),
           ],
         ),
@@ -624,7 +663,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   Widget renderDot(double radius, Color color) {
     return Container(
-      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius / 2)),
+      decoration: BoxDecoration(
+          color: color, borderRadius: BorderRadius.circular(radius / 2)),
       width: radius,
       height: radius,
       margin: EdgeInsets.all(radius / 2),

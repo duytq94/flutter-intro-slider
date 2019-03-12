@@ -1,3 +1,7 @@
+## 1.1.8
+
+* Add configuration able to scroll
+
 ## 1.1.7
 
 * Fix content scroll overlain bottom view

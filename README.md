@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.1.7
+  intro_slider: ^1.1.8
 ```
 
 Import
@@ -299,7 +299,7 @@ class MySplashScreenState extends State<MySplashScreen> {
 | highlightColorSkipBtn | `Color`     | Color(0x4dffffff)     | Color for SKIP button when press |
 | isShowSkipBtn         | `bool`      | true                  | Show or hide SKIP button         |
 | borderRadiusSkipBtn   | `double`    | 30.0                  | Rounded SKIP button              |
-| <b>Next Button (other attibutes will have the same Done btn)</b>    |             |                       |                                  |
+| <b>Next Button (other attributes will have the same Done btn)</b>    |             |                       |                                  |
 | renderNextBtn         | `Widget`    | Button with text NEXT | Render your own NEXT button      |
 | nameNextBtn           | `String`    | "NEXT"                | Change NEXT to any text you want |
 | <b>Done Button</b>    |             |                       |                                  |
@@ -317,7 +317,7 @@ class MySplashScreenState extends State<MySplashScreen> {
 | colorActiveDot        | `Color`     | Color(0xffffffff)     | Color for dot when active        |
 | sizeDot               | `double`    | 8.0                   | Size of each dot                 |
 | <b>Locale</b>         |             |                       |                                  |
-| locale                | `String`    | 'en'                  | 'en' or 'ar' To set the default locale and adjust the direction of widgets       |
+| locale                | `String`    | 'en'                  | 'en' or 'ar' to set the default locale and adjust the direction of widgets       |
 | <b>Status bar</b>     |             |                       |                                  |
 | shouldHideStatusBar   | `bool`      | false                 | Show or hide the status bar      |
 | <b>Behavior</b>       |             |                       |                                  |
