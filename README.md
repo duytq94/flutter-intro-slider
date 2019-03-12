@@ -237,6 +237,9 @@ class MySplashScreenState extends State<MySplashScreen> {
 
       // Show or hide status bar
       shouldHideStatusBar: true,
+
+      // Change slides only with buttons
+      isScrollable: false,
     );
   }
 }
@@ -317,5 +320,7 @@ class MySplashScreenState extends State<MySplashScreen> {
 | locale                | `String`    | 'en'                  | 'en' or 'ar' To set the default locale and adjust the direction of widgets       |
 | <b>Status bar</b>     |             |                       |                                  |
 | shouldHideStatusBar   | `bool`      | false                 | Show or hide the status bar      |
+| <b>Behavior</b>       |             |                       |                                  |
+| isScrollable          | `bool`      | true                  | Force button-only scrolling      |
 
 ## Pull request and feedback are always appreciated
