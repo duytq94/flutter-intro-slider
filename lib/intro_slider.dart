@@ -295,7 +295,9 @@ class IntroSliderState extends State<IntroSlider>
 
     // Skip button
     if (onSkipPress == null) {
-      onSkipPress = () {};
+      onSkipPress = () {
+        tabController.animateTo(slides.length - 1);
+      };
     }
     if (isShowSkipBtn == null) {
       isShowSkipBtn = true;

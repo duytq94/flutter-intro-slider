@@ -105,11 +105,7 @@ class MySplashScreenState extends State<MySplashScreen> {
   }
 
   void onDonePress() {
-    // TODO: go to next screen
-  }
-
-  void onSkipPress() {
-    // TODO: go to next screen
+    // Do what you want
   }
 
   Widget renderNextBtn() {
@@ -142,7 +138,6 @@ class MySplashScreenState extends State<MySplashScreen> {
 
       // Skip button
       renderSkipBtn: this.renderSkipBtn(),
-      onSkipPress: this.onSkipPress,
       colorSkipBtn: Color(0x33000000),
       highlightColorSkipBtn: Color(0xff000000),
 
@@ -205,11 +200,11 @@ class MySplashScreenState extends State<MySplashScreen> {
 //  }
 //
 //  void onDonePress() {
-//    // TODO: go to next screen
+//    // Do what you want
 //  }
 //
 //  void onSkipPress() {
-//    // TODO: go to next screen
+//    // Do what you want
 //  }
 //
 //  @override

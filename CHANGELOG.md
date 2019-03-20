@@ -1,3 +1,7 @@
+## 1.1.9
+
+* Add default go to last page at onSkipPress
+
 ## 1.1.8
 
 * Add configuration able to scroll
