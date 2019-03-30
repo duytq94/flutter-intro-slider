@@ -154,6 +154,15 @@ class IntroSlider extends StatefulWidget {
 
 class IntroSliderState extends State<IntroSlider>
     with SingleTickerProviderStateMixin {
+  /// Default values
+  static TextStyle defaultBtnNameTextStyle = TextStyle(color: Colors.white);
+
+  static double defaultBtnBorderRadius = 30.0;
+
+  static Color defaultBtnColor = Colors.transparent;
+
+  static Color defaultBtnHighlightColor = Colors.white.withOpacity(0.3);
+
   /// An array of Slide object
   final List<Slide> slides;
 
@@ -293,20 +302,7 @@ class IntroSliderState extends State<IntroSlider>
       this.setState(() {});
     });
 
-    // Skip button
-    if (onSkipPress == null) {
-      onSkipPress = () {
-        tabController.animateTo(slides.length - 1);
-      };
-    }
-    if (isShowSkipBtn == null) {
-      isShowSkipBtn = true;
-    }
-
-    // Done button
-    if (onDonePress == null) {
-      onDonePress = () {};
-    }
+    setupButtonDefaultValues();
 
     // Dot indicator
     if (isShowDotIndicator == null) {
@@ -327,6 +323,76 @@ class IntroSliderState extends State<IntroSlider>
     }
 
     renderListTabs();
+  }
+
+  void setupButtonDefaultValues() {
+    // Skip button
+    if (onSkipPress == null) {
+      onSkipPress = () {
+        tabController.animateTo(slides.length - 1);
+      };
+    }
+    if (isShowSkipBtn == null) {
+      isShowSkipBtn = true;
+    }
+    if (styleNameSkipBtn == null) {
+      styleNameSkipBtn = defaultBtnNameTextStyle;
+    }
+    if (nameSkipBtn == null) {
+      nameSkipBtn = "SKIP";
+    }
+    if (renderSkipBtn == null) {
+      renderSkipBtn = Text(
+        nameSkipBtn,
+        style: styleNameSkipBtn,
+      );
+    }
+    if (colorSkipBtn == null) {
+      colorSkipBtn = defaultBtnColor;
+    }
+    if (highlightColorSkipBtn == null) {
+      highlightColorSkipBtn = defaultBtnHighlightColor;
+    }
+    if (borderRadiusSkipBtn == null) {
+      borderRadiusSkipBtn = defaultBtnBorderRadius;
+    }
+
+    // Done button
+    if (onDonePress == null) {
+      onDonePress = () {};
+    }
+    if (styleNameDoneBtn == null) {
+      styleNameDoneBtn = defaultBtnNameTextStyle;
+    }
+    if (nameDoneBtn == null) {
+      nameDoneBtn = "DONE";
+    }
+    if (renderDoneBtn == null) {
+      renderDoneBtn = Text(
+        nameDoneBtn,
+        style: styleNameDoneBtn,
+      );
+    }
+    if (colorDoneBtn == null) {
+      colorDoneBtn = defaultBtnColor;
+    }
+    if (highlightColorDoneBtn == null) {
+      highlightColorDoneBtn = defaultBtnHighlightColor;
+    }
+    if (borderRadiusDoneBtn == null) {
+      borderRadiusDoneBtn = defaultBtnBorderRadius;
+    }
+
+    // Next button
+    if (nameNextBtn == null) {
+      nameNextBtn = "NEXT";
+    }
+    if (renderNextBtn == null) {
+      renderNextBtn = Text(
+        nameNextBtn,
+        style: styleNameDoneBtn,
+      );
+    }
   }
 
   @override
@@ -364,67 +430,38 @@ class IntroSliderState extends State<IntroSlider>
     );
   }
 
-  Widget _buildSkipButton() {
-    Widget buttonChild = renderSkipBtn;
-    if (buttonChild == null) {
-      buttonChild = Text(
-        nameSkipBtn ?? "SKIP",
-        style: styleNameSkipBtn ?? TextStyle(color: Colors.white),
-      );
-    }
-
+  Widget buildSkipButton() {
     return FlatButton(
-      child: buttonChild,
       onPressed: onSkipPress,
-      color: colorSkipBtn != null ? colorSkipBtn : Colors.transparent,
-      highlightColor: highlightColorSkipBtn != null
-          ? highlightColorSkipBtn
-          : Colors.white.withOpacity(0.3),
+      child: renderSkipBtn,
+      color: colorSkipBtn,
+      highlightColor: highlightColorSkipBtn,
       shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(borderRadiusSkipBtn ?? 30.0)),
+          borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
     );
   }
 
-  Widget _buildDoneButton() {
-    Widget buttonChild = renderDoneBtn;
-    if (buttonChild == null) {
-      buttonChild = Text(
-        nameDoneBtn ?? "DONE",
-        style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
-      );
-    }
+  Widget buildDoneButton() {
     return FlatButton(
-      child: buttonChild,
       onPressed: onDonePress,
-      color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
-      highlightColor: highlightColorDoneBtn != null
-          ? highlightColorDoneBtn
-          : Colors.white.withOpacity(0.3),
+      child: renderDoneBtn,
+      color: colorDoneBtn,
+      highlightColor: highlightColorDoneBtn,
       shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
-  Widget _buildNextButton() {
-    Widget buttonChild = renderNextBtn;
-    if (buttonChild == null) {
-      buttonChild = Text(
-        nameNextBtn ?? "NEXT",
-        style: styleNameDoneBtn ?? TextStyle(color: Colors.white),
-      );
-    }
-
+  Widget buildNextButton() {
     return FlatButton(
       onPressed: () {
         tabController.animateTo(tabController.index + 1);
       },
-      child: buttonChild,
-      color: colorDoneBtn != null ? colorDoneBtn : Colors.transparent,
-      highlightColor: highlightColorDoneBtn != null
-          ? highlightColorDoneBtn
-          : Colors.white.withOpacity(0.3),
+      child: renderNextBtn,
+      color: colorDoneBtn,
+      highlightColor: highlightColorDoneBtn,
       shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn ?? 30.0)),
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
@@ -436,7 +473,7 @@ class IntroSliderState extends State<IntroSlider>
           Container(
             alignment: Alignment.center,
             child: (tabController.index + 1 != slides.length && isShowSkipBtn)
-                ? _buildSkipButton()
+                ? buildSkipButton()
                 : Container(),
             width: widthSkipBtn ?? MediaQuery.of(context).size.width / 4,
           ),
@@ -455,8 +492,8 @@ class IntroSliderState extends State<IntroSlider>
           Container(
             alignment: Alignment.center,
             child: tabController.index + 1 == slides.length
-                ? _buildDoneButton()
-                : _buildNextButton(),
+                ? buildDoneButton()
+                : buildNextButton(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
           ),
         ],
