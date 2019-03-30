@@ -41,6 +41,16 @@ class IntroSlider extends StatefulWidget {
   /// Change NEXT to any text you want
   final String nameNextBtn;
 
+  // ---------- PREV button ----------
+  /// Render your own PREV button
+  final Widget renderPrevBtn;
+
+  /// Change PREV to any text you want
+  final String namePrevBtn;
+
+  /// Show or hide PREV button (only visible if skip is hidden)
+  final bool isShowPrevBtn;
+
   // ---------- DONE button ----------
   /// Change DONE to any text you want
   final String nameDoneBtn;
@@ -102,15 +112,18 @@ class IntroSlider extends StatefulWidget {
     this.isShowSkipBtn,
     this.borderRadiusSkipBtn,
     this.renderNextBtn,
+    this.renderPrevBtn,
     this.renderDoneBtn,
     this.widthDoneBtn,
     this.onDonePress,
     this.nameNextBtn,
+    this.namePrevBtn,
     this.nameDoneBtn,
     this.styleNameDoneBtn,
     this.colorDoneBtn,
     this.highlightColorDoneBtn,
     this.borderRadiusDoneBtn,
+    this.isShowPrevBtn,
     this.isShowDotIndicator,
     this.colorDot,
     this.colorActiveDot,
@@ -133,14 +146,17 @@ class IntroSlider extends StatefulWidget {
         isShowSkipBtn: this.isShowSkipBtn,
         borderRadiusSkipBtn: this.borderRadiusSkipBtn,
         renderNextBtn: this.renderNextBtn,
+        renderPrevBtn: this.renderPrevBtn,
         renderDoneBtn: this.renderDoneBtn,
         widthDoneBtn: this.widthDoneBtn,
         onDonePress: this.onDonePress,
         nameNextBtn: this.nameNextBtn,
+        namePrevBtn: this.namePrevBtn,
         nameDoneBtn: this.nameDoneBtn,
         styleNameDoneBtn: this.styleNameDoneBtn,
         colorDoneBtn: this.colorDoneBtn,
         highlightColorDoneBtn: this.highlightColorDoneBtn,
+        isShowPrevBtn: this.isShowPrevBtn,
         borderRadiusDoneBtn: this.borderRadiusDoneBtn,
         isShowDotIndicator: this.isShowDotIndicator,
         colorDot: this.colorDot,
@@ -194,9 +210,15 @@ class IntroSliderState extends State<IntroSlider>
   /// Rounded SKIP button
   double borderRadiusSkipBtn;
 
-  // DONE, NEXT button
+  /// Show or hide PREV button
+  bool isShowPrevBtn;
+
+  // DONE, NEXT, PREV button
   /// Render your own NEXT button
   Widget renderNextBtn;
+
+  /// Render your own PREV button
+  Widget renderPrevBtn;
 
   /// Render your own DONE button
   Widget renderDoneBtn;
@@ -209,6 +231,9 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Change NEXT to any text you want
   String nameNextBtn;
+
+    /// Change PREV to any text you want
+  String namePrevBtn;
 
   /// Change DONE to any text you want
   String nameDoneBtn;
@@ -265,14 +290,17 @@ class IntroSliderState extends State<IntroSlider>
 
     // Done button
     @required this.renderNextBtn,
+    @required this.renderPrevBtn,
     @required this.renderDoneBtn,
     @required this.widthDoneBtn,
     @required this.onDonePress,
     @required this.nameNextBtn,
+    @required this.namePrevBtn,
     @required this.nameDoneBtn,
     @required this.styleNameDoneBtn,
     @required this.colorDoneBtn,
     @required this.highlightColorDoneBtn,
+    @required this.isShowPrevBtn,
     @required this.borderRadiusDoneBtn,
 
     // Dot indicator
@@ -393,6 +421,20 @@ class IntroSliderState extends State<IntroSlider>
         style: styleNameDoneBtn,
       );
     }
+
+    // Prev button
+    if (isShowPrevBtn == null || isShowSkipBtn) {
+      isShowPrevBtn = false;
+    }
+    if (namePrevBtn == null) {
+      namePrevBtn = "PREV";
+    }
+    if (renderPrevBtn == null) {
+      renderPrevBtn = Text(
+        namePrevBtn,
+        style: styleNameDoneBtn,
+      );
+    }
   }
 
   @override
@@ -431,14 +473,18 @@ class IntroSliderState extends State<IntroSlider>
   }
 
   Widget buildSkipButton() {
-    return FlatButton(
-      onPressed: onSkipPress,
-      child: renderSkipBtn,
-      color: colorSkipBtn,
-      highlightColor: highlightColorSkipBtn,
-      shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
-    );
+    if (tabController.index + 1 == slides.length) {
+      return Container();
+    } else {
+      return FlatButton(
+        onPressed: onSkipPress,
+        child: renderSkipBtn,
+        color: colorSkipBtn,
+        highlightColor: highlightColorSkipBtn,
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
+      );
+    }
   }
 
   Widget buildDoneButton() {
@@ -450,6 +496,23 @@ class IntroSliderState extends State<IntroSlider>
       shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
+  }
+
+  Widget buildPrevButton() {
+    if (tabController.index == 0) {
+      return Container();
+    } else {
+      return FlatButton(
+        onPressed: () {
+          tabController.animateTo(tabController.index - 1);
+        },
+        child: renderPrevBtn,
+        color: colorDoneBtn,
+        highlightColor: highlightColorDoneBtn,
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+      );
+    }
   }
 
   Widget buildNextButton() {
@@ -472,9 +535,9 @@ class IntroSliderState extends State<IntroSlider>
           // Skip button
           Container(
             alignment: Alignment.center,
-            child: (tabController.index + 1 != slides.length && isShowSkipBtn)
+            child: (isShowSkipBtn)
                 ? buildSkipButton()
-                : Container(),
+                : (isShowPrevBtn ? buildPrevButton() : Container()),
             width: widthSkipBtn ?? MediaQuery.of(context).size.width / 4,
           ),
 
