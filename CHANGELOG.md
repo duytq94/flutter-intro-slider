@@ -1,3 +1,7 @@
+## 1.2.0
+
+* Add PREV button and optimize code
+
 ## 1.1.9
 
 * Add default go to last page at onSkipPress

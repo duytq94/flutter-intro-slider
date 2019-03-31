@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.1.9
+  intro_slider: ^1.2.0
 ```
 
 Import
@@ -64,16 +64,11 @@ class MySplashScreenState extends State<MySplashScreen> {
     // Do what you want
   }
 
-  void onSkipPress() {
-    // Do what you want
-  }
-
   @override
   Widget build(BuildContext context) {
     return new IntroSlider(
       slides: this.slides,
       onDonePress: this.onDonePress,
-      onSkipPress: this.onSkipPress,
     );
   }
 }
@@ -220,82 +215,86 @@ class MySplashScreenState extends State<MySplashScreen> {
 
 ## Slide object attributes
 
-| Name                      | Type                | Default                                 | Description                               |
-| -----------------         | ------------        | --------------------------------------- | ---------------------------------         |
-| <b>Title</b>              |                     |                                         |                                           |
-| title                     | `String`            | ""                                      | Change text title at top                  |
-| maxLineTitle              | `int`               | 1                                       | Change max number of lines title at top   |
-| styleTitle                | `TextStyle`         | White color, bold and font size is 30.0 | Style for text title                      |
-| marginTitle               | `EdgeInsets`        | top: 70.0, bottom: 50.0                 | Margin for text title                     |
-| <b>Image</b>              |                     |                                         |                                           |
-| pathImage                 | `String`            | ""                                      | Path to your local image                  |
-| widthImage                | `double`            | 250.0                                   | Width of image                            |
-| heightImage               | `double`            | 250.0                                   | Height of image                           |
-| onCenterItemPress         | `Function`          | Do nothing                              | Fire when press image                     |
-| <b>Center widget</b>      |                     |                                         |                                           |
-| centerWidget              | `Widget`            | null                                    | Your custom's widget                      |
-| onCenterItemPress         | `Function`          | Do nothing                              | Fire when press center widget             |
-| <b>Description</b>        |                     |                                         |                                           |
-| description               | `String`            | ""                                      | Change text description at bottom         |
-| maxLineTextDescription    | `String`            | 100                                     | Maximum line of text description          |
-| styleDescription          | `TextStyle`         | White and font size is 18.0             | Style for text description                |
-| marginDescription         | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description               |
-| <b>Background Color</b>   |                     |                                         |                                           |
-| backgroundColor           | `Color`             | Color(0xfff5a623)                       | Background tab color                      |
-| colorBegin                | `Color`             | null                                    | Gradient tab color begin                  |
-| colorEnd                  | `Color`             | null                                    | Gradient tab color end                    |
-| directionColorBegin       | `AlignmentGeometry` | null                                    | Direction color begin                     |
-| directionColorEnd         | `AlignmentGeometry` | null                                    | Direction color end                       |
-| <b>Background Image</b>   |                     |                                         |                                           |
-| backgroundImage           | `String`            | null                                    | Background tab image 				              |
-| backgroundImageFit        | `BoxFit`            | BoxFit.cover                            | Background tab image fit 	 	    	        |
-| backgroundOpacity         | `double`            | 0.5                                  		| Background tab image filter opacity       |
-| backgroundOpacityColor    | `Color`		          | Colors.black							              | Background tab image filter color         |
-| backgroundBlendMode       | `BlendMode`		      | BlendMode.darken						            | Background tab image filter blend mode    |
+| Name                    | Type                | Default                                 | Description                             |
+|-------------------------|---------------------|-----------------------------------------|-----------------------------------------|
+| <b>Title</b>            |                     |                                         |                                         |
+| title                   | `String`            | ""                                      | Change text title at top                |
+| maxLineTitle            | `int`               | 1                                       | Change max number of lines title at top |
+| styleTitle              | `TextStyle`         | White color, bold and font size is 30.0 | Style for text title                    |
+| marginTitle             | `EdgeInsets`        | top: 70.0, bottom: 50.0                 | Margin for text title                   |
+| <b>Image</b>            |                     |                                         |                                         |
+| pathImage               | `String`            | ""                                      | Path to your local image                |
+| widthImage              | `double`            | 250.0                                   | Width of image                          |
+| heightImage             | `double`            | 250.0                                   | Height of image                         |
+| onCenterItemPress       | `Function`          | Do nothing                              | Fire when press image                   |
+| <b>Center widget</b>    |                     |                                         |                                         |
+| centerWidget            | `Widget`            | null                                    | Your custom's widget                    |
+| onCenterItemPress       | `Function`          | Do nothing                              | Fire when press center widget           |
+| <b>Description</b>      |                     |                                         |                                         |
+| description             | `String`            | ""                                      | Change text description at bottom       |
+| maxLineTextDescription  | `String`            | 100                                     | Maximum line of text description        |
+| styleDescription        | `TextStyle`         | White and font size is 18.0             | Style for text description              |
+| marginDescription       | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description             |
+| <b>Background Color</b> |                     |                                         |                                         |
+| backgroundColor         | `Color`             | Color(0xfff5a623)                       | Background tab color                    |
+| colorBegin              | `Color`             | null                                    | Gradient tab color begin                |
+| colorEnd                | `Color`             | null                                    | Gradient tab color end                  |
+| directionColorBegin     | `AlignmentGeometry` | null                                    | Direction color begin                   |
+| directionColorEnd       | `AlignmentGeometry` | null                                    | Direction color end                     |
+| <b>Background Image</b> |                     |                                         |                                         |
+| backgroundImage         | `String`            | null                                    | Background tab image                    |
+| backgroundImageFit      | `BoxFit`            | BoxFit.cover                            | Background tab image fit                |
+| backgroundOpacity       | `double`            | 0.5                                     | Background tab image filter opacity     |
+| backgroundOpacityColor  | `Color`             | Colors.black                            | Background tab image filter color       |
+| backgroundBlendMode     | `BlendMode`         | BlendMode.darken                        | Background tab image filter blend mode  |
 
 
 ## IntroSlider widget attributes
 
-| Name                  | Type        | Default               | Description                      |
-| --------------------- | ----------- | --------------------- | -------------------------------- |
-| <b>Slide</b>          |             |                       |                                  |
-| slides                | `Slide`     | No default, required  | An array of Slide object         |
-| <b>Skip Button</b>    |             |                       |                                  |
-| renderSkipBtn         | `Widget`    | Button with text SKIP | Render your own SKIP button      |
-| widthSkipBtn          | `double`    | 1/4 screen width      | Width of view wrapper SKIP button|
-| onSkipPress           | `Function`  | Do nothing            | Fire when press SKIP button      |
-| nameSkipBtn           | `String`    | "SKIP"                | Change SKIP to any text you want |
-| styleNameSkipBtn      | `TextStyle` | White color           | Style for text at SKIP button    |
-| colorSkipBtn          | `Color`     | transparent           | Color for SKIP button            |
-| highlightColorSkipBtn | `Color`     | Color(0x4dffffff)     | Color for SKIP button when press |
-| isShowSkipBtn         | `bool`      | true                  | Show or hide SKIP button         |
-| borderRadiusSkipBtn   | `double`    | 30.0                  | Rounded SKIP button              |
-| <b>Next Button (other attributes will have the same Done btn)</b>    |             |                       |                                  |
-| renderNextBtn         | `Widget`    | Button with text NEXT | Render your own NEXT button      |
-| nameNextBtn           | `String`    | "NEXT"                | Change NEXT to any text you want |
-| <b>Prev Button (other attributes will have the same Done btn)</b>    |             |                       |                                  |
-| renderPrevBtn         | `Widget`    | Button with text PREV | Render your own PREV button      |
-| namePrevBtn           | `String`    | "PREV"                | Change PREV to any text you want |
-| isShowPrevBtn         | `bool`      | true                  | Show or hide PREV button         |
-| <b>Done Button</b>    |             |                       |                                  |
-| renderDoneBtn         | `Widget`    | Button with text DONE | Render your own DONE button      |
-| widthDoneBtn          | `double`    | 1/4 screen width      | Width of view wrapper DONE button|
-| onDonePress           | `Function`  | Go to last page       | Fire when press DONE button      |
-| nameDoneBtn           | `String`    | "DONE"                | Change DONE to any text you want |
-| styleNameDoneBtn      | `TextStyle` | White color           | Style for text at DONE button    |
-| colorDoneBtn          | `Color`     | transparent           | Color for DONE button            |
-| highlightColorDoneBtn | `Color`     | Color(0x4dffffff)     | Color for DONE button when press |
-| borderRadiusDoneBtn   | `double`    | 30.0                  | Rounded DONE button              |
-| <b>Dot Indicator</b>  |             |                       |                                  |
-| isShowDotIndicator    | `bool`      | true                  | Show or hide dot indicator       |
-| colorDot              | `Color`     | Color(0x80000000)     | Color for dot when passive       |
-| colorActiveDot        | `Color`     | Color(0xffffffff)     | Color for dot when active        |
-| sizeDot               | `double`    | 8.0                   | Size of each dot                 |
-| <b>Locale</b>         |             |                       |                                  |
-| locale                | `String`    | 'en'                  | 'en' or 'ar' to set the default locale and adjust the direction of widgets       |
-| <b>Status bar</b>     |             |                       |                                  |
-| shouldHideStatusBar   | `bool`      | false                 | Show or hide the status bar      |
-| <b>Behavior</b>       |             |                       |                                  |
-| isScrollable          | `bool`      | true                  | Force button-only scrolling      |
+| Name                                                              | Type        | Default               | Description                                                                |
+|-------------------------------------------------------------------|-------------|-----------------------|----------------------------------------------------------------------------|
+| <b>Slide</b>                                                      |             |                       |                                                                            |
+| slides                                                            | `Slide`     | No default, required  | An array of Slide object                                                   |
+| <b>Skip Button</b>                                                |             |                       |                                                                            |
+| renderSkipBtn                                                     | `Widget`    | Button with text SKIP | Render your own SKIP button                                                |
+| widthSkipBtn                                                      | `double`    | 1/4 screen width      | Width of view wrapper SKIP button                                          |
+| nameSkipBtn                                                       | `String`    | "SKIP"                | Change SKIP to any text you want                                           |
+| styleNameSkipBtn                                                  | `TextStyle` | White color           | Style for text at SKIP button                                              |
+| colorSkipBtn                                                      | `Color`     | transparent           | Color for SKIP button                                                      |
+| highlightColorSkipBtn                                             | `Color`     | Color(0x4dffffff)     | Color for SKIP button when press                                           |
+| isShowSkipBtn                                                     | `bool`      | true                  | Show or hide SKIP button                                                   |
+| borderRadiusSkipBtn                                               | `double`    | 30.0                  | Rounded SKIP button                                                        |
+| <b>Prev Button</b>                                                |             |                       |                                                                            |
+| renderPrevBtn                                                     | `Widget`    | Button with text PREV | Render your own PREV button                                                |
+| widthPrevBtn                                                      | `double`    | 1/4 screen width      | Width of view wrapper PREV button                                          |
+| namePrevBtn                                                       | `String`    | "PREV"                | Change PREV to any text you want                                           |
+| styleNamePrevBtn                                                  | `TextStyle` | White color           | Style for text at PREV button                                              |
+| colorPrevBtn                                                      | `Color`     | transparent           | Color for PREV button                                                      |
+| highlightColorPrevBtn                                             | `Color`     | Color(0x4dffffff)     | Color for PREV button when press                                           |
+| isShowPrevBtn                                                     | `bool`      | false                 | Show or hide PREV button                                                   |
+| borderRadiusPrevBtn                                               | `double`    | 30.0                  | Rounded PREV button                                                        |
+| <b>Done Button</b>                                                |             |                       |                                                                            |
+| renderDoneBtn                                                     | `Widget`    | Button with text DONE | Render your own DONE button                                                |
+| widthDoneBtn                                                      | `double`    | 1/4 screen width      | Width of view wrapper DONE button                                          |
+| onDonePress                                                       | `Function`  | Go to last page       | Fire when press DONE button                                                |
+| nameDoneBtn                                                       | `String`    | "DONE"                | Change DONE to any text you want                                           |
+| styleNameDoneBtn                                                  | `TextStyle` | White color           | Style for text at DONE button                                              |
+| colorDoneBtn                                                      | `Color`     | transparent           | Color for DONE button                                                      |
+| highlightColorDoneBtn                                             | `Color`     | Color(0x4dffffff)     | Color for DONE button when press                                           |
+| borderRadiusDoneBtn                                               | `double`    | 30.0                  | Rounded DONE button                                                        |
+| <b>Next Button (other attributes will have the same Done btn)</b> |             |                       |                                                                            |
+| renderNextBtn                                                     | `Widget`    | Button with text NEXT | Render your own NEXT button                                                |
+| nameNextBtn                                                       | `String`    | "NEXT"                | Change NEXT to any text you want                                           |
+| <b>Dot Indicator</b>                                              |             |                       |                                                                            |
+| isShowDotIndicator                                                | `bool`      | true                  | Show or hide dot indicator                                                 |
+| colorDot                                                          | `Color`     | Color(0x80000000)     | Color for dot when passive                                                 |
+| colorActiveDot                                                    | `Color`     | Color(0xffffffff)     | Color for dot when active                                                  |
+| sizeDot                                                           | `double`    | 8.0                   | Size of each dot                                                           |
+| <b>Locale</b>                                                     |             |                       |                                                                            |
+| locale                                                            | `String`    | 'en'                  | 'en' or 'ar' to set the default locale and adjust the direction of widgets |
+| <b>Status bar</b>                                                 |             |                       |                                                                            |
+| shouldHideStatusBar                                               | `bool`      | false                 | Show or hide the status bar                                                |
+| <b>Behavior</b>                                                   |             |                       |                                                                            |
+| isScrollable                                                      | `bool`      | true                  | Force button-only scrolling                                                |
 
 ## Pull request and feedback are always appreciated
