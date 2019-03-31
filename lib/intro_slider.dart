@@ -207,7 +207,8 @@ class IntroSlider extends StatefulWidget {
       );
 }
 
-class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider>
+    with SingleTickerProviderStateMixin {
   /// Default values
   static TextStyle defaultBtnNameTextStyle = TextStyle(color: Colors.white);
 
@@ -527,7 +528,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
               TabBarView(
                 children: tabs,
                 controller: tabController,
-                physics: isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics(),
+                physics: isScrollable
+                    ? ScrollPhysics()
+                    : NeverScrollableScrollPhysics(),
               ),
               renderBottom(),
             ],
@@ -548,7 +551,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         child: renderSkipBtn,
         color: colorSkipBtn,
         highlightColor: highlightColorSkipBtn,
-        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
       );
     }
   }
@@ -559,7 +563,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       child: renderDoneBtn,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
@@ -574,7 +579,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         child: renderPrevBtn,
         color: colorPrevBtn,
         highlightColor: highlightColorPrevBtn,
-        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusPrevBtn)),
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(borderRadiusPrevBtn)),
       );
     }
   }
@@ -587,7 +593,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       child: renderNextBtn,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
@@ -598,9 +605,14 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           // Skip button
           Container(
             alignment: Alignment.center,
-            child: isShowSkipBtn ? buildSkipButton() : (isShowPrevBtn ? buildPrevButton() : Container()),
-            width:
-                isShowSkipBtn ? widthSkipBtn : (isShowPrevBtn ? widthPrevBtn : MediaQuery.of(context).size.width / 4),
+            child: isShowSkipBtn
+                ? buildSkipButton()
+                : (isShowPrevBtn ? buildPrevButton() : Container()),
+            width: isShowSkipBtn
+                ? widthSkipBtn
+                : (isShowPrevBtn
+                    ? widthPrevBtn
+                    : MediaQuery.of(context).size.width / 4),
           ),
 
           // Dot indicator
@@ -616,7 +628,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           // Next, Done button
           Container(
             alignment: Alignment.center,
-            child: tabController.index + 1 == slides.length ? buildDoneButton() : buildNextButton(),
+            child: tabController.index + 1 == slides.length
+                ? buildDoneButton()
+                : buildNextButton(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
           ),
         ],
@@ -706,7 +720,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 fit: backgroundImageFit ?? BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   backgroundOpacityColor != null
-                      ? backgroundOpacityColor.withOpacity(backgroundOpacity ?? 0.5)
+                      ? backgroundOpacityColor
+                          .withOpacity(backgroundOpacity ?? 0.5)
                       : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
                   backgroundBlendMode ?? BlendMode.darken,
                 ),
@@ -714,7 +729,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             )
           : BoxDecoration(
               gradient: LinearGradient(
-                colors: backgroundColor != null ? [backgroundColor, backgroundColor] : [colorBegin, colorEnd],
+                colors: backgroundColor != null
+                    ? [backgroundColor, backgroundColor]
+                    : [colorBegin, colorEnd],
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
               ),
@@ -737,7 +754,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),
-              margin: marginTitle ?? EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+              margin: marginTitle ??
+                  EdgeInsets.only(
+                      top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
             ),
 
             // Image or Center widget
@@ -757,12 +776,16 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             Container(
               child: Text(
                 description ?? "",
-                style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
+                style: styleDescription ??
+                    TextStyle(color: Colors.white, fontSize: 18.0),
                 textAlign: TextAlign.center,
-                maxLines: maxLineTextDescription != null ? maxLineTextDescription : 100,
+                maxLines: maxLineTextDescription != null
+                    ? maxLineTextDescription
+                    : 100,
                 overflow: TextOverflow.ellipsis,
               ),
-              margin: marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+              margin: marginDescription ??
+                  EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
             ),
           ],
         ),
@@ -786,7 +809,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   Widget renderDot(double radius, Color color) {
     return Container(
-      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius / 2)),
+      decoration: BoxDecoration(
+          color: color, borderRadius: BorderRadius.circular(radius / 2)),
       width: radius,
       height: radius,
       margin: EdgeInsets.all(radius / 2),
