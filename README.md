@@ -273,6 +273,10 @@ class MySplashScreenState extends State<MySplashScreen> {
 | <b>Next Button (other attributes will have the same Done btn)</b>    |             |                       |                                  |
 | renderNextBtn         | `Widget`    | Button with text NEXT | Render your own NEXT button      |
 | nameNextBtn           | `String`    | "NEXT"                | Change NEXT to any text you want |
+| <b>Prev Button (other attributes will have the same Done btn)</b>    |             |                       |                                  |
+| renderPrevBtn         | `Widget`    | Button with text PREV | Render your own PREV button      |
+| namePrevBtn           | `String`    | "PREV"                | Change PREV to any text you want |
+| isShowPrevBtn         | `bool`      | true                  | Show or hide PREV button         |
 | <b>Done Button</b>    |             |                       |                                  |
 | renderDoneBtn         | `Widget`    | Button with text DONE | Render your own DONE button      |
 | widthDoneBtn          | `double`    | 1/4 screen width      | Width of view wrapper DONE button|
