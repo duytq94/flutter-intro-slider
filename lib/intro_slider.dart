@@ -13,6 +13,9 @@ class IntroSlider extends StatefulWidget {
   /// Width of view wrapper SKIP button
   final double widthSkipBtn;
 
+  /// Fire when press SKIP button
+  final Function onSkipPress;
+
   /// Change SKIP to any text you want
   final String nameSkipBtn;
 
@@ -117,6 +120,7 @@ class IntroSlider extends StatefulWidget {
     // Skip
     this.renderSkipBtn,
     this.widthSkipBtn,
+    this.onSkipPress,
     this.nameSkipBtn,
     this.styleNameSkipBtn,
     this.colorSkipBtn,
@@ -165,6 +169,7 @@ class IntroSlider extends StatefulWidget {
         // Skip
         renderSkipBtn: this.renderSkipBtn,
         widthSkipBtn: this.widthSkipBtn,
+        onSkipPress: this.onSkipPress,
         nameSkipBtn: this.nameSkipBtn,
         styleNameSkipBtn: this.styleNameSkipBtn,
         colorSkipBtn: this.colorSkipBtn,
@@ -227,6 +232,9 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Width of view wrapper SKIP button
   double widthSkipBtn;
+
+  /// Fire when press SKIP button
+  Function onSkipPress;
 
   /// Change SKIP to any text you want
   String nameSkipBtn;
@@ -333,6 +341,7 @@ class IntroSliderState extends State<IntroSlider>
     // Skip button
     @required this.renderSkipBtn,
     @required this.widthSkipBtn,
+    @required this.onSkipPress,
     @required this.nameSkipBtn,
     @required this.styleNameSkipBtn,
     @required this.colorSkipBtn,
@@ -416,6 +425,11 @@ class IntroSliderState extends State<IntroSlider>
 
   void setupButtonDefaultValues() {
     // Skip button
+    if (onSkipPress == null) {
+      onSkipPress = () {
+        tabController.animateTo(slides.length - 1);
+      };
+    }
     if (isShowSkipBtn == null) {
       isShowSkipBtn = true;
     }
@@ -545,9 +559,7 @@ class IntroSliderState extends State<IntroSlider>
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
       return FlatButton(
-        onPressed: () {
-          tabController.animateTo(slides.length - 1);
-        },
+        onPressed: onSkipPress,
         child: renderSkipBtn,
         color: colorSkipBtn,
         highlightColor: highlightColorSkipBtn,

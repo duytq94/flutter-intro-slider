@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.2.0
+  intro_slider: ^1.2.1
 ```
 
 Import
@@ -258,6 +258,7 @@ class MySplashScreenState extends State<MySplashScreen> {
 | <b>Skip Button</b>                                                |             |                       |                                                                            |
 | renderSkipBtn                                                     | `Widget`    | Button with text SKIP | Render your own SKIP button                                                |
 | widthSkipBtn                                                      | `double`    | 1/4 screen width      | Width of view wrapper SKIP button                                          |
+| onSkipPress                                                       | `Function`  | Go to last page       | Fire when press SKIP button                                                |
 | nameSkipBtn                                                       | `String`    | "SKIP"                | Change SKIP to any text you want                                           |
 | styleNameSkipBtn                                                  | `TextStyle` | White color           | Style for text at SKIP button                                              |
 | colorSkipBtn                                                      | `Color`     | transparent           | Color for SKIP button                                                      |
@@ -276,7 +277,7 @@ class MySplashScreenState extends State<MySplashScreen> {
 | <b>Done Button</b>                                                |             |                       |                                                                            |
 | renderDoneBtn                                                     | `Widget`    | Button with text DONE | Render your own DONE button                                                |
 | widthDoneBtn                                                      | `double`    | 1/4 screen width      | Width of view wrapper DONE button                                          |
-| onDonePress                                                       | `Function`  | Go to last page       | Fire when press DONE button                                                |
+| onDonePress                                                       | `Function`  | Do nothing            | Fire when press DONE button                                                |
 | nameDoneBtn                                                       | `String`    | "DONE"                | Change DONE to any text you want                                           |
 | styleNameDoneBtn                                                  | `TextStyle` | White color           | Style for text at DONE button                                              |
 | colorDoneBtn                                                      | `Color`     | transparent           | Color for DONE button                                                      |

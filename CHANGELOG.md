@@ -1,3 +1,7 @@
+## 1.2.1
+
+* Add optional onSkipPress
+
 ## 1.2.0
 
 * Add PREV button and optimize code
