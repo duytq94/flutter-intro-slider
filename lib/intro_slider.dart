@@ -318,9 +318,6 @@ class IntroSliderState extends State<IntroSlider>
   /// Size of each dot
   double sizeDot = 8.0;
 
-  /// Locale of view ('en' is the default) 'en' and 'ar' are supported
-  String locale;
-
   /// Show or hide status bar
   bool shouldHideStatusBar;
 
@@ -372,7 +369,6 @@ class IntroSliderState extends State<IntroSlider>
     @required this.colorDot,
     @required this.colorActiveDot,
     @required this.sizeDot,
-    @required this.locale,
     @required this.shouldHideStatusBar,
 
     // Behavior

@@ -1,3 +1,7 @@
+## 1.2.3
+
+* Update
+
 ## 1.2.2
 
 * Remove MaterialApp and replacing it by a Scaffold since should only be one MaterialApp() per application
