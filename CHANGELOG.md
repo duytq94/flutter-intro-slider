@@ -1,3 +1,8 @@
+## 1.2.2
+
+* Remove MaterialApp and replacing it by a Scaffold since should only be one MaterialApp() per application
+* Remove locale since it should handle by primary application (and it is configured by MaterialApp), not by the plugin.
+
 ## 1.2.1
 
 * Add optional onSkipPress

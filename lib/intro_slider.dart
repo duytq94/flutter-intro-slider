@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
 class IntroSlider extends StatefulWidget {
   /// An array of Slide object
@@ -104,9 +103,6 @@ class IntroSlider extends StatefulWidget {
   /// Size of each dot
   final double sizeDot;
 
-  /// Locale of view ('en' is the default) 'en' and 'ar' are supported
-  final String locale;
-
   /// Show or hide status bar
   final bool shouldHideStatusBar;
 
@@ -157,7 +153,6 @@ class IntroSlider extends StatefulWidget {
     this.colorDot,
     this.colorActiveDot,
     this.sizeDot,
-    this.locale,
     this.shouldHideStatusBar,
     this.isScrollable,
   });
@@ -206,7 +201,6 @@ class IntroSlider extends StatefulWidget {
         colorDot: this.colorDot,
         colorActiveDot: this.colorActiveDot,
         sizeDot: this.sizeDot,
-        locale: this.locale,
         shouldHideStatusBar: this.shouldHideStatusBar,
         isScrollable: this.isScrollable,
       );
@@ -526,29 +520,20 @@ class IntroSliderState extends State<IntroSlider>
       SystemChrome.setEnabledSystemUIOverlays([]);
     }
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      locale: Locale(locale ?? 'en'),
-      supportedLocales: [const Locale('en'), const Locale('ar')],
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      home: DefaultTabController(
+    return Scaffold(
+      body: DefaultTabController(
         length: slides.length,
-        child: Scaffold(
-          body: Stack(
-            children: <Widget>[
-              TabBarView(
-                children: tabs,
-                controller: tabController,
-                physics: isScrollable
-                    ? ScrollPhysics()
-                    : NeverScrollableScrollPhysics(),
-              ),
-              renderBottom(),
-            ],
-          ),
+        child: Stack(
+          children: <Widget>[
+            TabBarView(
+              children: tabs,
+              controller: tabController,
+              physics: isScrollable
+                  ? ScrollPhysics()
+                  : NeverScrollableScrollPhysics(),
+            ),
+            renderBottom(),
+          ],
         ),
       ),
     );

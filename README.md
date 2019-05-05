@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^1.2.1
+  intro_slider: ^1.2.2
 ```
 
 Import
@@ -26,7 +26,7 @@ import 'package:intro_slider/intro_slider.dart';
 ![default config image](screenshots/default.png)
 
 ```dart
-class MySplashScreenState extends State<MySplashScreen> {
+class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
 
   @override
@@ -53,7 +53,7 @@ class MySplashScreenState extends State<MySplashScreen> {
       new Slide(
         title: "RULER",
         description:
-            "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
+        "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
         pathImage: "images/photo_ruler.png",
         backgroundColor: Color(0xff9932CC),
       ),
@@ -80,15 +80,7 @@ class MySplashScreenState extends State<MySplashScreen> {
 ![custom config image](screenshots/custom2.gif)
 
 ```dart
-class MySplashScreen extends StatefulWidget {
-  MySplashScreen({Key key}) : super(key: key);
-
-  @override
-  MySplashScreenState createState() => new MySplashScreenState();
-}
-
-// Custom config
-class MySplashScreenState extends State<MySplashScreen> {
+class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
 
   @override
@@ -152,6 +144,10 @@ class MySplashScreenState extends State<MySplashScreen> {
 
   void onDonePress() {
     // Do what you want
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => HomeScreen()),
+    );
   }
 
   Widget renderNextBtn() {
@@ -200,9 +196,6 @@ class MySplashScreenState extends State<MySplashScreen> {
       colorDot: Color(0x33D02090),
       colorActiveDot: Color(0xffD02090),
       sizeDot: 13.0,
-
-      // Locale
-      locale: 'en',
 
       // Show or hide status bar
       shouldHideStatusBar: true,
@@ -291,8 +284,6 @@ class MySplashScreenState extends State<MySplashScreen> {
 | colorDot                                                          | `Color`     | Color(0x80000000)     | Color for dot when passive                                                 |
 | colorActiveDot                                                    | `Color`     | Color(0xffffffff)     | Color for dot when active                                                  |
 | sizeDot                                                           | `double`    | 8.0                   | Size of each dot                                                           |
-| <b>Locale</b>                                                     |             |                       |                                                                            |
-| locale                                                            | `String`    | 'en'                  | 'en' or 'ar' to set the default locale and adjust the direction of widgets |
 | <b>Status bar</b>                                                 |             |                       |                                                                            |
 | shouldHideStatusBar                                               | `bool`      | false                 | Show or hide the status bar                                                |
 | <b>Behavior</b>                                                   |             |                       |                                                                            |
