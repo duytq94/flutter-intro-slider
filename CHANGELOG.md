@@ -1,3 +1,7 @@
+## 2.0.0
+
+* Add custom your own tabs
+
 ## 1.2.3
 
 * Update

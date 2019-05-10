@@ -106,6 +106,10 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide status bar
   final bool shouldHideStatusBar;
 
+  // ---------- List custom tabs ----------
+  /// Render your own custom tabs
+  List<Widget> listCustomTabs;
+
   // ---------- Behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
   final bool isScrollable;
@@ -153,6 +157,9 @@ class IntroSlider extends StatefulWidget {
     this.colorDot,
     this.colorActiveDot,
     this.sizeDot,
+
+    // List custom tabs
+    this.listCustomTabs,
     this.shouldHideStatusBar,
     this.isScrollable,
   });
@@ -201,6 +208,10 @@ class IntroSlider extends StatefulWidget {
         colorDot: this.colorDot,
         colorActiveDot: this.colorActiveDot,
         sizeDot: this.sizeDot,
+
+        // List custom tabs
+        listCustomTabs: this.listCustomTabs,
+
         shouldHideStatusBar: this.shouldHideStatusBar,
         isScrollable: this.isScrollable,
       );
@@ -220,7 +231,7 @@ class IntroSliderState extends State<IntroSlider>
   /// An array of Slide object
   final List<Slide> slides;
 
-  // ----------SKIP button----------
+  // ---------- SKIP button ----------
   /// Render your own SKIP button
   Widget renderSkipBtn;
 
@@ -248,7 +259,7 @@ class IntroSliderState extends State<IntroSlider>
   /// Rounded SKIP button
   double borderRadiusSkipBtn;
 
-  // ----------PREV button----------
+  // ---------- PREV button ----------
   /// Render your own PREV button
   Widget renderPrevBtn;
 
@@ -273,7 +284,7 @@ class IntroSliderState extends State<IntroSlider>
   /// Rounded PREV button
   double borderRadiusPrevBtn;
 
-  // ----------DONE button----------
+  // ---------- DONE button ----------
   /// Render your own DONE button
   Widget renderDoneBtn;
 
@@ -298,14 +309,14 @@ class IntroSliderState extends State<IntroSlider>
   /// Rounded DONE button
   double borderRadiusDoneBtn;
 
-  // ----------NEXT button----------
+  // ---------- NEXT button ----------
   /// Render your own NEXT button
   Widget renderNextBtn;
 
   /// Change NEXT to any text you want
   String nameNextBtn;
 
-  // Dot indicator
+  // ---------- Dot indicator ----------
   /// Show or hide dot indicator
   bool isShowDotIndicator = true;
 
@@ -317,6 +328,9 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Size of each dot
   double sizeDot = 8.0;
+
+  /// List custom tabs
+  List<Widget> listCustomTabs;
 
   /// Show or hide status bar
   bool shouldHideStatusBar;
@@ -369,6 +383,9 @@ class IntroSliderState extends State<IntroSlider>
     @required this.colorDot,
     @required this.colorActiveDot,
     @required this.sizeDot,
+
+    // List custom tabs
+    @required this.listCustomTabs,
     @required this.shouldHideStatusBar,
 
     // Behavior
@@ -410,7 +427,11 @@ class IntroSliderState extends State<IntroSlider>
       isScrollable = true;
     }
 
-    renderListTabs();
+    if (this.listCustomTabs == null) {
+      renderListTabs();
+    } else {
+      tabs = this.listCustomTabs;
+    }
   }
 
   void setupButtonDefaultValues() {
