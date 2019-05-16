@@ -108,7 +108,7 @@ class IntroSlider extends StatefulWidget {
 
   // ---------- List custom tabs ----------
   /// Render your own custom tabs
-  List<Widget> listCustomTabs;
+  final List<Widget> listCustomTabs;
 
   // ---------- Behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
@@ -670,8 +670,9 @@ class IntroSliderState extends State<IntroSlider>
           slides[i].pathImage,
           slides[i].widthImage,
           slides[i].heightImage,
-          slides[i].onCenterItemPress,
+          slides[i].foregroundImageFit,
           slides[i].centerWidget,
+          slides[i].onCenterItemPress,
           slides[i].backgroundColor,
           slides[i].colorBegin,
           slides[i].colorEnd,
@@ -705,10 +706,11 @@ class IntroSliderState extends State<IntroSlider>
     String pathImage,
     double widthImage,
     double heightImage,
-    Function onCenterItemPress,
+    BoxFit foregroundImageFit,
 
     // Center Widget
     Widget centerWidget,
+    Function onCenterItemPress,
 
     // Background color
     Color backgroundColor,
@@ -780,7 +782,7 @@ class IntroSliderState extends State<IntroSlider>
                       pathImage,
                       width: widthImage ?? 200.0,
                       height: heightImage ?? 200.0,
-                      fit: BoxFit.contain,
+                      fit: foregroundImageFit ?? BoxFit.contain,
                     )
                   : Center(child: centerWidget ?? Container()),
               onTap: onCenterItemPress,
@@ -856,7 +858,10 @@ class Slide {
   /// Height of image
   double heightImage;
 
-  /// Fire when press image
+  /// Scale of image
+  BoxFit foregroundImageFit;
+
+  /// Fire when press image or center widget
   Function onCenterItemPress;
 
   // Custom your center widget instead of image (if this widget exist, center image will hide)
@@ -911,10 +916,11 @@ class Slide {
     String pathImage,
     double widthImage,
     double heightImage,
-    Function onCenterItemPress,
+    BoxFit foregroundImageFit,
 
     // Center widget
     Widget centerWidget,
+    Function onCenterItemPress,
 
     // Description
     String description,
@@ -946,10 +952,11 @@ class Slide {
     this.pathImage = pathImage;
     this.widthImage = widthImage;
     this.heightImage = heightImage;
-    this.onCenterItemPress = onCenterItemPress;
+    this.foregroundImageFit = foregroundImageFit;
 
     // Center widget
     this.centerWidget = centerWidget;
+    this.onCenterItemPress = onCenterItemPress;
 
     // Description
     this.description = description;

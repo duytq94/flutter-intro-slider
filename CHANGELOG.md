@@ -1,3 +1,7 @@
+## 2.0.1
+
+* Add custom boxfit to foreground image
+
 ## 2.0.0
 
 * Add custom your own tabs

@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.0.0
+  intro_slider: ^2.0.1
 ```
 
 Import
@@ -372,10 +372,10 @@ class IntroScreenState extends State<IntroScreen> {
 | pathImage               | `String`            | ""                                      | Path to your local image                |
 | widthImage              | `double`            | 250.0                                   | Width of image                          |
 | heightImage             | `double`            | 250.0                                   | Height of image                         |
-| onCenterItemPress       | `Function`          | Do nothing                              | Fire when press image                   |
+| foregroundImageFit      | `BoxFit`            | BoxFit.contain                          | Foreground image fit                    |
 | <b>Center widget</b>    |                     |                                         |                                         |
 | centerWidget            | `Widget`            | null                                    | Your custom's widget                    |
-| onCenterItemPress       | `Function`          | Do nothing                              | Fire when press center widget           |
+| onCenterItemPress       | `Function`          | Do nothing                              | Fire when press center image/widget     |
 | <b>Description</b>      |                     |                                         |                                         |
 | description             | `String`            | ""                                      | Change text description at bottom       |
 | maxLineTextDescription  | `String`            | 100                                     | Maximum line of text description        |
