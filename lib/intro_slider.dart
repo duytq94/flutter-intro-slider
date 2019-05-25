@@ -103,9 +103,6 @@ class IntroSlider extends StatefulWidget {
   /// Size of each dot
   final double sizeDot;
 
-  /// Show or hide status bar
-  final bool shouldHideStatusBar;
-
   // ---------- List custom tabs ----------
   /// Render your own custom tabs
   final List<Widget> listCustomTabs;
@@ -114,55 +111,66 @@ class IntroSlider extends StatefulWidget {
   /// Whether or not the slider is scrollable (or controlled only by buttons)
   final bool isScrollable;
 
+  // ---------- Others ----------
+  /// Show or hide status bar
+  final bool shouldHideStatusBar;
+
+  /// Notify when tab change completed
+  final Function onTabChangeCompleted;
+
   // Constructor
-  IntroSlider({
-    @required this.slides,
-    // Skip
-    this.renderSkipBtn,
-    this.widthSkipBtn,
-    this.onSkipPress,
-    this.nameSkipBtn,
-    this.styleNameSkipBtn,
-    this.colorSkipBtn,
-    this.highlightColorSkipBtn,
-    this.isShowSkipBtn,
-    this.borderRadiusSkipBtn,
+  IntroSlider(
+      {@required this.slides,
+      // Skip
+      this.renderSkipBtn,
+      this.widthSkipBtn,
+      this.onSkipPress,
+      this.nameSkipBtn,
+      this.styleNameSkipBtn,
+      this.colorSkipBtn,
+      this.highlightColorSkipBtn,
+      this.isShowSkipBtn,
+      this.borderRadiusSkipBtn,
 
-    // Prev
-    this.renderPrevBtn,
-    this.widthPrevBtn,
-    this.namePrevBtn,
-    this.isShowPrevBtn,
-    this.styleNamePrevBtn,
-    this.colorPrevBtn,
-    this.highlightColorPrevBtn,
-    this.borderRadiusPrevBtn,
+      // Prev
+      this.renderPrevBtn,
+      this.widthPrevBtn,
+      this.namePrevBtn,
+      this.isShowPrevBtn,
+      this.styleNamePrevBtn,
+      this.colorPrevBtn,
+      this.highlightColorPrevBtn,
+      this.borderRadiusPrevBtn,
 
-    // Done
-    this.renderDoneBtn,
-    this.widthDoneBtn,
-    this.onDonePress,
-    this.nameDoneBtn,
-    this.colorDoneBtn,
-    this.highlightColorDoneBtn,
-    this.borderRadiusDoneBtn,
-    this.styleNameDoneBtn,
+      // Done
+      this.renderDoneBtn,
+      this.widthDoneBtn,
+      this.onDonePress,
+      this.nameDoneBtn,
+      this.colorDoneBtn,
+      this.highlightColorDoneBtn,
+      this.borderRadiusDoneBtn,
+      this.styleNameDoneBtn,
 
-    // Next
-    this.renderNextBtn,
-    this.nameNextBtn,
+      // Next
+      this.renderNextBtn,
+      this.nameNextBtn,
 
-    // Dots
-    this.isShowDotIndicator,
-    this.colorDot,
-    this.colorActiveDot,
-    this.sizeDot,
+      // Dots
+      this.isShowDotIndicator,
+      this.colorDot,
+      this.colorActiveDot,
+      this.sizeDot,
 
-    // List custom tabs
-    this.listCustomTabs,
-    this.shouldHideStatusBar,
-    this.isScrollable,
-  });
+      // List custom tabs
+      this.listCustomTabs,
+
+      // Behavior
+      this.isScrollable,
+
+      // Others
+      this.shouldHideStatusBar,
+      this.onTabChangeCompleted});
 
   @override
   IntroSliderState createState() => new IntroSliderState(
@@ -212,8 +220,12 @@ class IntroSlider extends StatefulWidget {
         // List custom tabs
         listCustomTabs: this.listCustomTabs,
 
-        shouldHideStatusBar: this.shouldHideStatusBar,
+        // Behavior
         isScrollable: this.isScrollable,
+
+        // Others
+        shouldHideStatusBar: this.shouldHideStatusBar,
+        onTabChangeCompleted: this.onTabChangeCompleted,
       );
 }
 
@@ -332,11 +344,16 @@ class IntroSliderState extends State<IntroSlider>
   /// List custom tabs
   List<Widget> listCustomTabs;
 
+  // ---------- Behavior ----------
+  /// Allow the slider to scroll
+  bool isScrollable;
+
+  // ---------- Others ----------
   /// Show or hide status bar
   bool shouldHideStatusBar;
 
-  /// Allow the slider to scroll
-  bool isScrollable;
+  /// Notify when tab change completed
+  Function onTabChangeCompleted;
 
   // Constructor
   IntroSliderState({
@@ -386,10 +403,13 @@ class IntroSliderState extends State<IntroSlider>
 
     // List custom tabs
     @required this.listCustomTabs,
-    @required this.shouldHideStatusBar,
 
     // Behavior
     @required this.isScrollable,
+
+    // Others
+    @required this.shouldHideStatusBar,
+    @required this.onTabChangeCompleted,
   });
 
   TabController tabController;
@@ -403,6 +423,7 @@ class IntroSliderState extends State<IntroSlider>
 
     tabController = new TabController(length: slides.length, vsync: this);
     tabController.addListener(() {
+      this.onTabChangeCompleted(tabController.index);
       // To change dot color
       this.setState(() {});
     });

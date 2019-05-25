@@ -213,6 +213,10 @@ class IntroScreenState extends State<IntroScreen> {
     // Do what you want
   }
 
+  void onTabChangeCompleted(index) {
+    // Index of current tab is focused
+  }
+
   Widget renderNextBtn() {
     return Icon(
       Icons.navigate_next,
@@ -309,6 +313,9 @@ class IntroScreenState extends State<IntroScreen> {
 
       // Show or hide status bar
       shouldHideStatusBar: true,
+
+      // On tab change completed
+      onTabChangeCompleted: this.onTabChangeCompleted,
     );
   }
 }

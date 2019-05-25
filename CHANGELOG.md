@@ -1,3 +1,7 @@
+## 2.0.2
+
+* Add callback onTabChangeCompleted
+
 ## 2.0.1
 
 * Add custom boxfit to foreground image
