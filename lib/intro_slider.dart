@@ -423,7 +423,9 @@ class IntroSliderState extends State<IntroSlider>
 
     tabController = new TabController(length: slides.length, vsync: this);
     tabController.addListener(() {
-      this.onTabChangeCompleted(tabController.index);
+      if (this.onTabChangeCompleted != null) {
+        this.onTabChangeCompleted(tabController.index);
+      }
       // To change dot color
       this.setState(() {});
     });

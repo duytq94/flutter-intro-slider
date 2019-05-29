@@ -1,3 +1,7 @@
+## 2.0.3
+
+* Fix error when onTabChangeCompleted not defined
+
 ## 2.0.2
 
 * Add callback onTabChangeCompleted
