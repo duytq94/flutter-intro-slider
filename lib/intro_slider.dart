@@ -90,6 +90,9 @@ class IntroSlider extends StatefulWidget {
   /// Rounded DONE button
   final double borderRadiusDoneBtn;
 
+  /// Show or hide DONE button
+  final bool isShowDoneBtn;
+
   // ---------- Dot indicator ----------
   /// Show or hide dot indicator
   final bool isShowDotIndicator;
@@ -118,59 +121,65 @@ class IntroSlider extends StatefulWidget {
   /// Notify when tab change completed
   final Function onTabChangeCompleted;
 
+  /// Background color for all slides
+  final Color backgroundColorAllSlides;
+
   // Constructor
-  IntroSlider(
-      {@required this.slides,
-      // Skip
-      this.renderSkipBtn,
-      this.widthSkipBtn,
-      this.onSkipPress,
-      this.nameSkipBtn,
-      this.styleNameSkipBtn,
-      this.colorSkipBtn,
-      this.highlightColorSkipBtn,
-      this.isShowSkipBtn,
-      this.borderRadiusSkipBtn,
+  IntroSlider({
+    @required this.slides,
+    // Skip
+    this.renderSkipBtn,
+    this.widthSkipBtn,
+    this.onSkipPress,
+    this.nameSkipBtn,
+    this.styleNameSkipBtn,
+    this.colorSkipBtn,
+    this.highlightColorSkipBtn,
+    this.isShowSkipBtn,
+    this.borderRadiusSkipBtn,
 
-      // Prev
-      this.renderPrevBtn,
-      this.widthPrevBtn,
-      this.namePrevBtn,
-      this.isShowPrevBtn,
-      this.styleNamePrevBtn,
-      this.colorPrevBtn,
-      this.highlightColorPrevBtn,
-      this.borderRadiusPrevBtn,
+    // Prev
+    this.renderPrevBtn,
+    this.widthPrevBtn,
+    this.namePrevBtn,
+    this.isShowPrevBtn,
+    this.styleNamePrevBtn,
+    this.colorPrevBtn,
+    this.highlightColorPrevBtn,
+    this.borderRadiusPrevBtn,
 
-      // Done
-      this.renderDoneBtn,
-      this.widthDoneBtn,
-      this.onDonePress,
-      this.nameDoneBtn,
-      this.colorDoneBtn,
-      this.highlightColorDoneBtn,
-      this.borderRadiusDoneBtn,
-      this.styleNameDoneBtn,
+    // Done
+    this.renderDoneBtn,
+    this.widthDoneBtn,
+    this.onDonePress,
+    this.nameDoneBtn,
+    this.colorDoneBtn,
+    this.highlightColorDoneBtn,
+    this.borderRadiusDoneBtn,
+    this.styleNameDoneBtn,
+    this.isShowDoneBtn,
 
-      // Next
-      this.renderNextBtn,
-      this.nameNextBtn,
+    // Next
+    this.renderNextBtn,
+    this.nameNextBtn,
 
-      // Dots
-      this.isShowDotIndicator,
-      this.colorDot,
-      this.colorActiveDot,
-      this.sizeDot,
+    // Dots
+    this.isShowDotIndicator,
+    this.colorDot,
+    this.colorActiveDot,
+    this.sizeDot,
 
-      // List custom tabs
-      this.listCustomTabs,
+    // List custom tabs
+    this.listCustomTabs,
 
-      // Behavior
-      this.isScrollable,
+    // Behavior
+    this.isScrollable,
 
-      // Others
-      this.shouldHideStatusBar,
-      this.onTabChangeCompleted});
+    // Others
+    this.shouldHideStatusBar,
+    this.onTabChangeCompleted,
+    this.backgroundColorAllSlides,
+  });
 
   @override
   IntroSliderState createState() => new IntroSliderState(
@@ -206,6 +215,7 @@ class IntroSlider extends StatefulWidget {
         colorDoneBtn: this.colorDoneBtn,
         highlightColorDoneBtn: this.highlightColorDoneBtn,
         borderRadiusDoneBtn: this.borderRadiusDoneBtn,
+        isShowDoneBtn: this.isShowDoneBtn,
 
         // Next
         renderNextBtn: this.renderNextBtn,
@@ -226,11 +236,11 @@ class IntroSlider extends StatefulWidget {
         // Others
         shouldHideStatusBar: this.shouldHideStatusBar,
         onTabChangeCompleted: this.onTabChangeCompleted,
+        backgroundColorAllSlides: this.backgroundColorAllSlides,
       );
 }
 
-class IntroSliderState extends State<IntroSlider>
-    with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
   /// Default values
   static TextStyle defaultBtnNameTextStyle = TextStyle(color: Colors.white);
 
@@ -321,6 +331,9 @@ class IntroSliderState extends State<IntroSlider>
   /// Rounded DONE button
   double borderRadiusDoneBtn;
 
+  /// Show or hide DONE button
+  bool isShowDoneBtn;
+
   // ---------- NEXT button ----------
   /// Render your own NEXT button
   Widget renderNextBtn;
@@ -354,6 +367,9 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Notify when tab change completed
   Function onTabChangeCompleted;
+
+  /// Background color for all slides
+  Color backgroundColorAllSlides;
 
   // Constructor
   IntroSliderState({
@@ -390,6 +406,7 @@ class IntroSliderState extends State<IntroSlider>
     @required this.colorDoneBtn,
     @required this.highlightColorDoneBtn,
     @required this.borderRadiusDoneBtn,
+    @required this.isShowDoneBtn,
 
     // Next button
     @required this.nameNextBtn,
@@ -410,6 +427,7 @@ class IntroSliderState extends State<IntroSlider>
     // Others
     @required this.shouldHideStatusBar,
     @required this.onTabChangeCompleted,
+    @required this.backgroundColorAllSlides,
   });
 
   TabController tabController;
@@ -440,8 +458,7 @@ class IntroSliderState extends State<IntroSlider>
     tabController.animation.addListener(() {
       this.setState(() {
         marginLeftDotFocused = tabController.animation.value * sizeDot * 2;
-        marginRightDotFocused =
-            initValueMarginRight - tabController.animation.value * sizeDot * 2;
+        marginRightDotFocused = initValueMarginRight - tabController.animation.value * sizeDot * 2;
       });
     });
 
@@ -525,6 +542,9 @@ class IntroSliderState extends State<IntroSlider>
     if (borderRadiusPrevBtn == null) {
       borderRadiusPrevBtn = defaultBtnBorderRadius;
     }
+    if (isShowDoneBtn == null) {
+      isShowDoneBtn = true;
+    }
 
     // Done button
     if (onDonePress == null) {
@@ -579,14 +599,13 @@ class IntroSliderState extends State<IntroSlider>
             TabBarView(
               children: tabs,
               controller: tabController,
-              physics: isScrollable
-                  ? ScrollPhysics()
-                  : NeverScrollableScrollPhysics(),
+              physics: isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics(),
             ),
             renderBottom(),
           ],
         ),
       ),
+      backgroundColor: this.backgroundColorAllSlides ?? Colors.transparent,
     );
   }
 
@@ -599,8 +618,7 @@ class IntroSliderState extends State<IntroSlider>
         child: renderSkipBtn,
         color: colorSkipBtn,
         highlightColor: highlightColorSkipBtn,
-        shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
+        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
       );
     }
   }
@@ -611,8 +629,7 @@ class IntroSliderState extends State<IntroSlider>
       child: renderDoneBtn,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
@@ -627,8 +644,7 @@ class IntroSliderState extends State<IntroSlider>
         child: renderPrevBtn,
         color: colorPrevBtn,
         highlightColor: highlightColorPrevBtn,
-        shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(borderRadiusPrevBtn)),
+        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusPrevBtn)),
       );
     }
   }
@@ -641,8 +657,7 @@ class IntroSliderState extends State<IntroSlider>
       child: renderNextBtn,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
@@ -653,14 +668,9 @@ class IntroSliderState extends State<IntroSlider>
           // Skip button
           Container(
             alignment: Alignment.center,
-            child: isShowSkipBtn
-                ? buildSkipButton()
-                : (isShowPrevBtn ? buildPrevButton() : Container()),
-            width: isShowSkipBtn
-                ? widthSkipBtn
-                : (isShowPrevBtn
-                    ? widthPrevBtn
-                    : MediaQuery.of(context).size.width / 4),
+            child: isShowSkipBtn ? buildSkipButton() : (isShowPrevBtn ? buildPrevButton() : Container()),
+            width:
+                isShowSkipBtn ? widthSkipBtn : (isShowPrevBtn ? widthPrevBtn : MediaQuery.of(context).size.width / 4),
           ),
 
           // Dot indicator
@@ -675,15 +685,11 @@ class IntroSliderState extends State<IntroSlider>
                         ),
                         Center(
                           child: Container(
-                            decoration: BoxDecoration(
-                                color: colorActiveDot,
-                                borderRadius:
-                                    BorderRadius.circular(sizeDot / 2)),
+                            decoration:
+                                BoxDecoration(color: colorActiveDot, borderRadius: BorderRadius.circular(sizeDot / 2)),
                             width: sizeDot,
                             height: sizeDot,
-                            margin: EdgeInsets.only(
-                                left: marginLeftDotFocused,
-                                right: marginRightDotFocused),
+                            margin: EdgeInsets.only(left: marginLeftDotFocused, right: marginRightDotFocused),
                           ),
                         )
                       ],
@@ -695,9 +701,9 @@ class IntroSliderState extends State<IntroSlider>
           // Next, Done button
           Container(
             alignment: Alignment.center,
-            child: tabController.index + 1 == slides.length
-                ? buildDoneButton()
-                : buildNextButton(),
+            child: isShowDoneBtn
+                ? (tabController.index + 1 == slides.length ? buildDoneButton() : buildNextButton())
+                : Container(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
           ),
         ],
@@ -789,8 +795,7 @@ class IntroSliderState extends State<IntroSlider>
                 fit: backgroundImageFit ?? BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   backgroundOpacityColor != null
-                      ? backgroundOpacityColor
-                          .withOpacity(backgroundOpacity ?? 0.5)
+                      ? backgroundOpacityColor.withOpacity(backgroundOpacity ?? 0.5)
                       : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
                   backgroundBlendMode ?? BlendMode.darken,
                 ),
@@ -798,9 +803,7 @@ class IntroSliderState extends State<IntroSlider>
             )
           : BoxDecoration(
               gradient: LinearGradient(
-                colors: backgroundColor != null
-                    ? [backgroundColor, backgroundColor]
-                    : [colorBegin, colorEnd],
+                colors: backgroundColor != null ? [backgroundColor, backgroundColor] : [colorBegin, colorEnd],
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
               ),
@@ -823,9 +826,7 @@ class IntroSliderState extends State<IntroSlider>
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),
-              margin: marginTitle ??
-                  EdgeInsets.only(
-                      top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+              margin: marginTitle ?? EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
             ),
 
             // Image or Center widget
@@ -845,16 +846,12 @@ class IntroSliderState extends State<IntroSlider>
             Container(
               child: Text(
                 description ?? "",
-                style: styleDescription ??
-                    TextStyle(color: Colors.white, fontSize: 18.0),
+                style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
                 textAlign: TextAlign.center,
-                maxLines: maxLineTextDescription != null
-                    ? maxLineTextDescription
-                    : 100,
+                maxLines: maxLineTextDescription != null ? maxLineTextDescription : 100,
                 overflow: TextOverflow.ellipsis,
               ),
-              margin: marginDescription ??
-                  EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+              margin: marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
             ),
           ],
         ),
@@ -872,8 +869,7 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget renderDot(double radius, Color color) {
     return Container(
-      decoration: BoxDecoration(
-          color: color, borderRadius: BorderRadius.circular(radius / 2)),
+      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius / 2)),
       width: radius,
       height: radius,
       margin: EdgeInsets.only(left: radius / 2, right: radius / 2),

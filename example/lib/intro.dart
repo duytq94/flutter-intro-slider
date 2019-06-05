@@ -141,11 +141,12 @@ class IntroScreen extends StatefulWidget {
 //
 //      // Show or hide status bar
 //      shouldHideStatusBar: true,
+//      backgroundColorAllSlides: Colors.grey,
 //    );
 //  }
 //}
 
-//------------------ Custom list tabs ------------------
+//------------------ Custom your own tabs ------------------
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
 
@@ -156,54 +157,35 @@ class IntroScreenState extends State<IntroScreen> {
     slides.add(
       new Slide(
         title: "SCHOOL",
-        styleTitle: TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
+        styleTitle:
+            TextStyle(color: Color(0xff3da4ab), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description:
             "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-        styleDescription: TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+        styleDescription:
+            TextStyle(color: Color(0xfffe9c8f), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
         pathImage: "images/photo_school.png",
       ),
     );
     slides.add(
       new Slide(
         title: "MUSEUM",
-        styleTitle: TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
-        description:
-            "Ye indulgence unreserved connection alteration appearance",
-        styleDescription: TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+        styleTitle:
+            TextStyle(color: Color(0xff3da4ab), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        description: "Ye indulgence unreserved connection alteration appearance",
+        styleDescription:
+            TextStyle(color: Color(0xfffe9c8f), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
         pathImage: "images/photo_museum.png",
       ),
     );
     slides.add(
       new Slide(
         title: "COFFEE SHOP",
-        styleTitle: TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
+        styleTitle:
+            TextStyle(color: Color(0xff3da4ab), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription: TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+        styleDescription:
+            TextStyle(color: Color(0xfffe9c8f), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
         pathImage: "images/photo_coffee_shop.png",
       ),
     );
@@ -316,6 +298,7 @@ class IntroScreenState extends State<IntroScreen> {
 
       // On tab change completed
       onTabChangeCompleted: this.onTabChangeCompleted,
+      backgroundColorAllSlides: Colors.white,
     );
   }
 }

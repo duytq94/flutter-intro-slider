@@ -1,3 +1,8 @@
+## 2.1.1
+
+* Add can set background color for all slides
+* Add can hide DONE button
+
 ## 2.1.0
 
 * Add animation when dot indicator is moving
