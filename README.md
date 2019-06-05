@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.0.3
+  intro_slider: ^2.1.0
 ```
 
 Import
@@ -17,7 +17,7 @@ import 'package:intro_slider/intro_slider.dart';
 
 <h2 align="center">Demo</h2>
 
-![default](screenshots/default.gif)  ![custom 1](screenshots/custom.gif)  ![custom 2](screenshots/custom2.gif)  ![custom 3](screenshots/custom3.gif)
+![default](screenshots/default.gif)  ![custom 1](screenshots/custom.gif)  ![custom 2](screenshots/custom2.gif)
 
 <h2 align="center">Example</h2>
 

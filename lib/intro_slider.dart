@@ -417,6 +417,9 @@ class IntroSliderState extends State<IntroSlider>
   List<Widget> tabs = new List();
   List<Widget> dots = new List();
 
+  double marginLeftDotFocused = 0;
+  double marginRightDotFocused = 0;
+
   @override
   void initState() {
     super.initState();
@@ -426,8 +429,20 @@ class IntroSliderState extends State<IntroSlider>
       if (this.onTabChangeCompleted != null) {
         this.onTabChangeCompleted(tabController.index);
       }
-      // To change dot color
-      this.setState(() {});
+    });
+
+    // Dot animation
+    if (sizeDot == null) {
+      sizeDot = 8.0;
+    }
+    double initValueMarginRight = (sizeDot * 2) * (slides.length - 1);
+    marginRightDotFocused = initValueMarginRight;
+    tabController.animation.addListener(() {
+      this.setState(() {
+        marginLeftDotFocused = tabController.animation.value * sizeDot * 2;
+        marginRightDotFocused =
+            initValueMarginRight - tabController.animation.value * sizeDot * 2;
+      });
     });
 
     setupButtonDefaultValues();
@@ -442,10 +457,6 @@ class IntroSliderState extends State<IntroSlider>
     if (colorActiveDot == null) {
       colorActiveDot = Color(0xffffffff);
     }
-    if (sizeDot == null) {
-      sizeDot = 8.0;
-    }
-
     if (isScrollable == null) {
       isScrollable = true;
     }
@@ -555,7 +566,7 @@ class IntroSliderState extends State<IntroSlider>
 
   @override
   Widget build(BuildContext context) {
-    //Full screen view
+    // Full screen view
     if (shouldHideStatusBar == true) {
       SystemChrome.setEnabledSystemUIOverlays([]);
     }
@@ -655,9 +666,28 @@ class IntroSliderState extends State<IntroSlider>
           // Dot indicator
           Flexible(
             child: isShowDotIndicator
-                ? Row(
-                    children: renderListDots(),
-                    mainAxisAlignment: MainAxisAlignment.center,
+                ? Container(
+                    child: Stack(
+                      children: <Widget>[
+                        Row(
+                          children: this.renderListDots(),
+                          mainAxisAlignment: MainAxisAlignment.center,
+                        ),
+                        Center(
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: colorActiveDot,
+                                borderRadius:
+                                    BorderRadius.circular(sizeDot / 2)),
+                            width: sizeDot,
+                            height: sizeDot,
+                            margin: EdgeInsets.only(
+                                left: marginLeftDotFocused,
+                                right: marginRightDotFocused),
+                          ),
+                        )
+                      ],
+                    ),
                   )
                 : Container(),
           ),
@@ -835,13 +865,7 @@ class IntroSliderState extends State<IntroSlider>
   List<Widget> renderListDots() {
     dots.clear();
     for (int i = 0; i < slides.length; i++) {
-      Color currentColor;
-      if (tabController.index == i) {
-        currentColor = colorActiveDot;
-      } else {
-        currentColor = colorDot;
-      }
-      dots.add(renderDot(sizeDot, currentColor));
+      dots.add(renderDot(sizeDot, colorDot));
     }
     return dots;
   }
@@ -852,7 +876,7 @@ class IntroSliderState extends State<IntroSlider>
           color: color, borderRadius: BorderRadius.circular(radius / 2)),
       width: radius,
       height: radius,
-      margin: EdgeInsets.all(radius / 2),
+      margin: EdgeInsets.only(left: radius / 2, right: radius / 2),
     );
   }
 }

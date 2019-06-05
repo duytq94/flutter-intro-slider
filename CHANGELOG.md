@@ -1,3 +1,7 @@
+## 2.1.0
+
+* Add animation when dot indicator is moving
+
 ## 2.0.3
 
 * Fix error when onTabChangeCompleted not defined
