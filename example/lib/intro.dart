@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
+import 'package:intro_slider/slide_object.dart';
+
 //import 'package:intro_slider_example/home.dart';
 
 void main() => runApp(new MyApp());
@@ -157,35 +160,54 @@ class IntroScreenState extends State<IntroScreen> {
     slides.add(
       new Slide(
         title: "SCHOOL",
-        styleTitle:
-            TextStyle(color: Color(0xff3da4ab), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        styleTitle: TextStyle(
+            color: Color(0xff3da4ab),
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'RobotoMono'),
         description:
             "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-        styleDescription:
-            TextStyle(color: Color(0xfffe9c8f), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleDescription: TextStyle(
+            color: Color(0xfffe9c8f),
+            fontSize: 20.0,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Raleway'),
         pathImage: "images/photo_school.png",
       ),
     );
     slides.add(
       new Slide(
         title: "MUSEUM",
-        styleTitle:
-            TextStyle(color: Color(0xff3da4ab), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
-        description: "Ye indulgence unreserved connection alteration appearance",
-        styleDescription:
-            TextStyle(color: Color(0xfffe9c8f), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleTitle: TextStyle(
+            color: Color(0xff3da4ab),
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'RobotoMono'),
+        description:
+            "Ye indulgence unreserved connection alteration appearance",
+        styleDescription: TextStyle(
+            color: Color(0xfffe9c8f),
+            fontSize: 20.0,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Raleway'),
         pathImage: "images/photo_museum.png",
       ),
     );
     slides.add(
       new Slide(
         title: "COFFEE SHOP",
-        styleTitle:
-            TextStyle(color: Color(0xff3da4ab), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        styleTitle: TextStyle(
+            color: Color(0xff3da4ab),
+            fontSize: 30.0,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'RobotoMono'),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription:
-            TextStyle(color: Color(0xfffe9c8f), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleDescription: TextStyle(
+            color: Color(0xfffe9c8f),
+            fontSize: 20.0,
+            fontStyle: FontStyle.italic,
+            fontFamily: 'Raleway'),
         pathImage: "images/photo_coffee_shop.png",
       ),
     );
@@ -286,9 +308,9 @@ class IntroScreenState extends State<IntroScreen> {
       highlightColorDoneBtn: Color(0xffffcc5c),
 
       // Dot indicator
-      colorDot: Color(0x33ffcc5c),
-      colorActiveDot: Color(0xffffcc5c),
+      colorDot: Color(0xffffcc5c),
       sizeDot: 13.0,
+      typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
 
       // List custom tabs
       listCustomTabs: this.renderListCustomTabs(),

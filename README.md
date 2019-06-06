@@ -6,7 +6,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.1.1
+  intro_slider: ^2.2.0
 ```
 
 Import
@@ -348,9 +348,9 @@ class IntroScreenState extends State<IntroScreen> {
       highlightColorDoneBtn: Color(0xffffcc5c),
 
       // Dot indicator
-      colorDot: Color(0x33ffcc5c),
-      colorActiveDot: Color(0xffffcc5c),
+      colorDot: Color(0xffffcc5c),
       sizeDot: 13.0,
+      typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
 
       // List custom tabs
       listCustomTabs: this.renderListCustomTabs(),
@@ -406,55 +406,56 @@ class IntroScreenState extends State<IntroScreen> {
 
 ## IntroSlider widget attributes
 
-| Name                                                                                              | Type           | Default               | Description                                                       |
-|---------------------------------------------------------------------------------------------------|----------------|-----------------------|-------------------------------------------------------------------|
-| <b>Slide</b>                                                                                      |                |                       |                                                                   |
-| slides                                                                                            | `Slide`        | No default, required  | An array of Slide object                                          |
-| <b>Skip Button</b>                                                                                |                |                       |                                                                   |
-| renderSkipBtn                                                                                     | `Widget`       | Button with text SKIP | Render your own SKIP button                                       |
-| widthSkipBtn                                                                                      | `double`       | 1/4 screen width      | Width of view wrapper SKIP button                                 |
-| onSkipPress                                                                                       | `Function`     | Go to last page       | Fire when press SKIP button                                       |
-| nameSkipBtn                                                                                       | `String`       | "SKIP"                | Change SKIP to any text you want                                  |
-| styleNameSkipBtn                                                                                  | `TextStyle`    | White color           | Style for text at SKIP button                                     |
-| colorSkipBtn                                                                                      | `Color`        | transparent           | Color for SKIP button                                             |
-| highlightColorSkipBtn                                                                             | `Color`        | Color(0x4dffffff)     | Color for SKIP button when press                                  |
-| isShowSkipBtn                                                                                     | `bool`         | true                  | Show or hide SKIP button                                          |
-| borderRadiusSkipBtn                                                                               | `double`       | 30.0                  | Rounded SKIP button                                               |
-| <b>Prev Button</b>                                                                                |                |                       |                                                                   |
-| renderPrevBtn                                                                                     | `Widget`       | Button with text PREV | Render your own PREV button                                       |
-| widthPrevBtn                                                                                      | `double`       | 1/4 screen width      | Width of view wrapper PREV button                                 |
-| namePrevBtn                                                                                       | `String`       | "PREV"                | Change PREV to any text you want                                  |
-| styleNamePrevBtn                                                                                  | `TextStyle`    | White color           | Style for text at PREV button                                     |
-| colorPrevBtn                                                                                      | `Color`        | transparent           | Color for PREV button                                             |
-| highlightColorPrevBtn                                                                             | `Color`        | Color(0x4dffffff)     | Color for PREV button when press                                  |
-| isShowPrevBtn                                                                                     | `bool`         | false                 | Show or hide PREV button                                          |
-| borderRadiusPrevBtn                                                                               | `double`       | 30.0                  | Rounded PREV button                                               |
-| <b>Done Button</b>                                                                                |                |                       |                                                                   |
-| renderDoneBtn                                                                                     | `Widget`       | Button with text DONE | Render your own DONE button                                       |
-| widthDoneBtn                                                                                      | `double`       | 1/4 screen width      | Width of view wrapper DONE button                                 |
-| onDonePress                                                                                       | `Function`     | Do nothing            | Fire when press DONE button                                       |
-| nameDoneBtn                                                                                       | `String`       | "DONE"                | Change DONE to any text you want                                  |
-| styleNameDoneBtn                                                                                  | `TextStyle`    | White color           | Style for text at DONE button                                     |
-| colorDoneBtn                                                                                      | `Color`        | transparent           | Color for DONE button                                             |
-| highlightColorDoneBtn                                                                             | `Color`        | Color(0x4dffffff)     | Color for DONE button when press                                  |
-| borderRadiusDoneBtn                                                                               | `double`       | 30.0                  | Rounded DONE button                                               |
-| isShowDoneBtn                                                                                     | `bool`         | true                  | Show or hide DONE button                                          |
-| <b>Next Button (other attributes will have the same Done button since actually, they are one)</b> |                |                       |                                                                   |
-| renderNextBtn                                                                                     | `Widget`       | Button with text NEXT | Render your own NEXT button                                       |
-| nameNextBtn                                                                                       | `String`       | "NEXT"                | Change NEXT to any text you want                                  |
-| <b>Dot Indicator</b>                                                                              |                |                       |                                                                   |
-| isShowDotIndicator                                                                                | `bool`         | true                  | Show or hide dot indicator                                        |
-| colorDot                                                                                          | `Color`        | Color(0x80000000)     | Color for dot when passive                                        |
-| colorActiveDot                                                                                    | `Color`        | Color(0xffffffff)     | Color for dot when active                                         |
-| sizeDot                                                                                           | `double`       | 8.0                   | Size of each dot                                                  |
-| <b>List custom tabs</b>                                                                           |                |                       |                                                                   |
-| listCustomTabs                                                                                    | `List<Widget>` | null                  | Render your own list tabs (use default tab UI if not defined)     |
-| <b>Behavior</b>                                                                                   |                |                       |                                                                   |
-| isScrollable                                                                                      | `bool`         | true                  | Force button-only scrolling                                       |
-| <b>Others</b>                                                                                     |                |                       |                                                                   |
-| shouldHideStatusBar                                                                               | `bool`         | false                 | Show or hide the status bar                                       |
-| onTabChangeCompleted                                                                              | `Function`     | Do nothing            | Callback when tab change comleted, return the current tab's index |
-| backgroundColorAllSlides                                                                          | `Color`        | Transparent           | Background color for all slides                                   |
+| Name                                                                                               | Type                      | Default               | Description                                                       |
+|----------------------------------------------------------------------------------------------------|---------------------------|-----------------------|-------------------------------------------------------------------|
+| <b>Slide</b>                                                                                       |                           |                       |                                                                   |
+| slides                                                                                             | `Slide`                   | No default, required  | An array of Slide object                                          |
+| <b>Skip Button</b>                                                                                 |                           |                       |                                                                   |
+| renderSkipBtn                                                                                      | `Widget`                  | Button with text SKIP | Render your own SKIP button                                       |
+| widthSkipBtn                                                                                       | `double`                  | 1/4 screen width      | Width of view wrapper SKIP button                                 |
+| onSkipPress                                                                                        | `Function`                | Go to last page       | Fire when press SKIP button                                       |
+| nameSkipBtn                                                                                        | `String`                  | "SKIP"                | Change SKIP to any text you want                                  |
+| styleNameSkipBtn                                                                                   | `TextStyle`               | White color           | Style for text at SKIP button                                     |
+| colorSkipBtn                                                                                       | `Color`                   | transparent           | Color for SKIP button                                             |
+| highlightColorSkipBtn                                                                              | `Color`                   | Color(0x4dffffff)     | Color for SKIP button when press                                  |
+| isShowSkipBtn                                                                                      | `bool`                    | true                  | Show or hide SKIP button                                          |
+| borderRadiusSkipBtn                                                                                | `double`                  | 30.0                  | Rounded SKIP button                                               |
+| <b>Prev Button</b>                                                                                 |                           |                       |                                                                   |
+| renderPrevBtn                                                                                      | `Widget`                  | Button with text PREV | Render your own PREV button                                       |
+| widthPrevBtn                                                                                       | `double`                  | 1/4 screen width      | Width of view wrapper PREV button                                 |
+| namePrevBtn                                                                                        | `String`                  | "PREV"                | Change PREV to any text you want                                  |
+| styleNamePrevBtn                                                                                   | `TextStyle`               | White color           | Style for text at PREV button                                     |
+| colorPrevBtn                                                                                       | `Color`                   | transparent           | Color for PREV button                                             |
+| highlightColorPrevBtn                                                                              | `Color`                   | Color(0x4dffffff)     | Color for PREV button when press                                  |
+| isShowPrevBtn                                                                                      | `bool`                    | false                 | Show or hide PREV button                                          |
+| borderRadiusPrevBtn                                                                                | `double`                  | 30.0                  | Rounded PREV button                                               |
+| <b>Done Button</b>                                                                                 |                           |                       |                                                                   |
+| renderDoneBtn                                                                                      | `Widget`                  | Button with text DONE | Render your own DONE button                                       |
+| widthDoneBtn                                                                                       | `double`                  | 1/4 screen width      | Width of view wrapper DONE button                                 |
+| onDonePress                                                                                        | `Function`                | Do nothing            | Fire when press DONE button                                       |
+| nameDoneBtn                                                                                        | `String`                  | "DONE"                | Change DONE to any text you want                                  |
+| styleNameDoneBtn                                                                                   | `TextStyle`               | White color           | Style for text at DONE button                                     |
+| colorDoneBtn                                                                                       | `Color`                   | transparent           | Color for DONE button                                             |
+| highlightColorDoneBtn                                                                              | `Color`                   | Color(0x4dffffff)     | Color for DONE button when press                                  |
+| borderRadiusDoneBtn                                                                                | `double`                  | 30.0                  | Rounded DONE button                                               |
+| isShowDoneBtn                                                                                      | `bool`                    | true                  | Show or hide DONE button                                          |
+| <b>Next Button (other attributes will have the same Done button since actually, they are one)</b>  |                           |                       |                                                                   |
+| renderNextBtn                                                                                      | `Widget`                  | Button with text NEXT | Render your own NEXT button                                       |
+| nameNextBtn                                                                                        | `String`                  | "NEXT"                | Change NEXT to any text you want                                  |
+| <b>Dot Indicator</b>                                                                               |                           |                       |                                                                   |
+| isShowDotIndicator                                                                                 | `bool`                    | true                  | Show or hide dot indicator                                        |
+| colorDot                                                                                           | `Color`                   | Color(0x80000000)     | Color for dot when passive                                        |
+| colorActiveDot                                                                                     | `Color`                   | Color(0xffffffff)     | Color for dot when active                                         |
+| sizeDot                                                                                            | `double`                  | 8.0                   | Size of each dot                                                  |
+| typeDotAnimation (inactive dots auto have opacity 50%, dot active has size bigger than 1.5 times ) | `enum dotSliderAnimation` | DOT_MOVEMENT          | Type dots animation                                               |
+| <b>List custom tabs</b>                                                                            |                           |                       |                                                                   |
+| listCustomTabs                                                                                     | `List<Widget>`            | null                  | Render your own list tabs (use default tab UI if not defined)     |
+| <b>Behavior</b>                                                                                    |                           |                       |                                                                   |
+| isScrollable                                                                                       | `bool`                    | true                  | Force button-only scrolling                                       |
+| <b>Others</b>                                                                                      |                           |                       |                                                                   |
+| shouldHideStatusBar                                                                                | `bool`                    | false                 | Show or hide the status bar                                       |
+| onTabChangeCompleted                                                                               | `Function`                | Do nothing            | Callback when tab change comleted, return the current tab's index |
+| backgroundColorAllSlides                                                                           | `Color`                   | Transparent           | Background color for all slides                                   |
 
 
 ## Pull request and feedback are always appreciated

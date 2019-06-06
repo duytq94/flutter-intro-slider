@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'dot_animation_enum.dart';
+import 'slide_object.dart';
+
 class IntroSlider extends StatefulWidget {
   /// An array of Slide object
   final List<Slide> slides;
@@ -124,6 +127,9 @@ class IntroSlider extends StatefulWidget {
   /// Background color for all slides
   final Color backgroundColorAllSlides;
 
+  /// Type dots animation
+  final dotSliderAnimation typeDotAnimation;
+
   // Constructor
   IntroSlider({
     @required this.slides,
@@ -179,6 +185,7 @@ class IntroSlider extends StatefulWidget {
     this.shouldHideStatusBar,
     this.onTabChangeCompleted,
     this.backgroundColorAllSlides,
+    this.typeDotAnimation,
   });
 
   @override
@@ -237,10 +244,12 @@ class IntroSlider extends StatefulWidget {
         shouldHideStatusBar: this.shouldHideStatusBar,
         onTabChangeCompleted: this.onTabChangeCompleted,
         backgroundColorAllSlides: this.backgroundColorAllSlides,
+        typeDotAnimation: this.typeDotAnimation,
       );
 }
 
-class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider>
+    with SingleTickerProviderStateMixin {
   /// Default values
   static TextStyle defaultBtnNameTextStyle = TextStyle(color: Colors.white);
 
@@ -354,6 +363,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   /// Size of each dot
   double sizeDot = 8.0;
 
+  /// Type dots animation
+  dotSliderAnimation typeDotAnimation;
+
   /// List custom tabs
   List<Widget> listCustomTabs;
 
@@ -417,6 +429,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     @required this.colorDot,
     @required this.colorActiveDot,
     @required this.sizeDot,
+    @required this.typeDotAnimation,
 
     // List custom tabs
     @required this.listCustomTabs,
@@ -434,9 +447,16 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   List<Widget> tabs = new List();
   List<Widget> dots = new List();
+  List<double> sizeDots = new List();
+  List<double> opacityDots = new List();
 
+  // For DOT_MOVEMENT
   double marginLeftDotFocused = 0;
   double marginRightDotFocused = 0;
+
+  // For SIZE_TRANSITION
+  double currentAnimationValue = 0;
+  int currentTabIndex = 0;
 
   @override
   void initState() {
@@ -444,6 +464,12 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
     tabController = new TabController(length: slides.length, vsync: this);
     tabController.addListener(() {
+      if (tabController.indexIsChanging) {
+        currentTabIndex = tabController.previousIndex;
+      } else {
+        currentTabIndex = tabController.index;
+      }
+      currentAnimationValue = tabController.animation.value;
       if (this.onTabChangeCompleted != null) {
         this.onTabChangeCompleted(tabController.index);
       }
@@ -454,15 +480,84 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       sizeDot = 8.0;
     }
     double initValueMarginRight = (sizeDot * 2) * (slides.length - 1);
-    marginRightDotFocused = initValueMarginRight;
+    if (typeDotAnimation == null) {
+      typeDotAnimation = dotSliderAnimation.DOT_MOVEMENT;
+    }
+
+    switch (typeDotAnimation) {
+      case dotSliderAnimation.DOT_MOVEMENT:
+        for (int i = 0; i < slides.length; i++) {
+          sizeDots.add(sizeDot);
+          opacityDots.add(1.0);
+        }
+        marginRightDotFocused = initValueMarginRight;
+        break;
+      case dotSliderAnimation.SIZE_TRANSITION:
+        for (int i = 0; i < slides.length; i++) {
+          if (i == 0) {
+            sizeDots.add(sizeDot * 1.5);
+            opacityDots.add(1.0);
+          } else {
+            sizeDots.add(sizeDot);
+            opacityDots.add(0.5);
+          }
+        }
+    }
+
     tabController.animation.addListener(() {
       this.setState(() {
-        marginLeftDotFocused = tabController.animation.value * sizeDot * 2;
-        marginRightDotFocused = initValueMarginRight - tabController.animation.value * sizeDot * 2;
+        switch (typeDotAnimation) {
+          case dotSliderAnimation.DOT_MOVEMENT:
+            marginLeftDotFocused = tabController.animation.value * sizeDot * 2;
+            marginRightDotFocused = initValueMarginRight -
+                tabController.animation.value * sizeDot * 2;
+            break;
+          case dotSliderAnimation.SIZE_TRANSITION:
+            if (tabController.animation.value == currentAnimationValue) {
+              break;
+            }
+
+            double diffValueAnimation =
+                (tabController.animation.value - currentAnimationValue).abs();
+            int diffValueIndex = (currentTabIndex - tabController.index).abs();
+
+            // When press skip button
+            if (tabController.indexIsChanging &&
+                (tabController.index - tabController.previousIndex).abs() > 1) {
+              if (diffValueAnimation < 1.0) {
+                diffValueAnimation = 1.0;
+              }
+              sizeDots[currentTabIndex] = sizeDot * 1.5 -
+                  (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
+              sizeDots[tabController.index] = sizeDot +
+                  (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
+              opacityDots[currentTabIndex] =
+                  1.0 - (diffValueAnimation / diffValueIndex) / 2;
+              opacityDots[tabController.index] =
+                  0.5 + (diffValueAnimation / diffValueIndex) / 2;
+            } else {
+              if (tabController.animation.value > currentAnimationValue) {
+                // Swipe left
+                sizeDots[currentTabIndex] =
+                    sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex + 1] =
+                    sizeDot + (sizeDot / 2) * diffValueAnimation;
+                opacityDots[currentTabIndex] = 1.0 - diffValueAnimation / 2;
+                opacityDots[currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
+              } else {
+                // Swipe right
+                sizeDots[currentTabIndex] =
+                    sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex - 1] =
+                    sizeDot + (sizeDot / 2) * diffValueAnimation;
+                opacityDots[currentTabIndex] = 1.0 - diffValueAnimation / 2;
+                opacityDots[currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
+              }
+            }
+            break;
+        }
       });
     });
-
-    setupButtonDefaultValues();
 
     // Dot indicator
     if (isShowDotIndicator == null) {
@@ -472,11 +567,13 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       colorDot = Color(0x80000000);
     }
     if (colorActiveDot == null) {
-      colorActiveDot = Color(0xffffffff);
+      colorActiveDot = colorDot;
     }
     if (isScrollable == null) {
       isScrollable = true;
     }
+
+    setupButtonDefaultValues();
 
     if (this.listCustomTabs == null) {
       renderListTabs();
@@ -489,7 +586,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     // Skip button
     if (onSkipPress == null) {
       onSkipPress = () {
-        tabController.animateTo(slides.length - 1);
+        if (!this.isAnimating(tabController.animation.value)) {
+          tabController.animateTo(slides.length - 1);
+        }
       };
     }
     if (isShowSkipBtn == null) {
@@ -584,6 +683,13 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     }
   }
 
+  // Checking if tab is animating
+  bool isAnimating(value) {
+    return tabController.animation.value -
+            tabController.animation.value.truncate() !=
+        0;
+  }
+
   @override
   Widget build(BuildContext context) {
     // Full screen view
@@ -599,7 +705,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             TabBarView(
               children: tabs,
               controller: tabController,
-              physics: isScrollable ? ScrollPhysics() : NeverScrollableScrollPhysics(),
+              physics: isScrollable
+                  ? ScrollPhysics()
+                  : NeverScrollableScrollPhysics(),
             ),
             renderBottom(),
           ],
@@ -618,7 +726,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         child: renderSkipBtn,
         color: colorSkipBtn,
         highlightColor: highlightColorSkipBtn,
-        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
       );
     }
   }
@@ -629,7 +738,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       child: renderDoneBtn,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
@@ -639,12 +749,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     } else {
       return FlatButton(
         onPressed: () {
-          tabController.animateTo(tabController.index - 1);
+          if (!this.isAnimating(tabController.animation.value)) {
+            tabController.animateTo(tabController.index - 1);
+          }
         },
         child: renderPrevBtn,
         color: colorPrevBtn,
         highlightColor: highlightColorPrevBtn,
-        shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusPrevBtn)),
+        shape: new RoundedRectangleBorder(
+            borderRadius: new BorderRadius.circular(borderRadiusPrevBtn)),
       );
     }
   }
@@ -652,12 +765,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   Widget buildNextButton() {
     return FlatButton(
       onPressed: () {
-        tabController.animateTo(tabController.index + 1);
+        if (!this.isAnimating(tabController.animation.value)) {
+          tabController.animateTo(tabController.index + 1);
+        }
       },
       child: renderNextBtn,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
-      shape: new RoundedRectangleBorder(borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+      shape: new RoundedRectangleBorder(
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
     );
   }
 
@@ -668,9 +784,14 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           // Skip button
           Container(
             alignment: Alignment.center,
-            child: isShowSkipBtn ? buildSkipButton() : (isShowPrevBtn ? buildPrevButton() : Container()),
-            width:
-                isShowSkipBtn ? widthSkipBtn : (isShowPrevBtn ? widthPrevBtn : MediaQuery.of(context).size.width / 4),
+            child: isShowSkipBtn
+                ? buildSkipButton()
+                : (isShowPrevBtn ? buildPrevButton() : Container()),
+            width: isShowSkipBtn
+                ? widthSkipBtn
+                : (isShowPrevBtn
+                    ? widthPrevBtn
+                    : MediaQuery.of(context).size.width / 4),
           ),
 
           // Dot indicator
@@ -683,15 +804,21 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                           children: this.renderListDots(),
                           mainAxisAlignment: MainAxisAlignment.center,
                         ),
-                        Center(
-                          child: Container(
-                            decoration:
-                                BoxDecoration(color: colorActiveDot, borderRadius: BorderRadius.circular(sizeDot / 2)),
-                            width: sizeDot,
-                            height: sizeDot,
-                            margin: EdgeInsets.only(left: marginLeftDotFocused, right: marginRightDotFocused),
-                          ),
-                        )
+                        typeDotAnimation == dotSliderAnimation.DOT_MOVEMENT
+                            ? Center(
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      color: colorActiveDot,
+                                      borderRadius:
+                                          BorderRadius.circular(sizeDot / 2)),
+                                  width: sizeDot,
+                                  height: sizeDot,
+                                  margin: EdgeInsets.only(
+                                      left: marginLeftDotFocused,
+                                      right: marginRightDotFocused),
+                                ),
+                              )
+                            : Container()
                       ],
                     ),
                   )
@@ -702,7 +829,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           Container(
             alignment: Alignment.center,
             child: isShowDoneBtn
-                ? (tabController.index + 1 == slides.length ? buildDoneButton() : buildNextButton())
+                ? (tabController.index + 1 == slides.length
+                    ? buildDoneButton()
+                    : buildNextButton())
                 : Container(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
           ),
@@ -795,7 +924,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 fit: backgroundImageFit ?? BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   backgroundOpacityColor != null
-                      ? backgroundOpacityColor.withOpacity(backgroundOpacity ?? 0.5)
+                      ? backgroundOpacityColor
+                          .withOpacity(backgroundOpacity ?? 0.5)
                       : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
                   backgroundBlendMode ?? BlendMode.darken,
                 ),
@@ -803,7 +933,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             )
           : BoxDecoration(
               gradient: LinearGradient(
-                colors: backgroundColor != null ? [backgroundColor, backgroundColor] : [colorBegin, colorEnd],
+                colors: backgroundColor != null
+                    ? [backgroundColor, backgroundColor]
+                    : [colorBegin, colorEnd],
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
               ),
@@ -826,7 +958,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
               ),
-              margin: marginTitle ?? EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+              margin: marginTitle ??
+                  EdgeInsets.only(
+                      top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
             ),
 
             // Image or Center widget
@@ -846,12 +980,16 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             Container(
               child: Text(
                 description ?? "",
-                style: styleDescription ?? TextStyle(color: Colors.white, fontSize: 18.0),
+                style: styleDescription ??
+                    TextStyle(color: Colors.white, fontSize: 18.0),
                 textAlign: TextAlign.center,
-                maxLines: maxLineTextDescription != null ? maxLineTextDescription : 100,
+                maxLines: maxLineTextDescription != null
+                    ? maxLineTextDescription
+                    : 100,
                 overflow: TextOverflow.ellipsis,
               ),
-              margin: marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+              margin: marginDescription ??
+                  EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
             ),
           ],
         ),
@@ -862,163 +1000,21 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   List<Widget> renderListDots() {
     dots.clear();
     for (int i = 0; i < slides.length; i++) {
-      dots.add(renderDot(sizeDot, colorDot));
+      dots.add(renderDot(sizeDots[i], colorDot, opacityDots[i]));
     }
     return dots;
   }
 
-  Widget renderDot(double radius, Color color) {
-    return Container(
-      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius / 2)),
-      width: radius,
-      height: radius,
-      margin: EdgeInsets.only(left: radius / 2, right: radius / 2),
+  Widget renderDot(double radius, Color color, double opacity) {
+    return Opacity(
+      child: Container(
+        decoration: BoxDecoration(
+            color: color, borderRadius: BorderRadius.circular(radius / 2)),
+        width: radius,
+        height: radius,
+        margin: EdgeInsets.only(left: radius / 2, right: radius / 2),
+      ),
+      opacity: opacity,
     );
-  }
-}
-
-class Slide {
-  // Title
-  /// Change text title at top
-  String title;
-
-  /// Change max number of lines title at top
-  int maxLineTitle;
-
-  /// Style for text title
-  TextStyle styleTitle;
-
-  /// Margin for text title
-  EdgeInsets marginTitle;
-
-  // Image
-  /// Path to your local image
-  String pathImage;
-
-  /// Width of image
-  double widthImage;
-
-  /// Height of image
-  double heightImage;
-
-  /// Scale of image
-  BoxFit foregroundImageFit;
-
-  /// Fire when press image or center widget
-  Function onCenterItemPress;
-
-  // Custom your center widget instead of image (if this widget exist, center image will hide)
-  Widget centerWidget;
-
-  //endregion
-
-  // Description
-  /// Change text description at bottom
-  String description;
-
-  /// Maximum line of text description
-  int maxLineTextDescription;
-
-  /// Style for text description
-  TextStyle styleDescription;
-
-  /// Margin for text description
-  EdgeInsets marginDescription;
-
-  // Background color
-  /// Background tab color
-  Color backgroundColor;
-
-  /// Gradient tab color begin
-  Color colorBegin;
-
-  /// Gradient tab color end
-  Color colorEnd;
-
-  /// Direction color begin
-  AlignmentGeometry directionColorBegin;
-
-  /// Direction color end
-  AlignmentGeometry directionColorEnd;
-
-  // Background image
-  String backgroundImage;
-  BoxFit backgroundImageFit;
-  double backgroundOpacity;
-  Color backgroundOpacityColor;
-  BlendMode backgroundBlendMode;
-
-  Slide({
-    // Title
-    String title,
-    int maxLineTitle,
-    TextStyle styleTitle,
-    EdgeInsets marginTitle,
-
-    // Image (if specified centerWidget is not displayed)
-    String pathImage,
-    double widthImage,
-    double heightImage,
-    BoxFit foregroundImageFit,
-
-    // Center widget
-    Widget centerWidget,
-    Function onCenterItemPress,
-
-    // Description
-    String description,
-    int maxLineTextDescription,
-    TextStyle styleDescription,
-    EdgeInsets marginDescription,
-
-    // Background color
-    Color backgroundColor,
-    Color colorBegin,
-    Color colorEnd,
-    AlignmentGeometry directionColorBegin,
-    AlignmentGeometry directionColorEnd,
-
-    // Background image
-    String backgroundImage,
-    BoxFit backgroundImageFit,
-    double backgroundOpacity,
-    Color backgroundOpacityColor,
-    BlendMode backgroundBlendMode,
-  }) {
-    // Title
-    this.title = title;
-    this.maxLineTitle = maxLineTitle;
-    this.styleTitle = styleTitle;
-    this.marginTitle = marginTitle;
-
-    // Image
-    this.pathImage = pathImage;
-    this.widthImage = widthImage;
-    this.heightImage = heightImage;
-    this.foregroundImageFit = foregroundImageFit;
-
-    // Center widget
-    this.centerWidget = centerWidget;
-    this.onCenterItemPress = onCenterItemPress;
-
-    // Description
-    this.description = description;
-    this.maxLineTextDescription = maxLineTextDescription;
-    this.styleDescription = styleDescription;
-    this.marginDescription = marginDescription;
-
-    // Background color
-    this.backgroundColor = backgroundColor;
-    this.colorBegin = colorBegin;
-    this.colorEnd = colorEnd;
-    this.directionColorBegin = directionColorBegin;
-    this.directionColorEnd = directionColorEnd;
-
-    // background image
-    this.backgroundImage = backgroundImage;
-    this.backgroundImageFit = backgroundImageFit;
-    this.backgroundOpacity = backgroundOpacity;
-    this.backgroundOpacityColor = backgroundOpacityColor;
-    this.backgroundBlendMode = backgroundBlendMode;
   }
 }

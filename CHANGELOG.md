@@ -1,3 +1,7 @@
+## 2.2.0
+
+* Add more dots animation 
+
 ## 2.1.1
 
 * Add can set background color for all slides
