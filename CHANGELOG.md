@@ -1,3 +1,7 @@
+## 2.2.1
+
+* Fix color dots displaced to the right on last slide
+
 ## 2.2.0
 
 * Add more dots animation 

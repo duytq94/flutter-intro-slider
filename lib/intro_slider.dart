@@ -788,7 +788,7 @@ class IntroSliderState extends State<IntroSlider>
                 ? buildSkipButton()
                 : (isShowPrevBtn ? buildPrevButton() : Container()),
             width: isShowSkipBtn
-                ? widthSkipBtn
+                ? widthSkipBtn ?? MediaQuery.of(context).size.width / 4
                 : (isShowPrevBtn
                     ? widthPrevBtn
                     : MediaQuery.of(context).size.width / 4),
