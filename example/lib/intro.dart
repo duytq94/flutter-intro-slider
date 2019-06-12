@@ -153,6 +153,8 @@ class IntroScreen extends StatefulWidget {
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
 
+  Function goToTab;
+
   @override
   void initState() {
     super.initState();
@@ -214,7 +216,8 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   void onDonePress() {
-    // Do what you want
+    // Back to the first tab
+    this.goToTab(0);
   }
 
   void onTabChangeCompleted(index) {
@@ -312,15 +315,18 @@ class IntroScreenState extends State<IntroScreen> {
       sizeDot: 13.0,
       typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
 
-      // List custom tabs
+      // Tabs
       listCustomTabs: this.renderListCustomTabs(),
+      backgroundColorAllSlides: Colors.white,
+      refFuncGoToTab: (refFunc) {
+        this.goToTab = refFunc;
+      },
 
       // Show or hide status bar
       shouldHideStatusBar: true,
 
       // On tab change completed
       onTabChangeCompleted: this.onTabChangeCompleted,
-      backgroundColorAllSlides: Colors.white,
     );
   }
 }

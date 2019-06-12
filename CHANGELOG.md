@@ -1,3 +1,7 @@
+## 2.2.2
+
+* Add refFuncGoToTab, then we can move to any tab index programmatically
+
 ## 2.2.1
 
 * Fix color dots displaced to the right on last slide

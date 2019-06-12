@@ -5,8 +5,12 @@ import 'dot_animation_enum.dart';
 import 'slide_object.dart';
 
 class IntroSlider extends StatefulWidget {
+  // ---------- Slides ----------
   /// An array of Slide object
   final List<Slide> slides;
+
+  /// Background color for all slides
+  final Color backgroundColorAllSlides;
 
   // ---------- SKIP button ----------
   /// Render your own SKIP button
@@ -109,30 +113,32 @@ class IntroSlider extends StatefulWidget {
   /// Size of each dot
   final double sizeDot;
 
-  // ---------- List custom tabs ----------
+  /// Type dots animation
+  final dotSliderAnimation typeDotAnimation;
+
+  // ---------- Tabs ----------
   /// Render your own custom tabs
   final List<Widget> listCustomTabs;
+
+  /// Notify when tab change completed
+  final Function onTabChangeCompleted;
+
+  /// Ref function go to specific tab index
+  final Function refFuncGoToTab;
 
   // ---------- Behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
   final bool isScrollable;
 
-  // ---------- Others ----------
   /// Show or hide status bar
   final bool shouldHideStatusBar;
 
-  /// Notify when tab change completed
-  final Function onTabChangeCompleted;
-
-  /// Background color for all slides
-  final Color backgroundColorAllSlides;
-
-  /// Type dots animation
-  final dotSliderAnimation typeDotAnimation;
-
   // Constructor
   IntroSlider({
+    // Slides
     @required this.slides,
+    this.backgroundColorAllSlides,
+
     // Skip
     this.renderSkipBtn,
     this.widthSkipBtn,
@@ -174,78 +180,78 @@ class IntroSlider extends StatefulWidget {
     this.colorDot,
     this.colorActiveDot,
     this.sizeDot,
+    this.typeDotAnimation,
 
-    // List custom tabs
+    // Tabs
     this.listCustomTabs,
+    this.onTabChangeCompleted,
+    this.refFuncGoToTab,
 
     // Behavior
     this.isScrollable,
-
-    // Others
     this.shouldHideStatusBar,
-    this.onTabChangeCompleted,
-    this.backgroundColorAllSlides,
-    this.typeDotAnimation,
   });
 
   @override
-  IntroSliderState createState() => new IntroSliderState(
-        slides: this.slides,
+  IntroSliderState createState() {
+    return new IntroSliderState(
+      // Slides
+      slides: this.slides,
+      backgroundColorAllSlides: this.backgroundColorAllSlides,
 
-        // Skip
-        renderSkipBtn: this.renderSkipBtn,
-        widthSkipBtn: this.widthSkipBtn,
-        onSkipPress: this.onSkipPress,
-        nameSkipBtn: this.nameSkipBtn,
-        styleNameSkipBtn: this.styleNameSkipBtn,
-        colorSkipBtn: this.colorSkipBtn,
-        highlightColorSkipBtn: this.highlightColorSkipBtn,
-        isShowSkipBtn: this.isShowSkipBtn,
-        borderRadiusSkipBtn: this.borderRadiusSkipBtn,
+      // Skip
+      renderSkipBtn: this.renderSkipBtn,
+      widthSkipBtn: this.widthSkipBtn,
+      onSkipPress: this.onSkipPress,
+      nameSkipBtn: this.nameSkipBtn,
+      styleNameSkipBtn: this.styleNameSkipBtn,
+      colorSkipBtn: this.colorSkipBtn,
+      highlightColorSkipBtn: this.highlightColorSkipBtn,
+      isShowSkipBtn: this.isShowSkipBtn,
+      borderRadiusSkipBtn: this.borderRadiusSkipBtn,
 
-        // Prev
-        renderPrevBtn: this.renderPrevBtn,
-        widthPrevBtn: this.widthPrevBtn,
-        namePrevBtn: this.namePrevBtn,
-        isShowPrevBtn: this.isShowPrevBtn,
-        styleNamePrevBtn: this.styleNamePrevBtn,
-        colorPrevBtn: this.colorPrevBtn,
-        highlightColorPrevBtn: this.highlightColorPrevBtn,
-        borderRadiusPrevBtn: this.borderRadiusPrevBtn,
+      // Prev
+      renderPrevBtn: this.renderPrevBtn,
+      widthPrevBtn: this.widthPrevBtn,
+      namePrevBtn: this.namePrevBtn,
+      isShowPrevBtn: this.isShowPrevBtn,
+      styleNamePrevBtn: this.styleNamePrevBtn,
+      colorPrevBtn: this.colorPrevBtn,
+      highlightColorPrevBtn: this.highlightColorPrevBtn,
+      borderRadiusPrevBtn: this.borderRadiusPrevBtn,
 
-        // Done
-        renderDoneBtn: this.renderDoneBtn,
-        widthDoneBtn: this.widthDoneBtn,
-        onDonePress: this.onDonePress,
-        nameDoneBtn: this.nameDoneBtn,
-        styleNameDoneBtn: this.styleNameDoneBtn,
-        colorDoneBtn: this.colorDoneBtn,
-        highlightColorDoneBtn: this.highlightColorDoneBtn,
-        borderRadiusDoneBtn: this.borderRadiusDoneBtn,
-        isShowDoneBtn: this.isShowDoneBtn,
+      // Done
+      renderDoneBtn: this.renderDoneBtn,
+      widthDoneBtn: this.widthDoneBtn,
+      onDonePress: this.onDonePress,
+      nameDoneBtn: this.nameDoneBtn,
+      styleNameDoneBtn: this.styleNameDoneBtn,
+      colorDoneBtn: this.colorDoneBtn,
+      highlightColorDoneBtn: this.highlightColorDoneBtn,
+      borderRadiusDoneBtn: this.borderRadiusDoneBtn,
+      isShowDoneBtn: this.isShowDoneBtn,
 
-        // Next
-        renderNextBtn: this.renderNextBtn,
-        nameNextBtn: this.nameNextBtn,
+      // Next
+      renderNextBtn: this.renderNextBtn,
+      nameNextBtn: this.nameNextBtn,
 
-        // Dots
-        isShowDotIndicator: this.isShowDotIndicator,
-        colorDot: this.colorDot,
-        colorActiveDot: this.colorActiveDot,
-        sizeDot: this.sizeDot,
+      // Dots
+      isShowDotIndicator: this.isShowDotIndicator,
+      colorDot: this.colorDot,
+      colorActiveDot: this.colorActiveDot,
+      sizeDot: this.sizeDot,
+      typeDotAnimation: this.typeDotAnimation,
 
-        // List custom tabs
-        listCustomTabs: this.listCustomTabs,
+      // Tabs
+      listCustomTabs: this.listCustomTabs,
+      onTabChangeCompleted: this.onTabChangeCompleted,
+      refFuncGoToTab: this.refFuncGoToTab,
 
-        // Behavior
-        isScrollable: this.isScrollable,
-
-        // Others
-        shouldHideStatusBar: this.shouldHideStatusBar,
-        onTabChangeCompleted: this.onTabChangeCompleted,
-        backgroundColorAllSlides: this.backgroundColorAllSlides,
-        typeDotAnimation: this.typeDotAnimation,
-      );
+      // Behavior
+      isScrollable: this.isScrollable,
+      shouldHideStatusBar: this.shouldHideStatusBar,
+    );
+  }
 }
 
 class IntroSliderState extends State<IntroSlider>
@@ -259,8 +265,12 @@ class IntroSliderState extends State<IntroSlider>
 
   static Color defaultBtnHighlightColor = Colors.white.withOpacity(0.3);
 
+  // ---------- Slides ----------
   /// An array of Slide object
   final List<Slide> slides;
+
+  /// Background color for all slides
+  Color backgroundColorAllSlides;
 
   // ---------- SKIP button ----------
   /// Render your own SKIP button
@@ -366,27 +376,28 @@ class IntroSliderState extends State<IntroSlider>
   /// Type dots animation
   dotSliderAnimation typeDotAnimation;
 
+  // ---------- Tabs ----------
   /// List custom tabs
   List<Widget> listCustomTabs;
+
+  /// Notify when tab change completed
+  Function onTabChangeCompleted;
+
+  /// Ref function go to specific tab index
+  Function refFuncGoToTab;
 
   // ---------- Behavior ----------
   /// Allow the slider to scroll
   bool isScrollable;
 
-  // ---------- Others ----------
   /// Show or hide status bar
   bool shouldHideStatusBar;
-
-  /// Notify when tab change completed
-  Function onTabChangeCompleted;
-
-  /// Background color for all slides
-  Color backgroundColorAllSlides;
 
   // Constructor
   IntroSliderState({
     // List slides
     @required this.slides,
+    @required this.backgroundColorAllSlides,
 
     // Skip button
     @required this.renderSkipBtn,
@@ -431,16 +442,14 @@ class IntroSliderState extends State<IntroSlider>
     @required this.sizeDot,
     @required this.typeDotAnimation,
 
-    // List custom tabs
+    // Tabs
     @required this.listCustomTabs,
+    @required this.onTabChangeCompleted,
+    @required this.refFuncGoToTab,
 
     // Behavior
     @required this.isScrollable,
-
-    // Others
     @required this.shouldHideStatusBar,
-    @required this.onTabChangeCompleted,
-    @required this.backgroundColorAllSlides,
   });
 
   TabController tabController;
@@ -474,6 +483,11 @@ class IntroSliderState extends State<IntroSlider>
         this.onTabChangeCompleted(tabController.index);
       }
     });
+
+    // Send reference function goToTab to parent
+    if (this.refFuncGoToTab != null) {
+      this.refFuncGoToTab(this.goToTab);
+    }
 
     // Dot animation
     if (sizeDot == null) {
@@ -680,6 +694,12 @@ class IntroSliderState extends State<IntroSlider>
         nameNextBtn,
         style: styleNameDoneBtn,
       );
+    }
+  }
+
+  void goToTab(index) {
+    if (index < tabController.length) {
+      tabController.animateTo(index);
     }
   }
 
