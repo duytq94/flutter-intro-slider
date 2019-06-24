@@ -1,3 +1,7 @@
+## 2.2.3
+
+* Fix dot animation don't working properly on RTL language
+
 ## 2.2.2
 
 * Add refFuncGoToTab, then we can move to any tab index programmatically

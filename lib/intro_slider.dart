@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'dot_animation_enum.dart';
+import 'list_rtl_language.dart';
 import 'slide_object.dart';
 
 class IntroSlider extends StatefulWidget {
@@ -710,6 +711,10 @@ class IntroSliderState extends State<IntroSlider>
         0;
   }
 
+  bool isRTLLanguage(language) {
+    return rtlLanguages.contains(language);
+  }
+
   @override
   Widget build(BuildContext context) {
     // Full screen view
@@ -834,8 +839,16 @@ class IntroSliderState extends State<IntroSlider>
                                   width: sizeDot,
                                   height: sizeDot,
                                   margin: EdgeInsets.only(
-                                      left: marginLeftDotFocused,
-                                      right: marginRightDotFocused),
+                                      left: this.isRTLLanguage(
+                                              Localizations.localeOf(context)
+                                                  .languageCode)
+                                          ? marginRightDotFocused
+                                          : marginLeftDotFocused,
+                                      right: this.isRTLLanguage(
+                                              Localizations.localeOf(context)
+                                                  .languageCode)
+                                          ? marginLeftDotFocused
+                                          : marginRightDotFocused),
                                 ),
                               )
                             : Container()
