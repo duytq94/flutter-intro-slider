@@ -1,3 +1,7 @@
+## 2.2.4
+
+* Update docs
+
 ## 2.2.3
 
 * Fix dot animation don't working properly on RTL language

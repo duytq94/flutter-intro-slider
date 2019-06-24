@@ -2,11 +2,22 @@
 
 <p align="center">A plugin to help you make intro screens to show the major features of your app. You can change the image, button, text style, color, and more things. Create intro screens is never been more quick and easy than this</p>
 
+# Table of Contents
+  - [Installing](#installing) - How to install
+  - [Demo](#demo) - How this plugin works
+  - [Code example](#code-example) - How to use
+    - [Default config](#default-config)
+    - [Custom config](#custom-config)
+    - [Custom your own tabs](#custom-your-own-tabs)
+  - [Slide object properties](#slide-object-properties) - Modifying your tabs
+  - [IntroSlider widget properties](#IntroSlider-widget-properties) - Modifying entire slider
+
+# Installing
 Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.2.3
+  intro_slider: ^2.2.4
 ```
 
 Import
@@ -15,16 +26,18 @@ Import
 import 'package:intro_slider/intro_slider.dart';
 ```
 
-<h2 align="center">Demo</h2>
+# Demo
 
 ![default](screenshots/default.gif)  ![custom 1](screenshots/custom.gif)  ![custom 2](screenshots/custom2.gif)
 
-<h2 align="center">Example</h2>
+# Code example
 
-### Default config
+## Default config
 
 ![default config image](screenshots/default.png)
-
+<details>
+  <summary>Code example (Click to expand)</summary>
+  
 ```dart
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
@@ -74,9 +87,13 @@ class IntroScreenState extends State<IntroScreen> {
 }
 ```
 
-### Custom config
+</details>
+
+## Custom config
 
 ![custom config image](screenshots/custom.png)
+<details>
+  <summary>Code example (Click to expand)</summary>
 
 ```dart
 class IntroScreenState extends State<IntroScreen> {
@@ -204,9 +221,13 @@ class IntroScreenState extends State<IntroScreen> {
 }
 ```
 
-### Custom your own tabs
+</details>
+
+## Custom your own tabs
 
 ![custom config image](screenshots/custom3.jpg)
+<details>
+  <summary>Code example (Click to expand)</summary>
 
 ```dart
 class IntroScreenState extends State<IntroScreen> {
@@ -372,9 +393,9 @@ class IntroScreenState extends State<IntroScreen> {
 }
 ```
 
-<h2 align="center">Options</h2>
+</details>
 
-## Slide object attributes
+# Slide object properties
 
 | Name                    | Type                | Default                                 | Description                             |
 |-------------------------|---------------------|-----------------------------------------|-----------------------------------------|
@@ -410,7 +431,7 @@ class IntroScreenState extends State<IntroScreen> {
 | backgroundBlendMode     | `BlendMode`         | BlendMode.darken                        | Background tab image filter blend mode  |
 
 
-## IntroSlider widget attributes
+# IntroSlider widget properties
 
 | Name                                                                                                   | Type                      | Default               | Description                                                                                         |
 |--------------------------------------------------------------------------------------------------------|---------------------------|-----------------------|-----------------------------------------------------------------------------------------------------|
