@@ -1,8 +1,8 @@
 <h1 align="center">FLUTTER INTRO SLIDER</h1>
 
-<p align="center">A plugin to help you make intro screens to show the major features of your app. You can change the image, button, text style, color, and more things. Create intro screens is never been more quick and easy than this</p>
+<p align="center">Flutter Intro Slider is a flutter plugin that helps you make a cool intro for your app. Create intro has never been easier and faster</p>
 
-# Table of Contents
+## Table of Contents
   - [Installing](#installing) - How to install
   - [Demo](#demo) - How this plugin works
   - [Code example](#code-example) - How to use
@@ -12,12 +12,12 @@
   - [Slide object properties](#slide-object-properties) - Modifying your tabs
   - [IntroSlider widget properties](#IntroSlider-widget-properties) - Modifying entire slider
 
-# Installing
+## Installing
 Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.2.4
+  intro_slider: ^2.2.5
 ```
 
 Import
@@ -26,17 +26,17 @@ Import
 import 'package:intro_slider/intro_slider.dart';
 ```
 
-# Demo
+## Demo
 
 ![default](screenshots/default.gif)  ![custom 1](screenshots/custom.gif)  ![custom 2](screenshots/custom2.gif)
 
-# Code example
+## Code example
 
-## Default config
+### Default config
 
 ![default config image](screenshots/default.png)
 <details>
-  <summary>Code example (Click to expand)</summary>
+  <summary>Code example (click to expand)</summary>
   
 ```dart
 class IntroScreenState extends State<IntroScreen> {
@@ -89,11 +89,11 @@ class IntroScreenState extends State<IntroScreen> {
 
 </details>
 
-## Custom config
+### Custom config
 
 ![custom config image](screenshots/custom.png)
 <details>
-  <summary>Code example (Click to expand)</summary>
+  <summary>Code example (click to expand)</summary>
 
 ```dart
 class IntroScreenState extends State<IntroScreen> {
@@ -223,11 +223,11 @@ class IntroScreenState extends State<IntroScreen> {
 
 </details>
 
-## Custom your own tabs
+### Custom your own tabs
 
 ![custom config image](screenshots/custom3.jpg)
 <details>
-  <summary>Code example (Click to expand)</summary>
+  <summary>Code example (click to expand)</summary>
 
 ```dart
 class IntroScreenState extends State<IntroScreen> {
@@ -395,7 +395,7 @@ class IntroScreenState extends State<IntroScreen> {
 
 </details>
 
-# Slide object properties
+## Slide object properties
 
 | Name                    | Type                | Default                                 | Description                             |
 |-------------------------|---------------------|-----------------------------------------|-----------------------------------------|
@@ -431,7 +431,7 @@ class IntroScreenState extends State<IntroScreen> {
 | backgroundBlendMode     | `BlendMode`         | BlendMode.darken                        | Background tab image filter blend mode  |
 
 
-# IntroSlider widget properties
+## IntroSlider widget properties
 
 | Name                                                                                                   | Type                      | Default               | Description                                                                                         |
 |--------------------------------------------------------------------------------------------------------|---------------------------|-----------------------|-----------------------------------------------------------------------------------------------------|
