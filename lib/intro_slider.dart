@@ -947,13 +947,17 @@ class IntroSliderState extends State<IntroSlider>
     Color backgroundOpacityColor,
     BlendMode backgroundBlendMode,
   ) {
+    ImageProvider bgimg = AssetImage(backgroundImage);
+    if (backgroundImage.startsWith("http")) {
+       bgimg = NetworkImage(backgroundImage);
+    }
     return Container(
       width: double.infinity,
       height: double.infinity,
       decoration: backgroundImage != null
           ? BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(backgroundImage),
+                image:bgimg,
                 fit: backgroundImageFit ?? BoxFit.cover,
                 colorFilter: ColorFilter.mode(
                   backgroundOpacityColor != null
