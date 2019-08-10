@@ -1,3 +1,7 @@
+## 2.2.6
+
+* Remove some unnecessary files
+
 ## 2.2.5
 
 * Update docs
