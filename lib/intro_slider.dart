@@ -947,6 +947,9 @@ class IntroSliderState extends State<IntroSlider>
     Color backgroundOpacityColor,
     BlendMode backgroundBlendMode,
   ) {
+    if (backgroundColor == null && colorBegin == null) {
+      backgroundColor = Color(0xfff5a623);
+    }
     return Container(
       width: double.infinity,
       height: double.infinity,
