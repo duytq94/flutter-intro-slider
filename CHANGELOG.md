@@ -1,3 +1,7 @@
+## 2.2.7
+
+* Set backgroundColor to Colors.amberAccent when not define
+
 ## 2.2.6
 
 * Remove some unnecessary files

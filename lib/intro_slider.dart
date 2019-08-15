@@ -968,7 +968,10 @@ class IntroSliderState extends State<IntroSlider>
               gradient: LinearGradient(
                 colors: backgroundColor != null
                     ? [backgroundColor, backgroundColor]
-                    : [colorBegin, colorEnd],
+                    : [
+                        colorBegin ?? Colors.amberAccent,
+                        colorEnd ?? Colors.amberAccent
+                      ],
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
               ),

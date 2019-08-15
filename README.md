@@ -17,7 +17,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.2.6
+  intro_slider: ^2.2.7
 ```
 
 Import
@@ -418,11 +418,11 @@ class IntroScreenState extends State<IntroScreen> {
 | styleDescription        | `TextStyle`         | White and font size is 18.0             | Style for text description              |
 | marginDescription       | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description             |
 | <b>Background Color</b> |                     |                                         |                                         |
-| backgroundColor         | `Color`             | Color(0xfff5a623)                       | Background tab color                    |
-| colorBegin              | `Color`             | null                                    | Gradient tab color begin                |
-| colorEnd                | `Color`             | null                                    | Gradient tab color end                  |
-| directionColorBegin     | `AlignmentGeometry` | null                                    | Direction color begin                   |
-| directionColorEnd       | `AlignmentGeometry` | null                                    | Direction color end                     |
+| backgroundColor         | `Color`             | Colors.amberAccent                      | Background tab color                    |
+| colorBegin              | `Color`             | Colors.amberAccent                      | Gradient tab color begin                |
+| colorEnd                | `Color`             | Colors.amberAccent                      | Gradient tab color end                  |
+| directionColorBegin     | `AlignmentGeometry` | Alignment.topLeft                       | Direction color begin                   |
+| directionColorEnd       | `AlignmentGeometry` | Alignment.bottomRight                   | Direction color end                     |
 | <b>Background Image</b> |                     |                                         |                                         |
 | backgroundImage         | `String`            | null                                    | Background tab image                    |
 | backgroundImageFit      | `BoxFit`            | BoxFit.cover                            | Background tab image fit                |
