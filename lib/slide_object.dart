@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
 class Slide {
+  // Title widget
+  /// If non-null, used instead of [title] and its relevant properties
+  Widget widgetTitle;
+
   // Title
   /// Change text title at top
   String title;
@@ -34,6 +38,10 @@ class Slide {
   Widget centerWidget;
 
   //endregion
+
+  // Description widget
+  /// If non-null, used instead of [description] and its relevant properties
+  Widget widgetDescription;
 
   // Description
   /// Change text description at bottom
@@ -73,6 +81,7 @@ class Slide {
 
   Slide({
     // Title
+    Widget widgetTitle,
     String title,
     int maxLineTitle,
     TextStyle styleTitle,
@@ -89,6 +98,7 @@ class Slide {
     Function onCenterItemPress,
 
     // Description
+    Widget widgetDescription,
     String description,
     int maxLineTextDescription,
     TextStyle styleDescription,
@@ -109,6 +119,7 @@ class Slide {
     BlendMode backgroundBlendMode,
   }) {
     // Title
+    this.widgetTitle = widgetTitle;
     this.title = title;
     this.maxLineTitle = maxLineTitle;
     this.styleTitle = styleTitle;
@@ -125,6 +136,7 @@ class Slide {
     this.onCenterItemPress = onCenterItemPress;
 
     // Description
+    this.widgetDescription = widgetDescription;
     this.description = description;
     this.maxLineTextDescription = maxLineTextDescription;
     this.styleDescription = styleDescription;

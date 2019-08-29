@@ -880,10 +880,12 @@ class IntroSliderState extends State<IntroSlider>
     for (int i = 0; i < slides.length; i++) {
       tabs.add(
         renderTab(
+          slides[i].widgetTitle,
           slides[i].title,
           slides[i].maxLineTitle,
           slides[i].styleTitle,
           slides[i].marginTitle,
+          slides[i].widgetDescription,
           slides[i].description,
           slides[i].maxLineTextDescription,
           slides[i].styleDescription,
@@ -912,12 +914,14 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget renderTab(
     // Title
+    Widget widgetTitle,
     String title,
     int maxLineTitle,
     TextStyle styleTitle,
     EdgeInsets marginTitle,
 
     // Description
+    Widget widgetDescription,
     String description,
     int maxLineTextDescription,
     TextStyle styleDescription,
@@ -982,7 +986,7 @@ class IntroSliderState extends State<IntroSlider>
           children: <Widget>[
             Container(
               // Title
-              child: Text(
+              child: widgetTitle ?? Text(
                 title ?? "",
                 style: styleTitle ??
                     TextStyle(
@@ -1014,7 +1018,7 @@ class IntroSliderState extends State<IntroSlider>
 
             // Description
             Container(
-              child: Text(
+              child: widgetDescription ?? Text(
                 description ?? "",
                 style: styleDescription ??
                     TextStyle(color: Colors.white, fontSize: 18.0),
