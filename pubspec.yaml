@@ -3,7 +3,7 @@ description: Flutter Intro Slider is a flutter plugin that helps you make a cool
 authors:
   - Duy Tran <tranquangduy7994@gmail.com>
 homepage: https://github.com/duytq94/flutter-intro-slider
-version: 2.2.7
+version: 2.2.8
 
 dependencies:
   flutter:

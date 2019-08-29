@@ -1,3 +1,7 @@
+## 2.2.8
+
+* Allow supplying a custom title and/or description widgets.
+
 ## 2.2.7
 
 * Set backgroundColor to Colors.amberAccent when not define

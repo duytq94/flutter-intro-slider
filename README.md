@@ -17,7 +17,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.2.7
+  intro_slider: ^2.2.8
 ```
 
 Import
@@ -397,38 +397,40 @@ class IntroScreenState extends State<IntroScreen> {
 
 ## Slide object properties
 
-| Name                    | Type                | Default                                 | Description                             |
-|-------------------------|---------------------|-----------------------------------------|-----------------------------------------|
-| <b>Title</b>            |                     |                                         |                                         |
-| title                   | `String`            | ""                                      | Change text title at top                |
-| maxLineTitle            | `int`               | 1                                       | Change max number of lines title at top |
-| styleTitle              | `TextStyle`         | White color, bold and font size is 30.0 | Style for text title                    |
-| marginTitle             | `EdgeInsets`        | top: 70.0, bottom: 50.0                 | Margin for text title                   |
-| <b>Image</b>            |                     |                                         |                                         |
-| pathImage               | `String`            | ""                                      | Path to your local image                |
-| widthImage              | `double`            | 250.0                                   | Width of image                          |
-| heightImage             | `double`            | 250.0                                   | Height of image                         |
-| foregroundImageFit      | `BoxFit`            | BoxFit.contain                          | Foreground image fit                    |
-| <b>Center widget</b>    |                     |                                         |                                         |
-| centerWidget            | `Widget`            | null                                    | Your custom's widget                    |
-| onCenterItemPress       | `Function`          | Do nothing                              | Fire when press center image/widget     |
-| <b>Description</b>      |                     |                                         |                                         |
-| description             | `String`            | ""                                      | Change text description at bottom       |
-| maxLineTextDescription  | `String`            | 100                                     | Maximum line of text description        |
-| styleDescription        | `TextStyle`         | White and font size is 18.0             | Style for text description              |
-| marginDescription       | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description             |
-| <b>Background Color</b> |                     |                                         |                                         |
-| backgroundColor         | `Color`             | Colors.amberAccent                      | Background tab color                    |
-| colorBegin              | `Color`             | Colors.amberAccent                      | Gradient tab color begin                |
-| colorEnd                | `Color`             | Colors.amberAccent                      | Gradient tab color end                  |
-| directionColorBegin     | `AlignmentGeometry` | Alignment.topLeft                       | Direction color begin                   |
-| directionColorEnd       | `AlignmentGeometry` | Alignment.bottomRight                   | Direction color end                     |
-| <b>Background Image</b> |                     |                                         |                                         |
-| backgroundImage         | `String`            | null                                    | Background tab image                    |
-| backgroundImageFit      | `BoxFit`            | BoxFit.cover                            | Background tab image fit                |
-| backgroundOpacity       | `double`            | 0.5                                     | Background tab image filter opacity     |
-| backgroundOpacityColor  | `Color`             | Colors.black                            | Background tab image filter color       |
-| backgroundBlendMode     | `BlendMode`         | BlendMode.darken                        | Background tab image filter blend mode  |
+| Name                    | Type                | Default                                 | Description                                                                  |
+|-------------------------|---------------------|-----------------------------------------|------------------------------------------------------------------------------|
+| <b>Title</b>            |                     |                                         |                                                                              |
+| title                   | `String`            | ""                                      | Change text title at top                                                     |
+| widgetTitle             | `Widget`            | null                                    | Set a custom widget as the title (ignore `title` if define both)             |
+| maxLineTitle            | `int`               | 1                                       | Change max number of lines title at top                                      |
+| styleTitle              | `TextStyle`         | White color, bold and font size is 30.0 | Style for text title                                                         |
+| marginTitle             | `EdgeInsets`        | top: 70.0, bottom: 50.0                 | Margin for text title                                                        |
+| <b>Image</b>            |                     |                                         |                                                                              |
+| pathImage               | `String`            | ""                                      | Path to your local image                                                     |
+| widthImage              | `double`            | 250.0                                   | Width of image                                                               |
+| heightImage             | `double`            | 250.0                                   | Height of image                                                              |
+| foregroundImageFit      | `BoxFit`            | BoxFit.contain                          | Foreground image fit                                                         |
+| <b>Center widget</b>    |                     |                                         |                                                                              |
+| centerWidget            | `Widget`            | null                                    | Your custom's widget                                                         |
+| onCenterItemPress       | `Function`          | Do nothing                              | Fire when press center image/widget                                          |
+| <b>Description</b>      |                     |                                         |                                                                              |
+| description             | `String`            | ""                                      | Change text description at bottom                                            |
+| widgetDescription       | `Widget`            | null                                    | Set a custom widget as the description (ignore `description` if define both) |
+| maxLineTextDescription  | `String`            | 100                                     | Maximum line of text description                                             |
+| styleDescription        | `TextStyle`         | White and font size is 18.0             | Style for text description                                                   |
+| marginDescription       | `EdgeInsets`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description                                                  |
+| <b>Background Color</b> |                     |                                         |                                                                              |
+| backgroundColor         | `Color`             | Colors.amberAccent                      | Background tab color                                                         |
+| colorBegin              | `Color`             | Colors.amberAccent                      | Gradient tab color begin                                                     |
+| colorEnd                | `Color`             | Colors.amberAccent                      | Gradient tab color end                                                       |
+| directionColorBegin     | `AlignmentGeometry` | Alignment.topLeft                       | Direction color begin                                                        |
+| directionColorEnd       | `AlignmentGeometry` | Alignment.bottomRight                   | Direction color end                                                          |
+| <b>Background Image</b> |                     |                                         |                                                                              |
+| backgroundImage         | `String`            | null                                    | Background tab image                                                         |
+| backgroundImageFit      | `BoxFit`            | BoxFit.cover                            | Background tab image fit                                                     |
+| backgroundOpacity       | `double`            | 0.5                                     | Background tab image filter opacity                                          |
+| backgroundOpacityColor  | `Color`             | Colors.black                            | Background tab image filter color                                            |
+| backgroundBlendMode     | `BlendMode`         | BlendMode.darken                        | Background tab image filter blend mode                                       |
 
 
 ## IntroSlider widget properties
