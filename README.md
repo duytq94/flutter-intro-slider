@@ -24,7 +24,13 @@ Import
 
 ```sh
 import 'package:intro_slider/intro_slider.dart';
+import 'package:intro_slider/dot_animation_enum.dart';
+import 'package:intro_slider/slide_object.dart';
 ```
+
+Add image assets
+
+The demo already contains image assets in the pubspec.yml, but if you are putting the example code below straight into your project, don't forget to [add the image assets](https://flutter.dev/docs/development/ui/assets-and-images).
 
 ## Demo
 
