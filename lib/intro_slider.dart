@@ -1059,4 +1059,11 @@ class IntroSliderState extends State<IntroSlider>
       opacity: opacity,
     );
   }
+
+  @override
+  void dispose() {
+    super.dispose();
+    // bring the status bar back
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+  }
 }
