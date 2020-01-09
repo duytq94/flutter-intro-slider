@@ -480,7 +480,7 @@ class IntroSliderState extends State<IntroSlider>
         currentTabIndex = tabController.index;
       }
       currentAnimationValue = tabController.animation.value;
-      if (this.onTabChangeCompleted != null) {
+      if (tabController.indexIsChanging && this.onTabChangeCompleted != null) {
         this.onTabChangeCompleted(tabController.index);
       }
     });
