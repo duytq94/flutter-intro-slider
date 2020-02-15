@@ -1,3 +1,7 @@
+## 2.2.9
+
+* Dispose tabController/animations.
+
 ## 2.2.8
 
 * Allow supplying a custom title and/or description widgets.

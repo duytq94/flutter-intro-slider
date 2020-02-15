@@ -17,7 +17,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.2.8
+  intro_slider: ^2.2.9
 ```
 
 Import
