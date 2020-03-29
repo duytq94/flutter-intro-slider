@@ -153,30 +153,33 @@ class IntroScreen extends StatefulWidget {
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
 
+  //adding global key and adding it to the slider gives you the function of manually changing the slides.
+  GlobalKey<IntroSliderState> _globalKey = GlobalKey<IntroSliderState>();
+
+
   Function goToTab;
 
   @override
   void initState() {
     super.initState();
+    slides.add(new Slide(
+        pathImage: "images/photo_museum.png",
+        title: "",
+        description: "",
+        widgetDescription: Column(
+          children: <Widget>[
+            RaisedButton(
+              child: Text("next"),
+              onPressed: () {
 
-    slides.add(
-      new Slide(
-        title: "SCHOOL",
-        styleTitle: TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
-        description:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-        styleDescription: TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
-        pathImage: "images/photo_school.png",
-      ),
-    );
+                // you can call next slide
+                _globalKey.currentState.nextSlide();
+                //you can also get previous.
+//                _globalKey.currentState.previousSlide();
+              },
+            ),
+          ],
+        )));
     slides.add(
       new Slide(
         title: "MUSEUM",

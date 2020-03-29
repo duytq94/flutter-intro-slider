@@ -10,6 +10,7 @@ class IntroSlider extends StatefulWidget {
   /// An array of Slide object
   final List<Slide> slides;
 
+
   /// Background color for all slides
   final Color backgroundColorAllSlides;
 
@@ -139,7 +140,8 @@ class IntroSlider extends StatefulWidget {
     // Slides
     @required this.slides,
     this.backgroundColorAllSlides,
-
+    // GlobalKey to call inner methods in the widget from outside
+    Key key,
     // Skip
     this.renderSkipBtn,
     this.widthSkipBtn,
@@ -191,7 +193,7 @@ class IntroSlider extends StatefulWidget {
     // Behavior
     this.isScrollable,
     this.shouldHideStatusBar,
-  });
+  }):super(key:key);
 
   @override
   IntroSliderState createState() {
@@ -400,6 +402,8 @@ class IntroSliderState extends State<IntroSlider>
     @required this.slides,
     @required this.backgroundColorAllSlides,
 
+    // Global key
+    Key key,
     // Skip button
     @required this.renderSkipBtn,
     @required this.widthSkipBtn,
@@ -774,16 +778,17 @@ class IntroSliderState extends State<IntroSlider>
     );
   }
 
+  void previousSlide(){
+    if (!this.isAnimating(tabController.animation.value)) {
+      tabController.animateTo(tabController.index - 1);
+    }
+  }
   Widget buildPrevButton() {
     if (tabController.index == 0) {
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
       return FlatButton(
-        onPressed: () {
-          if (!this.isAnimating(tabController.animation.value)) {
-            tabController.animateTo(tabController.index - 1);
-          }
-        },
+        onPressed: previousSlide,
         child: renderPrevBtn,
         color: colorPrevBtn,
         highlightColor: highlightColorPrevBtn,
@@ -793,13 +798,14 @@ class IntroSliderState extends State<IntroSlider>
     }
   }
 
+  void nextSlide(){
+    if (!this.isAnimating(tabController.animation.value)) {
+      tabController.animateTo(tabController.index + 1);
+    }
+  }
   Widget buildNextButton() {
     return FlatButton(
-      onPressed: () {
-        if (!this.isAnimating(tabController.animation.value)) {
-          tabController.animateTo(tabController.index + 1);
-        }
-      },
+      onPressed: nextSlide,
       child: renderNextBtn,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
