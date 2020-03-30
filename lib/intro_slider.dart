@@ -729,6 +729,8 @@ class IntroSliderState extends State<IntroSlider>
     }
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
+      resizeToAvoidBottomPadding: false,
       body: DefaultTabController(
         length: slides.length,
         child: Stack(
