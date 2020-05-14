@@ -17,7 +17,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.2.9
+  intro_slider: ^2.3.0
 ```
 
 Import
@@ -471,6 +471,7 @@ class IntroScreenState extends State<IntroScreen> {
 | <b>Next Button (other attributes will have the same<br/>Done button since they are one)                |                           |                       |                                                                                                     |
 | renderNextBtn                                                                                          | `Widget`                  | Button with text NEXT | Render your own NEXT button                                                                         |
 | nameNextBtn                                                                                            | `String`                  | "NEXT"                | Change NEXT to any text you want                                                                    |
+| isShowNextBtn                                                                                          | `bool`                    | true                  | Show or hide NEXT button                                                                            |
 | <b>Dot Indicator</b>                                                                                   |                           |                       |                                                                                                     |
 | isShowDotIndicator                                                                                     | `bool`                    | true                  | Show or hide dot indicator                                                                          |
 | colorDot                                                                                               | `Color`                   | Color(0x80000000)     | Color for dot when passive                                                                          |

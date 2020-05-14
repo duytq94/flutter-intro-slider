@@ -1,3 +1,7 @@
+## 2.3.0
+
+* Add isShowNextBtn
+
 ## 2.2.9
 
 * Dispose tabController/animations.

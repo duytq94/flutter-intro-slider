@@ -73,6 +73,9 @@ class IntroSlider extends StatefulWidget {
   /// Change NEXT to any text you want
   final String nameNextBtn;
 
+  /// Show or hide NEXT button
+  final bool isShowNextBtn;
+
   // ---------- DONE button ----------
   /// Change DONE to any text you want
   final String nameDoneBtn;
@@ -175,6 +178,7 @@ class IntroSlider extends StatefulWidget {
     // Next
     this.renderNextBtn,
     this.nameNextBtn,
+    this.isShowNextBtn,
 
     // Dots
     this.isShowDotIndicator,
@@ -235,6 +239,7 @@ class IntroSlider extends StatefulWidget {
       // Next
       renderNextBtn: this.renderNextBtn,
       nameNextBtn: this.nameNextBtn,
+      isShowNextBtn: this.isShowNextBtn,
 
       // Dots
       isShowDotIndicator: this.isShowDotIndicator,
@@ -361,6 +366,9 @@ class IntroSliderState extends State<IntroSlider>
   /// Change NEXT to any text you want
   String nameNextBtn;
 
+  /// Show or hide NEXT button
+  bool isShowNextBtn;
+
   // ---------- Dot indicator ----------
   /// Show or hide dot indicator
   bool isShowDotIndicator = true;
@@ -435,6 +443,7 @@ class IntroSliderState extends State<IntroSlider>
     // Next button
     @required this.nameNextBtn,
     @required this.renderNextBtn,
+    @required this.isShowNextBtn,
 
     // Dot indicator
     @required this.isShowDotIndicator,
@@ -660,6 +669,10 @@ class IntroSliderState extends State<IntroSlider>
       isShowDoneBtn = true;
     }
 
+    if (isShowNextBtn == null) {
+      isShowNextBtn = true;
+    }
+
     // Done button
     if (onDonePress == null) {
       onDonePress = () {};
@@ -867,12 +880,11 @@ class IntroSliderState extends State<IntroSlider>
           // Next, Done button
           Container(
             alignment: Alignment.center,
-            child: isShowDoneBtn
-                ? (tabController.index + 1 == slides.length
-                    ? buildDoneButton()
-                    : buildNextButton())
-                : Container(),
+            child: tabController.index + 1 == slides.length
+                ? isShowDoneBtn ? buildDoneButton() : Container()
+                : isShowNextBtn ? buildNextButton() : Container(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
+            height: 50,
           ),
         ],
       ),
