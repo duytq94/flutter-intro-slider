@@ -1,3 +1,7 @@
+## 2.3.1
+
+* Update example (migrate to AndroidX)
+
 ## 2.3.0
 
 * Add isShowNextBtn
