@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'dot_animation_enum.dart';
 import 'list_rtl_language.dart';
+import 'scrollbar_behavior_enum.dart';
 import 'slide_object.dart';
 
 class IntroSlider extends StatefulWidget {
@@ -137,6 +138,9 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide status bar
   final bool shouldHideStatusBar;
 
+  /// The way the vertical scrollbar should behave
+  final scrollbarBehavior verticalScrollbarBehavior;
+
   // Constructor
   IntroSlider({
     // Slides
@@ -195,6 +199,7 @@ class IntroSlider extends StatefulWidget {
     // Behavior
     this.isScrollable,
     this.shouldHideStatusBar,
+    this.verticalScrollbarBehavior,
   });
 
   @override
@@ -256,6 +261,8 @@ class IntroSlider extends StatefulWidget {
       // Behavior
       isScrollable: this.isScrollable,
       shouldHideStatusBar: this.shouldHideStatusBar,
+      verticalScrollbarBehavior:
+          this.verticalScrollbarBehavior ?? scrollbarBehavior.HIDE,
     );
   }
 }
@@ -402,6 +409,9 @@ class IntroSliderState extends State<IntroSlider>
   /// Show or hide status bar
   bool shouldHideStatusBar;
 
+  /// The way the vertical scrollbar should behave
+  final scrollbarBehavior verticalScrollbarBehavior;
+
   // Constructor
   IntroSliderState({
     // List slides
@@ -460,6 +470,7 @@ class IntroSliderState extends State<IntroSlider>
     // Behavior
     @required this.isScrollable,
     @required this.shouldHideStatusBar,
+    @required this.verticalScrollbarBehavior,
   });
 
   TabController tabController;
@@ -969,6 +980,63 @@ class IntroSliderState extends State<IntroSlider>
     Color backgroundOpacityColor,
     BlendMode backgroundBlendMode,
   ) {
+    final scrollController =
+        this.verticalScrollbarBehavior == scrollbarBehavior.SHOW_ALWAYS
+            ? ScrollController()
+            : null;
+    final listView = ListView(
+      controller: scrollController,
+      children: <Widget>[
+        Container(
+          // Title
+          child: widgetTitle ??
+              Text(
+                title ?? "",
+                style: styleTitle ??
+                    TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30.0,
+                    ),
+                maxLines: maxLineTitle != null ? maxLineTitle : 1,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+          margin: marginTitle ??
+              EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+        ),
+
+        // Image or Center widget
+        GestureDetector(
+          child: pathImage != null
+              ? Image.asset(
+                  pathImage,
+                  width: widthImage ?? 200.0,
+                  height: heightImage ?? 200.0,
+                  fit: foregroundImageFit ?? BoxFit.contain,
+                )
+              : Center(child: centerWidget ?? Container()),
+          onTap: onCenterItemPress,
+        ),
+
+        // Description
+        Container(
+          child: widgetDescription ??
+              Text(
+                description ?? "",
+                style: styleDescription ??
+                    TextStyle(color: Colors.white, fontSize: 18.0),
+                textAlign: TextAlign.center,
+                maxLines: maxLineTextDescription != null
+                    ? maxLineTextDescription
+                    : 100,
+                overflow: TextOverflow.ellipsis,
+              ),
+          margin:
+              marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+        ),
+      ],
+    );
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -1000,59 +1068,13 @@ class IntroSliderState extends State<IntroSlider>
             ),
       child: Container(
         margin: EdgeInsets.only(bottom: 60.0),
-        child: ListView(
-          children: <Widget>[
-            Container(
-              // Title
-              child: widgetTitle ??
-                  Text(
-                    title ?? "",
-                    style: styleTitle ??
-                        TextStyle(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 30.0,
-                        ),
-                    maxLines: maxLineTitle != null ? maxLineTitle : 1,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-              margin: marginTitle ??
-                  EdgeInsets.only(
-                      top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
-            ),
-
-            // Image or Center widget
-            GestureDetector(
-              child: pathImage != null
-                  ? Image.asset(
-                      pathImage,
-                      width: widthImage ?? 200.0,
-                      height: heightImage ?? 200.0,
-                      fit: foregroundImageFit ?? BoxFit.contain,
-                    )
-                  : Center(child: centerWidget ?? Container()),
-              onTap: onCenterItemPress,
-            ),
-
-            // Description
-            Container(
-              child: widgetDescription ??
-                  Text(
-                    description ?? "",
-                    style: styleDescription ??
-                        TextStyle(color: Colors.white, fontSize: 18.0),
-                    textAlign: TextAlign.center,
-                    maxLines: maxLineTextDescription != null
-                        ? maxLineTextDescription
-                        : 100,
-                    overflow: TextOverflow.ellipsis,
-                  ),
-              margin: marginDescription ??
-                  EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
-            ),
-          ],
-        ),
+        child: this.verticalScrollbarBehavior != scrollbarBehavior.HIDE
+            ? Scrollbar(
+                child: listView,
+                controller: scrollController,
+                isAlwaysShown: scrollController != null,
+              )
+            : listView,
       ),
     );
   }
