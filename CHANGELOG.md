@@ -1,3 +1,7 @@
+## 2.3.2
+
+* Add scrollbar for tab content
+
 ## 2.3.1
 
 * Update example (migrate to AndroidX)

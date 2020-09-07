@@ -3,21 +3,23 @@
 <p align="center">Flutter Intro Slider is a flutter plugin that helps you make a cool intro for your app. Create intro has never been easier and faster</p>
 
 ## Table of Contents
-  - [Installing](#installing) - How to install
-  - [Demo](#demo) - How this plugin works
-  - [Code example](#code-example) - How to use
-    - [Default config](#default-config)
-    - [Custom config](#custom-config)
-    - [Custom your own tabs](#custom-your-own-tabs)
-  - [Slide object properties](#slide-object-properties) - Modifying your tabs
-  - [IntroSlider widget properties](#IntroSlider-widget-properties) - Modifying entire slider
+
+- [Installing](#installing) - How to install
+- [Demo](#demo) - How this plugin works
+- [Code example](#code-example) - How to use
+  - [Default config](#default-config)
+  - [Custom config](#custom-config)
+  - [Custom your own tabs](#custom-your-own-tabs)
+- [Slide object properties](#slide-object-properties) - Modifying your tabs
+- [IntroSlider widget properties](#IntroSlider-widget-properties) - Modifying entire slider
 
 ## Installing
+
 Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^2.3.1
+  intro_slider: ^2.3.2
 ```
 
 Import
@@ -28,13 +30,14 @@ import 'package:intro_slider/intro_slider.dart';
 
 ## Demo
 
-![default](screenshots/default.gif)  ![custom 1](screenshots/custom.gif)  ![custom 2](screenshots/custom2.gif)
+![default](screenshots/default.gif) ![custom 1](screenshots/custom.gif) ![custom 2](screenshots/custom2.gif)
 
 ## Code example
 
 ### Default config
 
 ![default config image](screenshots/default.png)
+
 <details>
   <summary>Code example (click to expand)</summary>
   
@@ -42,9 +45,9 @@ import 'package:intro_slider/intro_slider.dart';
 class IntroScreenState extends State<IntroScreen> {
   List<Slide> slides = new List();
 
-  @override
-  void initState() {
-    super.initState();
+@override
+void initState() {
+super.initState();
 
     slides.add(
       new Slide(
@@ -71,21 +74,23 @@ class IntroScreenState extends State<IntroScreen> {
         backgroundColor: Color(0xff9932CC),
       ),
     );
-  }
 
-  void onDonePress() {
-    // Do what you want
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return new IntroSlider(
-      slides: this.slides,
-      onDonePress: this.onDonePress,
-    );
-  }
 }
-```
+
+void onDonePress() {
+// Do what you want
+}
+
+@override
+Widget build(BuildContext context) {
+return new IntroSlider(
+slides: this.slides,
+onDonePress: this.onDonePress,
+);
+}
+}
+
+````
 
 </details>
 
@@ -219,13 +224,14 @@ class IntroScreenState extends State<IntroScreen> {
     );
   }
 }
-```
+````
 
 </details>
 
 ### Custom your own tabs
 
 ![custom config image](screenshots/custom3.jpg)
+
 <details>
   <summary>Code example (click to expand)</summary>
 
@@ -398,7 +404,7 @@ class IntroScreenState extends State<IntroScreen> {
 ## Slide object properties
 
 | Name                    | Type                | Default                                 | Description                                                                  |
-|-------------------------|---------------------|-----------------------------------------|------------------------------------------------------------------------------|
+| ----------------------- | ------------------- | --------------------------------------- | ---------------------------------------------------------------------------- |
 | <b>Title</b>            |                     |                                         |                                                                              |
 | title                   | `String`            | ""                                      | Change text title at top                                                     |
 | widgetTitle             | `Widget`            | null                                    | Set a custom widget as the title (ignore `title` if define both)             |
@@ -432,11 +438,10 @@ class IntroScreenState extends State<IntroScreen> {
 | backgroundOpacityColor  | `Color`             | Colors.black                            | Background tab image filter color                                            |
 | backgroundBlendMode     | `BlendMode`         | BlendMode.darken                        | Background tab image filter blend mode                                       |
 
-
 ## IntroSlider widget properties
 
 | Name                                                                                                   | Type                      | Default               | Description                                                                                         |
-|--------------------------------------------------------------------------------------------------------|---------------------------|-----------------------|-----------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------ | ------------------------- | --------------------- | --------------------------------------------------------------------------------------------------- |
 | <b>Slide</b>                                                                                           |                           |                       |                                                                                                     |
 | slides                                                                                                 | `Slide`                   | No default, required  | An array of Slide object                                                                            |
 | <b>Skip Button</b>                                                                                     |                           |                       |                                                                                                     |
@@ -485,6 +490,7 @@ class IntroScreenState extends State<IntroScreen> {
 | backgroundColorAllSlides                                                                               | `Color`                   | Transparent           | Background color for all slides                                                                     |
 | <b>Behavior</b>                                                                                        |                           |                       |                                                                                                     |
 | isScrollable                                                                                           | `bool`                    | true                  | Force button-only scrolling                                                                         |
+| alwaysShowScrollbarForContent                                                                          | `bool`                    | false                 | Ability to always show the scrollbar or to only show when interacting                               |
 | shouldHideStatusBar                                                                                    | `bool`                    | false                 | Show or hide the status bar                                                                         |
 
 ## Pull request and feedback are always appreciated
