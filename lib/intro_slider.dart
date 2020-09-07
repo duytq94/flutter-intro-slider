@@ -982,7 +982,7 @@ class IntroSliderState extends State<IntroSlider>
   ) {
     final scrollController =
         this.verticalScrollbarBehavior == scrollbarBehavior.SHOW_ALWAYS
-            ? ScrollController()
+            ? ScrollController(initialScrollOffset: 0.01)
             : null;
     final listView = ListView(
       controller: scrollController,
