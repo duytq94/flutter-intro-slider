@@ -1011,7 +1011,7 @@ class IntroSliderState extends State<IntroSlider>
       child: Container(
         margin: EdgeInsets.only(bottom: 60.0),
         child: Scrollbar(
-          isAlwaysShown: alwaysShowScrollbarForContent,
+         // isAlwaysShown: alwaysShowScrollbarForContent,
           controller: _scrollController,
           child: ListView(
             controller: _scrollController,
