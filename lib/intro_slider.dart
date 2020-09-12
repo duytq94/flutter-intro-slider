@@ -479,6 +479,7 @@ class IntroSliderState extends State<IntroSlider>
   List<Widget> dots = new List();
   List<double> sizeDots = new List();
   List<double> opacityDots = new List();
+  List<ScrollController> scrollControllers = new List();
 
   // For DOT_MOVEMENT
   double marginLeftDotFocused = 0;
@@ -907,8 +908,11 @@ class IntroSliderState extends State<IntroSlider>
 
   List<Widget> renderListTabs() {
     for (int i = 0; i < slides.length; i++) {
+      final scrollController = ScrollController();
+      scrollControllers.add(scrollController);
       tabs.add(
         renderTab(
+          scrollController,
           slides[i].widgetTitle,
           slides[i].title,
           slides[i].maxLineTitle,
@@ -942,6 +946,8 @@ class IntroSliderState extends State<IntroSlider>
   }
 
   Widget renderTab(
+    ScrollController scrollController,
+
     // Title
     Widget widgetTitle,
     String title,
@@ -980,65 +986,58 @@ class IntroSliderState extends State<IntroSlider>
     Color backgroundOpacityColor,
     BlendMode backgroundBlendMode,
   ) {
-    final scrollController =
-        this.verticalScrollbarBehavior == scrollbarBehavior.SHOW_ALWAYS
-            ? ScrollController(initialScrollOffset: 0.01)
-            : null;
-    final scrollableChild = SingleChildScrollView(
+    final listView = ListView(
       controller: scrollController,
-      child: Column(
-        children: <Widget>[
-          Container(
-            // Title
-            child: widgetTitle ??
-                Text(
-                  title ?? "",
-                  style: styleTitle ??
-                      TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30.0,
-                      ),
-                  maxLines: maxLineTitle != null ? maxLineTitle : 1,
-                  textAlign: TextAlign.center,
-                  overflow: TextOverflow.ellipsis,
-                ),
-            margin: marginTitle ??
-                EdgeInsets.only(
-                    top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
-          ),
+      children: <Widget>[
+        Container(
+          // Title
+          child: widgetTitle ??
+              Text(
+                title ?? "",
+                style: styleTitle ??
+                    TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30.0,
+                    ),
+                maxLines: maxLineTitle != null ? maxLineTitle : 1,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+              ),
+          margin: marginTitle ??
+              EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+        ),
 
-          // Image or Center widget
-          GestureDetector(
-            child: pathImage != null
-                ? Image.asset(
-                    pathImage,
-                    width: widthImage ?? 200.0,
-                    height: heightImage ?? 200.0,
-                    fit: foregroundImageFit ?? BoxFit.contain,
-                  )
-                : Center(child: centerWidget ?? Container()),
-            onTap: onCenterItemPress,
-          ),
+        // Image or Center widget
+        GestureDetector(
+          child: pathImage != null
+              ? Image.asset(
+                  pathImage,
+                  width: widthImage ?? 200.0,
+                  height: heightImage ?? 200.0,
+                  fit: foregroundImageFit ?? BoxFit.contain,
+                )
+              : Center(child: centerWidget ?? Container()),
+          onTap: onCenterItemPress,
+        ),
 
-          // Description
-          Container(
-            child: widgetDescription ??
-                Text(
-                  description ?? "",
-                  style: styleDescription ??
-                      TextStyle(color: Colors.white, fontSize: 18.0),
-                  textAlign: TextAlign.center,
-                  maxLines: maxLineTextDescription != null
-                      ? maxLineTextDescription
-                      : 100,
-                  overflow: TextOverflow.ellipsis,
-                ),
-            margin: marginDescription ??
-                EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
-          ),
-        ],
-      ),
+        // Description
+        Container(
+          child: widgetDescription ??
+              Text(
+                description ?? "",
+                style: styleDescription ??
+                    TextStyle(color: Colors.white, fontSize: 18.0),
+                textAlign: TextAlign.center,
+                maxLines: maxLineTextDescription != null
+                    ? maxLineTextDescription
+                    : 100,
+                overflow: TextOverflow.ellipsis,
+              ),
+          margin:
+              marginDescription ?? EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+        ),
+      ],
     );
     return Container(
       width: double.infinity,
@@ -1073,11 +1072,11 @@ class IntroSliderState extends State<IntroSlider>
         margin: EdgeInsets.only(bottom: 60.0),
         child: this.verticalScrollbarBehavior != scrollbarBehavior.HIDE
             ? Scrollbar(
-                child: scrollableChild,
+                child: listView,
                 controller: scrollController,
-                isAlwaysShown: scrollController != null,
-              )
-            : scrollableChild,
+                isAlwaysShown: this.verticalScrollbarBehavior ==
+                    scrollbarBehavior.SHOW_ALWAYS)
+            : listView,
       ),
     );
   }
