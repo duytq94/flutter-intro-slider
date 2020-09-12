@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -1071,11 +1074,17 @@ class IntroSliderState extends State<IntroSlider>
       child: Container(
         margin: EdgeInsets.only(bottom: 60.0),
         child: this.verticalScrollbarBehavior != scrollbarBehavior.HIDE
-            ? Scrollbar(
-                child: listView,
-                controller: scrollController,
-                isAlwaysShown: this.verticalScrollbarBehavior ==
-                    scrollbarBehavior.SHOW_ALWAYS)
+            ? Platform.isIOS
+                ? CupertinoScrollbar(
+                    child: listView,
+                    controller: scrollController,
+                    isAlwaysShown: this.verticalScrollbarBehavior ==
+                        scrollbarBehavior.SHOW_ALWAYS)
+                : Scrollbar(
+                    child: listView,
+                    controller: scrollController,
+                    isAlwaysShown: this.verticalScrollbarBehavior ==
+                        scrollbarBehavior.SHOW_ALWAYS)
             : listView,
       ),
     );
