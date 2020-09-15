@@ -490,7 +490,7 @@ class IntroScreenState extends State<IntroScreen> {
 | backgroundColorAllSlides                                                                               | `Color`                   | Transparent           | Background color for all slides                                                                     |
 | <b>Behavior</b>                                                                                        |                           |                       |                                                                                                     |
 | isScrollable                                                                                           | `bool`                    | true                  | Force button-only scrolling                                                                         |
-| alwaysShowScrollbarForContent                                                                          | `bool`                    | false                 | Ability to always show the scrollbar or to only show when interacting                               |
+| verticalScrollbarBehavior                                                                              | `enum scrollbarBehavior`  | HIDE                  | Allow to specify how the vertical scrollbar should behave                                           |
 | shouldHideStatusBar                                                                                    | `bool`                    | false                 | Show or hide the status bar                                                                         |
 
 ## Pull request and feedback are always appreciated
