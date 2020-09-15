@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
+import 'package:intro_slider/scrollbar_behavior_enum.dart';
 
 //import 'package:intro_slider_example/home.dart';
 
@@ -25,7 +26,7 @@ class IntroScreen extends StatefulWidget {
 }
 
 //------------------ Custom config ------------------
-//class IntroScreenState extends State<IntroScreen> {
+// class IntroScreenState extends State<IntroScreen> {
 //  List<Slide> slides = new List();
 //
 //  @override
@@ -88,11 +89,11 @@ class IntroScreen extends StatefulWidget {
 //  }
 //
 //  void onDonePress() {
-////    Do what you want
-////    Navigator.push(
-////      context,
-////      MaterialPageRoute(builder: (context) => HomeScreen()),
-////    );
+// //    Do what you want
+// //    Navigator.push(
+// //      context,
+// //      MaterialPageRoute(builder: (context) => HomeScreen()),
+// //    );
 //  }
 //
 //  Widget renderNextBtn() {
@@ -145,9 +146,12 @@ class IntroScreen extends StatefulWidget {
 //      // Show or hide status bar
 //      shouldHideStatusBar: true,
 //      backgroundColorAllSlides: Colors.grey,
+//
+//      // Scrollbar
+//      verticalScrollbarBehavior: scrollbarBehavior.SHOW_ALWAYS,
 //    );
 //  }
-//}
+// }
 
 //------------------ Custom your own tabs ------------------
 class IntroScreenState extends State<IntroScreen> {

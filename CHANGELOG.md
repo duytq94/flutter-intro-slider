@@ -1,3 +1,7 @@
+## 2.3.3
+
+* Update scrollbar
+
 ## 2.3.2
 
 * Add scrollbar for tab content
