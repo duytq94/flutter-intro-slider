@@ -80,6 +80,9 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide NEXT button
   final bool isShowNextBtn;
 
+  /// Fire when press NEXT button
+  final Function onNextPress;
+
   // ---------- DONE button ----------
   /// Change DONE to any text you want
   final String nameDoneBtn;
@@ -186,6 +189,7 @@ class IntroSlider extends StatefulWidget {
     this.renderNextBtn,
     this.nameNextBtn,
     this.isShowNextBtn,
+    this.onNextPress,
 
     // Dots
     this.isShowDotIndicator,
@@ -248,6 +252,7 @@ class IntroSlider extends StatefulWidget {
       renderNextBtn: this.renderNextBtn,
       nameNextBtn: this.nameNextBtn,
       isShowNextBtn: this.isShowNextBtn,
+      onNextPress: this.onNextPress,
 
       // Dots
       isShowDotIndicator: this.isShowDotIndicator,
@@ -379,6 +384,9 @@ class IntroSliderState extends State<IntroSlider>
   /// Show or hide NEXT button
   bool isShowNextBtn;
 
+  /// Fire when press NEXT button
+  Function onNextPress;
+
   // ---------- Dot indicator ----------
   /// Show or hide dot indicator
   bool isShowDotIndicator = true;
@@ -457,6 +465,7 @@ class IntroSliderState extends State<IntroSlider>
     @required this.nameNextBtn,
     @required this.renderNextBtn,
     @required this.isShowNextBtn,
+    @required this.onNextPress,
 
     // Dot indicator
     @required this.isShowDotIndicator,
@@ -715,6 +724,9 @@ class IntroSliderState extends State<IntroSlider>
     }
 
     // Next button
+    if (onNextPress == null) {
+      onNextPress = () {};
+    }
     if (nameNextBtn == null) {
       nameNextBtn = "NEXT";
     }
@@ -824,6 +836,7 @@ class IntroSliderState extends State<IntroSlider>
   Widget buildNextButton() {
     return FlatButton(
       onPressed: () {
+        onNextPress();
         if (!this.isAnimating(tabController.animation.value)) {
           tabController.animateTo(tabController.index + 1);
         }
@@ -896,8 +909,12 @@ class IntroSliderState extends State<IntroSlider>
           Container(
             alignment: Alignment.center,
             child: tabController.index + 1 == slides.length
-                ? isShowDoneBtn ? buildDoneButton() : Container()
-                : isShowNextBtn ? buildNextButton() : Container(),
+                ? isShowDoneBtn
+                    ? buildDoneButton()
+                    : Container()
+                : isShowNextBtn
+                    ? buildNextButton()
+                    : Container(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
             height: 50,
           ),
