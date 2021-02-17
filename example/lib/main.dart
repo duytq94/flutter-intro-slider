@@ -298,7 +298,7 @@ class IntroScreenState extends State<IntroScreen> {
   Widget build(BuildContext context) {
     return new IntroSlider(
       // List slides
-      slides: this.slides,
+      // slides: this.slides,
 
       // Skip button
       renderSkipBtn: this.renderSkipBtn(),
@@ -325,6 +325,9 @@ class IntroScreenState extends State<IntroScreen> {
       refFuncGoToTab: (refFunc) {
         this.goToTab = refFunc;
       },
+
+      // Behavior
+      scrollPhysics: BouncingScrollPhysics(),
 
       // Show or hide status bar
       shouldHideStatusBar: true,

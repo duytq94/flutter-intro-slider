@@ -137,6 +137,7 @@ class IntroSlider extends StatefulWidget {
   // ---------- Behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
   final bool isScrollable;
+  final ScrollPhysics scrollPhysics;
 
   /// Show or hide status bar
   final bool shouldHideStatusBar;
@@ -147,7 +148,7 @@ class IntroSlider extends StatefulWidget {
   // Constructor
   IntroSlider({
     // Slides
-    @required this.slides,
+    this.slides,
     this.backgroundColorAllSlides,
 
     // Skip
@@ -201,6 +202,7 @@ class IntroSlider extends StatefulWidget {
 
     // Behavior
     this.isScrollable,
+    this.scrollPhysics,
     this.shouldHideStatusBar,
     this.verticalScrollbarBehavior,
   });
@@ -263,6 +265,7 @@ class IntroSlider extends StatefulWidget {
 
       // Behavior
       isScrollable: this.isScrollable,
+      scrollPhysics: this.scrollPhysics,
       shouldHideStatusBar: this.shouldHideStatusBar,
       verticalScrollbarBehavior:
           this.verticalScrollbarBehavior ?? scrollbarBehavior.HIDE,
@@ -408,6 +411,7 @@ class IntroSliderState extends State<IntroSlider>
   // ---------- Behavior ----------
   /// Allow the slider to scroll
   bool isScrollable;
+  ScrollPhysics scrollPhysics;
 
   /// Show or hide status bar
   bool shouldHideStatusBar;
@@ -472,6 +476,7 @@ class IntroSliderState extends State<IntroSlider>
 
     // Behavior
     @required this.isScrollable,
+    @required this.scrollPhysics,
     @required this.shouldHideStatusBar,
     @required this.verticalScrollbarBehavior,
   });
@@ -492,11 +497,15 @@ class IntroSliderState extends State<IntroSlider>
   double currentAnimationValue = 0;
   int currentTabIndex = 0;
 
+  int lengthSlide = 0;
+
   @override
   void initState() {
     super.initState();
 
-    tabController = new TabController(length: slides.length, vsync: this);
+    lengthSlide = slides?.length ?? listCustomTabs?.length ?? 0;
+
+    tabController = new TabController(length: lengthSlide, vsync: this);
     tabController.addListener(() {
       if (tabController.indexIsChanging) {
         currentTabIndex = tabController.previousIndex;
@@ -518,21 +527,21 @@ class IntroSliderState extends State<IntroSlider>
     if (sizeDot == null) {
       sizeDot = 8.0;
     }
-    double initValueMarginRight = (sizeDot * 2) * (slides.length - 1);
+    double initValueMarginRight = (sizeDot * 2) * (lengthSlide - 1);
     if (typeDotAnimation == null) {
       typeDotAnimation = dotSliderAnimation.DOT_MOVEMENT;
     }
 
     switch (typeDotAnimation) {
       case dotSliderAnimation.DOT_MOVEMENT:
-        for (int i = 0; i < slides.length; i++) {
+        for (int i = 0; i < lengthSlide; i++) {
           sizeDots.add(sizeDot);
           opacityDots.add(1.0);
         }
         marginRightDotFocused = initValueMarginRight;
         break;
       case dotSliderAnimation.SIZE_TRANSITION:
-        for (int i = 0; i < slides.length; i++) {
+        for (int i = 0; i < lengthSlide; i++) {
           if (i == 0) {
             sizeDots.add(sizeDot * 1.5);
             opacityDots.add(1.0);
@@ -612,6 +621,10 @@ class IntroSliderState extends State<IntroSlider>
       isScrollable = true;
     }
 
+    if (scrollPhysics == null) {
+      scrollPhysics = ScrollPhysics();
+    }
+
     setupButtonDefaultValues();
 
     if (this.listCustomTabs == null) {
@@ -626,7 +639,9 @@ class IntroSliderState extends State<IntroSlider>
     if (onSkipPress == null) {
       onSkipPress = () {
         if (!this.isAnimating(tabController.animation.value)) {
-          tabController.animateTo(slides.length - 1);
+          if (lengthSlide > 0) {
+            tabController.animateTo(lengthSlide - 1);
+          }
         }
       };
     }
@@ -758,15 +773,14 @@ class IntroSliderState extends State<IntroSlider>
 
     return Scaffold(
       body: DefaultTabController(
-        length: slides.length,
+        length: lengthSlide,
         child: Stack(
           children: <Widget>[
             TabBarView(
               children: tabs,
               controller: tabController,
-              physics: isScrollable
-                  ? ScrollPhysics()
-                  : NeverScrollableScrollPhysics(),
+              physics:
+                  isScrollable ? scrollPhysics : NeverScrollableScrollPhysics(),
             ),
             renderBottom(),
           ],
@@ -777,7 +791,7 @@ class IntroSliderState extends State<IntroSlider>
   }
 
   Widget buildSkipButton() {
-    if (tabController.index + 1 == slides.length) {
+    if (tabController.index + 1 == lengthSlide) {
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
       return FlatButton(
@@ -895,9 +909,13 @@ class IntroSliderState extends State<IntroSlider>
           // Next, Done button
           Container(
             alignment: Alignment.center,
-            child: tabController.index + 1 == slides.length
-                ? isShowDoneBtn ? buildDoneButton() : Container()
-                : isShowNextBtn ? buildNextButton() : Container(),
+            child: tabController.index + 1 == lengthSlide
+                ? isShowDoneBtn
+                    ? buildDoneButton()
+                    : Container()
+                : isShowNextBtn
+                    ? buildNextButton()
+                    : Container(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
             height: 50,
           ),
@@ -910,7 +928,7 @@ class IntroSliderState extends State<IntroSlider>
   }
 
   List<Widget> renderListTabs() {
-    for (int i = 0; i < slides.length; i++) {
+    for (int i = 0; i < lengthSlide; i++) {
       final scrollController = ScrollController();
       scrollControllers.add(scrollController);
       tabs.add(
@@ -1092,7 +1110,7 @@ class IntroSliderState extends State<IntroSlider>
 
   List<Widget> renderListDots() {
     dots.clear();
-    for (int i = 0; i < slides.length; i++) {
+    for (int i = 0; i < lengthSlide; i++) {
       dots.add(renderDot(sizeDots[i], colorDot, opacityDots[i]));
     }
     return dots;

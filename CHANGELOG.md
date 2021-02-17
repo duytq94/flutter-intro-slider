@@ -1,3 +1,8 @@
+## 2.3.4
+
+* Allow custom the physics horizontal scroll for the slide
+* `slides` not require when using `listCustomTabs`
+
 ## 2.3.3
 
 * Update scrollbar
