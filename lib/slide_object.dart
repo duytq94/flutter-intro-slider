@@ -34,10 +34,8 @@ class Slide {
   /// Fire when press image or center widget
   Function? onCenterItemPress;
 
-  // Custom your center widget instead of image (if this widget exist, center image will hide)
+  // Custom center widget that replaces image
   Widget? centerWidget;
-
-  //endregion
 
   // Description widget
   /// If non-null, used instead of [description] and its relevant properties
@@ -81,79 +79,41 @@ class Slide {
 
   Slide({
     // Title
-    Widget? widgetTitle,
-    String? title,
-    int? maxLineTitle,
-    TextStyle? styleTitle,
-    EdgeInsets? marginTitle,
-
-    // Image (if specified centerWidget is not displayed)
-    String? pathImage,
-    double? widthImage,
-    double? heightImage,
-    BoxFit? foregroundImageFit,
-
-    // Center widget
-    Widget? centerWidget,
-    Function? onCenterItemPress,
-
-    // Description
-    Widget? widgetDescription,
-    String? description,
-    int? maxLineTextDescription,
-    TextStyle? styleDescription,
-    EdgeInsets? marginDescription,
-
-    // Background color
-    Color? backgroundColor,
-    Color? colorBegin,
-    Color? colorEnd,
-    AlignmentGeometry? directionColorBegin,
-    AlignmentGeometry? directionColorEnd,
-
-    // Background image
-    String? backgroundImage,
-    BoxFit? backgroundImageFit,
-    double? backgroundOpacity,
-    Color? backgroundOpacityColor,
-    BlendMode? backgroundBlendMode,
-  }) {
-    // Title
-    this.widgetTitle = widgetTitle;
-    this.title = title;
-    this.maxLineTitle = maxLineTitle;
-    this.styleTitle = styleTitle;
-    this.marginTitle = marginTitle;
+    this.widgetTitle,
+    this.title,
+    this.maxLineTitle,
+    this.styleTitle,
+    this.marginTitle,
 
     // Image
-    this.pathImage = pathImage;
-    this.widthImage = widthImage;
-    this.heightImage = heightImage;
-    this.foregroundImageFit = foregroundImageFit;
+    this.pathImage,
+    this.widthImage,
+    this.heightImage,
+    this.foregroundImageFit,
 
     // Center widget
-    this.centerWidget = centerWidget;
-    this.onCenterItemPress = onCenterItemPress;
+    this.centerWidget,
+    this.onCenterItemPress,
 
     // Description
-    this.widgetDescription = widgetDescription;
-    this.description = description;
-    this.maxLineTextDescription = maxLineTextDescription;
-    this.styleDescription = styleDescription;
-    this.marginDescription = marginDescription;
+    this.widgetDescription,
+    this.description,
+    this.maxLineTextDescription,
+    this.styleDescription,
+    this.marginDescription,
 
     // Background color
-    this.backgroundColor = backgroundColor;
-    this.colorBegin = colorBegin;
-    this.colorEnd = colorEnd;
-    this.directionColorBegin = directionColorBegin;
-    this.directionColorEnd = directionColorEnd;
+    this.backgroundColor,
+    this.colorBegin,
+    this.colorEnd,
+    this.directionColorBegin,
+    this.directionColorEnd,
 
     // background image
-    this.backgroundImage = backgroundImage;
-    this.backgroundImageFit = backgroundImageFit;
-    this.backgroundOpacity = backgroundOpacity;
-    this.backgroundOpacityColor = backgroundOpacityColor;
-    this.backgroundBlendMode = backgroundBlendMode;
-  }
+    this.backgroundImage,
+    this.backgroundImageFit,
+    this.backgroundOpacity,
+    this.backgroundOpacityColor,
+    this.backgroundBlendMode,
+  });
 }
