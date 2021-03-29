@@ -14,7 +14,7 @@ dev_dependencies:
     path: ../
 
 environment:                                                            
-  sdk: '>=2.10.0 <3.0.0'
+  sdk: ">=2.10.0 <3.0.0"
 
 flutter:
 

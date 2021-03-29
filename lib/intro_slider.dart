@@ -12,138 +12,138 @@ import 'slide_object.dart';
 class IntroSlider extends StatefulWidget {
   // ---------- Slides ----------
   /// An array of Slide object
-  final List<Slide> slides;
+  final List<Slide>? slides;
 
   /// Background color for all slides
-  final Color backgroundColorAllSlides;
+  final Color? backgroundColorAllSlides;
 
   // ---------- SKIP button ----------
   /// Render your own SKIP button
-  final Widget renderSkipBtn;
+  final Widget? renderSkipBtn;
 
   /// Width of view wrapper SKIP button
-  final double widthSkipBtn;
+  final double? widthSkipBtn;
 
   /// Fire when press SKIP button
-  final Function onSkipPress;
+  final Function? onSkipPress;
 
   /// Change SKIP to any text you want
-  final String nameSkipBtn;
+  final String? nameSkipBtn;
 
   /// Style for text at SKIP button
-  final TextStyle styleNameSkipBtn;
+  final TextStyle? styleNameSkipBtn;
 
   /// Color for SKIP button
-  final Color colorSkipBtn;
+  final Color? colorSkipBtn;
 
   /// Color for Skip button when press
-  final Color highlightColorSkipBtn;
+  final Color? highlightColorSkipBtn;
 
   /// Show or hide SKIP button
-  final bool isShowSkipBtn;
+  final bool? isShowSkipBtn;
 
   /// Rounded SKIP button
-  final double borderRadiusSkipBtn;
+  final double? borderRadiusSkipBtn;
 
   // ---------- PREV button ----------
   /// Render your own PREV button
-  final Widget renderPrevBtn;
+  final Widget? renderPrevBtn;
 
   /// Width of view wrapper PREV button
-  final double widthPrevBtn;
+  final double? widthPrevBtn;
 
   /// Change PREV to any text you want
-  final String namePrevBtn;
+  final String? namePrevBtn;
 
   /// Style for text at PREV button
-  final TextStyle styleNamePrevBtn;
+  final TextStyle? styleNamePrevBtn;
 
   /// Color for PREV button
-  final Color colorPrevBtn;
+  final Color? colorPrevBtn;
 
   /// Color for PREV button when press
-  final Color highlightColorPrevBtn;
+  final Color? highlightColorPrevBtn;
 
   /// Show or hide PREV button (only visible if skip is hidden)
-  final bool isShowPrevBtn;
+  final bool? isShowPrevBtn;
 
   /// Rounded PREV button
-  final double borderRadiusPrevBtn;
+  final double? borderRadiusPrevBtn;
 
   // ---------- NEXT button ----------
   /// Render your own NEXT button
-  final Widget renderNextBtn;
+  final Widget? renderNextBtn;
 
   /// Change NEXT to any text you want
-  final String nameNextBtn;
+  final String? nameNextBtn;
 
   /// Show or hide NEXT button
-  final bool isShowNextBtn;
+  final bool? isShowNextBtn;
 
   // ---------- DONE button ----------
   /// Change DONE to any text you want
-  final String nameDoneBtn;
+  final String? nameDoneBtn;
 
   /// Render your own DONE button
-  final Widget renderDoneBtn;
+  final Widget? renderDoneBtn;
 
   /// Width of view wrapper DONE button
-  final double widthDoneBtn;
+  final double? widthDoneBtn;
 
   /// Fire when press DONE button
-  final Function onDonePress;
+  final Function? onDonePress;
 
   /// Style for text at DONE button
-  final TextStyle styleNameDoneBtn;
+  final TextStyle? styleNameDoneBtn;
 
   /// Color for DONE button
-  final Color colorDoneBtn;
+  final Color? colorDoneBtn;
 
   /// Color for DONE button when press
-  final Color highlightColorDoneBtn;
+  final Color? highlightColorDoneBtn;
 
   /// Rounded DONE button
-  final double borderRadiusDoneBtn;
+  final double? borderRadiusDoneBtn;
 
   /// Show or hide DONE button
-  final bool isShowDoneBtn;
+  final bool? isShowDoneBtn;
 
   // ---------- Dot indicator ----------
   /// Show or hide dot indicator
-  final bool isShowDotIndicator;
+  final bool? isShowDotIndicator;
 
   /// Color for dot when passive
-  final Color colorDot;
+  final Color? colorDot;
 
   /// Color for dot when active
-  final Color colorActiveDot;
+  final Color? colorActiveDot;
 
   /// Size of each dot
-  final double sizeDot;
+  final double? sizeDot;
 
   /// Type dots animation
-  final dotSliderAnimation typeDotAnimation;
+  final dotSliderAnimation? typeDotAnimation;
 
   // ---------- Tabs ----------
   /// Render your own custom tabs
-  final List<Widget> listCustomTabs;
+  final List<Widget>? listCustomTabs;
 
   /// Notify when tab change completed
-  final Function onTabChangeCompleted;
+  final Function? onTabChangeCompleted;
 
   /// Ref function go to specific tab index
-  final Function refFuncGoToTab;
+  final Function? refFuncGoToTab;
 
   // ---------- Behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
-  final bool isScrollable;
-  final ScrollPhysics scrollPhysics;
+  final bool? isScrollable;
+  final ScrollPhysics? scrollPhysics;
 
   /// Show or hide status bar
-  final bool shouldHideStatusBar;
+  final bool? shouldHideStatusBar;
 
   /// The way the vertical scrollbar should behave
-  final scrollbarBehavior verticalScrollbarBehavior;
+  final scrollbarBehavior? verticalScrollbarBehavior;
 
   // Constructor
   IntroSlider({
@@ -286,135 +286,135 @@ class IntroSliderState extends State<IntroSlider>
 
   // ---------- Slides ----------
   /// An array of Slide object
-  final List<Slide> slides;
+  List<Slide>? slides;
 
   /// Background color for all slides
-  Color backgroundColorAllSlides;
+  Color? backgroundColorAllSlides;
 
   // ---------- SKIP button ----------
   /// Render your own SKIP button
-  Widget renderSkipBtn;
+  Widget? renderSkipBtn;
 
   /// Width of view wrapper SKIP button
-  double widthSkipBtn;
+  double? widthSkipBtn;
 
   /// Fire when press SKIP button
-  Function onSkipPress;
+  Function? onSkipPress;
 
   /// Change SKIP to any text you want
-  String nameSkipBtn;
+  String? nameSkipBtn;
 
   /// Style for text at SKIP button
-  TextStyle styleNameSkipBtn;
+  TextStyle? styleNameSkipBtn;
 
   /// Color for SKIP button
-  Color colorSkipBtn;
+  Color? colorSkipBtn;
 
   /// Color for SKIP button when press
-  Color highlightColorSkipBtn;
+  Color? highlightColorSkipBtn;
 
   /// Show or hide SKIP button
-  bool isShowSkipBtn;
+  bool? isShowSkipBtn;
 
   /// Rounded SKIP button
-  double borderRadiusSkipBtn;
+  double? borderRadiusSkipBtn;
 
   // ---------- PREV button ----------
   /// Render your own PREV button
-  Widget renderPrevBtn;
+  Widget? renderPrevBtn;
 
   /// Change PREV to any text you want
-  String namePrevBtn;
+  String? namePrevBtn;
 
   /// Style for text at PREV button
-  TextStyle styleNamePrevBtn;
+  TextStyle? styleNamePrevBtn;
 
   /// Color for PREV button
-  Color colorPrevBtn;
+  Color? colorPrevBtn;
 
   /// Width of view wrapper PREV button
-  double widthPrevBtn;
+  double? widthPrevBtn;
 
   /// Color for PREV button when press
-  Color highlightColorPrevBtn;
+  Color? highlightColorPrevBtn;
 
   /// Show or hide PREV button
-  bool isShowPrevBtn;
+  bool? isShowPrevBtn;
 
   /// Rounded PREV button
-  double borderRadiusPrevBtn;
+  double? borderRadiusPrevBtn;
 
   // ---------- DONE button ----------
   /// Render your own DONE button
-  Widget renderDoneBtn;
+  Widget? renderDoneBtn;
 
   /// Width of view wrapper DONE button
-  double widthDoneBtn;
+  double? widthDoneBtn;
 
   /// Fire when press DONE button
-  Function onDonePress;
+  Function? onDonePress;
 
   /// Change DONE to any text you want
-  String nameDoneBtn;
+  String? nameDoneBtn;
 
   /// Style for text at DONE button
-  TextStyle styleNameDoneBtn;
+  TextStyle? styleNameDoneBtn;
 
   /// Color for DONE button
-  Color colorDoneBtn;
+  Color? colorDoneBtn;
 
   /// Color for DONE button when press
-  Color highlightColorDoneBtn;
+  Color? highlightColorDoneBtn;
 
   /// Rounded DONE button
-  double borderRadiusDoneBtn;
+  double? borderRadiusDoneBtn;
 
   /// Show or hide DONE button
-  bool isShowDoneBtn;
+  bool? isShowDoneBtn;
 
   // ---------- NEXT button ----------
   /// Render your own NEXT button
-  Widget renderNextBtn;
+  Widget? renderNextBtn;
 
   /// Change NEXT to any text you want
-  String nameNextBtn;
+  String? nameNextBtn;
 
   /// Show or hide NEXT button
-  bool isShowNextBtn;
+  bool? isShowNextBtn;
 
   // ---------- Dot indicator ----------
   /// Show or hide dot indicator
-  bool isShowDotIndicator = true;
+  bool? isShowDotIndicator = true;
 
   /// Color for dot when passive
-  Color colorDot;
+  Color? colorDot;
 
   /// Color for dot when active
-  Color colorActiveDot;
+  Color? colorActiveDot;
 
   /// Size of each dot
-  double sizeDot = 8.0;
+  double? sizeDot = 8.0;
 
   /// Type dots animation
-  dotSliderAnimation typeDotAnimation;
+  dotSliderAnimation? typeDotAnimation;
 
   // ---------- Tabs ----------
   /// List custom tabs
-  List<Widget> listCustomTabs;
+  List<Widget>? listCustomTabs;
 
   /// Notify when tab change completed
-  Function onTabChangeCompleted;
+  Function? onTabChangeCompleted;
 
   /// Ref function go to specific tab index
-  Function refFuncGoToTab;
+  Function? refFuncGoToTab;
 
   // ---------- Behavior ----------
   /// Allow the slider to scroll
-  bool isScrollable;
-  ScrollPhysics scrollPhysics;
+  bool? isScrollable;
+  ScrollPhysics? scrollPhysics;
 
   /// Show or hide status bar
-  bool shouldHideStatusBar;
+  bool? shouldHideStatusBar;
 
   /// The way the vertical scrollbar should behave
   final scrollbarBehavior verticalScrollbarBehavior;
@@ -422,72 +422,72 @@ class IntroSliderState extends State<IntroSlider>
   // Constructor
   IntroSliderState({
     // List slides
-    @required this.slides,
-    @required this.backgroundColorAllSlides,
+    required this.slides,
+    required this.backgroundColorAllSlides,
 
     // Skip button
-    @required this.renderSkipBtn,
-    @required this.widthSkipBtn,
-    @required this.onSkipPress,
-    @required this.nameSkipBtn,
-    @required this.styleNameSkipBtn,
-    @required this.colorSkipBtn,
-    @required this.highlightColorSkipBtn,
-    @required this.isShowSkipBtn,
-    @required this.borderRadiusSkipBtn,
+    required this.renderSkipBtn,
+    required this.widthSkipBtn,
+    required this.onSkipPress,
+    required this.nameSkipBtn,
+    required this.styleNameSkipBtn,
+    required this.colorSkipBtn,
+    required this.highlightColorSkipBtn,
+    required this.isShowSkipBtn,
+    required this.borderRadiusSkipBtn,
 
     // Prev button
-    @required this.widthPrevBtn,
-    @required this.isShowPrevBtn,
-    @required this.namePrevBtn,
-    @required this.renderPrevBtn,
-    @required this.styleNamePrevBtn,
-    @required this.colorPrevBtn,
-    @required this.highlightColorPrevBtn,
-    @required this.borderRadiusPrevBtn,
+    required this.widthPrevBtn,
+    required this.isShowPrevBtn,
+    required this.namePrevBtn,
+    required this.renderPrevBtn,
+    required this.styleNamePrevBtn,
+    required this.colorPrevBtn,
+    required this.highlightColorPrevBtn,
+    required this.borderRadiusPrevBtn,
 
     // Done button
-    @required this.renderDoneBtn,
-    @required this.widthDoneBtn,
-    @required this.onDonePress,
-    @required this.nameDoneBtn,
-    @required this.styleNameDoneBtn,
-    @required this.colorDoneBtn,
-    @required this.highlightColorDoneBtn,
-    @required this.borderRadiusDoneBtn,
-    @required this.isShowDoneBtn,
+    required this.renderDoneBtn,
+    required this.widthDoneBtn,
+    required this.onDonePress,
+    required this.nameDoneBtn,
+    required this.styleNameDoneBtn,
+    required this.colorDoneBtn,
+    required this.highlightColorDoneBtn,
+    required this.borderRadiusDoneBtn,
+    required this.isShowDoneBtn,
 
     // Next button
-    @required this.nameNextBtn,
-    @required this.renderNextBtn,
-    @required this.isShowNextBtn,
+    required this.nameNextBtn,
+    required this.renderNextBtn,
+    required this.isShowNextBtn,
 
     // Dot indicator
-    @required this.isShowDotIndicator,
-    @required this.colorDot,
-    @required this.colorActiveDot,
-    @required this.sizeDot,
-    @required this.typeDotAnimation,
+    required this.isShowDotIndicator,
+    required this.colorDot,
+    required this.colorActiveDot,
+    required this.sizeDot,
+    required this.typeDotAnimation,
 
     // Tabs
-    @required this.listCustomTabs,
-    @required this.onTabChangeCompleted,
-    @required this.refFuncGoToTab,
+    required this.listCustomTabs,
+    required this.onTabChangeCompleted,
+    required this.refFuncGoToTab,
 
     // Behavior
-    @required this.isScrollable,
-    @required this.scrollPhysics,
-    @required this.shouldHideStatusBar,
-    @required this.verticalScrollbarBehavior,
+    required this.isScrollable,
+    required this.scrollPhysics,
+    required this.shouldHideStatusBar,
+    required this.verticalScrollbarBehavior,
   });
 
-  TabController tabController;
+  late TabController tabController;
 
-  List<Widget> tabs = new List();
-  List<Widget> dots = new List();
-  List<double> sizeDots = new List();
-  List<double> opacityDots = new List();
-  List<ScrollController> scrollControllers = new List();
+  List<Widget>? tabs = [];
+  List<Widget> dots = [];
+  List<double?> sizeDots =  [];
+  List<double> opacityDots = [];
+  List<ScrollController> scrollControllers = [];
 
   // For DOT_MOVEMENT
   double marginLeftDotFocused = 0;
@@ -512,27 +512,27 @@ class IntroSliderState extends State<IntroSlider>
       } else {
         currentTabIndex = tabController.index;
       }
-      currentAnimationValue = tabController.animation.value;
+      currentAnimationValue = tabController.animation!.value;
       if (this.onTabChangeCompleted != null) {
-        this.onTabChangeCompleted(tabController.index);
+        this.onTabChangeCompleted!(tabController.index);
       }
     });
 
     // Send reference function goToTab to parent
     if (this.refFuncGoToTab != null) {
-      this.refFuncGoToTab(this.goToTab);
+      this.refFuncGoToTab!(this.goToTab);
     }
 
     // Dot animation
     if (sizeDot == null) {
       sizeDot = 8.0;
     }
-    double initValueMarginRight = (sizeDot * 2) * (lengthSlide - 1);
+    double initValueMarginRight = (sizeDot! * 2) * (lengthSlide - 1);
     if (typeDotAnimation == null) {
       typeDotAnimation = dotSliderAnimation.DOT_MOVEMENT;
     }
 
-    switch (typeDotAnimation) {
+    switch (typeDotAnimation!) {
       case dotSliderAnimation.DOT_MOVEMENT:
         for (int i = 0; i < lengthSlide; i++) {
           sizeDots.add(sizeDot);
@@ -543,7 +543,7 @@ class IntroSliderState extends State<IntroSlider>
       case dotSliderAnimation.SIZE_TRANSITION:
         for (int i = 0; i < lengthSlide; i++) {
           if (i == 0) {
-            sizeDots.add(sizeDot * 1.5);
+            sizeDots.add(sizeDot! * 1.5);
             opacityDots.add(1.0);
           } else {
             sizeDots.add(sizeDot);
@@ -552,21 +552,21 @@ class IntroSliderState extends State<IntroSlider>
         }
     }
 
-    tabController.animation.addListener(() {
+    tabController.animation!.addListener(() {
       this.setState(() {
-        switch (typeDotAnimation) {
+        switch (typeDotAnimation!) {
           case dotSliderAnimation.DOT_MOVEMENT:
-            marginLeftDotFocused = tabController.animation.value * sizeDot * 2;
+            marginLeftDotFocused = tabController.animation!.value * sizeDot! * 2;
             marginRightDotFocused = initValueMarginRight -
-                tabController.animation.value * sizeDot * 2;
+                tabController.animation!.value * sizeDot! * 2;
             break;
           case dotSliderAnimation.SIZE_TRANSITION:
-            if (tabController.animation.value == currentAnimationValue) {
+            if (tabController.animation!.value == currentAnimationValue) {
               break;
             }
 
             double diffValueAnimation =
-                (tabController.animation.value - currentAnimationValue).abs();
+                (tabController.animation!.value - currentAnimationValue).abs();
             int diffValueIndex = (currentTabIndex - tabController.index).abs();
 
             // When press skip button
@@ -575,29 +575,29 @@ class IntroSliderState extends State<IntroSlider>
               if (diffValueAnimation < 1.0) {
                 diffValueAnimation = 1.0;
               }
-              sizeDots[currentTabIndex] = sizeDot * 1.5 -
-                  (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
-              sizeDots[tabController.index] = sizeDot +
-                  (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
+              sizeDots[currentTabIndex] = sizeDot! * 1.5 -
+                  (sizeDot! / 2) * (1 - (diffValueIndex - diffValueAnimation));
+              sizeDots[tabController.index] = sizeDot! +
+                  (sizeDot! / 2) * (1 - (diffValueIndex - diffValueAnimation));
               opacityDots[currentTabIndex] =
                   1.0 - (diffValueAnimation / diffValueIndex) / 2;
               opacityDots[tabController.index] =
                   0.5 + (diffValueAnimation / diffValueIndex) / 2;
             } else {
-              if (tabController.animation.value > currentAnimationValue) {
+              if (tabController.animation!.value > currentAnimationValue) {
                 // Swipe left
                 sizeDots[currentTabIndex] =
-                    sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
+                    sizeDot! * 1.5 - (sizeDot! / 2) * diffValueAnimation;
                 sizeDots[currentTabIndex + 1] =
-                    sizeDot + (sizeDot / 2) * diffValueAnimation;
+                    sizeDot! + (sizeDot! / 2) * diffValueAnimation;
                 opacityDots[currentTabIndex] = 1.0 - diffValueAnimation / 2;
                 opacityDots[currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
               } else {
                 // Swipe right
                 sizeDots[currentTabIndex] =
-                    sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
+                    sizeDot! * 1.5 - (sizeDot! / 2) * diffValueAnimation;
                 sizeDots[currentTabIndex - 1] =
-                    sizeDot + (sizeDot / 2) * diffValueAnimation;
+                    sizeDot! + (sizeDot! / 2) * diffValueAnimation;
                 opacityDots[currentTabIndex] = 1.0 - diffValueAnimation / 2;
                 opacityDots[currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
               }
@@ -638,7 +638,7 @@ class IntroSliderState extends State<IntroSlider>
     // Skip button
     if (onSkipPress == null) {
       onSkipPress = () {
-        if (!this.isAnimating(tabController.animation.value)) {
+        if (!this.isAnimating(tabController.animation!.value)) {
           if (lengthSlide > 0) {
             tabController.animateTo(lengthSlide - 1);
           }
@@ -656,7 +656,7 @@ class IntroSliderState extends State<IntroSlider>
     }
     if (renderSkipBtn == null) {
       renderSkipBtn = Text(
-        nameSkipBtn,
+        nameSkipBtn!,
         style: styleNameSkipBtn,
       );
     }
@@ -671,7 +671,7 @@ class IntroSliderState extends State<IntroSlider>
     }
 
     // Prev button
-    if (isShowPrevBtn == null || isShowSkipBtn) {
+    if (isShowPrevBtn == null || isShowSkipBtn!) {
       isShowPrevBtn = false;
     }
     if (styleNamePrevBtn == null) {
@@ -682,7 +682,7 @@ class IntroSliderState extends State<IntroSlider>
     }
     if (renderPrevBtn == null) {
       renderPrevBtn = Text(
-        namePrevBtn,
+        namePrevBtn!,
         style: styleNamePrevBtn,
       );
     }
@@ -715,7 +715,7 @@ class IntroSliderState extends State<IntroSlider>
     }
     if (renderDoneBtn == null) {
       renderDoneBtn = Text(
-        nameDoneBtn,
+        nameDoneBtn!,
         style: styleNameDoneBtn,
       );
     }
@@ -735,7 +735,7 @@ class IntroSliderState extends State<IntroSlider>
     }
     if (renderNextBtn == null) {
       renderNextBtn = Text(
-        nameNextBtn,
+        nameNextBtn!,
         style: styleNameDoneBtn,
       );
     }
@@ -755,8 +755,8 @@ class IntroSliderState extends State<IntroSlider>
 
   // Checking if tab is animating
   bool isAnimating(value) {
-    return tabController.animation.value -
-            tabController.animation.value.truncate() !=
+    return tabController.animation!.value -
+            tabController.animation!.value.truncate() !=
         0;
   }
 
@@ -777,10 +777,10 @@ class IntroSliderState extends State<IntroSlider>
         child: Stack(
           children: <Widget>[
             TabBarView(
-              children: tabs,
+              children: tabs!,
               controller: tabController,
               physics:
-                  isScrollable ? scrollPhysics : NeverScrollableScrollPhysics(),
+                  isScrollable! ? scrollPhysics : NeverScrollableScrollPhysics(),
             ),
             renderBottom(),
           ],
@@ -795,24 +795,24 @@ class IntroSliderState extends State<IntroSlider>
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
       return FlatButton(
-        onPressed: onSkipPress,
-        child: renderSkipBtn,
+        onPressed: onSkipPress as void Function()?,
+        child: renderSkipBtn!,
         color: colorSkipBtn,
         highlightColor: highlightColorSkipBtn,
         shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn)),
+            borderRadius: new BorderRadius.circular(borderRadiusSkipBtn!)),
       );
     }
   }
 
   Widget buildDoneButton() {
     return FlatButton(
-      onPressed: onDonePress,
-      child: renderDoneBtn,
+      onPressed: onDonePress as void Function()?,
+      child: renderDoneBtn!,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
       shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn!)),
     );
   }
 
@@ -822,15 +822,15 @@ class IntroSliderState extends State<IntroSlider>
     } else {
       return FlatButton(
         onPressed: () {
-          if (!this.isAnimating(tabController.animation.value)) {
+          if (!this.isAnimating(tabController.animation!.value)) {
             tabController.animateTo(tabController.index - 1);
           }
         },
-        child: renderPrevBtn,
+        child: renderPrevBtn!,
         color: colorPrevBtn,
         highlightColor: highlightColorPrevBtn,
         shape: new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(borderRadiusPrevBtn)),
+            borderRadius: new BorderRadius.circular(borderRadiusPrevBtn!)),
       );
     }
   }
@@ -838,15 +838,15 @@ class IntroSliderState extends State<IntroSlider>
   Widget buildNextButton() {
     return FlatButton(
       onPressed: () {
-        if (!this.isAnimating(tabController.animation.value)) {
+        if (!this.isAnimating(tabController.animation!.value)) {
           tabController.animateTo(tabController.index + 1);
         }
       },
-      child: renderNextBtn,
+      child: renderNextBtn!,
       color: colorDoneBtn,
       highlightColor: highlightColorDoneBtn,
       shape: new RoundedRectangleBorder(
-          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn)),
+          borderRadius: new BorderRadius.circular(borderRadiusDoneBtn!)),
     );
   }
 
@@ -857,19 +857,19 @@ class IntroSliderState extends State<IntroSlider>
           // Skip button
           Container(
             alignment: Alignment.center,
-            child: isShowSkipBtn
+            child: isShowSkipBtn!
                 ? buildSkipButton()
-                : (isShowPrevBtn ? buildPrevButton() : Container()),
-            width: isShowSkipBtn
+                : (isShowPrevBtn! ? buildPrevButton() : Container()),
+            width: isShowSkipBtn!
                 ? widthSkipBtn ?? MediaQuery.of(context).size.width / 4
-                : (isShowPrevBtn
+                : (isShowPrevBtn!
                     ? widthPrevBtn
                     : MediaQuery.of(context).size.width / 4),
           ),
 
           // Dot indicator
           Flexible(
-            child: isShowDotIndicator
+            child: isShowDotIndicator!
                 ? Container(
                     child: Stack(
                       children: <Widget>[
@@ -883,7 +883,7 @@ class IntroSliderState extends State<IntroSlider>
                                   decoration: BoxDecoration(
                                       color: colorActiveDot,
                                       borderRadius:
-                                          BorderRadius.circular(sizeDot / 2)),
+                                          BorderRadius.circular(sizeDot! / 2)),
                                   width: sizeDot,
                                   height: sizeDot,
                                   margin: EdgeInsets.only(
@@ -910,10 +910,10 @@ class IntroSliderState extends State<IntroSlider>
           Container(
             alignment: Alignment.center,
             child: tabController.index + 1 == lengthSlide
-                ? isShowDoneBtn
+                ? isShowDoneBtn!
                     ? buildDoneButton()
                     : Container()
-                : isShowNextBtn
+                : isShowNextBtn!
                     ? buildNextButton()
                     : Container(),
             width: widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
@@ -927,39 +927,39 @@ class IntroSliderState extends State<IntroSlider>
     );
   }
 
-  List<Widget> renderListTabs() {
+  List<Widget>? renderListTabs() {
     for (int i = 0; i < lengthSlide; i++) {
       final scrollController = ScrollController();
       scrollControllers.add(scrollController);
-      tabs.add(
+      tabs!.add(
         renderTab(
           scrollController,
-          slides[i].widgetTitle,
-          slides[i].title,
-          slides[i].maxLineTitle,
-          slides[i].styleTitle,
-          slides[i].marginTitle,
-          slides[i].widgetDescription,
-          slides[i].description,
-          slides[i].maxLineTextDescription,
-          slides[i].styleDescription,
-          slides[i].marginDescription,
-          slides[i].pathImage,
-          slides[i].widthImage,
-          slides[i].heightImage,
-          slides[i].foregroundImageFit,
-          slides[i].centerWidget,
-          slides[i].onCenterItemPress,
-          slides[i].backgroundColor,
-          slides[i].colorBegin,
-          slides[i].colorEnd,
-          slides[i].directionColorBegin,
-          slides[i].directionColorEnd,
-          slides[i].backgroundImage,
-          slides[i].backgroundImageFit,
-          slides[i].backgroundOpacity,
-          slides[i].backgroundOpacityColor,
-          slides[i].backgroundBlendMode,
+          slides?[i].widgetTitle,
+          slides?[i].title,
+          slides?[i].maxLineTitle,
+          slides?[i].styleTitle,
+          slides?[i].marginTitle,
+          slides?[i].widgetDescription,
+          slides?[i].description,
+          slides?[i].maxLineTextDescription,
+          slides?[i].styleDescription,
+          slides?[i].marginDescription,
+          slides?[i].pathImage,
+          slides?[i].widthImage,
+          slides?[i].heightImage,
+          slides?[i].foregroundImageFit,
+          slides?[i].centerWidget,
+          slides?[i].onCenterItemPress,
+          slides?[i].backgroundColor,
+          slides?[i].colorBegin,
+          slides?[i].colorEnd,
+          slides?[i].directionColorBegin,
+          slides?[i].directionColorEnd,
+          slides?[i].backgroundImage,
+          slides?[i].backgroundImageFit,
+          slides?[i].backgroundOpacity,
+          slides?[i].backgroundOpacityColor,
+          slides?[i].backgroundBlendMode,
         ),
       );
     }
@@ -970,42 +970,42 @@ class IntroSliderState extends State<IntroSlider>
     ScrollController scrollController,
 
     // Title
-    Widget widgetTitle,
-    String title,
-    int maxLineTitle,
-    TextStyle styleTitle,
-    EdgeInsets marginTitle,
+    Widget? widgetTitle,
+    String? title,
+    int? maxLineTitle,
+    TextStyle? styleTitle,
+    EdgeInsets? marginTitle,
 
     // Description
-    Widget widgetDescription,
-    String description,
-    int maxLineTextDescription,
-    TextStyle styleDescription,
-    EdgeInsets marginDescription,
+    Widget? widgetDescription,
+    String? description,
+    int? maxLineTextDescription,
+    TextStyle? styleDescription,
+    EdgeInsets? marginDescription,
 
     // Image
-    String pathImage,
-    double widthImage,
-    double heightImage,
-    BoxFit foregroundImageFit,
+    String? pathImage,
+    double? widthImage,
+    double? heightImage,
+    BoxFit? foregroundImageFit,
 
     // Center Widget
-    Widget centerWidget,
-    Function onCenterItemPress,
+    Widget? centerWidget,
+    Function? onCenterItemPress,
 
     // Background color
-    Color backgroundColor,
-    Color colorBegin,
-    Color colorEnd,
-    AlignmentGeometry directionColorBegin,
-    AlignmentGeometry directionColorEnd,
+    Color? backgroundColor,
+    Color? colorBegin,
+    Color? colorEnd,
+    AlignmentGeometry? directionColorBegin,
+    AlignmentGeometry? directionColorEnd,
 
     // Background image
-    String backgroundImage,
-    BoxFit backgroundImageFit,
-    double backgroundOpacity,
-    Color backgroundOpacityColor,
-    BlendMode backgroundBlendMode,
+    String? backgroundImage,
+    BoxFit? backgroundImageFit,
+    double? backgroundOpacity,
+    Color? backgroundOpacityColor,
+    BlendMode? backgroundBlendMode,
   ) {
     final listView = ListView(
       controller: scrollController,
@@ -1039,7 +1039,7 @@ class IntroSliderState extends State<IntroSlider>
                   fit: foregroundImageFit ?? BoxFit.contain,
                 )
               : Center(child: centerWidget ?? Container()),
-          onTap: onCenterItemPress,
+          onTap: onCenterItemPress as void Function()?,
         ),
 
         // Description
@@ -1111,12 +1111,12 @@ class IntroSliderState extends State<IntroSlider>
   List<Widget> renderListDots() {
     dots.clear();
     for (int i = 0; i < lengthSlide; i++) {
-      dots.add(renderDot(sizeDots[i], colorDot, opacityDots[i]));
+      dots.add(renderDot(sizeDots[i]!, colorDot, opacityDots[i]));
     }
     return dots;
   }
 
-  Widget renderDot(double radius, Color color, double opacity) {
+  Widget renderDot(double radius, Color? color, double opacity) {
     return Opacity(
       child: Container(
         decoration: BoxDecoration(
