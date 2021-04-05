@@ -286,7 +286,7 @@ class IntroSliderState extends State<IntroSlider>
 
   // ---------- Slides ----------
   /// An array of Slide object
-  final List<Slide> slides;
+  List<Slide> slides;
 
   /// Background color for all slides
   Color backgroundColorAllSlides;
@@ -515,7 +515,13 @@ class IntroSliderState extends State<IntroSlider>
         widget.nameNextBtn,
         style: styleNameDoneBtn,
       );
-
+      renderDoneBtn = Text(
+        widget.nameDoneBtn,
+        style: styleNameDoneBtn,
+      );
+      slides = widget.slides;
+      tabs.clear();
+      renderListTabs();
       setState(() {});
     }
     super.didUpdateWidget(oldWidget);
@@ -953,6 +959,7 @@ class IntroSliderState extends State<IntroSlider>
     for (int i = 0; i < lengthSlide; i++) {
       final scrollController = ScrollController();
       scrollControllers.add(scrollController);
+
       tabs.add(
         renderTab(
           scrollController,
