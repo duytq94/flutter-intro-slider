@@ -500,6 +500,28 @@ class IntroSliderState extends State<IntroSlider>
   int lengthSlide = 0;
 
   @override
+  void didUpdateWidget(covariant IntroSlider oldWidget) {
+    if (oldWidget.nameSkipBtn != widget.nameSkipBtn) {
+      renderSkipBtn = Text(
+        widget.nameSkipBtn,
+        style: styleNameSkipBtn,
+      );
+      renderPrevBtn = Text(
+        widget.namePrevBtn,
+        style: styleNamePrevBtn,
+      );
+
+      renderNextBtn = Text(
+        widget.nameNextBtn,
+        style: styleNameDoneBtn,
+      );
+
+      setState(() {});
+    }
+    super.didUpdateWidget(oldWidget);
+  }
+
+  @override
   void initState() {
     super.initState();
 
