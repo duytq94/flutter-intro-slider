@@ -155,7 +155,7 @@ class IntroScreen extends StatefulWidget {
 
 //------------------ Custom your own tabs ------------------
 class IntroScreenState extends State<IntroScreen> {
-  List<Slide> slides = new List();
+  List<Slide> slides = [];
 
   Function goToTab;
 
@@ -330,7 +330,7 @@ class IntroScreenState extends State<IntroScreen> {
       scrollPhysics: BouncingScrollPhysics(),
 
       // Show or hide status bar
-      shouldHideStatusBar: true,
+      hideStatusBar: true,
 
       // On tab change completed
       onTabChangeCompleted: this.onTabChangeCompleted,
