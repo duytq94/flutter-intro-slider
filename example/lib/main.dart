@@ -3,8 +3,7 @@ import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:intro_slider/scrollbar_behavior_enum.dart';
-
-//import 'package:intro_slider_example/home.dart';
+import 'package:intro_slider_example/home.dart';
 
 void main() => runApp(new MyApp());
 
@@ -25,9 +24,9 @@ class IntroScreen extends StatefulWidget {
   IntroScreenState createState() => new IntroScreenState();
 }
 
-//------------------ Custom config ------------------
+// ------------------ Custom config ------------------
 // class IntroScreenState extends State<IntroScreen> {
-//  List<Slide> slides = new List();
+//  List<Slide> slides = [];
 //
 //  @override
 //  void initState() {
@@ -89,11 +88,11 @@ class IntroScreen extends StatefulWidget {
 //  }
 //
 //  void onDonePress() {
-// //    Do what you want
-// //    Navigator.push(
-// //      context,
-// //      MaterialPageRoute(builder: (context) => HomeScreen()),
-// //    );
+//    // Do what you want
+//    // Navigator.push(
+//    //   context,
+//    //   MaterialPageRoute(builder: (context) => HomeScreen()),
+//    // );
 //  }
 //
 //  Widget renderNextBtn() {
@@ -144,7 +143,7 @@ class IntroScreen extends StatefulWidget {
 //      sizeDot: 13.0,
 //
 //      // Show or hide status bar
-//      shouldHideStatusBar: true,
+//      hideStatusBar: true,
 //      backgroundColorAllSlides: Colors.grey,
 //
 //      // Scrollbar
@@ -153,9 +152,9 @@ class IntroScreen extends StatefulWidget {
 //  }
 // }
 
-//------------------ Custom your own tabs ------------------
+// ------------------ Custom your own tabs ------------------
 class IntroScreenState extends State<IntroScreen> {
-  List<Slide> slides = new List();
+  List<Slide> slides = [];
 
   Function goToTab;
 
@@ -167,10 +166,11 @@ class IntroScreenState extends State<IntroScreen> {
       new Slide(
         title: "SCHOOL",
         styleTitle: TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
+          color: Color(0xff3da4ab),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description:
             "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
         styleDescription: TextStyle(
@@ -251,7 +251,7 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   List<Widget> renderListCustomTabs() {
-    List<Widget> tabs = new List();
+    List<Widget> tabs = [];
     for (int i = 0; i < slides.length; i++) {
       Slide currentSlide = slides[i];
       tabs.add(Container(
@@ -297,9 +297,6 @@ class IntroScreenState extends State<IntroScreen> {
   @override
   Widget build(BuildContext context) {
     return new IntroSlider(
-      // List slides
-      // slides: this.slides,
-
       // Skip button
       renderSkipBtn: this.renderSkipBtn(),
       colorSkipBtn: Color(0x33ffcc5c),
@@ -330,7 +327,7 @@ class IntroScreenState extends State<IntroScreen> {
       scrollPhysics: BouncingScrollPhysics(),
 
       // Show or hide status bar
-      shouldHideStatusBar: true,
+      hideStatusBar: true,
 
       // On tab change completed
       onTabChangeCompleted: this.onTabChangeCompleted,
@@ -339,8 +336,8 @@ class IntroScreenState extends State<IntroScreen> {
 }
 
 //------------------ Default config ------------------
-//class IntroScreenState extends State<IntroScreen> {
-//  List<Slide> slides = new List();
+// class IntroScreenState extends State<IntroScreen> {
+//  List<Slide> slides = [];
 //
 //  @override
 //  void initState() {
@@ -384,4 +381,4 @@ class IntroScreenState extends State<IntroScreen> {
 //      onDonePress: this.onDonePress,
 //    );
 //  }
-//}
+// }

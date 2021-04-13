@@ -1,3 +1,7 @@
+## 2.4.0
+
+* Migrating to null safety
+
 ## 2.3.4
 
 * Allow custom the physics horizontal scroll for the slide
