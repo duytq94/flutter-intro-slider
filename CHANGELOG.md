@@ -1,3 +1,7 @@
+## 2.4.1
+
+* Fixing set button colors don't working properly
+
 ## 2.4.0
 
 * Migrating to null safety

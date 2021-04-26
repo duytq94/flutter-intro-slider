@@ -220,6 +220,7 @@ class IntroSliderState extends State<IntroSlider>
   static double defaultBtnBorderRadius = 30.0;
 
   static Color defaultBtnColor = Colors.transparent;
+  static Color defaultBtnHighlightColor = Colors.white.withOpacity(0.3);
 
   // ---------- Slides ----------
   /// An array of Slide object
@@ -240,6 +241,9 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Color for SKIP button
   late final Color colorSkipBtn;
+
+  /// Color for Skip button when press
+  late final Color highlightColorSkipBtn;
 
   /// Show or hide SKIP button
   late final bool showSkipBtn;
@@ -281,6 +285,9 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Color for DONE button
   late final Color colorDoneBtn;
+
+  /// Color for DONE button when press
+  late final Color highlightColorDoneBtn;
 
   /// Rounded DONE button
   late final double borderRadiusDoneBtn;
@@ -502,7 +509,8 @@ class IntroSliderState extends State<IntroSlider>
           style: styleSkipBtn,
         );
     colorSkipBtn = widget.colorSkipBtn ?? defaultBtnColor;
-
+    highlightColorSkipBtn =
+        widget.highlightColorSkipBtn ?? defaultBtnHighlightColor;
     borderRadiusSkipBtn = widget.borderRadiusSkipBtn ?? defaultBtnBorderRadius;
 
     // Prev button
@@ -542,7 +550,8 @@ class IntroSliderState extends State<IntroSlider>
         );
 
     colorDoneBtn = widget.colorDoneBtn ?? defaultBtnColor;
-
+    highlightColorDoneBtn =
+        widget.highlightColorDoneBtn ?? defaultBtnHighlightColor;
     borderRadiusDoneBtn = widget.borderRadiusDoneBtn ?? defaultBtnBorderRadius;
 
     // Next button
@@ -612,7 +621,8 @@ class IntroSliderState extends State<IntroSlider>
       return TextButton(
         onPressed: onSkipPress as void Function(),
         style: TextButton.styleFrom(
-          primary: colorSkipBtn,
+          backgroundColor: colorSkipBtn,
+          primary: highlightColorSkipBtn,
           shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadiusSkipBtn)),
         ),
@@ -625,7 +635,8 @@ class IntroSliderState extends State<IntroSlider>
     return TextButton(
       onPressed: onDonePress as void Function()?,
       style: TextButton.styleFrom(
-        primary: colorDoneBtn,
+        backgroundColor: colorDoneBtn,
+        primary: highlightColorDoneBtn,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadiusDoneBtn)),
       ),
@@ -661,7 +672,8 @@ class IntroSliderState extends State<IntroSlider>
         }
       },
       style: TextButton.styleFrom(
-        primary: colorDoneBtn,
+        backgroundColor: colorDoneBtn,
+        primary: highlightColorDoneBtn,
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(borderRadiusDoneBtn)),
       ),
