@@ -361,17 +361,18 @@ class IntroSliderState extends State<IntroSlider>
 
     lengthSlide = slides?.length ?? widget.listCustomTabs?.length ?? 0;
 
+    onTabChangeCompleted = widget.onTabChangeCompleted;
     tabController = TabController(length: lengthSlide, vsync: this);
     tabController.addListener(() {
       if (tabController.indexIsChanging) {
         currentTabIndex = tabController.previousIndex;
       } else {
         currentTabIndex = tabController.index;
+        if (onTabChangeCompleted != null) {
+          onTabChangeCompleted!(tabController.index);
+        }
       }
       currentAnimationValue = tabController.animation!.value;
-      if (onTabChangeCompleted != null) {
-        onTabChangeCompleted!(tabController.index);
-      }
     });
 
     // Send reference function goToTab to parent

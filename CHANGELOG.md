@@ -1,3 +1,7 @@
+## 2.4.2
+
+* Fixing onTabChangeCompleted is never called
+
 ## 2.4.1
 
 * Fixing set button colors don't working properly
