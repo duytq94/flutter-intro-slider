@@ -951,7 +951,7 @@ class IntroSliderState extends State<IntroSlider>
   Widget renderDot(double radius, Color? color, double opacity, int index) {
     return GestureDetector(
       onTap: () {
-        tabController.index = index;
+        tabController.animateTo(index);
       },
       child: Opacity(
         opacity: opacity,

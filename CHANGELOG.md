@@ -1,3 +1,7 @@
+## 2.4.3
+
+* Change slide on dot click
+
 ## 2.4.2
 
 * Fixing onTabChangeCompleted is never called
