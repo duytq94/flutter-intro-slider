@@ -943,20 +943,25 @@ class IntroSliderState extends State<IntroSlider>
   List<Widget> renderListDots() {
     dots.clear();
     for (var i = 0; i < lengthSlide; i++) {
-      dots.add(renderDot(sizeDots[i]!, colorDot, opacityDots[i]));
+      dots.add(renderDot(sizeDots[i]!, colorDot, opacityDots[i], i));
     }
     return dots;
   }
 
-  Widget renderDot(double radius, Color? color, double opacity) {
-    return Opacity(
-      opacity: opacity,
-      child: Container(
-        decoration: BoxDecoration(
-            color: color, borderRadius: BorderRadius.circular(radius / 2)),
-        width: radius,
-        height: radius,
-        margin: EdgeInsets.only(left: radius / 2, right: radius / 2),
+  Widget renderDot(double radius, Color? color, double opacity, int index) {
+    return GestureDetector(
+      onTap: () {
+        tabController.index = index;
+      },
+      child: Opacity(
+        opacity: opacity,
+        child: Container(
+          decoration: BoxDecoration(
+              color: color, borderRadius: BorderRadius.circular(radius / 2)),
+          width: radius,
+          height: radius,
+          margin: EdgeInsets.only(left: radius / 2, right: radius / 2),
+        ),
       ),
     );
   }
