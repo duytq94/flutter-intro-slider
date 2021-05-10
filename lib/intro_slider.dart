@@ -226,6 +226,7 @@ class IntroSliderState extends State<IntroSlider>
   /// An array of Slide object
   late final List<Slide>? slides;
 
+
   // ---------- SKIP button ----------
   /// Render your own SKIP button
   late final Widget renderSkipBtn;
@@ -353,6 +354,34 @@ class IntroSliderState extends State<IntroSlider>
   int currentTabIndex = 0;
 
   late final int lengthSlide;
+
+  @override
+  void didUpdateWidget(covariant IntroSlider oldWidget) {
+    if (oldWidget.nameSkipBtn != widget.nameSkipBtn) {
+      renderSkipBtn = Text(
+        widget.nameSkipBtn,
+        style: styleNameSkipBtn,
+      );
+      renderPrevBtn = Text(
+        widget.namePrevBtn,
+        style: styleNamePrevBtn,
+      );
+
+      renderNextBtn = Text(
+        widget.nameNextBtn,
+        style: styleNameDoneBtn,
+      );
+      renderDoneBtn = Text(
+        widget.nameDoneBtn,
+        style: styleNameDoneBtn,
+      );
+      slides = widget.slides;
+      tabs.clear();
+      renderListTabs();
+      setState(() {});
+    }
+    super.didUpdateWidget(oldWidget);
+  }
 
   @override
   void initState() {
@@ -762,6 +791,7 @@ class IntroSliderState extends State<IntroSlider>
     for (var i = 0; i < lengthSlide; i++) {
       final scrollController = ScrollController();
       scrollControllers.add(scrollController);
+
       tabs!.add(
         renderTab(
           scrollController,
