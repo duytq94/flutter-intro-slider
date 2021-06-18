@@ -32,7 +32,7 @@ class Slide {
   BoxFit? foregroundImageFit;
 
   /// Fire when press image or center widget
-  Function? onCenterItemPress;
+  void Function()? onCenterItemPress;
 
   // Custom center widget that replaces image
   Widget? centerWidget;

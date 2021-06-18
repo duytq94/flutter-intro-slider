@@ -1,3 +1,8 @@
+## 3.0.0
+
+* Revamp PREV, NEXT, SKIP, DONE buttons
+* Fix wrong and missing docs
+
 ## 2.4.3
 
 * Change slide on dot click

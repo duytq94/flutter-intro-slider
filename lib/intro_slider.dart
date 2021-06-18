@@ -18,92 +18,47 @@ class IntroSlider extends StatefulWidget {
   final Color? backgroundColorAllSlides;
 
   // ---------- SKIP button ----------
-  /// Render your own SKIP button
+  /// Render your own widget SKIP button
   final Widget? renderSkipBtn;
 
-  /// Width of view wrapper SKIP button
-  final double? widthSkipBtn;
+  /// Render your own style SKIP button
+  final ButtonStyle? skipButtonStyle;
 
   /// Fire when press SKIP button
-  final Function? onSkipPress;
-
-  /// Change SKIP to any text you want
-  final String? nameSkipBtn;
-
-  /// Style for text at SKIP button
-  final TextStyle? styleSkipBtn;
-
-  /// Color for SKIP button
-  final Color? colorSkipBtn;
-
-  /// Color for Skip button when press
-  final Color? highlightColorSkipBtn;
+  final void Function()? onSkipPress;
 
   /// Show or hide SKIP button
   final bool? showSkipBtn;
 
-  /// Rounded SKIP button
-  final double? borderRadiusSkipBtn;
-
   // ---------- PREV button ----------
-  /// Render your own PREV button
+  /// Render your own widget PREV button
   final Widget? renderPrevBtn;
 
-  /// Width of view wrapper PREV button
-  final double? widthPrevBtn;
-
-  /// Change PREV to any text you want
-  final String? namePrevBtn;
-
-  /// Style for text at PREV button
-  final TextStyle? stylePrevBtn;
-
-  /// Color for PREV button
-  final Color? colorPrevBtn;
-
-  /// Color for PREV button when press
-  final Color? highlightColorPrevBtn;
+  /// Render your own style PREV button
+  final ButtonStyle? prevButtonStyle;
 
   /// Show or hide PREV button (only visible if skip is hidden)
   final bool? showPrevBtn;
 
-  /// Rounded PREV button
-  final double? borderRadiusPrevBtn;
-
   // ---------- NEXT button ----------
-  /// Render your own NEXT button
+  /// Render your own widget NEXT button
   final Widget? renderNextBtn;
 
-  /// Change NEXT to any text you want
-  final String? nameNextBtn;
+  /// Render your own style NEXT button
+  final ButtonStyle? nextButtonStyle;
 
   /// Show or hide NEXT button
   final bool? showNextBtn;
 
   // ---------- DONE button ----------
-  /// Change DONE to any text you want
-  final String? nameDoneBtn;
-
-  /// Render your own DONE button
+  /// Render your own widget DONE button
   final Widget? renderDoneBtn;
 
-  /// Width of view wrapper DONE button
-  final double? widthDoneBtn;
+  /// Render your own style NEXT button
+  final ButtonStyle? doneButtonStyle;
 
   /// Fire when press DONE button
-  final Function? onDonePress;
-
-  /// Style for text at DONE button
-  final TextStyle? styleDoneBtn;
-
-  /// Color for DONE button
-  final Color? colorDoneBtn;
-
-  /// Color for DONE button when press
-  final Color? highlightColorDoneBtn;
-
-  /// Rounded DONE button
-  final double? borderRadiusDoneBtn;
+  final void Function()? onDonePress;
 
   /// Show or hide DONE button
   final bool? showDoneBtn;
@@ -129,10 +84,10 @@ class IntroSlider extends StatefulWidget {
   final List<Widget>? listCustomTabs;
 
   /// Notify when tab change completed
-  final Function? onTabChangeCompleted;
+  final void Function(int index)? onTabChangeCompleted;
 
   /// Ref function go to specific tab index
-  final Function? refFuncGoToTab;
+  final void Function(Function function)? refFuncGoToTab;
 
   // ---------- Behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
@@ -153,39 +108,24 @@ class IntroSlider extends StatefulWidget {
 
     // Skip
     this.renderSkipBtn,
-    this.widthSkipBtn,
+    this.skipButtonStyle,
     this.onSkipPress,
-    this.nameSkipBtn,
-    this.styleSkipBtn,
-    this.colorSkipBtn,
-    this.highlightColorSkipBtn,
     this.showSkipBtn,
-    this.borderRadiusSkipBtn,
 
     // Prev
     this.renderPrevBtn,
-    this.widthPrevBtn,
-    this.namePrevBtn,
+    this.prevButtonStyle,
     this.showPrevBtn,
-    this.stylePrevBtn,
-    this.colorPrevBtn,
-    this.highlightColorPrevBtn,
-    this.borderRadiusPrevBtn,
 
     // Done
     this.renderDoneBtn,
-    this.widthDoneBtn,
     this.onDonePress,
-    this.nameDoneBtn,
-    this.colorDoneBtn,
-    this.highlightColorDoneBtn,
-    this.borderRadiusDoneBtn,
-    this.styleDoneBtn,
+    this.doneButtonStyle,
     this.showDoneBtn,
 
     // Next
     this.renderNextBtn,
-    this.nameNextBtn,
+    this.nextButtonStyle,
     this.showNextBtn,
 
     // Dots
@@ -213,94 +153,52 @@ class IntroSlider extends StatefulWidget {
 
 class IntroSliderState extends State<IntroSlider>
     with SingleTickerProviderStateMixin {
-  /// Default values
-  static TextStyle defaultBtnNameTextStyle =
-      const TextStyle(color: Colors.white);
-
-  static double defaultBtnBorderRadius = 30.0;
-
-  static Color defaultBtnColor = Colors.transparent;
-  static Color defaultBtnHighlightColor = Colors.white.withOpacity(0.3);
-
   // ---------- Slides ----------
   /// An array of Slide object
   late final List<Slide>? slides;
 
   // ---------- SKIP button ----------
-  /// Render your own SKIP button
+  /// Render your own widget SKIP button
   late final Widget renderSkipBtn;
 
   /// Fire when press SKIP button
-  late final Function onSkipPress;
+  late final void Function()? onSkipPress;
 
-  /// Change SKIP to any text you want
-  late final String nameSkipBtn;
-
-  /// Style for text at SKIP button
-  late final TextStyle styleSkipBtn;
-
-  /// Color for SKIP button
-  late final Color colorSkipBtn;
-
-  /// Color for Skip button when press
-  late final Color highlightColorSkipBtn;
+  /// Render your own style SKIP button
+  late final ButtonStyle skipButtonStyle;
 
   /// Show or hide SKIP button
   late final bool showSkipBtn;
 
-  /// Rounded SKIP button
-  late final double borderRadiusSkipBtn;
-
   // ---------- PREV button ----------
-  /// Render your own PREV button
+  /// Render your own widget PREV button
   late final Widget renderPrevBtn;
 
-  /// Change PREV to any text you want
-  late final String namePrevBtn;
-
-  /// Style for text at PREV button
-  late final TextStyle stylePrevBtn;
-
-  /// Color for PREV button
-  late final Color colorPrevBtn;
+  /// Render your own style PREV button
+  late final ButtonStyle prevButtonStyle;
 
   /// Show or hide PREV button
-  bool showPrevBtn = true;
-
-  /// Rounded PREV button
-  late final double borderRadiusPrevBtn;
+  late final bool showPrevBtn;
 
   // ---------- DONE button ----------
-  /// Render your own DONE button
+  /// Render your own widget DONE button
   late final Widget renderDoneBtn;
 
   /// Fire when press DONE button
-  late final Function onDonePress;
+  late final void Function()? onDonePress;
 
-  /// Change DONE to any text you want
-  late final String nameDoneBtn;
-
-  /// Style for text at DONE button
-  late final TextStyle styleDoneBtn;
-
-  /// Color for DONE button
-  late final Color colorDoneBtn;
-
-  /// Color for DONE button when press
-  late final Color highlightColorDoneBtn;
-
-  /// Rounded DONE button
-  late final double borderRadiusDoneBtn;
+  /// Render your own style DONE button
+  late final ButtonStyle doneButtonStyle;
 
   /// Show or hide DONE button
   late final bool showDoneBtn;
 
   // ---------- NEXT button ----------
-  /// Render your own NEXT button
+  /// Render your own widget NEXT button
   late final Widget renderNextBtn;
 
-  /// Change NEXT to any text you want
-  late final String nameNextBtn;
+  /// Render your own style NEXT button
+  late final ButtonStyle nextButtonStyle;
 
   /// Show or hide NEXT button
   late final bool showNextBtn;
@@ -368,17 +266,13 @@ class IntroSliderState extends State<IntroSlider>
         currentTabIndex = tabController.previousIndex;
       } else {
         currentTabIndex = tabController.index;
-        if (onTabChangeCompleted != null) {
-          onTabChangeCompleted!(tabController.index);
-        }
+        onTabChangeCompleted?.call(tabController.index);
       }
       currentAnimationValue = tabController.animation!.value;
     });
 
     // Send reference function goToTab to parent
-    if (widget.refFuncGoToTab != null) {
-      widget.refFuncGoToTab!(goToTab);
-    }
+    widget.refFuncGoToTab?.call(goToTab);
 
     // Dot animation
     sizeDot = widget.sizeDot ?? 8.0;
@@ -500,69 +394,46 @@ class IntroSliderState extends State<IntroSlider>
 
     showSkipBtn = widget.showSkipBtn ?? true;
 
-    styleSkipBtn = widget.styleSkipBtn ?? defaultBtnNameTextStyle;
-
-    nameSkipBtn = widget.nameSkipBtn ?? 'SKIP';
-
     renderSkipBtn = widget.renderSkipBtn ??
         Text(
-          nameSkipBtn,
-          style: styleSkipBtn,
+          "SKIP",
+          style: TextStyle(color: Colors.white),
         );
-    colorSkipBtn = widget.colorSkipBtn ?? defaultBtnColor;
-    highlightColorSkipBtn =
-        widget.highlightColorSkipBtn ?? defaultBtnHighlightColor;
-    borderRadiusSkipBtn = widget.borderRadiusSkipBtn ?? defaultBtnBorderRadius;
+    skipButtonStyle = widget.skipButtonStyle ?? ButtonStyle();
 
     // Prev button
-    if (widget.showPrevBtn == null || showSkipBtn) {
+    if (showSkipBtn) {
       showPrevBtn = false;
+    } else {
+      showPrevBtn = widget.showPrevBtn ?? true;
     }
-
-    stylePrevBtn = widget.stylePrevBtn ?? defaultBtnNameTextStyle;
-
-    namePrevBtn = widget.namePrevBtn ?? 'PREV';
 
     renderPrevBtn = widget.renderPrevBtn ??
         Text(
-          namePrevBtn,
-          style: stylePrevBtn,
+          "PREV",
+          style: TextStyle(color: Colors.white),
         );
-
-    colorPrevBtn = widget.colorPrevBtn ?? defaultBtnColor;
-
-    borderRadiusPrevBtn = widget.borderRadiusPrevBtn ?? defaultBtnBorderRadius;
-
-    showDoneBtn = widget.showDoneBtn ?? true;
+    prevButtonStyle = widget.prevButtonStyle ?? ButtonStyle();
 
     showNextBtn = widget.showNextBtn ?? true;
 
     // Done button
     onDonePress = widget.onDonePress ?? () {};
-
-    styleDoneBtn = widget.styleDoneBtn ?? defaultBtnNameTextStyle;
-
-    nameDoneBtn = widget.nameDoneBtn ?? 'DONE';
-
     renderDoneBtn = widget.renderDoneBtn ??
         Text(
-          nameDoneBtn,
-          style: styleDoneBtn,
+          "DONE",
+          style: TextStyle(color: Colors.white),
         );
-
-    colorDoneBtn = widget.colorDoneBtn ?? defaultBtnColor;
-    highlightColorDoneBtn =
-        widget.highlightColorDoneBtn ?? defaultBtnHighlightColor;
-    borderRadiusDoneBtn = widget.borderRadiusDoneBtn ?? defaultBtnBorderRadius;
+    doneButtonStyle = widget.doneButtonStyle ?? ButtonStyle();
+    showDoneBtn = widget.showDoneBtn ?? true;
 
     // Next button
-    nameNextBtn = widget.nameNextBtn ?? 'NEXT';
-
     renderNextBtn = widget.renderNextBtn ??
         Text(
-          nameNextBtn,
-          style: styleDoneBtn,
+          "NEXT",
+          style: TextStyle(color: Colors.white),
         );
+    nextButtonStyle = widget.nextButtonStyle ?? ButtonStyle();
   }
 
   void goToTab(int index) {
@@ -620,13 +491,8 @@ class IntroSliderState extends State<IntroSlider>
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
       return TextButton(
-        onPressed: onSkipPress as void Function(),
-        style: TextButton.styleFrom(
-          backgroundColor: colorSkipBtn,
-          primary: highlightColorSkipBtn,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadiusSkipBtn)),
-        ),
+        onPressed: onSkipPress,
+        style: skipButtonStyle,
         child: renderSkipBtn,
       );
     }
@@ -634,13 +500,8 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget buildDoneButton() {
     return TextButton(
-      onPressed: onDonePress as void Function()?,
-      style: TextButton.styleFrom(
-        backgroundColor: colorDoneBtn,
-        primary: highlightColorDoneBtn,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadiusDoneBtn)),
-      ),
+      onPressed: onDonePress,
+      style: doneButtonStyle,
       child: renderDoneBtn,
     );
   }
@@ -655,11 +516,7 @@ class IntroSliderState extends State<IntroSlider>
             tabController.animateTo(tabController.index - 1);
           }
         },
-        style: TextButton.styleFrom(
-          primary: colorPrevBtn,
-          shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadiusPrevBtn)),
-        ),
+        style: prevButtonStyle,
         child: renderPrevBtn,
       );
     }
@@ -672,12 +529,7 @@ class IntroSliderState extends State<IntroSlider>
           tabController.animateTo(tabController.index + 1);
         }
       },
-      style: TextButton.styleFrom(
-        backgroundColor: colorDoneBtn,
-        primary: highlightColorDoneBtn,
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(borderRadiusDoneBtn)),
-      ),
+      style: nextButtonStyle,
       child: renderNextBtn,
     );
   }
@@ -692,11 +544,7 @@ class IntroSliderState extends State<IntroSlider>
           // Skip button
           Container(
             alignment: Alignment.center,
-            width: showSkipBtn
-                ? widget.widthSkipBtn ?? MediaQuery.of(context).size.width / 4
-                : (showPrevBtn
-                    ? widget.widthPrevBtn
-                    : MediaQuery.of(context).size.width / 4),
+            width: MediaQuery.of(context).size.width / 4,
             child: showSkipBtn
                 ? buildSkipButton()
                 : (showPrevBtn ? buildPrevButton() : Container()),
@@ -743,7 +591,7 @@ class IntroSliderState extends State<IntroSlider>
           // Next, Done button
           Container(
             alignment: Alignment.center,
-            width: widget.widthDoneBtn ?? MediaQuery.of(context).size.width / 4,
+            width: MediaQuery.of(context).size.width / 4,
             height: 50,
             child: tabController.index + 1 == lengthSlide
                 ? showDoneBtn
@@ -822,7 +670,7 @@ class IntroSliderState extends State<IntroSlider>
 
     // Center Widget
     Widget? centerWidget,
-    Function? onCenterItemPress,
+    void Function()? onCenterItemPress,
 
     // Background color
     Color? backgroundColor,
@@ -863,7 +711,7 @@ class IntroSliderState extends State<IntroSlider>
 
         // Image or Center widget
         GestureDetector(
-          onTap: onCenterItemPress as void Function()?,
+          onTap: onCenterItemPress,
           child: pathImage != null
               ? Image.asset(
                   pathImage,
