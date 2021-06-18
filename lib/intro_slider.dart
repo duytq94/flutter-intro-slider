@@ -9,6 +9,8 @@ import 'list_rtl_language.dart';
 import 'scrollbar_behavior_enum.dart';
 import 'slide_object.dart';
 
+typedef BottomLayoutBuilder = Widget Function(Widget dots);
+
 class IntroSlider extends StatefulWidget {
   // ---------- Slides ----------
   /// An array of Slide object
@@ -128,6 +130,9 @@ class IntroSlider extends StatefulWidget {
   /// Render your own custom tabs
   final List<Widget>? listCustomTabs;
 
+  /// Render your custom bottom
+  final BottomLayoutBuilder? renderCustomBottom;
+
   /// Notify when tab change completed
   final Function? onTabChangeCompleted;
 
@@ -197,6 +202,7 @@ class IntroSlider extends StatefulWidget {
 
     // Tabs
     this.listCustomTabs,
+    this.renderCustomBottom,
     this.onTabChangeCompleted,
     this.refFuncGoToTab,
 
@@ -682,7 +688,43 @@ class IntroSliderState extends State<IntroSlider>
     );
   }
 
-  Widget renderBottom() {
+  Widget renderDotIndicator() {
+    return Flexible(
+      child: showDotIndicator
+          ? Stack(
+              children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: renderListDots(),
+                ),
+                if (typeDotAnimation == dotSliderAnimation.DOT_MOVEMENT)
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                          color: colorActiveDot,
+                          borderRadius: BorderRadius.circular(sizeDot! / 2)),
+                      width: sizeDot,
+                      height: sizeDot,
+                      margin: EdgeInsets.only(
+                          left: isRTLLanguage(
+                                  Localizations.localeOf(context).languageCode)
+                              ? marginRightDotFocused
+                              : marginLeftDotFocused,
+                          right: isRTLLanguage(
+                                  Localizations.localeOf(context).languageCode)
+                              ? marginLeftDotFocused
+                              : marginRightDotFocused),
+                    ),
+                  )
+                else
+                  Container()
+              ],
+            )
+          : Container(),
+    );
+  }
+
+  Widget renderDefaultBottom() {
     return Positioned(
       bottom: 10.0,
       left: 10.0,
@@ -703,42 +745,7 @@ class IntroSliderState extends State<IntroSlider>
           ),
 
           // Dot indicator
-          Flexible(
-            child: showDotIndicator
-                ? Stack(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: renderListDots(),
-                      ),
-                      if (typeDotAnimation == dotSliderAnimation.DOT_MOVEMENT)
-                        Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                                color: colorActiveDot,
-                                borderRadius:
-                                    BorderRadius.circular(sizeDot! / 2)),
-                            width: sizeDot,
-                            height: sizeDot,
-                            margin: EdgeInsets.only(
-                                left: isRTLLanguage(
-                                        Localizations.localeOf(context)
-                                            .languageCode)
-                                    ? marginRightDotFocused
-                                    : marginLeftDotFocused,
-                                right: isRTLLanguage(
-                                        Localizations.localeOf(context)
-                                            .languageCode)
-                                    ? marginLeftDotFocused
-                                    : marginRightDotFocused),
-                          ),
-                        )
-                      else
-                        Container()
-                    ],
-                  )
-                : Container(),
-          ),
+          renderDotIndicator(),
 
           // Next, Done button
           Container(
@@ -756,6 +763,13 @@ class IntroSliderState extends State<IntroSlider>
         ],
       ),
     );
+  }
+
+  Widget renderBottom() {
+    if (widget.renderCustomBottom != null) {
+      return widget.renderCustomBottom!(renderDotIndicator());
+    }
+    return renderDefaultBottom();
   }
 
   List<Widget>? renderListTabs() {
