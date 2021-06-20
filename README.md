@@ -19,7 +19,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^3.0.0
+  intro_slider: ^3.0.1
 ```
 
 Import
@@ -120,9 +120,7 @@ class IntroScreenState extends State<IntroScreen> {
             TextStyle(color: Colors.white, fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
         marginDescription: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 70.0),
         centerWidget: Text("Replace this with a custom widget", style: TextStyle(color: Colors.white)),
-        colorBegin: Color(0xffFFDAB9),
-        colorEnd: Color(0xff40E0D0),
-        backgroundImage: 'images/photo_eraser.png',
+        backgroundImage: "images/forest.png",
         directionColorBegin: Alignment.topLeft,
         directionColorEnd: Alignment.bottomRight,
         onCenterItemPress: () {},
@@ -130,31 +128,27 @@ class IntroScreenState extends State<IntroScreen> {
     );
     slides.add(
       new Slide(
-        title: "MUSEUM",
+        title: "CITY",
         styleTitle:
-            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+            TextStyle(color: Color(0xff7FFFD4), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description: "Ye indulgence unreserved connection alteration appearance",
         styleDescription:
-            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
-        pathImage: "images/photo_museum.png",
-        colorBegin: Color(0xffFFFACD),
-        colorEnd: Color(0xffFF6347),
+            TextStyle(color: Color(0xff7FFFD4), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        backgroundImage: "images/city.jpeg",
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
       ),
     );
     slides.add(
       new Slide(
-        title: "COFFEE",
+        title: "BEACH",
         styleTitle:
-            TextStyle(color: Color(0xffD02090), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+            TextStyle(color: Color(0xffFFDAB9), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
         styleDescription:
-            TextStyle(color: Color(0xffD02090), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
-        pathImage: "images/photo_coffee_shop.png",
-        colorBegin: Color(0xffFFA500),
-        colorEnd: Color(0xff7FFFD4),
+            TextStyle(color: Color(0xffFFDAB9), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        backgroundImage: "images/beach.jpeg",
         directionColorBegin: Alignment.topCenter,
         directionColorEnd: Alignment.bottomCenter,
         maxLineTextDescription: 3,
@@ -173,7 +167,7 @@ class IntroScreenState extends State<IntroScreen> {
   Widget renderNextBtn() {
     return Icon(
       Icons.navigate_next,
-      color: Color(0xffD02090),
+      color: Color(0xffF3B4BA),
       size: 35.0,
     );
   }
@@ -181,22 +175,22 @@ class IntroScreenState extends State<IntroScreen> {
   Widget renderDoneBtn() {
     return Icon(
       Icons.done,
-      color: Color(0xffD02090),
+      color: Color(0xffF3B4BA),
     );
   }
 
   Widget renderSkipBtn() {
     return Icon(
       Icons.skip_next,
-      color: Color(0xffD02090),
+      color: Color(0xffF3B4BA),
     );
   }
 
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(Color(0x33000000)),
-      overlayColor: MaterialStateProperty.all<Color>(Color(0xff000000)),
+      backgroundColor: MaterialStateProperty.all<Color>(Color(0x33F3B4BA)),
+      overlayColor: MaterialStateProperty.all<Color>(Color(0x33FFA8B0)),
     );
   }
 
@@ -220,8 +214,8 @@ class IntroScreenState extends State<IntroScreen> {
       doneButtonStyle: myButtonStyle(),
 
       // Dot indicator
-      colorDot: Color(0x33D02090),
-      colorActiveDot: Color(0xffD02090),
+      colorDot: Color(0x33FFA8B0),
+      colorActiveDot: Color(0xffFFA8B0),
       sizeDot: 13.0,
 
       // Show or hide status bar
@@ -239,7 +233,7 @@ class IntroScreenState extends State<IntroScreen> {
 
 ### Custom your own tabs
 
-![custom config image](screenshots/custom3.jpg)
+![custom config image](screenshots/custom2.png)
 
 <details>
   <summary>Code example (click to expand)</summary>
