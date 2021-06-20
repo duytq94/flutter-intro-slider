@@ -493,6 +493,7 @@ class IntroSliderState extends State<IntroSlider>
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
       return TextButton(
+        key: const Key("IntroSliderSkipButton"),
         onPressed: onSkipPress,
         style: skipButtonStyle,
         child: renderSkipBtn,
@@ -502,6 +503,7 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget buildDoneButton() {
     return TextButton(
+      key: const Key("IntroSliderDoneButton"),
       onPressed: onDonePress,
       style: doneButtonStyle,
       child: renderDoneBtn,
@@ -513,6 +515,7 @@ class IntroSliderState extends State<IntroSlider>
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
       return TextButton(
+        key: const Key("IntroSliderPrevButton"),
         onPressed: () {
           if (!isAnimating()) {
             tabController.animateTo(tabController.index - 1);
@@ -526,6 +529,7 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget buildNextButton() {
     return TextButton(
+      key: const Key("IntroSliderNextButton"),
       onPressed: () {
         if (!isAnimating()) {
           tabController.animateTo(tabController.index + 1);
