@@ -1,3 +1,7 @@
+## 3.0.1
+
+* Update some null safety syntax and example
+
 ## 3.0.0
 
 * Revamp PREV, NEXT, SKIP, DONE buttons
