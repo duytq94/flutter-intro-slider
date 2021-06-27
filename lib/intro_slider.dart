@@ -30,6 +30,9 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide SKIP button
   final bool? showSkipBtn;
 
+  /// Assign Key to SKIP button
+  final Key? skipButtonKey;
+
   // ---------- PREV button ----------
   /// Render your own widget PREV button
   final Widget? renderPrevBtn;
@@ -40,6 +43,9 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide PREV button (only visible if skip is hidden)
   final bool? showPrevBtn;
 
+  /// Assign Key to PREV button
+  final Key? prevButtonKey;
+
   // ---------- NEXT button ----------
   /// Render your own widget NEXT button
   final Widget? renderNextBtn;
@@ -49,6 +55,9 @@ class IntroSlider extends StatefulWidget {
 
   /// Show or hide NEXT button
   final bool? showNextBtn;
+
+  /// Assign Key to NEXT button
+  final Key? nextButtonKey;
 
   // ---------- DONE button ----------
   /// Render your own widget DONE button
@@ -62,6 +71,9 @@ class IntroSlider extends StatefulWidget {
 
   /// Show or hide DONE button
   final bool? showDoneBtn;
+
+  /// Assign Key to DONE button
+  final Key? doneButtonKey;
 
   // ---------- Dot indicator ----------
   /// Show or hide dot indicator
@@ -111,22 +123,26 @@ class IntroSlider extends StatefulWidget {
     this.skipButtonStyle,
     this.onSkipPress,
     this.showSkipBtn,
+    this.skipButtonKey,
 
     // Prev
     this.renderPrevBtn,
     this.prevButtonStyle,
     this.showPrevBtn,
+    this.prevButtonKey,
 
     // Done
     this.renderDoneBtn,
     this.onDonePress,
     this.doneButtonStyle,
     this.showDoneBtn,
+    this.doneButtonKey,
 
     // Next
     this.renderNextBtn,
     this.nextButtonStyle,
     this.showNextBtn,
+    this.nextButtonKey,
 
     // Dots
     this.colorActiveDot,
@@ -170,6 +186,9 @@ class IntroSliderState extends State<IntroSlider>
   /// Show or hide SKIP button
   late final bool showSkipBtn;
 
+  /// Assign Key to SKIP button
+  late final Key? skipButtonKey;
+
   // ---------- PREV button ----------
   /// Render your own widget PREV button
   late final Widget renderPrevBtn;
@@ -179,6 +198,9 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Show or hide PREV button
   late final bool showPrevBtn;
+
+  /// Assign Key to PREV button
+  late final Key? prevButtonKey;
 
   // ---------- DONE button ----------
   /// Render your own widget DONE button
@@ -193,6 +215,9 @@ class IntroSliderState extends State<IntroSlider>
   /// Show or hide DONE button
   late final bool showDoneBtn;
 
+  /// Assign Key to DONE button
+  late final Key? doneButtonKey;
+
   // ---------- NEXT button ----------
   /// Render your own widget NEXT button
   late final Widget renderNextBtn;
@@ -202,6 +227,9 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Show or hide NEXT button
   late final bool showNextBtn;
+
+  /// Assign Key to NEXT button
+  late final Key? nextButtonKey;
 
   // ---------- Dot indicator ----------
   /// Show or hide dot indicator
@@ -256,6 +284,11 @@ class IntroSliderState extends State<IntroSlider>
   void initState() {
     super.initState();
     slides = widget.slides;
+
+    skipButtonKey = widget.skipButtonKey;
+    prevButtonKey = widget.prevButtonKey;
+    doneButtonKey = widget.doneButtonKey;
+    nextButtonKey = widget.nextButtonKey;
 
     lengthSlide = slides?.length ?? widget.listCustomTabs?.length ?? 0;
 
@@ -493,6 +526,7 @@ class IntroSliderState extends State<IntroSlider>
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
       return TextButton(
+        key: skipButtonKey,
         onPressed: onSkipPress,
         style: skipButtonStyle,
         child: renderSkipBtn,
@@ -502,6 +536,7 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget buildDoneButton() {
     return TextButton(
+      key: doneButtonKey,
       onPressed: onDonePress,
       style: doneButtonStyle,
       child: renderDoneBtn,
@@ -513,6 +548,7 @@ class IntroSliderState extends State<IntroSlider>
       return Container(width: MediaQuery.of(context).size.width / 4);
     } else {
       return TextButton(
+        key: prevButtonKey,
         onPressed: () {
           if (!isAnimating()) {
             tabController.animateTo(tabController.index - 1);
@@ -526,6 +562,7 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget buildNextButton() {
     return TextButton(
+      key: nextButtonKey,
       onPressed: () {
         if (!isAnimating()) {
           tabController.animateTo(tabController.index + 1);
