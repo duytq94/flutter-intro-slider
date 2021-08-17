@@ -22,6 +22,9 @@ class Slide {
   /// Path to your local image
   String? pathImage;
 
+  /// Url to your network image
+  String? networkImage;
+
   /// Width of image
   double? widthImage;
 
@@ -87,6 +90,7 @@ class Slide {
 
     // Image
     this.pathImage,
+    this.networkImage,
     this.widthImage,
     this.heightImage,
     this.foregroundImageFit,

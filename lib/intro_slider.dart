@@ -663,6 +663,7 @@ class IntroSliderState extends State<IntroSlider>
           slides?[i].styleDescription,
           slides?[i].marginDescription,
           slides?[i].pathImage,
+          slides?[i].networkImage,
           slides?[i].widthImage,
           slides?[i].heightImage,
           slides?[i].foregroundImageFit,
@@ -684,6 +685,23 @@ class IntroSliderState extends State<IntroSlider>
     return tabs;
   }
 
+  Widget _renderImage(String? pathImage, String? networkImage,
+      double? widthImage, double? heightImage, BoxFit? foregroundImageFit) {
+    return pathImage != null
+        ? Image.asset(
+            pathImage,
+            width: widthImage ?? 200.0,
+            height: heightImage ?? 200.0,
+            fit: foregroundImageFit ?? BoxFit.contain,
+          )
+        : Image.network(
+            networkImage!,
+            width: widthImage ?? 200.0,
+            height: heightImage ?? 200.0,
+            fit: foregroundImageFit ?? BoxFit.contain,
+          );
+  }
+
   Widget renderTab(
     ScrollController scrollController,
 
@@ -703,6 +721,7 @@ class IntroSliderState extends State<IntroSlider>
 
     // Image
     String? pathImage,
+    String? networkImage,
     double? widthImage,
     double? heightImage,
     BoxFit? foregroundImageFit,
@@ -751,13 +770,9 @@ class IntroSliderState extends State<IntroSlider>
         // Image or Center widget
         GestureDetector(
           onTap: onCenterItemPress,
-          child: pathImage != null
-              ? Image.asset(
-                  pathImage,
-                  width: widthImage ?? 200.0,
-                  height: heightImage ?? 200.0,
-                  fit: foregroundImageFit ?? BoxFit.contain,
-                )
+          child: (pathImage != null || networkImage != null)
+              ? _renderImage(pathImage, networkImage, widthImage, heightImage,
+                  foregroundImageFit)
               : Center(child: centerWidget ?? Container()),
         ),
 

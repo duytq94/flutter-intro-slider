@@ -428,6 +428,7 @@ class IntroScreenState extends State<IntroScreen> {
 | marginTitle             | `EdgeInsets?`        | top: 70.0, bottom: 50.0                 | Margin for text title                                                        |
 | <b>Image</b>            |                      |                                         |                                                                              |
 | pathImage               | `String?`            | ""                                      | Path to your local image                                                     |
+| networkImage            | `String?`            | ""                                      | Url to your network image                                                     |
 | widthImage              | `double?`            | 250.0                                   | Width of image                                                               |
 | heightImage             | `double?`            | 250.0                                   | Height of image                                                              |
 | foregroundImageFit      | `BoxFit?`            | BoxFit.contain                          | Foreground image fit                                                         |
