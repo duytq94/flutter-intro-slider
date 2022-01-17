@@ -56,6 +56,9 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide NEXT button
   final bool? showNextBtn;
 
+  /// Fire when press NEXT button
+  final Function()? onNextPress;
+
   /// Assign Key to NEXT button
   final Key? nextButtonKey;
 
@@ -142,6 +145,7 @@ class IntroSlider extends StatefulWidget {
     this.renderNextBtn,
     this.nextButtonStyle,
     this.showNextBtn,
+    this.onNextPress,
     this.nextButtonKey,
 
     // Dots
@@ -227,6 +231,9 @@ class IntroSliderState extends State<IntroSlider>
 
   /// Show or hide NEXT button
   late final bool showNextBtn;
+
+  /// Fire when press NEXT button
+  late final void Function()? onNextPress;
 
   /// Assign Key to NEXT button
   late final Key? nextButtonKey;
@@ -460,6 +467,7 @@ class IntroSliderState extends State<IntroSlider>
     showDoneBtn = widget.showDoneBtn ?? true;
 
     // Next button
+    onNextPress = widget.onNextPress ?? () {};
     renderNextBtn = widget.renderNextBtn ??
         Text(
           "NEXT",
@@ -564,6 +572,7 @@ class IntroSliderState extends State<IntroSlider>
     return TextButton(
       key: nextButtonKey,
       onPressed: () {
+        onNextPress?.call();
         if (!isAnimating()) {
           tabController.animateTo(tabController.index + 1);
         }

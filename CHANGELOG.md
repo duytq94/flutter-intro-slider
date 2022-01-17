@@ -1,3 +1,7 @@
+## 3.0.3
+
+* Add onNextPress method
+
 ## 3.0.2
 
 * Add keys for some buttons (skip, next, prev, done) for support testing

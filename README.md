@@ -19,7 +19,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^3.0.2
+  intro_slider: ^3.0.3
 ```
 
 Import
@@ -164,6 +164,10 @@ class IntroScreenState extends State<IntroScreen> {
     // );
   }
 
+  void onNextPress() {
+    print("onNextPress caught");
+  }
+
   Widget renderNextBtn() {
     return Icon(
       Icons.navigate_next,
@@ -206,6 +210,7 @@ class IntroScreenState extends State<IntroScreen> {
 
       // Next button
       renderNextBtn: this.renderNextBtn(),
+      onNextPress: this.onNextPress,
       nextButtonStyle: myButtonStyle(),
 
       // Done button
@@ -477,6 +482,7 @@ class IntroScreenState extends State<IntroScreen> {
 | <b>Next Button                                                                                         |                                     |                                                   |                                                                                                     |
 | renderNextBtn                                                                                          | `Widget?`                           | Button with white text NEXT                       | Render your own NEXT button                                                                         |
 | nextButtonStyle                                                                                        | `ButtonStyle?`                      | ButtonStyle()                                     | Style for NEXT button                                                                               |
+| onNextPress                                                                                            | `void Function()?`                  | Do nothing                                        | Fire when press NEXT button                                                                         |
 | showNextBtn                                                                                            | `bool?`                             | true                                              | Show or hide NEXT button                                                                            |
 | <b>Dot Indicator</b>                                                                                   |                                     |                                                   |                                                                                                     |
 | showDotIndicator                                                                                       | `bool?`                             | true                                              | Show or hide dot indicator                                                                          |
