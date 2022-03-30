@@ -791,35 +791,8 @@ class IntroSliderState extends State<IntroSlider>
     return Container(
       width: double.infinity,
       height: double.infinity,
-      decoration: backgroundNetworkImage != null
+      decoration: backgroundImage == null && backgroundNetworkImage == null
           ? BoxDecoration(
-              image: DecorationImage(
-                image: NetworkImage(backgroundNetworkImage),
-                fit: backgroundImageFit ?? BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  backgroundOpacityColor != null
-                      ? backgroundOpacityColor
-                          .withOpacity(backgroundOpacity ?? 0.5)
-                      : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
-                  backgroundBlendMode ?? BlendMode.darken,
-                ),
-              ),
-            )
-          : backgroundImage != null
-          ? BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(backgroundImage),
-                fit: backgroundImageFit ?? BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  backgroundOpacityColor != null
-                      ? backgroundOpacityColor
-                          .withOpacity(backgroundOpacity ?? 0.5)
-                      : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
-                  backgroundBlendMode ?? BlendMode.darken,
-                ),
-              ),
-            )
-          : BoxDecoration(
               gradient: LinearGradient(
                 colors: backgroundColor != null
                     ? [backgroundColor, backgroundColor]
@@ -830,6 +803,19 @@ class IntroSliderState extends State<IntroSlider>
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
               ),
+            )
+          : BoxDecoration(
+              image: DecorationImage(
+                image: backgroundImage != null ? AssetImage(backgroundImage) : NetworkImage(backgroundNetworkImage!) as ImageProvider,
+                fit: backgroundImageFit ?? BoxFit.cover,
+                colorFilter: ColorFilter.mode(
+                  backgroundOpacityColor != null
+                      ? backgroundOpacityColor
+                          .withOpacity(backgroundOpacity ?? 0.5)
+                      : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
+                  backgroundBlendMode ?? BlendMode.darken,
+                ),
+              )
             ),
       child: Container(
         margin: const EdgeInsets.only(bottom: 60.0),
