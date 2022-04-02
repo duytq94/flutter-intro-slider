@@ -73,6 +73,7 @@ class Slide {
   // Background image
   String? backgroundImage;
   BoxFit? backgroundImageFit;
+  String? backgroundNetworkImage;
   double? backgroundOpacity;
   Color? backgroundOpacityColor;
   BlendMode? backgroundBlendMode;
@@ -112,6 +113,7 @@ class Slide {
     // background image
     this.backgroundImage,
     this.backgroundImageFit,
+    this.backgroundNetworkImage,
     this.backgroundOpacity,
     this.backgroundOpacityColor,
     this.backgroundBlendMode,

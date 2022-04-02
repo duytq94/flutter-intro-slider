@@ -453,6 +453,7 @@ class IntroScreenState extends State<IntroScreen> {
 | directionColorEnd       | `AlignmentGeometry?` | Alignment.bottomRight                   | Direction color end                                                          |
 | <b>Background Image</b> |                      |                                         |                                                                              |
 | backgroundImage         | `String?`            | null                                    | Background tab image                                                         |
+| backgroundNetworkImage  | `String?`            | null                                    | Background tab image (from network)                                          |
 | backgroundImageFit      | `BoxFit?`            | BoxFit.cover                            | Background tab image fit                                                     |
 | backgroundOpacity       | `double?`            | 0.5                                     | Background tab image filter opacity                                          |
 | backgroundOpacityColor  | `Color?`             | Colors.black                            | Background tab image filter color                                            |
