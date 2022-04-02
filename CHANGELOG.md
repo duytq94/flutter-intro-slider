@@ -1,3 +1,7 @@
+## 3.0.4
+
+* Add backgroundNetworkImage
+
 ## 3.0.3
 
 * Add onNextPress method

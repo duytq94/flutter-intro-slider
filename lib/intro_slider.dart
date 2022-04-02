@@ -611,22 +611,23 @@ class IntroSliderState extends State<IntroSlider>
                         Center(
                           child: Container(
                             decoration: BoxDecoration(
-                                color: colorActiveDot,
-                                borderRadius:
-                                    BorderRadius.circular(sizeDot / 2)),
+                              color: colorActiveDot,
+                              borderRadius: BorderRadius.circular(sizeDot / 2),
+                            ),
                             width: sizeDot,
                             height: sizeDot,
                             margin: EdgeInsets.only(
-                                left: isRTLLanguage(
-                                        Localizations.localeOf(context)
-                                            .languageCode)
-                                    ? marginRightDotFocused
-                                    : marginLeftDotFocused,
-                                right: isRTLLanguage(
-                                        Localizations.localeOf(context)
-                                            .languageCode)
-                                    ? marginLeftDotFocused
-                                    : marginRightDotFocused),
+                              left: isRTLLanguage(
+                                      Localizations.localeOf(context)
+                                          .languageCode)
+                                  ? marginRightDotFocused
+                                  : marginLeftDotFocused,
+                              right: isRTLLanguage(
+                                      Localizations.localeOf(context)
+                                          .languageCode)
+                                  ? marginLeftDotFocused
+                                  : marginRightDotFocused,
+                            ),
                           ),
                         )
                       else
@@ -798,7 +799,7 @@ class IntroSliderState extends State<IntroSlider>
                     ? [backgroundColor, backgroundColor]
                     : [
                         colorBegin ?? Colors.amberAccent,
-                        colorEnd ?? Colors.amberAccent
+                        colorEnd ?? Colors.amberAccent,
                       ],
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
@@ -806,17 +807,18 @@ class IntroSliderState extends State<IntroSlider>
             )
           : BoxDecoration(
               image: DecorationImage(
-                image: backgroundImage != null ? AssetImage(backgroundImage) : NetworkImage(backgroundNetworkImage!) as ImageProvider,
-                fit: backgroundImageFit ?? BoxFit.cover,
-                colorFilter: ColorFilter.mode(
-                  backgroundOpacityColor != null
-                      ? backgroundOpacityColor
-                          .withOpacity(backgroundOpacity ?? 0.5)
-                      : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
-                  backgroundBlendMode ?? BlendMode.darken,
-                ),
-              )
-            ),
+              image: backgroundImage != null
+                  ? AssetImage(backgroundImage)
+                  : NetworkImage(backgroundNetworkImage!) as ImageProvider,
+              fit: backgroundImageFit ?? BoxFit.cover,
+              colorFilter: ColorFilter.mode(
+                backgroundOpacityColor != null
+                    ? backgroundOpacityColor
+                        .withOpacity(backgroundOpacity ?? 0.5)
+                    : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
+                backgroundBlendMode ?? BlendMode.darken,
+              ),
+            )),
       child: Container(
         margin: const EdgeInsets.only(bottom: 60.0),
         child: verticalScrollbarBehavior != scrollbarBehavior.HIDE

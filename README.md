@@ -19,7 +19,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^3.0.3
+  intro_slider: ^3.0.4
 ```
 
 Import
@@ -120,7 +120,7 @@ class IntroScreenState extends State<IntroScreen> {
             TextStyle(color: Colors.white, fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
         marginDescription: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 70.0),
         centerWidget: Text("Replace this with a custom widget", style: TextStyle(color: Colors.white)),
-        backgroundImage: "images/forest.png",
+        backgroundNetworkImage: "https://picsum.photos/200/300",
         directionColorBegin: Alignment.topLeft,
         directionColorEnd: Alignment.bottomRight,
         onCenterItemPress: () {},
