@@ -1,12 +1,20 @@
 name: intro_slider
-description: Flutter Intro Slider is a flutter plugin that helps you make a cool intro for your app
+description: Flutter Intro Slider is a flutter plugin that helps you make a cool
+  intro for your app
 homepage: https://github.com/duytq94/flutter-intro-slider
-version: 3.0.4
+version: 3.0.5
+
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+  flutter: ">=1.12.0"
 
 dependencies:
   flutter:
     sdk: flutter
 
-environment:
-  sdk: ">=2.12.0 <3.0.0"
-  flutter: ">=1.12.0"
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.1
+
+

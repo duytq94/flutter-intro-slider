@@ -1,3 +1,14 @@
+## 3.0.5
+* Updated package to Flutter 3 and Dart 2.17
+* Updated example to Flutter 3 and Dart 2.17
+* BREAKING: only package:intro_slider/flutter_intro_slider.dart has to be imported now to get access to the whole feature
+* BREAKING: "dotSliderAnimation" is now "DotSliderAnimation" to match enum guidelines
+* BREAKING: "scrollbarBehavior" is now "ScrollbarBehavior" to match enum guidelines
+* Internal: Project structure cleanup
+* Internal: Example cleanup
+* Internal: Added flutter_lints
+* Internal: Renamed files to match the class name
+* Internal: Removed home.dart from example
 ## 3.0.4
 
 * Add backgroundNetworkImage
