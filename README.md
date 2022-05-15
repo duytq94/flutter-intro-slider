@@ -9,9 +9,9 @@
 - [Code example](#code-example) - How to use
   - [Default config](#default-config)
   - [Custom config](#custom-config)
-  - [Custom your own tabs](#custom-your-own-tabs)
+  - [Custom tab](#custom-tab)
 - [Slide object properties](#slide-object-properties) - Modifying your tabs
-- [IntroSlider widget properties](#IntroSlider-widget-properties) - Modifying entire slider
+- [IntroSlider widget properties](#introslider-widget-properties) - Modifying entire slider
 
 ## Installing
 
@@ -19,7 +19,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^3.0.4
+  intro_slider: ^3.0.5
 ```
 
 Import
@@ -42,7 +42,7 @@ import 'package:intro_slider/intro_slider.dart';
   <summary>Code example (click to expand)</summary>
   
 ```dart
-class IntroScreenState extends State<IntroScreen> {
+class IntroScreenDefaultState extends State<IntroScreenDefault> {
   List<Slide> slides = [];
 
   @override
@@ -50,28 +50,30 @@ class IntroScreenState extends State<IntroScreen> {
     super.initState();
 
     slides.add(
-      new Slide(
+      Slide(
         title: "ERASER",
-        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        description:
+            "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         pathImage: "images/photo_eraser.png",
-        backgroundColor: Color(0xfff5a623),
+        backgroundColor: const Color(0xfff5a623),
       ),
     );
     slides.add(
-      new Slide(
+      Slide(
         title: "PENCIL",
-        description: "Ye indulgence unreserved connection alteration appearance",
+        description:
+            "Ye indulgence unreserved connection alteration appearance",
         pathImage: "images/photo_pencil.png",
-        backgroundColor: Color(0xff203152),
+        backgroundColor: const Color(0xff203152),
       ),
     );
     slides.add(
-      new Slide(
+      Slide(
         title: "RULER",
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
         pathImage: "images/photo_ruler.png",
-        backgroundColor: Color(0xff9932CC),
+        backgroundColor: const Color(0xff9932CC),
       ),
     );
   }
@@ -83,9 +85,9 @@ class IntroScreenState extends State<IntroScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return new IntroSlider(
-      slides: this.slides,
-      onDonePress: this.onDonePress,
+    return IntroSlider(
+      slides: slides,
+      onDonePress: onDonePress,
     );
   }
 }
@@ -100,7 +102,7 @@ class IntroScreenState extends State<IntroScreen> {
   <summary>Code example (click to expand)</summary>
 
 ```dart
-class IntroScreenState extends State<IntroScreen> {
+class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   List<Slide> slides = [];
 
   @override
@@ -108,18 +110,34 @@ class IntroScreenState extends State<IntroScreen> {
     super.initState();
 
     slides.add(
-      new Slide(
+      Slide(
         title:
             "A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE",
         maxLineTitle: 2,
-        styleTitle:
-            TextStyle(color: Colors.white, fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        styleTitle: const TextStyle(
+          color: Colors.white,
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description:
             "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nunc, blandit vel, luctus pulvinar, hendrerit id, lorem. Maecenas nec odio et ante tincidunt tempus. Donec vitae sapien ut libero venenatis faucibus. Nullam quis ante. Etiam sit amet orci eget eros faucibus tincidunt. Duis leo. Sed fringilla mauris sit amet nibh. Donec sodales sagittis magna. Sed consequat, leo eget bibendum sodales, augue velit cursus nunc,",
-        styleDescription:
-            TextStyle(color: Colors.white, fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
-        marginDescription: EdgeInsets.only(left: 20.0, right: 20.0, top: 20.0, bottom: 70.0),
-        centerWidget: Text("Replace this with a custom widget", style: TextStyle(color: Colors.white)),
+        styleDescription: const TextStyle(
+          color: Colors.white,
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
+        marginDescription: const EdgeInsets.only(
+          left: 20.0,
+          right: 20.0,
+          top: 20.0,
+          bottom: 70.0,
+        ),
+        centerWidget: const Text(
+          "Replace this with a custom widget",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundNetworkImage: "https://picsum.photos/200/300",
         directionColorBegin: Alignment.topLeft,
         directionColorEnd: Alignment.bottomRight,
@@ -127,27 +145,43 @@ class IntroScreenState extends State<IntroScreen> {
       ),
     );
     slides.add(
-      new Slide(
+      Slide(
         title: "CITY",
-        styleTitle:
-            TextStyle(color: Color(0xff7FFFD4), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        styleTitle: const TextStyle(
+          color: Color(0xff7FFFD4),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description: "Ye indulgence unreserved connection alteration appearance",
-        styleDescription:
-            TextStyle(color: Color(0xff7FFFD4), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleDescription: const TextStyle(
+          color: Color(0xff7FFFD4),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         backgroundImage: "images/city.jpeg",
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
       ),
     );
     slides.add(
-      new Slide(
+      Slide(
         title: "BEACH",
-        styleTitle:
-            TextStyle(color: Color(0xffFFDAB9), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        styleTitle: const TextStyle(
+          color: Color(0xffFFDAB9),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription:
-            TextStyle(color: Color(0xffFFDAB9), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleDescription: const TextStyle(
+          color: Color(0xffFFDAB9),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         backgroundImage: "images/beach.jpeg",
         directionColorBegin: Alignment.topCenter,
         directionColorEnd: Alignment.bottomCenter,
@@ -165,11 +199,11 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   void onNextPress() {
-    print("onNextPress caught");
+    log("onNextPress caught");
   }
 
   Widget renderNextBtn() {
-    return Icon(
+    return const Icon(
       Icons.navigate_next,
       color: Color(0xffF3B4BA),
       size: 35.0,
@@ -177,14 +211,14 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   Widget renderDoneBtn() {
-    return Icon(
+    return const Icon(
       Icons.done,
       color: Color(0xffF3B4BA),
     );
   }
 
   Widget renderSkipBtn() {
-    return Icon(
+    return const Icon(
       Icons.skip_next,
       color: Color(0xffF3B4BA),
     );
@@ -192,35 +226,35 @@ class IntroScreenState extends State<IntroScreen> {
 
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
-      shape: MaterialStateProperty.all<OutlinedBorder>(StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(Color(0x33F3B4BA)),
-      overlayColor: MaterialStateProperty.all<Color>(Color(0x33FFA8B0)),
+      shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
+      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
+      overlayColor: MaterialStateProperty.all<Color>(const Color(0x33FFA8B0)),
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return new IntroSlider(
+    return IntroSlider(
       // List slides
-      slides: this.slides,
+      slides: slides,
 
       // Skip button
-      renderSkipBtn: this.renderSkipBtn(),
+      renderSkipBtn: renderSkipBtn(),
       skipButtonStyle: myButtonStyle(),
 
       // Next button
-      renderNextBtn: this.renderNextBtn(),
-      onNextPress: this.onNextPress,
+      renderNextBtn: renderNextBtn(),
+      onNextPress: onNextPress,
       nextButtonStyle: myButtonStyle(),
 
       // Done button
-      renderDoneBtn: this.renderDoneBtn(),
-      onDonePress: this.onDonePress,
+      renderDoneBtn: renderDoneBtn(),
+      onDonePress: onDonePress,
       doneButtonStyle: myButtonStyle(),
 
       // Dot indicator
-      colorDot: Color(0x33FFA8B0),
-      colorActiveDot: Color(0xffFFA8B0),
+      colorDot: const Color(0x33FFA8B0),
+      colorActiveDot: const Color(0xffFFA8B0),
       sizeDot: 13.0,
 
       // Show or hide status bar
@@ -228,7 +262,7 @@ class IntroScreenState extends State<IntroScreen> {
       backgroundColorAllSlides: Colors.grey,
 
       // Scrollbar
-      verticalScrollbarBehavior: scrollbarBehavior.SHOW_ALWAYS,
+      verticalScrollbarBehavior: ScrollbarBehavior.SHOW_ALWAYS,
     );
   }
 }
@@ -236,7 +270,7 @@ class IntroScreenState extends State<IntroScreen> {
 
 </details>
 
-### Custom your own tabs
+### Custom tab
 
 ![custom config image](screenshots/custom2.png)
 
@@ -244,19 +278,19 @@ class IntroScreenState extends State<IntroScreen> {
   <summary>Code example (click to expand)</summary>
 
 ```dart
-class IntroScreenState extends State<IntroScreen> {
+class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
   List<Slide> slides = [];
 
-  Function goToTab;
+  late Function goToTab;
 
   @override
   void initState() {
     super.initState();
 
     slides.add(
-      new Slide(
+      Slide(
         title: "SCHOOL",
-        styleTitle: TextStyle(
+        styleTitle: const TextStyle(
           color: Color(0xff3da4ab),
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
@@ -264,31 +298,51 @@ class IntroScreenState extends State<IntroScreen> {
         ),
         description:
             "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-        styleDescription:
-            TextStyle(color: Color(0xfffe9c8f), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleDescription: const TextStyle(
+          color: Color(0xfffe9c8f),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         pathImage: "images/photo_school.png",
       ),
     );
     slides.add(
-      new Slide(
+      Slide(
         title: "MUSEUM",
-        styleTitle:
-            TextStyle(color: Color(0xff3da4ab), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        styleTitle: const TextStyle(
+          color: Color(0xff3da4ab),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description: "Ye indulgence unreserved connection alteration appearance",
-        styleDescription:
-            TextStyle(color: Color(0xfffe9c8f), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleDescription: const TextStyle(
+          color: Color(0xfffe9c8f),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         pathImage: "images/photo_museum.png",
       ),
     );
     slides.add(
-      new Slide(
+      Slide(
         title: "COFFEE SHOP",
-        styleTitle:
-            TextStyle(color: Color(0xff3da4ab), fontSize: 30.0, fontWeight: FontWeight.bold, fontFamily: 'RobotoMono'),
+        styleTitle: const TextStyle(
+          color: Color(0xff3da4ab),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription:
-            TextStyle(color: Color(0xfffe9c8f), fontSize: 20.0, fontStyle: FontStyle.italic, fontFamily: 'Raleway'),
+        styleDescription: const TextStyle(
+          color: Color(0xfffe9c8f),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         pathImage: "images/photo_coffee_shop.png",
       ),
     );
@@ -296,16 +350,16 @@ class IntroScreenState extends State<IntroScreen> {
 
   void onDonePress() {
     // Back to the first tab
-    this.goToTab(0);
+    goToTab(0);
   }
 
   void onTabChangeCompleted(index) {
     // Index of current tab is focused
-    print(index);
+    log("onTabChangeCompleted, index: $index");
   }
 
   Widget renderNextBtn() {
-    return Icon(
+    return const Icon(
       Icons.navigate_next,
       color: Color(0xffffcc5c),
       size: 35.0,
@@ -313,14 +367,14 @@ class IntroScreenState extends State<IntroScreen> {
   }
 
   Widget renderDoneBtn() {
-    return Icon(
+    return const Icon(
       Icons.done,
       color: Color(0xffffcc5c),
     );
   }
 
   Widget renderSkipBtn() {
-    return Icon(
+    return const Icon(
       Icons.skip_next,
       color: Color(0xffffcc5c),
     );
@@ -328,92 +382,91 @@ class IntroScreenState extends State<IntroScreen> {
 
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
-      shape: MaterialStateProperty.all<OutlinedBorder>(StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(Color(0x33ffcc5c)),
-      overlayColor: MaterialStateProperty.all<Color>(Color(0x33ffcc5c)),
+      shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
+      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
+      overlayColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
     );
   }
 
   List<Widget> renderListCustomTabs() {
-    List<Widget> tabs = [];
-    for (int i = 0; i < slides.length; i++) {
-      Slide currentSlide = slides[i];
-      tabs.add(Container(
+    return List.generate(
+      slides.length,
+      (index) => SizedBox(
         width: double.infinity,
         height: double.infinity,
         child: Container(
-          margin: EdgeInsets.only(bottom: 60.0, top: 60.0),
+          margin: const EdgeInsets.only(bottom: 60.0, top: 60.0),
           child: ListView(
             children: <Widget>[
               GestureDetector(
-                  child: Image.asset(
-                currentSlide.pathImage,
-                width: 200.0,
-                height: 200.0,
-                fit: BoxFit.contain,
-              )),
-              Container(
-                child: Text(
-                  currentSlide.title,
-                  style: currentSlide.styleTitle,
-                  textAlign: TextAlign.center,
+                child: Image.asset(
+                  slides[index].pathImage!,
+                  width: 200.0,
+                  height: 200.0,
+                  fit: BoxFit.contain,
                 ),
-                margin: EdgeInsets.only(top: 20.0),
               ),
               Container(
+                margin: const EdgeInsets.only(top: 20.0),
                 child: Text(
-                  currentSlide.description,
-                  style: currentSlide.styleDescription,
+                  slides[index].title!,
+                  style: slides[index].styleTitle,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(top: 20.0),
+                child: Text(
+                  slides[index].description ?? '',
+                  style: slides[index].styleDescription,
                   textAlign: TextAlign.center,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
                 ),
-                margin: EdgeInsets.only(top: 20.0),
               ),
             ],
           ),
         ),
-      ));
-    }
-    return tabs;
+      ),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return new IntroSlider(
+    return IntroSlider(
       // Skip button
-      renderSkipBtn: this.renderSkipBtn(),
+      renderSkipBtn: renderSkipBtn(),
       skipButtonStyle: myButtonStyle(),
 
       // Next button
-      renderNextBtn: this.renderNextBtn(),
+      renderNextBtn: renderNextBtn(),
       nextButtonStyle: myButtonStyle(),
 
       // Done button
-      renderDoneBtn: this.renderDoneBtn(),
-      onDonePress: this.onDonePress,
+      renderDoneBtn: renderDoneBtn(),
+      onDonePress: onDonePress,
       doneButtonStyle: myButtonStyle(),
 
       // Dot indicator
-      colorDot: Color(0xffffcc5c),
+      colorDot: const Color(0xffffcc5c),
       sizeDot: 13.0,
-      typeDotAnimation: dotSliderAnimation.SIZE_TRANSITION,
+      typeDotAnimation: DotSliderAnimation.SIZE_TRANSITION,
 
       // Tabs
-      listCustomTabs: this.renderListCustomTabs(),
+      listCustomTabs: renderListCustomTabs(),
       backgroundColorAllSlides: Colors.white,
       refFuncGoToTab: (refFunc) {
-        this.goToTab = refFunc;
+        goToTab = refFunc;
       },
 
       // Behavior
-      scrollPhysics: BouncingScrollPhysics(),
+      scrollPhysics: const BouncingScrollPhysics(),
 
       // Show or hide status bar
       hideStatusBar: true,
 
       // On tab change completed
-      onTabChangeCompleted: this.onTabChangeCompleted,
+      onTabChangeCompleted: onTabChangeCompleted,
     );
   }
 }

@@ -1,15 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:intro_slider/flutter_intro_slider.dart';
+import 'dart:developer';
 
-class IntroScreenCustom extends StatefulWidget {
-  const IntroScreenCustom({super.key});
+import 'package:flutter/material.dart';
+import 'package:intro_slider/intro_slider.dart';
+
+class IntroScreenCustomTab extends StatefulWidget {
+  const IntroScreenCustomTab({Key? key}) : super(key: key);
 
   @override
-  IntroScreenCustomState createState() => IntroScreenCustomState();
+  IntroScreenCustomTabState createState() => IntroScreenCustomTabState();
 }
 
 // ------------------ Customize your own tabs ------------------
-class IntroScreenCustomState extends State<IntroScreenCustom> {
+class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
   List<Slide> slides = [];
 
   late Function goToTab;
@@ -30,10 +32,11 @@ class IntroScreenCustomState extends State<IntroScreenCustom> {
         description:
             "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
         styleDescription: const TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+          color: Color(0xfffe9c8f),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         pathImage: "images/photo_school.png",
       ),
     );
@@ -41,17 +44,19 @@ class IntroScreenCustomState extends State<IntroScreenCustom> {
       Slide(
         title: "MUSEUM",
         styleTitle: const TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
+          color: Color(0xff3da4ab),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description:
             "Ye indulgence unreserved connection alteration appearance",
         styleDescription: const TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+          color: Color(0xfffe9c8f),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         pathImage: "images/photo_museum.png",
       ),
     );
@@ -59,17 +64,19 @@ class IntroScreenCustomState extends State<IntroScreenCustom> {
       Slide(
         title: "COFFEE SHOP",
         styleTitle: const TextStyle(
-            color: Color(0xff3da4ab),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
+          color: Color(0xff3da4ab),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
         styleDescription: const TextStyle(
-            color: Color(0xfffe9c8f),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+          color: Color(0xfffe9c8f),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         pathImage: "images/photo_coffee_shop.png",
       ),
     );
@@ -82,7 +89,7 @@ class IntroScreenCustomState extends State<IntroScreenCustom> {
 
   void onTabChangeCompleted(index) {
     // Index of current tab is focused
-    print(index);
+    log("onTabChangeCompleted, index: $index");
   }
 
   Widget renderNextBtn() {

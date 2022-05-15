@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:intro_slider/flutter_intro_slider.dart';
+import 'package:intro_slider/intro_slider.dart';
 
 class IntroSlider extends StatefulWidget {
   // ---------- Slides ----------
@@ -113,7 +113,7 @@ class IntroSlider extends StatefulWidget {
 
   // Constructor
   const IntroSlider({
-    super.key,
+    Key? key,
     // Slides
     this.slides,
     this.backgroundColorAllSlides,
@@ -162,7 +162,7 @@ class IntroSlider extends StatefulWidget {
     this.scrollPhysics,
     this.hideStatusBar,
     this.verticalScrollbarBehavior,
-  });
+  }) : super(key: key);
 
   @override
   IntroSliderState createState() => IntroSliderState();

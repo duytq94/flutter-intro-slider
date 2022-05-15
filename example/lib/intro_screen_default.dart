@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
-import 'package:intro_slider/flutter_intro_slider.dart';
+import 'package:intro_slider/intro_slider.dart';
 
 class IntroScreenDefault extends StatefulWidget {
-  const IntroScreenDefault({super.key});
+  const IntroScreenDefault({Key? key}) : super(key: key);
 
   @override
   IntroScreenDefaultState createState() => IntroScreenDefaultState();
@@ -46,7 +48,7 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
 
   void onDonePress() {
     // Do what you want
-    print("End of slides");
+    log("End of slides");
   }
 
   @override

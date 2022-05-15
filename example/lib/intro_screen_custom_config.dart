@@ -1,17 +1,17 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:intro_slider/flutter_intro_slider.dart';
+import 'package:intro_slider/intro_slider.dart';
 
-class IntroScreen extends StatefulWidget {
-  const IntroScreen({super.key});
+class IntroScreenCustomConfig extends StatefulWidget {
+  const IntroScreenCustomConfig({Key? key}) : super(key: key);
 
   @override
-  IntroScreenState createState() => IntroScreenState();
+  IntroScreenCustomConfigState createState() => IntroScreenCustomConfigState();
 }
 
 // ------------------ Custom config ------------------
-class IntroScreenState extends State<IntroScreen> {
+class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   List<Slide> slides = [];
 
   @override
@@ -38,9 +38,15 @@ class IntroScreenState extends State<IntroScreen> {
           fontFamily: 'Raleway',
         ),
         marginDescription: const EdgeInsets.only(
-            left: 20.0, right: 20.0, top: 20.0, bottom: 70.0),
-        centerWidget: const Text("Replace this with a custom widget",
-            style: TextStyle(color: Colors.white)),
+          left: 20.0,
+          right: 20.0,
+          top: 20.0,
+          bottom: 70.0,
+        ),
+        centerWidget: const Text(
+          "Replace this with a custom widget",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundNetworkImage: "https://picsum.photos/200/300",
         directionColorBegin: Alignment.topLeft,
         directionColorEnd: Alignment.bottomRight,
@@ -51,17 +57,19 @@ class IntroScreenState extends State<IntroScreen> {
       Slide(
         title: "CITY",
         styleTitle: const TextStyle(
-            color: Color(0xff7FFFD4),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
+          color: Color(0xff7FFFD4),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description:
             "Ye indulgence unreserved connection alteration appearance",
         styleDescription: const TextStyle(
-            color: Color(0xff7FFFD4),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+          color: Color(0xff7FFFD4),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         backgroundImage: "images/city.jpeg",
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
@@ -71,17 +79,19 @@ class IntroScreenState extends State<IntroScreen> {
       Slide(
         title: "BEACH",
         styleTitle: const TextStyle(
-            color: Color(0xffFFDAB9),
-            fontSize: 30.0,
-            fontWeight: FontWeight.bold,
-            fontFamily: 'RobotoMono'),
+          color: Color(0xffFFDAB9),
+          fontSize: 30.0,
+          fontWeight: FontWeight.bold,
+          fontFamily: 'RobotoMono',
+        ),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
         styleDescription: const TextStyle(
-            color: Color(0xffFFDAB9),
-            fontSize: 20.0,
-            fontStyle: FontStyle.italic,
-            fontFamily: 'Raleway'),
+          color: Color(0xffFFDAB9),
+          fontSize: 20.0,
+          fontStyle: FontStyle.italic,
+          fontFamily: 'Raleway',
+        ),
         backgroundImage: "images/beach.jpeg",
         directionColorBegin: Alignment.topCenter,
         directionColorEnd: Alignment.bottomCenter,
