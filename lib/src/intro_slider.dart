@@ -3,11 +3,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-import 'dot_animation_enum.dart';
-import 'list_rtl_language.dart';
-import 'scrollbar_behavior_enum.dart';
-import 'slide_object.dart';
+import 'package:intro_slider/flutter_intro_slider.dart';
 
 class IntroSlider extends StatefulWidget {
   // ---------- Slides ----------
@@ -92,7 +88,7 @@ class IntroSlider extends StatefulWidget {
   final double? sizeDot;
 
   /// Type dots animation
-  final dotSliderAnimation? typeDotAnimation;
+  final DotSliderAnimation? typeDotAnimation;
 
   // ---------- Tabs ----------
   /// Render your own custom tabs
@@ -113,10 +109,11 @@ class IntroSlider extends StatefulWidget {
   final bool? hideStatusBar;
 
   /// The way the vertical scrollbar should behave
-  final scrollbarBehavior? verticalScrollbarBehavior;
+  final ScrollbarBehavior? verticalScrollbarBehavior;
 
   // Constructor
-  IntroSlider({
+  const IntroSlider({
+    super.key,
     // Slides
     this.slides,
     this.backgroundColorAllSlides,
@@ -252,7 +249,7 @@ class IntroSliderState extends State<IntroSlider>
   late final double sizeDot;
 
   /// Type dots animation
-  late final dotSliderAnimation typeDotAnimation;
+  late final DotSliderAnimation typeDotAnimation;
 
   // ---------- Tabs ----------
   /// List custom tabs
@@ -267,7 +264,7 @@ class IntroSliderState extends State<IntroSlider>
   late final ScrollPhysics scrollPhysics;
 
   /// The way the vertical scrollbar should behave
-  late final scrollbarBehavior verticalScrollbarBehavior;
+  late final ScrollbarBehavior verticalScrollbarBehavior;
 
   late TabController tabController;
 
@@ -319,17 +316,17 @@ class IntroSliderState extends State<IntroSlider>
 
     final initValueMarginRight = (sizeDot * 2) * (lengthSlide - 1);
     typeDotAnimation =
-        widget.typeDotAnimation ?? dotSliderAnimation.DOT_MOVEMENT;
+        widget.typeDotAnimation ?? DotSliderAnimation.DOT_MOVEMENT;
 
     switch (typeDotAnimation) {
-      case dotSliderAnimation.DOT_MOVEMENT:
+      case DotSliderAnimation.DOT_MOVEMENT:
         for (var i = 0; i < lengthSlide; i++) {
           sizeDots.add(sizeDot);
           opacityDots.add(1.0);
         }
         marginRightDotFocused = initValueMarginRight;
         break;
-      case dotSliderAnimation.SIZE_TRANSITION:
+      case DotSliderAnimation.SIZE_TRANSITION:
         for (var i = 0; i < lengthSlide; i++) {
           if (i == 0) {
             sizeDots.add(sizeDot * 1.5);
@@ -344,12 +341,12 @@ class IntroSliderState extends State<IntroSlider>
     tabController.animation?.addListener(() {
       setState(() {
         switch (typeDotAnimation) {
-          case dotSliderAnimation.DOT_MOVEMENT:
+          case DotSliderAnimation.DOT_MOVEMENT:
             marginLeftDotFocused = tabController.animation!.value * sizeDot * 2;
             marginRightDotFocused = initValueMarginRight -
                 tabController.animation!.value * sizeDot * 2;
             break;
-          case dotSliderAnimation.SIZE_TRANSITION:
+          case DotSliderAnimation.SIZE_TRANSITION:
             if (tabController.animation!.value == currentAnimationValue) {
               break;
             }
@@ -409,7 +406,7 @@ class IntroSliderState extends State<IntroSlider>
     scrollPhysics = widget.scrollPhysics ?? const ScrollPhysics();
 
     verticalScrollbarBehavior =
-        widget.verticalScrollbarBehavior ?? scrollbarBehavior.HIDE;
+        widget.verticalScrollbarBehavior ?? ScrollbarBehavior.HIDE;
 
     setupButtonDefaultValues();
 
@@ -434,11 +431,11 @@ class IntroSliderState extends State<IntroSlider>
     showSkipBtn = widget.showSkipBtn ?? true;
 
     renderSkipBtn = widget.renderSkipBtn ??
-        Text(
+        const Text(
           "SKIP",
           style: TextStyle(color: Colors.white),
         );
-    skipButtonStyle = widget.skipButtonStyle ?? ButtonStyle();
+    skipButtonStyle = widget.skipButtonStyle ?? const ButtonStyle();
 
     // Prev button
     if (showSkipBtn) {
@@ -448,32 +445,32 @@ class IntroSliderState extends State<IntroSlider>
     }
 
     renderPrevBtn = widget.renderPrevBtn ??
-        Text(
+        const Text(
           "PREV",
           style: TextStyle(color: Colors.white),
         );
-    prevButtonStyle = widget.prevButtonStyle ?? ButtonStyle();
+    prevButtonStyle = widget.prevButtonStyle ?? const ButtonStyle();
 
     showNextBtn = widget.showNextBtn ?? true;
 
     // Done button
     onDonePress = widget.onDonePress ?? () {};
     renderDoneBtn = widget.renderDoneBtn ??
-        Text(
+        const Text(
           "DONE",
           style: TextStyle(color: Colors.white),
         );
-    doneButtonStyle = widget.doneButtonStyle ?? ButtonStyle();
+    doneButtonStyle = widget.doneButtonStyle ?? const ButtonStyle();
     showDoneBtn = widget.showDoneBtn ?? true;
 
     // Next button
     onNextPress = widget.onNextPress ?? () {};
     renderNextBtn = widget.renderNextBtn ??
-        Text(
+        const Text(
           "NEXT",
           style: TextStyle(color: Colors.white),
         );
-    nextButtonStyle = widget.nextButtonStyle ?? ButtonStyle();
+    nextButtonStyle = widget.nextButtonStyle ?? const ButtonStyle();
   }
 
   void goToTab(int index) {
@@ -499,14 +496,14 @@ class IntroSliderState extends State<IntroSlider>
   }
 
   bool isRTLLanguage(String language) {
-    return rtlLanguages.contains(language);
+    return IntroSliderConfig.rtlLanguages.contains(language);
   }
 
   @override
   Widget build(BuildContext context) {
     // Full screen view
     if (widget.hideStatusBar == true) {
-      SystemChrome.setEnabledSystemUIOverlays([]);
+      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
     }
 
     return Scaffold(
@@ -607,7 +604,7 @@ class IntroSliderState extends State<IntroSlider>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: renderListDots(),
                       ),
-                      if (typeDotAnimation == dotSliderAnimation.DOT_MOVEMENT)
+                      if (typeDotAnimation == DotSliderAnimation.DOT_MOVEMENT)
                         Center(
                           child: Container(
                             decoration: BoxDecoration(
@@ -821,18 +818,18 @@ class IntroSliderState extends State<IntroSlider>
             )),
       child: Container(
         margin: const EdgeInsets.only(bottom: 60.0),
-        child: verticalScrollbarBehavior != scrollbarBehavior.HIDE
+        child: verticalScrollbarBehavior != ScrollbarBehavior.HIDE
             ? Platform.isIOS
                 ? CupertinoScrollbar(
                     controller: scrollController,
-                    isAlwaysShown: verticalScrollbarBehavior ==
-                        scrollbarBehavior.SHOW_ALWAYS,
+                    thumbVisibility: verticalScrollbarBehavior ==
+                        ScrollbarBehavior.SHOW_ALWAYS,
                     child: listView,
                   )
                 : Scrollbar(
                     controller: scrollController,
-                    isAlwaysShown: verticalScrollbarBehavior ==
-                        scrollbarBehavior.SHOW_ALWAYS,
+                    thumbVisibility: verticalScrollbarBehavior ==
+                        ScrollbarBehavior.SHOW_ALWAYS,
                     child: listView,
                   )
             : listView,

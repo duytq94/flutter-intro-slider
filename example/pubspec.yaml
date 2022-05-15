@@ -1,25 +1,24 @@
 name: intro_slider_example
 description: Demonstrates how to use the intro_slider plugin.
 
+environment:
+  sdk: ">=2.17.0 <3.0.0"
+
 dependencies:
+  cupertino_icons: ^1.0.4
   flutter:
     sdk: flutter
-  cupertino_icons: ^0.1.2
+  
+  intro_slider:
+    path: ../
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
-  intro_slider:
-    path: ../
-
-environment:                                                            
-  sdk: ">=2.10.0 <3.0.0"
+  flutter_lints: ^2.0.1
 
 flutter:
-
   uses-material-design: true
-
   assets:
     - images/photo_eraser.png
     - images/photo_pencil.png
@@ -30,7 +29,6 @@ flutter:
     - images/forest.png
     - images/beach.jpeg
     - images/city.jpeg
-
 
   fonts:
     - family: RobotoMono
