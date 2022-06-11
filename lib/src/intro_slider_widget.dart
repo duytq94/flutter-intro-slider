@@ -111,6 +111,9 @@ class IntroSlider extends StatefulWidget {
   /// The way the vertical scrollbar should behave
   final ScrollbarBehavior? verticalScrollbarBehavior;
 
+  /// location of the dots and prev/next/done buttons
+  final IntroSliderNavPosition introSliderNavPosition;
+
   // Constructor
   const IntroSlider({
     Key? key,
@@ -162,6 +165,7 @@ class IntroSlider extends StatefulWidget {
     this.scrollPhysics,
     this.hideStatusBar,
     this.verticalScrollbarBehavior,
+    this.introSliderNavPosition = IntroSliderNavPosition.bottom,
   }) : super(key: key);
 
   @override
@@ -518,7 +522,7 @@ class IntroSliderState extends State<IntroSlider>
                   : const NeverScrollableScrollPhysics(),
               children: tabs,
             ),
-            renderBottom(),
+            renderNav(),
           ],
         ),
       ),
@@ -579,9 +583,10 @@ class IntroSliderState extends State<IntroSlider>
     );
   }
 
-  Widget renderBottom() {
+  Widget renderNav() {
     return Positioned(
-      bottom: 10.0,
+      top: widget.introSliderNavPosition == IntroSliderNavPosition.top ? MediaQuery.of(context).viewPadding.top : null,
+      bottom: widget.introSliderNavPosition == IntroSliderNavPosition.bottom ? 10.0 : null,
       left: 10.0,
       right: 10.0,
       child: Row(
@@ -817,7 +822,10 @@ class IntroSliderState extends State<IntroSlider>
               ),
             )),
       child: Container(
-        margin: const EdgeInsets.only(bottom: 60.0),
+        margin: EdgeInsets.only(
+          top: widget.introSliderNavPosition == IntroSliderNavPosition.top ? 60 : 0,
+          bottom: widget.introSliderNavPosition == IntroSliderNavPosition.bottom ? 60 : 0,
+        ),
         child: verticalScrollbarBehavior != ScrollbarBehavior.HIDE
             ? Platform.isIOS
                 ? CupertinoScrollbar(
