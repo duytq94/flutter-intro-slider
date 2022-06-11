@@ -485,8 +485,8 @@ class IntroSliderState extends State<IntroSlider>
 
   @override
   void dispose() {
-    super.dispose();
     tabController.dispose();
+    super.dispose();
   }
 
   // Checking if tab is animating
