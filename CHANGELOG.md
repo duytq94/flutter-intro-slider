@@ -1,3 +1,7 @@
+## 3.0.6
+* Add IntroSliderNavPosition
+* Fixing some conflict properties & update docs
+
 ## 3.0.5
 * Updated package to Flutter 3 and Dart 2.17
 * Updated example to Flutter 3 and Dart 2.17

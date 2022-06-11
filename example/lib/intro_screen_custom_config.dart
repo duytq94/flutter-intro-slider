@@ -48,8 +48,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundNetworkImage: "https://picsum.photos/200/300",
-        directionColorBegin: Alignment.topLeft,
-        directionColorEnd: Alignment.bottomRight,
         onCenterItemPress: () {},
       ),
     );
@@ -70,7 +68,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontStyle: FontStyle.italic,
           fontFamily: 'Raleway',
         ),
-        backgroundImage: "images/city.jpeg",
+        colorBegin: Colors.lightBlue,
+        colorEnd: Colors.amber,
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
       ),
@@ -93,8 +92,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontFamily: 'Raleway',
         ),
         backgroundImage: "images/beach.jpeg",
-        directionColorBegin: Alignment.topCenter,
-        directionColorEnd: Alignment.bottomCenter,
         maxLineTextDescription: 3,
       ),
     );

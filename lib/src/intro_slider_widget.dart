@@ -112,7 +112,7 @@ class IntroSlider extends StatefulWidget {
   final ScrollbarBehavior? verticalScrollbarBehavior;
 
   /// location of the dots and prev/next/done buttons
-  final IntroSliderNavPosition introSliderNavPosition;
+  final IntroSliderNavPosition navPosition;
 
   // Constructor
   const IntroSlider({
@@ -165,7 +165,7 @@ class IntroSlider extends StatefulWidget {
     this.scrollPhysics,
     this.hideStatusBar,
     this.verticalScrollbarBehavior,
-    this.introSliderNavPosition = IntroSliderNavPosition.bottom,
+    this.navPosition = IntroSliderNavPosition.bottom,
   }) : super(key: key);
 
   @override
@@ -585,8 +585,10 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget renderNav() {
     return Positioned(
-      top: widget.introSliderNavPosition == IntroSliderNavPosition.top ? MediaQuery.of(context).viewPadding.top : null,
-      bottom: widget.introSliderNavPosition == IntroSliderNavPosition.bottom ? 10.0 : null,
+      top: widget.navPosition == IntroSliderNavPosition.top
+          ? MediaQuery.of(context).viewPadding.top
+          : null,
+      bottom: widget.navPosition == IntroSliderNavPosition.bottom ? 10.0 : null,
       left: 10.0,
       right: 10.0,
       child: Row(
@@ -800,8 +802,8 @@ class IntroSliderState extends State<IntroSlider>
                 colors: backgroundColor != null
                     ? [backgroundColor, backgroundColor]
                     : [
-                        colorBegin ?? Colors.amberAccent,
-                        colorEnd ?? Colors.amberAccent,
+                        colorBegin ?? Colors.transparent,
+                        colorEnd ?? Colors.transparent,
                       ],
                 begin: directionColorBegin ?? Alignment.topLeft,
                 end: directionColorEnd ?? Alignment.bottomRight,
@@ -823,8 +825,8 @@ class IntroSliderState extends State<IntroSlider>
             )),
       child: Container(
         margin: EdgeInsets.only(
-          top: widget.introSliderNavPosition == IntroSliderNavPosition.top ? 60 : 0,
-          bottom: widget.introSliderNavPosition == IntroSliderNavPosition.bottom ? 60 : 0,
+          top: widget.navPosition == IntroSliderNavPosition.top ? 60 : 0,
+          bottom: widget.navPosition == IntroSliderNavPosition.bottom ? 60 : 0,
         ),
         child: verticalScrollbarBehavior != ScrollbarBehavior.HIDE
             ? Platform.isIOS

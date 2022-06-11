@@ -19,7 +19,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^3.0.5
+  intro_slider: ^3.0.6
 ```
 
 Import
@@ -109,7 +109,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   void initState() {
     super.initState();
 
-    slides.add(
+        slides.add(
       Slide(
         title:
             "A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE",
@@ -139,8 +139,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundNetworkImage: "https://picsum.photos/200/300",
-        directionColorBegin: Alignment.topLeft,
-        directionColorEnd: Alignment.bottomRight,
         onCenterItemPress: () {},
       ),
     );
@@ -160,7 +158,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontStyle: FontStyle.italic,
           fontFamily: 'Raleway',
         ),
-        backgroundImage: "images/city.jpeg",
+        colorBegin: Colors.lightBlue,
+        colorEnd: Colors.amber,
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
       ),
@@ -183,8 +182,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontFamily: 'Raleway',
         ),
         backgroundImage: "images/beach.jpeg",
-        directionColorBegin: Alignment.topCenter,
-        directionColorEnd: Alignment.bottomCenter,
         maxLineTextDescription: 3,
       ),
     );
@@ -499,7 +496,7 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 | styleDescription        | `TextStyle?`         | White and font size is 18.0             | Style for text description                                                   |
 | marginDescription       | `EdgeInsets?`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description                                                  |
 | <b>Background Color</b> |                      |                                         |                                                                              |
-| backgroundColor         | `Color?`             | Colors.amberAccent                      | Background tab color                                                         |
+| backgroundColor         | `Color?`             | Colors.amberAccent                      | Background tab color (if set, will ignore gradient properties below)         |
 | colorBegin              | `Color?`             | Colors.amberAccent                      | Gradient tab color begin                                                     |
 | colorEnd                | `Color?`             | Colors.amberAccent                      | Gradient tab color end                                                       |
 | directionColorBegin     | `AlignmentGeometry?` | Alignment.topLeft                       | Direction color begin                                                        |
@@ -538,6 +535,8 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 | nextButtonStyle                                                                                        | `ButtonStyle?`                      | ButtonStyle()                                     | Style for NEXT button                                                                               |
 | onNextPress                                                                                            | `void Function()?`                  | Do nothing                                        | Fire when press NEXT button                                                                         |
 | showNextBtn                                                                                            | `bool?`                             | true                                              | Show or hide NEXT button                                                                            |
+| <b>Nav position</b>                                                                                    |                                     |                                                   |                                                                                                     |
+| navPosition                                                                                            | `IntroSliderNavPosition`            | IntroSliderNavPosition.bottom                     | Customize the position of dots and skip/next/done buttons to the top of the screen or the bottom    |
 | <b>Dot Indicator</b>                                                                                   |                                     |                                                   |                                                                                                     |
 | showDotIndicator                                                                                       | `bool?`                             | true                                              | Show or hide dot indicator                                                                          |
 | colorDot                                                                                               | `Color?`                            | Color(0x80000000)                                 | Color for dot when passive                                                                          |
@@ -548,7 +547,7 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 | listCustomTabs                                                                                         | `List<Widget>?`                     | null                                              | Render your own list tabs (use default tab UI if not defined)                                       |
 | refFuncGoToTab                                                                                         | `void Function(Function function)?` | Do nothing                                        | Send the reference of change tab's function,<br/>then we can move to any tab index programmatically |
 | onTabChangeCompleted                                                                                   | `void Function(int index)?`         | Do nothing                                        | Callback when tab change comleted, return the current tab's index                                   |
-| backgroundColorAllSlides                                                                               | `Color?`                            | Transparent                                       | Background color for all slides                                                                     |
+| backgroundColorAllSlides                                                                               | `Color?`                            | Transparent                                       | Background color for all slides (if backgroundColor on each slide not set)                          |
 | <b>Behavior</b>                                                                                        |                                     |                                                   |                                                                                                     |
 | isScrollable                                                                                           | `bool?`                             | true                                              | Force button-only scrolling                                                                         |
 | scrollPhysics                                                                                          | `ScrollPhysics?`                    | ScrollPhysics()                                   | Determines the physics horizontal scroll for the slide                                              |
