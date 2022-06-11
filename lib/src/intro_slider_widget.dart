@@ -822,7 +822,7 @@ class IntroSliderState extends State<IntroSlider>
               ),
             )),
       child: Container(
-        margin: const EdgeInsets.only(
+        margin: EdgeInsets.only(
           top: widget.introSliderNavPosition == IntroSliderNavPosition.top ? 60 : 0,
           bottom: widget.introSliderNavPosition == IntroSliderNavPosition.bottom ? 60 : 0,
         ),
