@@ -1,3 +1,6 @@
+## 3.0.7
+* Fixing FlutterError (IntroSliderState#c8edc(ticker active) was disposed with an active Ticker.
+
 ## 3.0.6
 * Add IntroSliderNavPosition
 * Fixing some conflict properties & update docs
