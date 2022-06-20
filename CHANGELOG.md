@@ -1,3 +1,6 @@
+## 3.0.8
+* Add TextAlign & TextOverFlow fot title & description
+
 ## 3.0.7
 * Fixing FlutterError (IntroSliderState#c8edc(ticker active) was disposed with an active Ticker.
 
