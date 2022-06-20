@@ -196,11 +196,7 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 
       // Behavior
       scrollPhysics: const BouncingScrollPhysics(),
-
-      // Show or hide status bar
       hideStatusBar: true,
-
-      // On tab change completed
       onTabChangeCompleted: onTabChangeCompleted,
     );
   }

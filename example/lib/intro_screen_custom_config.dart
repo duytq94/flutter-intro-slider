@@ -165,12 +165,12 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       colorActiveDot: const Color(0xffFFA8B0),
       sizeDot: 13.0,
 
-      // Show or hide status bar
+      // Behavior
       hideStatusBar: true,
       backgroundColorAllSlides: Colors.grey,
-
-      // Scrollbar
       verticalScrollbarBehavior: ScrollbarBehavior.SHOW_ALWAYS,
+      isAutoScroll: true,
+      isLoopAutoScroll: false,
     );
   }
 }
