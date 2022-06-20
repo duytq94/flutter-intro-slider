@@ -480,6 +480,8 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 | widgetTitle             | `Widget?`            | null                                    | Set a custom widget as the title (ignore `title` if define both)             |
 | maxLineTitle            | `int?`               | 1                                       | Change max number of lines title at top                                      |
 | styleTitle              | `TextStyle?`         | White color, bold and font size is 30.0 | Style for text title                                                         |
+| textAlignTitle          | `TextAlign?`         | TextAlign.center                        | TextAlign for text title                                                     |
+| textOverFlowTitle       | `TextOverflow?`      | TextOverflow.ellipsis                   | TextOverflow for text title                                                  |
 | marginTitle             | `EdgeInsets?`        | top: 70.0, bottom: 50.0                 | Margin for text title                                                        |
 | <b>Image</b>            |                      |                                         |                                                                              |
 | pathImage               | `String?`            | ""                                      | Path to your local image                                                     |
@@ -494,6 +496,8 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 | widgetDescription       | `Widget?`            | null                                    | Set a custom widget as the description (ignore `description` if define both) |
 | maxLineTextDescription  | `int?`               | 100                                     | Maximum line of text description                                             |
 | styleDescription        | `TextStyle?`         | White and font size is 18.0             | Style for text description                                                   |
+| textAlignDescription    | `TextAlign?`         | TextAlign.center                        | TextAlign for text description                                               |
+| textOverFlowDescription | `TextOverflow?`      | TextOverflow.ellipsis                   | TextOverflow for text description                                            |
 | marginDescription       | `EdgeInsets?`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description                                                  |
 | <b>Background Color</b> |                      |                                         |                                                                              |
 | backgroundColor         | `Color?`             | Colors.amberAccent                      | Background tab color (if set, will ignore gradient properties below)         |

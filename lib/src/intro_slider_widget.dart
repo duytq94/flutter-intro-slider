@@ -670,11 +670,15 @@ class IntroSliderState extends State<IntroSlider>
           slides?[i].title,
           slides?[i].maxLineTitle,
           slides?[i].styleTitle,
+          slides?[i].textAlignTitle,
+          slides?[i].textOverFlowTitle,
           slides?[i].marginTitle,
           slides?[i].widgetDescription,
           slides?[i].description,
           slides?[i].maxLineTextDescription,
           slides?[i].styleDescription,
+          slides?[i].textAlignDescription,
+          slides?[i].textOverFlowDescription,
           slides?[i].marginDescription,
           slides?[i].pathImage,
           slides?[i].widthImage,
@@ -707,6 +711,8 @@ class IntroSliderState extends State<IntroSlider>
     String? title,
     int? maxLineTitle,
     TextStyle? styleTitle,
+    TextAlign? textAlignTitle,
+    TextOverflow? textOverFlowTitle,
     EdgeInsets? marginTitle,
 
     // Description
@@ -714,6 +720,8 @@ class IntroSliderState extends State<IntroSlider>
     String? description,
     int? maxLineTextDescription,
     TextStyle? styleDescription,
+    TextAlign? textAlignDescription,
+    TextOverflow? textOverFlowDescription,
     EdgeInsets? marginDescription,
 
     // Image
@@ -759,8 +767,8 @@ class IntroSliderState extends State<IntroSlider>
                       fontSize: 30.0,
                     ),
                 maxLines: maxLineTitle ?? 1,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
+                textAlign: textAlignTitle ?? TextAlign.center,
+                overflow: textOverFlowTitle ?? TextOverflow.ellipsis,
               ),
         ),
 
@@ -786,9 +794,9 @@ class IntroSliderState extends State<IntroSlider>
                 description ?? '',
                 style: styleDescription ??
                     const TextStyle(color: Colors.white, fontSize: 18.0),
-                textAlign: TextAlign.center,
+                textAlign: textAlignDescription ?? TextAlign.center,
                 maxLines: maxLineTextDescription ?? 100,
-                overflow: TextOverflow.ellipsis,
+                overflow: textOverFlowDescription ?? TextOverflow.ellipsis,
               ),
         ),
       ],

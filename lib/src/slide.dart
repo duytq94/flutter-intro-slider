@@ -15,6 +15,12 @@ class Slide {
   /// Style for text title
   TextStyle? styleTitle;
 
+  /// TextAlign for text title
+  TextAlign? textAlignTitle;
+
+  /// TextOverflow for text title
+  TextOverflow? textOverFlowTitle;
+
   /// Margin for text title
   EdgeInsets? marginTitle;
 
@@ -51,6 +57,12 @@ class Slide {
   /// Style for text description
   TextStyle? styleDescription;
 
+  /// TextAlign for text description
+  TextAlign? textAlignDescription;
+
+  /// TextOverflow for text description
+  TextOverflow? textOverFlowDescription;
+
   /// Margin for text description
   EdgeInsets? marginDescription;
 
@@ -84,6 +96,8 @@ class Slide {
     this.title,
     this.maxLineTitle,
     this.styleTitle,
+    this.textAlignTitle,
+    this.textOverFlowTitle,
     this.marginTitle,
 
     // Image
@@ -101,6 +115,8 @@ class Slide {
     this.description,
     this.maxLineTextDescription,
     this.styleDescription,
+    this.textAlignDescription,
+    this.textOverFlowDescription,
     this.marginDescription,
 
     // Background color
