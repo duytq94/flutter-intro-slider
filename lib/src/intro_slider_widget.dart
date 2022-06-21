@@ -103,13 +103,14 @@ class IntroSlider extends StatefulWidget {
 
   // ---------- Behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
-  final bool? isScrollable;
+  final bool? scrollable;
   final ScrollPhysics? scrollPhysics;
   final Curve? curveScroll;
 
   /// Enable auto scroll
-  final bool? isAutoScroll;
-  final bool? isLoopAutoScroll;
+  final bool? autoScroll;
+  final bool? loopAutoScroll;
+  final bool? pauseAutoPlayOnTouch;
   final Duration? autoScrollInterval;
 
   /// Show or hide status bar
@@ -168,9 +169,10 @@ class IntroSlider extends StatefulWidget {
     this.refFuncGoToTab,
 
     // Behavior
-    this.isScrollable,
-    this.isAutoScroll,
-    this.isLoopAutoScroll,
+    this.scrollable,
+    this.autoScroll,
+    this.loopAutoScroll,
+    this.pauseAutoPlayOnTouch,
     this.autoScrollInterval,
     this.curveScroll,
     this.scrollPhysics,
@@ -275,11 +277,12 @@ class IntroSliderState extends State<IntroSlider>
 
   // ---------- Behavior ----------
   /// Allow the slider to scroll
-  late final bool isScrollable;
+  late final bool scrollable;
   late final ScrollPhysics scrollPhysics;
 
-  late final bool isAutoScroll;
-  late final bool isLoopAutoScroll;
+  late final bool autoScroll;
+  late final bool loopAutoScroll;
+  late final bool pauseAutoPlayOnTouch;
   late final Duration autoScrollInterval;
   late final Curve curveScroll;
 
@@ -316,8 +319,9 @@ class IntroSliderState extends State<IntroSlider>
     nextButtonKey = widget.nextButtonKey;
 
     lengthSlide = slides?.length ?? widget.listCustomTabs?.length ?? 0;
-    isAutoScroll = widget.isAutoScroll ?? false;
-    isLoopAutoScroll = widget.isLoopAutoScroll ?? false;
+    autoScroll = widget.autoScroll ?? false;
+    loopAutoScroll = widget.loopAutoScroll ?? false;
+    pauseAutoPlayOnTouch = widget.pauseAutoPlayOnTouch ?? true;
     autoScrollInterval =
         widget.autoScrollInterval ?? const Duration(seconds: 4);
     curveScroll = widget.curveScroll ?? Curves.ease;
@@ -334,16 +338,8 @@ class IntroSliderState extends State<IntroSlider>
       currentAnimationValue = tabController.animation?.value ?? 0;
     });
 
-    if (isAutoScroll) {
-      timerAutoScroll = Timer.periodic(autoScrollInterval, (Timer timer) {
-        if (tabController.index < lengthSlide - 1) {
-          tabController.animateTo(tabController.index + 1, curve: curveScroll);
-        } else {
-          if (isLoopAutoScroll) {
-            tabController.animateTo(0, curve: curveScroll);
-          }
-        }
-      });
+    if (autoScroll) {
+      startTimerAutoScroll();
     }
 
     // Send reference function goToTab to parent
@@ -437,7 +433,7 @@ class IntroSliderState extends State<IntroSlider>
     colorDot = widget.colorDot ?? const Color(0x80000000);
     colorActiveDot = widget.colorActiveDot ?? colorDot;
 
-    isScrollable = widget.isScrollable ?? true;
+    scrollable = widget.scrollable ?? true;
     scrollPhysics = widget.scrollPhysics ?? const ScrollPhysics();
     verticalScrollbarBehavior =
         widget.verticalScrollbarBehavior ?? ScrollbarBehavior.HIDE;
@@ -449,6 +445,27 @@ class IntroSliderState extends State<IntroSlider>
     } else {
       tabs = widget.listCustomTabs!;
     }
+  }
+
+  void startTimerAutoScroll() {
+    timerAutoScroll = Timer.periodic(autoScrollInterval, (Timer timer) {
+      if (tabController.index < lengthSlide - 1) {
+        if (!isAnimating()) {
+          tabController.animateTo(tabController.index + 1, curve: curveScroll);
+        }
+      } else {
+        if (loopAutoScroll) {
+          if (!isAnimating()) {
+            tabController.animateTo(0, curve: curveScroll);
+          }
+        }
+      }
+    });
+  }
+
+  void clearTimerAutoScroll() {
+    timerAutoScroll?.cancel();
+    timerAutoScroll = null;
   }
 
   void setupButtonDefaultValues() {
@@ -516,7 +533,7 @@ class IntroSliderState extends State<IntroSlider>
   @override
   void dispose() {
     tabController.dispose();
-    timerAutoScroll?.cancel();
+    clearTimerAutoScroll();
     super.dispose();
   }
 
@@ -546,12 +563,23 @@ class IntroSliderState extends State<IntroSlider>
         length: lengthSlide,
         child: Stack(
           children: <Widget>[
-            TabBarView(
-              controller: tabController,
-              physics: isScrollable
-                  ? scrollPhysics
-                  : const NeverScrollableScrollPhysics(),
-              children: tabs,
+            GestureDetector(
+              onTapDown: (a) {
+                clearTimerAutoScroll();
+              },
+              onTapUp: (a) {
+                startTimerAutoScroll();
+              },
+              onTapCancel: () {
+                startTimerAutoScroll();
+              },
+              child: TabBarView(
+                controller: tabController,
+                physics: scrollable
+                    ? scrollPhysics
+                    : const NeverScrollableScrollPhysics(),
+                children: tabs,
+              ),
             ),
             renderNav(),
           ],
@@ -890,7 +918,12 @@ class IntroSliderState extends State<IntroSlider>
   List<Widget> renderListDots() {
     dots.clear();
     for (var i = 0; i < lengthSlide; i++) {
-      dots.add(renderDot(sizeDots[i], colorDot, opacityDots[i], i));
+      double opacityCurrentDot = opacityDots[i];
+      if (opacityCurrentDot >= 0 && opacityCurrentDot <= 1) {
+        dots.add(renderDot(sizeDots[i], colorDot, opacityDots[i], i));
+      } else {
+        dots.add(renderDot(sizeDots[i], colorDot, 1, i));
+      }
     }
     return dots;
   }

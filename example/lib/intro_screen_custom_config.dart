@@ -169,8 +169,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       hideStatusBar: true,
       backgroundColorAllSlides: Colors.grey,
       verticalScrollbarBehavior: ScrollbarBehavior.SHOW_ALWAYS,
-      isAutoScroll: true,
-      isLoopAutoScroll: false,
+      autoScroll: true,
+      loopAutoScroll: true,
     );
   }
 }
