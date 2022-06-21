@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
@@ -102,8 +103,15 @@ class IntroSlider extends StatefulWidget {
 
   // ---------- Behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
-  final bool? isScrollable;
+  final bool? scrollable;
   final ScrollPhysics? scrollPhysics;
+  final Curve? curveScroll;
+
+  /// Enable auto scroll
+  final bool? autoScroll;
+  final bool? loopAutoScroll;
+  final bool? pauseAutoPlayOnTouch;
+  final Duration? autoScrollInterval;
 
   /// Show or hide status bar
   final bool? hideStatusBar;
@@ -161,7 +169,12 @@ class IntroSlider extends StatefulWidget {
     this.refFuncGoToTab,
 
     // Behavior
-    this.isScrollable,
+    this.scrollable,
+    this.autoScroll,
+    this.loopAutoScroll,
+    this.pauseAutoPlayOnTouch,
+    this.autoScrollInterval,
+    this.curveScroll,
     this.scrollPhysics,
     this.hideStatusBar,
     this.verticalScrollbarBehavior,
@@ -264,8 +277,14 @@ class IntroSliderState extends State<IntroSlider>
 
   // ---------- Behavior ----------
   /// Allow the slider to scroll
-  late final bool isScrollable;
+  late final bool scrollable;
   late final ScrollPhysics scrollPhysics;
+
+  late final bool autoScroll;
+  late final bool loopAutoScroll;
+  late final bool pauseAutoPlayOnTouch;
+  late final Duration autoScrollInterval;
+  late final Curve curveScroll;
 
   /// The way the vertical scrollbar should behave
   late final ScrollbarBehavior verticalScrollbarBehavior;
@@ -287,6 +306,7 @@ class IntroSliderState extends State<IntroSlider>
   int currentTabIndex = 0;
 
   late final int lengthSlide;
+  Timer? timerAutoScroll;
 
   @override
   void initState() {
@@ -299,6 +319,12 @@ class IntroSliderState extends State<IntroSlider>
     nextButtonKey = widget.nextButtonKey;
 
     lengthSlide = slides?.length ?? widget.listCustomTabs?.length ?? 0;
+    autoScroll = widget.autoScroll ?? false;
+    loopAutoScroll = widget.loopAutoScroll ?? false;
+    pauseAutoPlayOnTouch = widget.pauseAutoPlayOnTouch ?? true;
+    autoScrollInterval =
+        widget.autoScrollInterval ?? const Duration(seconds: 4);
+    curveScroll = widget.curveScroll ?? Curves.ease;
 
     onTabChangeCompleted = widget.onTabChangeCompleted;
     tabController = TabController(length: lengthSlide, vsync: this);
@@ -311,6 +337,10 @@ class IntroSliderState extends State<IntroSlider>
       }
       currentAnimationValue = tabController.animation?.value ?? 0;
     });
+
+    if (autoScroll) {
+      startTimerAutoScroll();
+    }
 
     // Send reference function goToTab to parent
     widget.refFuncGoToTab?.call(goToTab);
@@ -400,15 +430,11 @@ class IntroSliderState extends State<IntroSlider>
 
     // Dot indicator
     showDotIndicator = widget.showDotIndicator ?? true;
-
     colorDot = widget.colorDot ?? const Color(0x80000000);
-
     colorActiveDot = widget.colorActiveDot ?? colorDot;
 
-    isScrollable = widget.isScrollable ?? true;
-
+    scrollable = widget.scrollable ?? true;
     scrollPhysics = widget.scrollPhysics ?? const ScrollPhysics();
-
     verticalScrollbarBehavior =
         widget.verticalScrollbarBehavior ?? ScrollbarBehavior.HIDE;
 
@@ -421,13 +447,34 @@ class IntroSliderState extends State<IntroSlider>
     }
   }
 
+  void startTimerAutoScroll() {
+    timerAutoScroll = Timer.periodic(autoScrollInterval, (Timer timer) {
+      if (tabController.index < lengthSlide - 1) {
+        if (!isAnimating()) {
+          tabController.animateTo(tabController.index + 1, curve: curveScroll);
+        }
+      } else {
+        if (loopAutoScroll) {
+          if (!isAnimating()) {
+            tabController.animateTo(0, curve: curveScroll);
+          }
+        }
+      }
+    });
+  }
+
+  void clearTimerAutoScroll() {
+    timerAutoScroll?.cancel();
+    timerAutoScroll = null;
+  }
+
   void setupButtonDefaultValues() {
     // Skip button
     onSkipPress = widget.onSkipPress ??
         () {
           if (!isAnimating()) {
             if (lengthSlide > 0) {
-              tabController.animateTo(lengthSlide - 1);
+              tabController.animateTo(lengthSlide - 1, curve: curveScroll);
             }
           }
         };
@@ -479,13 +526,14 @@ class IntroSliderState extends State<IntroSlider>
 
   void goToTab(int index) {
     if (index < tabController.length) {
-      tabController.animateTo(index);
+      tabController.animateTo(index, curve: curveScroll);
     }
   }
 
   @override
   void dispose() {
     tabController.dispose();
+    clearTimerAutoScroll();
     super.dispose();
   }
 
@@ -515,12 +563,23 @@ class IntroSliderState extends State<IntroSlider>
         length: lengthSlide,
         child: Stack(
           children: <Widget>[
-            TabBarView(
-              controller: tabController,
-              physics: isScrollable
-                  ? scrollPhysics
-                  : const NeverScrollableScrollPhysics(),
-              children: tabs,
+            GestureDetector(
+              onTapDown: (a) {
+                clearTimerAutoScroll();
+              },
+              onTapUp: (a) {
+                startTimerAutoScroll();
+              },
+              onTapCancel: () {
+                startTimerAutoScroll();
+              },
+              child: TabBarView(
+                controller: tabController,
+                physics: scrollable
+                    ? scrollPhysics
+                    : const NeverScrollableScrollPhysics(),
+                children: tabs,
+              ),
             ),
             renderNav(),
           ],
@@ -560,7 +619,8 @@ class IntroSliderState extends State<IntroSlider>
         key: prevButtonKey,
         onPressed: () {
           if (!isAnimating()) {
-            tabController.animateTo(tabController.index - 1);
+            tabController.animateTo(tabController.index - 1,
+                curve: curveScroll);
           }
         },
         style: prevButtonStyle,
@@ -575,7 +635,7 @@ class IntroSliderState extends State<IntroSlider>
       onPressed: () {
         onNextPress?.call();
         if (!isAnimating()) {
-          tabController.animateTo(tabController.index + 1);
+          tabController.animateTo(tabController.index + 1, curve: curveScroll);
         }
       },
       style: nextButtonStyle,
@@ -858,7 +918,12 @@ class IntroSliderState extends State<IntroSlider>
   List<Widget> renderListDots() {
     dots.clear();
     for (var i = 0; i < lengthSlide; i++) {
-      dots.add(renderDot(sizeDots[i], colorDot, opacityDots[i], i));
+      double opacityCurrentDot = opacityDots[i];
+      if (opacityCurrentDot >= 0 && opacityCurrentDot <= 1) {
+        dots.add(renderDot(sizeDots[i], colorDot, opacityDots[i], i));
+      } else {
+        dots.add(renderDot(sizeDots[i], colorDot, 1, i));
+      }
     }
     return dots;
   }
@@ -866,7 +931,7 @@ class IntroSliderState extends State<IntroSlider>
   Widget renderDot(double radius, Color? color, double opacity, int index) {
     return GestureDetector(
       onTap: () {
-        tabController.animateTo(index);
+        tabController.animateTo(index, curve: curveScroll);
       },
       child: Opacity(
         opacity: opacity,

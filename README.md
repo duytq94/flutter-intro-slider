@@ -109,7 +109,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   void initState() {
     super.initState();
 
-        slides.add(
+    slides.add(
       Slide(
         title:
             "A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE",
@@ -151,7 +151,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontWeight: FontWeight.bold,
           fontFamily: 'RobotoMono',
         ),
-        description: "Ye indulgence unreserved connection alteration appearance",
+        description:
+            "Ye indulgence unreserved connection alteration appearance",
         styleDescription: const TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 20.0,
@@ -224,7 +225,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
+      backgroundColor:
+          MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
       overlayColor: MaterialStateProperty.all<Color>(const Color(0x33FFA8B0)),
     );
   }
@@ -254,12 +256,12 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       colorActiveDot: const Color(0xffFFA8B0),
       sizeDot: 13.0,
 
-      // Show or hide status bar
+      // Behavior
       hideStatusBar: true,
       backgroundColorAllSlides: Colors.grey,
-
-      // Scrollbar
       verticalScrollbarBehavior: ScrollbarBehavior.SHOW_ALWAYS,
+      autoScroll: true,
+      loopAutoScroll: true,
     );
   }
 }
@@ -546,16 +548,20 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 | colorDot                                                                                               | `Color?`                            | Color(0x80000000)                                 | Color for dot when passive                                                                          |
 | colorActiveDot                                                                                         | `Color?`                            | Color(0xffffffff)                                 | Color for dot when active                                                                           |
 | sizeDot                                                                                                | `double?`                           | 8.0                                               | Size of each dot                                                                                    |
-| typeDotAnimation (inactive dots auto have opacity 50%,<br/>dot active has size bigger than 1.5 times ) | `enum dotSliderAnimation?`          | dotSliderAnimation.DOT_MOVEMENT                   | Type dots animation                                                                                 |
+| typeDotAnimation (inactive dots auto have opacity 50%,<br/>dot active has size bigger than 1.5 times ) | `enum DotSliderAnimation?`          | DotSliderAnimation.DOT_MOVEMENT                   | Type dots animation                                                                                 |
 | <b>Tabs</b>                                                                                            |                                     |                                                   |                                                                                                     |
 | listCustomTabs                                                                                         | `List<Widget>?`                     | null                                              | Render your own list tabs (use default tab UI if not defined)                                       |
 | refFuncGoToTab                                                                                         | `void Function(Function function)?` | Do nothing                                        | Send the reference of change tab's function,<br/>then we can move to any tab index programmatically |
 | onTabChangeCompleted                                                                                   | `void Function(int index)?`         | Do nothing                                        | Callback when tab change comleted, return the current tab's index                                   |
 | backgroundColorAllSlides                                                                               | `Color?`                            | Transparent                                       | Background color for all slides (if backgroundColor on each slide not set)                          |
 | <b>Behavior</b>                                                                                        |                                     |                                                   |                                                                                                     |
-| isScrollable                                                                                           | `bool?`                             | true                                              | Force button-only scrolling                                                                         |
-| scrollPhysics                                                                                          | `ScrollPhysics?`                    | ScrollPhysics()                                   | Determines the physics horizontal scroll for the slide                                              |
-| verticalScrollbarBehavior                                                                              | `enum scrollbarBehavior?`           | scrollbarBehavior.HIDE                            | Allow to specify how the vertical scrollbar should behave                                           |
+| scrollable                                                                                             | `bool?`                             | true                                              | If false, user only scroll by tap nav button                                                        |
+| autoScroll                                                                                             | `bool?`                             | false                                             | Enable auto scroll slides                                                                           |
+| loopAutoScroll                                                                                         | `bool?`                             | false                                             | Loop transition by go to first slide when reach the end                                                     |
+| pauseAutoPlayOnTouch                                                                                   | `bool?`                             | true                                              | Auto scroll will be paused if user touch to slide                                                   |
+| autoScrollInterval                                                                                     | `Duration?`                         | 4 seconds                                         | Sets duration to determine the frequency of slides                                                  |
+| scrollPhysics                                                                                          | `ScrollPhysics?`                    | ScrollPhysics()                                   | Determines the physics horizontal scroll for the slides                                             |
+| verticalScrollbarBehavior                                                                              | `enum ScrollbarBehavior?`           | ScrollbarBehavior.HIDE                            | Allow to specify how the vertical scrollbar should behave                                           |
 | hideStatusBar                                                                                          | `bool?`                             | false                                             | Show or hide the status bar                                                                         |
 
 ## Pull request and feedback are always appreciated
