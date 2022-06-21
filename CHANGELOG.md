@@ -1,3 +1,6 @@
+## 3.0.9
+* Add auto scroll
+
 ## 3.0.8
 * Add TextAlign & TextOverFlow fot title & description
 

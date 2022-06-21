@@ -19,7 +19,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^3.0.8
+  intro_slider: ^3.0.9
 ```
 
 Import
@@ -262,6 +262,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       verticalScrollbarBehavior: ScrollbarBehavior.SHOW_ALWAYS,
       autoScroll: true,
       loopAutoScroll: true,
+      curveScroll: Curves.bounceIn,
     );
   }
 }
@@ -557,9 +558,10 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 | <b>Behavior</b>                                                                                        |                                     |                                                   |                                                                                                     |
 | scrollable                                                                                             | `bool?`                             | true                                              | If false, user only scroll by tap nav button                                                        |
 | autoScroll                                                                                             | `bool?`                             | false                                             | Enable auto scroll slides                                                                           |
-| loopAutoScroll                                                                                         | `bool?`                             | false                                             | Loop transition by go to first slide when reach the end                                                     |
+| loopAutoScroll                                                                                         | `bool?`                             | false                                             | Loop transition by go to first slide when reach the end                                             |
 | pauseAutoPlayOnTouch                                                                                   | `bool?`                             | true                                              | Auto scroll will be paused if user touch to slide                                                   |
 | autoScrollInterval                                                                                     | `Duration?`                         | 4 seconds                                         | Sets duration to determine the frequency of slides                                                  |
+| curveScroll                                                                                            | `Curve?`                            | Curves.ease                                       | Set transition animation curves.                                                                                                    |
 | scrollPhysics                                                                                          | `ScrollPhysics?`                    | ScrollPhysics()                                   | Determines the physics horizontal scroll for the slides                                             |
 | verticalScrollbarBehavior                                                                              | `enum ScrollbarBehavior?`           | ScrollbarBehavior.HIDE                            | Allow to specify how the vertical scrollbar should behave                                           |
 | hideStatusBar                                                                                          | `bool?`                             | false                                             | Show or hide the status bar                                                                         |

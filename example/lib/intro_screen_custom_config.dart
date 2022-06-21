@@ -171,6 +171,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       verticalScrollbarBehavior: ScrollbarBehavior.SHOW_ALWAYS,
       autoScroll: true,
       loopAutoScroll: true,
+      curveScroll: Curves.bounceIn,
     );
   }
 }
