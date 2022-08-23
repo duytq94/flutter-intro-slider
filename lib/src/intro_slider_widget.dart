@@ -568,10 +568,14 @@ class IntroSliderState extends State<IntroSlider>
                 clearTimerAutoScroll();
               },
               onTapUp: (a) {
-                startTimerAutoScroll();
+                if (autoScroll) {
+                  startTimerAutoScroll();
+                }
               },
               onTapCancel: () {
-                startTimerAutoScroll();
+                if (autoScroll) {
+                  startTimerAutoScroll();
+                }
               },
               child: TabBarView(
                 controller: tabController,
