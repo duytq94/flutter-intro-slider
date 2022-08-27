@@ -1,3 +1,7 @@
+## 3.0.10
+* Fix disable auto scroll not working
+* Fix can not set text color navigate buttons
+
 ## 3.0.9
 * Add auto scroll
 
