@@ -481,11 +481,7 @@ class IntroSliderState extends State<IntroSlider>
 
     showSkipBtn = widget.showSkipBtn ?? true;
 
-    renderSkipBtn = widget.renderSkipBtn ??
-        const Text(
-          "SKIP",
-          style: TextStyle(color: Colors.white),
-        );
+    renderSkipBtn = widget.renderSkipBtn ?? const Text("SKIP");
     skipButtonStyle = widget.skipButtonStyle ?? const ButtonStyle();
 
     // Prev button
@@ -495,32 +491,20 @@ class IntroSliderState extends State<IntroSlider>
       showPrevBtn = widget.showPrevBtn ?? true;
     }
 
-    renderPrevBtn = widget.renderPrevBtn ??
-        const Text(
-          "PREV",
-          style: TextStyle(color: Colors.white),
-        );
+    renderPrevBtn = widget.renderPrevBtn ?? const Text("PREV");
     prevButtonStyle = widget.prevButtonStyle ?? const ButtonStyle();
 
     showNextBtn = widget.showNextBtn ?? true;
 
     // Done button
     onDonePress = widget.onDonePress ?? () {};
-    renderDoneBtn = widget.renderDoneBtn ??
-        const Text(
-          "DONE",
-          style: TextStyle(color: Colors.white),
-        );
+    renderDoneBtn = widget.renderDoneBtn ?? const Text("DONE");
     doneButtonStyle = widget.doneButtonStyle ?? const ButtonStyle();
     showDoneBtn = widget.showDoneBtn ?? true;
 
     // Next button
     onNextPress = widget.onNextPress ?? () {};
-    renderNextBtn = widget.renderNextBtn ??
-        const Text(
-          "NEXT",
-          style: TextStyle(color: Colors.white),
-        );
+    renderNextBtn = widget.renderNextBtn ?? const Text("NEXT");
     nextButtonStyle = widget.nextButtonStyle ?? const ButtonStyle();
   }
 
@@ -568,10 +552,14 @@ class IntroSliderState extends State<IntroSlider>
                 clearTimerAutoScroll();
               },
               onTapUp: (a) {
-                startTimerAutoScroll();
+                if (autoScroll) {
+                  startTimerAutoScroll();
+                }
               },
               onTapCancel: () {
-                startTimerAutoScroll();
+                if (autoScroll) {
+                  startTimerAutoScroll();
+                }
               },
               child: TabBarView(
                 controller: tabController,
