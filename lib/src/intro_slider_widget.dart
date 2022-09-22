@@ -124,7 +124,7 @@ class IntroSlider extends StatefulWidget {
 
   // Constructor
   const IntroSlider({
-    Key? key,
+    super.key,
     // Slides
     this.slides,
     this.backgroundColorAllSlides,
@@ -179,14 +179,14 @@ class IntroSlider extends StatefulWidget {
     this.hideStatusBar,
     this.verticalScrollbarBehavior,
     this.navPosition = IntroSliderNavPosition.bottom,
-  }) : super(key: key);
+  })  : assert((slides?.length ?? 0) > 0 || (listCustomTabs?.length ?? 0) > 0),
+        assert(sizeDot == null || sizeDot >= 0);
 
   @override
   IntroSliderState createState() => IntroSliderState();
 }
 
-class IntroSliderState extends State<IntroSlider>
-    with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
   // ---------- Slides ----------
   /// An array of Slide object
   late final List<Slide>? slides;
@@ -322,8 +322,7 @@ class IntroSliderState extends State<IntroSlider>
     autoScroll = widget.autoScroll ?? false;
     loopAutoScroll = widget.loopAutoScroll ?? false;
     pauseAutoPlayOnTouch = widget.pauseAutoPlayOnTouch ?? true;
-    autoScrollInterval =
-        widget.autoScrollInterval ?? const Duration(seconds: 4);
+    autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
     curveScroll = widget.curveScroll ?? Curves.ease;
 
     onTabChangeCompleted = widget.onTabChangeCompleted;
@@ -349,8 +348,7 @@ class IntroSliderState extends State<IntroSlider>
     sizeDot = widget.sizeDot ?? 8.0;
 
     final initValueMarginRight = (sizeDot * 2) * (lengthSlide - 1);
-    typeDotAnimation =
-        widget.typeDotAnimation ?? DotSliderAnimation.DOT_MOVEMENT;
+    typeDotAnimation = widget.typeDotAnimation ?? DotSliderAnimation.DOT_MOVEMENT;
 
     switch (typeDotAnimation) {
       case DotSliderAnimation.DOT_MOVEMENT:
@@ -377,48 +375,36 @@ class IntroSliderState extends State<IntroSlider>
         switch (typeDotAnimation) {
           case DotSliderAnimation.DOT_MOVEMENT:
             marginLeftDotFocused = tabController.animation!.value * sizeDot * 2;
-            marginRightDotFocused = initValueMarginRight -
-                tabController.animation!.value * sizeDot * 2;
+            marginRightDotFocused = initValueMarginRight - tabController.animation!.value * sizeDot * 2;
             break;
           case DotSliderAnimation.SIZE_TRANSITION:
             if (tabController.animation!.value == currentAnimationValue) {
               break;
             }
 
-            var diffValueAnimation =
-                (tabController.animation!.value - currentAnimationValue).abs();
-            final diffValueIndex =
-                (currentTabIndex - tabController.index).abs();
+            var diffValueAnimation = (tabController.animation!.value - currentAnimationValue).abs();
+            final diffValueIndex = (currentTabIndex - tabController.index).abs();
 
             // When press skip button
-            if (tabController.indexIsChanging &&
-                (tabController.index - tabController.previousIndex).abs() > 1) {
+            if (tabController.indexIsChanging && (tabController.index - tabController.previousIndex).abs() > 1) {
               if (diffValueAnimation < 1.0) {
                 diffValueAnimation = 1.0;
               }
-              sizeDots[currentTabIndex] = sizeDot * 1.5 -
-                  (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
-              sizeDots[tabController.index] = sizeDot +
-                  (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
-              opacityDots[currentTabIndex] =
-                  1.0 - (diffValueAnimation / diffValueIndex) / 2;
-              opacityDots[tabController.index] =
-                  0.5 + (diffValueAnimation / diffValueIndex) / 2;
+              sizeDots[currentTabIndex] = sizeDot * 1.5 - (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
+              sizeDots[tabController.index] = sizeDot + (sizeDot / 2) * (1 - (diffValueIndex - diffValueAnimation));
+              opacityDots[currentTabIndex] = 1.0 - (diffValueAnimation / diffValueIndex) / 2;
+              opacityDots[tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
             } else {
               if (tabController.animation!.value > currentAnimationValue) {
                 // Swipe left
-                sizeDots[currentTabIndex] =
-                    sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
-                sizeDots[currentTabIndex + 1] =
-                    sizeDot + (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex] = sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex + 1] = sizeDot + (sizeDot / 2) * diffValueAnimation;
                 opacityDots[currentTabIndex] = 1.0 - diffValueAnimation / 2;
                 opacityDots[currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
               } else {
                 // Swipe right
-                sizeDots[currentTabIndex] =
-                    sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
-                sizeDots[currentTabIndex - 1] =
-                    sizeDot + (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex] = sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
+                sizeDots[currentTabIndex - 1] = sizeDot + (sizeDot / 2) * diffValueAnimation;
                 opacityDots[currentTabIndex] = 1.0 - diffValueAnimation / 2;
                 opacityDots[currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
               }
@@ -435,8 +421,7 @@ class IntroSliderState extends State<IntroSlider>
 
     scrollable = widget.scrollable ?? true;
     scrollPhysics = widget.scrollPhysics ?? const ScrollPhysics();
-    verticalScrollbarBehavior =
-        widget.verticalScrollbarBehavior ?? ScrollbarBehavior.HIDE;
+    verticalScrollbarBehavior = widget.verticalScrollbarBehavior ?? ScrollbarBehavior.HIDE;
 
     setupButtonDefaultValues();
 
@@ -563,9 +548,7 @@ class IntroSliderState extends State<IntroSlider>
               },
               child: TabBarView(
                 controller: tabController,
-                physics: scrollable
-                    ? scrollPhysics
-                    : const NeverScrollableScrollPhysics(),
+                physics: scrollable ? scrollPhysics : const NeverScrollableScrollPhysics(),
                 children: tabs,
               ),
             ),
@@ -607,8 +590,7 @@ class IntroSliderState extends State<IntroSlider>
         key: prevButtonKey,
         onPressed: () {
           if (!isAnimating()) {
-            tabController.animateTo(tabController.index - 1,
-                curve: curveScroll);
+            tabController.animateTo(tabController.index - 1, curve: curveScroll);
           }
         },
         style: prevButtonStyle,
@@ -633,9 +615,7 @@ class IntroSliderState extends State<IntroSlider>
 
   Widget renderNav() {
     return Positioned(
-      top: widget.navPosition == IntroSliderNavPosition.top
-          ? MediaQuery.of(context).viewPadding.top
-          : null,
+      top: widget.navPosition == IntroSliderNavPosition.top ? MediaQuery.of(context).viewPadding.top : null,
       bottom: widget.navPosition == IntroSliderNavPosition.bottom ? 10.0 : null,
       left: 10.0,
       right: 10.0,
@@ -645,9 +625,7 @@ class IntroSliderState extends State<IntroSlider>
           Container(
             alignment: Alignment.center,
             width: MediaQuery.of(context).size.width / 4,
-            child: showSkipBtn
-                ? buildSkipButton()
-                : (showPrevBtn ? buildPrevButton() : Container()),
+            child: showSkipBtn ? buildSkipButton() : (showPrevBtn ? buildPrevButton() : const SizedBox.shrink()),
           ),
 
           // Dot indicator
@@ -659,34 +637,29 @@ class IntroSliderState extends State<IntroSlider>
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: renderListDots(),
                       ),
-                      if (typeDotAnimation == DotSliderAnimation.DOT_MOVEMENT)
-                        Center(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: colorActiveDot,
-                              borderRadius: BorderRadius.circular(sizeDot / 2),
-                            ),
-                            width: sizeDot,
-                            height: sizeDot,
-                            margin: EdgeInsets.only(
-                              left: isRTLLanguage(
-                                      Localizations.localeOf(context)
-                                          .languageCode)
-                                  ? marginRightDotFocused
-                                  : marginLeftDotFocused,
-                              right: isRTLLanguage(
-                                      Localizations.localeOf(context)
-                                          .languageCode)
-                                  ? marginLeftDotFocused
-                                  : marginRightDotFocused,
-                            ),
-                          ),
-                        )
-                      else
-                        Container()
+                      typeDotAnimation == DotSliderAnimation.DOT_MOVEMENT
+                          ? Center(
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: colorActiveDot,
+                                  borderRadius: BorderRadius.circular(sizeDot / 2),
+                                ),
+                                width: sizeDot,
+                                height: sizeDot,
+                                margin: EdgeInsets.only(
+                                  left: isRTLLanguage(Localizations.localeOf(context).languageCode)
+                                      ? marginRightDotFocused
+                                      : marginLeftDotFocused,
+                                  right: isRTLLanguage(Localizations.localeOf(context).languageCode)
+                                      ? marginLeftDotFocused
+                                      : marginRightDotFocused,
+                                ),
+                              ),
+                            )
+                          : const SizedBox.shrink()
                     ],
                   )
-                : Container(),
+                : const SizedBox.shrink(),
           ),
 
           // Next, Done button
@@ -697,10 +670,10 @@ class IntroSliderState extends State<IntroSlider>
             child: tabController.index + 1 == lengthSlide
                 ? showDoneBtn
                     ? buildDoneButton()
-                    : Container()
+                    : const SizedBox.shrink()
                 : showNextBtn
                     ? buildNextButton()
-                    : Container(),
+                    : const SizedBox.shrink(),
           ),
         ],
       ),
@@ -802,9 +775,7 @@ class IntroSliderState extends State<IntroSlider>
       children: <Widget>[
         Container(
           // Title
-          margin: marginTitle ??
-              const EdgeInsets.only(
-                  top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+          margin: marginTitle ?? const EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
           child: widgetTitle ??
               Text(
                 title ?? '',
@@ -830,18 +801,16 @@ class IntroSliderState extends State<IntroSlider>
                   height: heightImage ?? 200.0,
                   fit: foregroundImageFit ?? BoxFit.contain,
                 )
-              : Center(child: centerWidget ?? Container()),
+              : Center(child: centerWidget ?? const SizedBox.shrink()),
         ),
 
         // Description
         Container(
-          margin: marginDescription ??
-              const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+          margin: marginDescription ?? const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
           child: widgetDescription ??
               Text(
                 description ?? '',
-                style: styleDescription ??
-                    const TextStyle(color: Colors.white, fontSize: 18.0),
+                style: styleDescription ?? const TextStyle(color: Colors.white, fontSize: 18.0),
                 textAlign: textAlignDescription ?? TextAlign.center,
                 maxLines: maxLineTextDescription ?? 100,
                 overflow: textOverFlowDescription ?? TextOverflow.ellipsis,
@@ -873,8 +842,7 @@ class IntroSliderState extends State<IntroSlider>
               fit: backgroundImageFit ?? BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 backgroundOpacityColor != null
-                    ? backgroundOpacityColor
-                        .withOpacity(backgroundOpacity ?? 0.5)
+                    ? backgroundOpacityColor.withOpacity(backgroundOpacity ?? 0.5)
                     : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
                 backgroundBlendMode ?? BlendMode.darken,
               ),
@@ -888,14 +856,12 @@ class IntroSliderState extends State<IntroSlider>
             ? Platform.isIOS
                 ? CupertinoScrollbar(
                     controller: scrollController,
-                    thumbVisibility: verticalScrollbarBehavior ==
-                        ScrollbarBehavior.SHOW_ALWAYS,
+                    thumbVisibility: verticalScrollbarBehavior == ScrollbarBehavior.SHOW_ALWAYS,
                     child: listView,
                   )
                 : Scrollbar(
                     controller: scrollController,
-                    thumbVisibility: verticalScrollbarBehavior ==
-                        ScrollbarBehavior.SHOW_ALWAYS,
+                    thumbVisibility: verticalScrollbarBehavior == ScrollbarBehavior.SHOW_ALWAYS,
                     child: listView,
                   )
             : listView,
@@ -924,8 +890,7 @@ class IntroSliderState extends State<IntroSlider>
       child: Opacity(
         opacity: opacity,
         child: Container(
-          decoration: BoxDecoration(
-              color: color, borderRadius: BorderRadius.circular(radius / 2)),
+          decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(radius / 2)),
           width: radius,
           height: radius,
           margin: EdgeInsets.only(left: radius / 2, right: radius / 2),

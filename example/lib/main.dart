@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:intro_slider_example/intro_screen_custom_config.dart';
+
+import 'intro_screen_custom_config.dart';
+import 'intro_screen_custom_tab.dart';
+import 'intro_screen_default.dart';
 
 void main() => runApp(const MyApp());
 
@@ -9,9 +12,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: IntroScreenCustomConfig(),
+      // home: IntroScreenCustomConfig(),
       // home: IntroScreenCustomTab(),
-      // home: IntroScreenDefault(),
+      home: IntroScreenDefault(),
       debugShowCheckedModeBanner: false,
     );
   }
