@@ -20,8 +20,7 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
     slides.add(
       Slide(
         title: "ERASER",
-        description:
-            "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         pathImage: "images/photo_eraser.png",
         backgroundColor: const Color(0xfff5a623),
       ),
@@ -29,8 +28,7 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
     slides.add(
       Slide(
         title: "PENCIL",
-        description:
-            "Ye indulgence unreserved connection alteration appearance",
+        description: "Ye indulgence unreserved connection alteration appearance",
         pathImage: "images/photo_pencil.png",
         backgroundColor: const Color(0xff203152),
       ),
@@ -54,6 +52,7 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
+      key: UniqueKey(),
       slides: slides,
       onDonePress: onDonePress,
     );

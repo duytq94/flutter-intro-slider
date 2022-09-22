@@ -52,8 +52,7 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
     slides.add(
       Slide(
         title: "ERASER",
-        description:
-            "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         pathImage: "images/photo_eraser.png",
         backgroundColor: const Color(0xfff5a623),
       ),
@@ -61,8 +60,7 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
     slides.add(
       Slide(
         title: "PENCIL",
-        description:
-            "Ye indulgence unreserved connection alteration appearance",
+        description: "Ye indulgence unreserved connection alteration appearance",
         pathImage: "images/photo_pencil.png",
         backgroundColor: const Color(0xff203152),
       ),
@@ -80,12 +78,13 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
 
   void onDonePress() {
     // Do what you want
-    print("End of slides");
+    log("End of slides");
   }
 
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
+      key: UniqueKey(),
       slides: slides,
       onDonePress: onDonePress,
     );
@@ -151,8 +150,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontWeight: FontWeight.bold,
           fontFamily: 'RobotoMono',
         ),
-        description:
-            "Ye indulgence unreserved connection alteration appearance",
+        description: "Ye indulgence unreserved connection alteration appearance",
         styleDescription: const TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 20.0,
@@ -225,8 +223,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor:
-          MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
+      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
       overlayColor: MaterialStateProperty.all<Color>(const Color(0x33FFA8B0)),
     );
   }
@@ -234,6 +231,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
+      key: UniqueKey(),
       // List slides
       slides: slides,
 
@@ -434,6 +432,7 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
+      key: UniqueKey(),
       // Skip button
       renderSkipBtn: renderSkipBtn(),
       skipButtonStyle: myButtonStyle(),
@@ -461,11 +460,7 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 
       // Behavior
       scrollPhysics: const BouncingScrollPhysics(),
-
-      // Show or hide status bar
       hideStatusBar: true,
-
-      // On tab change completed
       onTabChangeCompleted: onTabChangeCompleted,
     );
   }

@@ -60,8 +60,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontWeight: FontWeight.bold,
           fontFamily: 'RobotoMono',
         ),
-        description:
-            "Ye indulgence unreserved connection alteration appearance",
+        description: "Ye indulgence unreserved connection alteration appearance",
         styleDescription: const TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 20.0,
@@ -134,8 +133,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor:
-          MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
+      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
       overlayColor: MaterialStateProperty.all<Color>(const Color(0x33FFA8B0)),
     );
   }
@@ -143,6 +141,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
+      key: UniqueKey(),
       // List slides
       slides: slides,
 

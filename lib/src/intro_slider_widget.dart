@@ -371,18 +371,20 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     }
 
     tabController.animation?.addListener(() {
+      if (tabController.animation == null) return;
       setState(() {
+        double animationValue = tabController.animation!.value;
         switch (typeDotAnimation) {
           case DotSliderAnimation.DOT_MOVEMENT:
-            marginLeftDotFocused = tabController.animation!.value * sizeDot * 2;
-            marginRightDotFocused = initValueMarginRight - tabController.animation!.value * sizeDot * 2;
+            marginLeftDotFocused = animationValue * sizeDot * 2;
+            marginRightDotFocused = initValueMarginRight - animationValue * sizeDot * 2;
             break;
           case DotSliderAnimation.SIZE_TRANSITION:
-            if (tabController.animation!.value == currentAnimationValue) {
+            if (animationValue == currentAnimationValue) {
               break;
             }
 
-            var diffValueAnimation = (tabController.animation!.value - currentAnimationValue).abs();
+            var diffValueAnimation = (animationValue - currentAnimationValue).abs();
             final diffValueIndex = (currentTabIndex - tabController.index).abs();
 
             // When press skip button
@@ -395,7 +397,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
               opacityDots[currentTabIndex] = 1.0 - (diffValueAnimation / diffValueIndex) / 2;
               opacityDots[tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
             } else {
-              if (tabController.animation!.value > currentAnimationValue) {
+              if (animationValue > currentAnimationValue) {
                 // Swipe left
                 sizeDots[currentTabIndex] = sizeDot * 1.5 - (sizeDot / 2) * diffValueAnimation;
                 sizeDots[currentTabIndex + 1] = sizeDot + (sizeDot / 2) * diffValueAnimation;

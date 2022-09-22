@@ -49,8 +49,7 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
           fontWeight: FontWeight.bold,
           fontFamily: 'RobotoMono',
         ),
-        description:
-            "Ye indulgence unreserved connection alteration appearance",
+        description: "Ye indulgence unreserved connection alteration appearance",
         styleDescription: const TextStyle(
           color: Color(0xfffe9c8f),
           fontSize: 20.0,
@@ -117,8 +116,7 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor:
-          MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
+      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
       overlayColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
     );
   }
@@ -169,6 +167,7 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
+      key: UniqueKey(),
       // Skip button
       renderSkipBtn: renderSkipBtn(),
       skipButtonStyle: myButtonStyle(),
