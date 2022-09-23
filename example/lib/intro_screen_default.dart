@@ -45,7 +45,6 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
   }
 
   void onDonePress() {
-    // Do what you want
     log("End of slides");
   }
 

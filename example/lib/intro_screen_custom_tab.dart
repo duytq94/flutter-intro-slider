@@ -181,10 +181,10 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
       onDonePress: onDonePress,
       doneButtonStyle: myButtonStyle(),
 
-      // Dot indicator
-      colorDot: const Color(0xffffcc5c),
-      sizeDot: 13.0,
-      typeDotAnimation: DotSliderAnimation.SIZE_TRANSITION,
+      // Indicator
+      colorIndicator: const Color(0xffffcc5c),
+      sizeIndicator: 13.0,
+      typeIndicatorAnimation: TypeIndicatorAnimation.sizeTransition,
 
       // Tabs
       listCustomTabs: renderListCustomTabs(),

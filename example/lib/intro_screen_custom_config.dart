@@ -13,6 +13,9 @@ class IntroScreenCustomConfig extends StatefulWidget {
 // ------------------ Custom config ------------------
 class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   List<Slide> slides = [];
+  Color activeColor = const Color(0xff0BEEF9);
+  Color inactiveColor = const Color(0xff03838b);
+  double sizeIndicator = 20;
 
   @override
   void initState() {
@@ -47,7 +50,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           "Replace this with a custom widget",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundNetworkImage: "https://picsum.photos/200/300",
+        backgroundNetworkImage: "https://picsum.photos/600/900",
         onCenterItemPress: () {},
       ),
     );
@@ -67,8 +70,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontStyle: FontStyle.italic,
           fontFamily: 'Raleway',
         ),
-        colorBegin: Colors.lightBlue,
-        colorEnd: Colors.amber,
+        colorBegin: const Color(0xff89D4CF),
+        colorEnd: const Color(0xff734AE8),
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
       ),
@@ -97,11 +100,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   }
 
   void onDonePress() {
-    // Do what you want
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => HomeScreen()),
-    // );
+    log("onDonePress caught");
   }
 
   void onNextPress() {
@@ -111,30 +110,29 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   Widget renderNextBtn() {
     return const Icon(
       Icons.navigate_next,
-      color: Color(0xffF3B4BA),
-      size: 35.0,
+      size: 25,
     );
   }
 
   Widget renderDoneBtn() {
     return const Icon(
       Icons.done,
-      color: Color(0xffF3B4BA),
+      size: 25,
     );
   }
 
   Widget renderSkipBtn() {
     return const Icon(
       Icons.skip_next,
-      color: Color(0xffF3B4BA),
+      size: 25,
     );
   }
 
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
-      overlayColor: MaterialStateProperty.all<Color>(const Color(0x33FFA8B0)),
+      foregroundColor: MaterialStateProperty.all<Color>(activeColor),
+      backgroundColor: MaterialStateProperty.all<Color>(inactiveColor),
     );
   }
 
@@ -159,16 +157,25 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       onDonePress: onDonePress,
       doneButtonStyle: myButtonStyle(),
 
-      // Dot indicator
-      colorDot: const Color(0x33FFA8B0),
-      colorActiveDot: const Color(0xffFFA8B0),
-      sizeDot: 13.0,
+      // Indicator
+      sizeIndicator: sizeIndicator,
+      indicatorWidget: Container(
+        width: sizeIndicator,
+        height: 10,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: inactiveColor),
+      ),
+      activeIndicatorWidget: Container(
+        width: sizeIndicator,
+        height: 10,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: activeColor),
+      ),
+      spaceBetweenIndicator: 10,
 
       // Behavior
       hideStatusBar: true,
       backgroundColorAllSlides: Colors.grey,
-      verticalScrollbarBehavior: ScrollbarBehavior.SHOW_ALWAYS,
-      autoScroll: true,
+      verticalScrollbarBehavior: ScrollbarBehavior.alwaysShow,
+      // autoScroll: true,
       loopAutoScroll: true,
       curveScroll: Curves.bounceIn,
     );

@@ -1,10 +1,8 @@
-// Type dots animation
-enum DotSliderAnimation { SIZE_TRANSITION, DOT_MOVEMENT }
+enum TypeIndicatorAnimation { sizeTransition, sliding }
 
-// Scrollbar behavior values
-enum ScrollbarBehavior { HIDE, SHOW, SHOW_ALWAYS }
+enum ScrollbarBehavior { hide, show, alwaysShow }
 
-// Dots and next/done/skip buttons position
+// Indicators & next/done/skip buttons position
 enum IntroSliderNavPosition { top, bottom }
 
 abstract class IntroSliderConfig {
