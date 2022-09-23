@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intro_slider/intro_slider.dart';
 
+import 'intro_slider_tab.dart';
+
 class IntroSlider extends StatefulWidget {
   // ---------- Slides ----------
   /// An array of Slide object
@@ -707,188 +709,45 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       final scrollController = ScrollController();
       scrollControllers.add(scrollController);
       tabs.add(
-        renderTab(
-          scrollController,
-          slides?[i].widgetTitle,
-          slides?[i].title,
-          slides?[i].maxLineTitle,
-          slides?[i].styleTitle,
-          slides?[i].textAlignTitle,
-          slides?[i].textOverFlowTitle,
-          slides?[i].marginTitle,
-          slides?[i].widgetDescription,
-          slides?[i].description,
-          slides?[i].maxLineTextDescription,
-          slides?[i].styleDescription,
-          slides?[i].textAlignDescription,
-          slides?[i].textOverFlowDescription,
-          slides?[i].marginDescription,
-          slides?[i].pathImage,
-          slides?[i].widthImage,
-          slides?[i].heightImage,
-          slides?[i].foregroundImageFit,
-          slides?[i].centerWidget,
-          slides?[i].onCenterItemPress,
-          slides?[i].backgroundColor,
-          slides?[i].colorBegin,
-          slides?[i].colorEnd,
-          slides?[i].directionColorBegin,
-          slides?[i].directionColorEnd,
-          slides?[i].backgroundImage,
-          slides?[i].backgroundImageFit,
-          slides?[i].backgroundNetworkImage,
-          slides?[i].backgroundOpacity,
-          slides?[i].backgroundOpacityColor,
-          slides?[i].backgroundBlendMode,
+        IntroSliderTab(
+          scrollController: scrollController,
+          navPosition: widget.navPosition,
+          verticalScrollbarBehavior: verticalScrollbarBehavior,
+          widgetTitle: slides?[i].widgetTitle,
+          title: slides?[i].title,
+          maxLineTitle: slides?[i].maxLineTitle,
+          styleTitle: slides?[i].styleTitle,
+          textAlignTitle: slides?[i].textAlignTitle,
+          textOverFlowTitle: slides?[i].textOverFlowTitle,
+          marginTitle: slides?[i].marginTitle,
+          widgetDescription: slides?[i].widgetDescription,
+          description: slides?[i].description,
+          maxLineTextDescription: slides?[i].maxLineTextDescription,
+          styleDescription: slides?[i].styleDescription,
+          textAlignDescription: slides?[i].textAlignDescription,
+          textOverFlowDescription: slides?[i].textOverFlowDescription,
+          marginDescription: slides?[i].marginDescription,
+          pathImage: slides?[i].pathImage,
+          widthImage: slides?[i].widthImage,
+          heightImage: slides?[i].heightImage,
+          foregroundImageFit: slides?[i].foregroundImageFit,
+          centerWidget: slides?[i].centerWidget,
+          onCenterItemPress: slides?[i].onCenterItemPress,
+          backgroundColor: slides?[i].backgroundColor,
+          colorBegin: slides?[i].colorBegin,
+          colorEnd: slides?[i].colorEnd,
+          directionColorBegin: slides?[i].directionColorBegin,
+          directionColorEnd: slides?[i].directionColorEnd,
+          backgroundImage: slides?[i].backgroundImage,
+          backgroundImageFit: slides?[i].backgroundImageFit,
+          backgroundNetworkImage: slides?[i].backgroundNetworkImage,
+          backgroundOpacity: slides?[i].backgroundOpacity,
+          backgroundOpacityColor: slides?[i].backgroundOpacityColor,
+          backgroundBlendMode: slides?[i].backgroundBlendMode,
         ),
       );
     }
     return tabs;
-  }
-
-  Widget renderTab(
-    ScrollController scrollController,
-
-    // Title
-    Widget? widgetTitle,
-    String? title,
-    int? maxLineTitle,
-    TextStyle? styleTitle,
-    TextAlign? textAlignTitle,
-    TextOverflow? textOverFlowTitle,
-    EdgeInsets? marginTitle,
-
-    // Description
-    Widget? widgetDescription,
-    String? description,
-    int? maxLineTextDescription,
-    TextStyle? styleDescription,
-    TextAlign? textAlignDescription,
-    TextOverflow? textOverFlowDescription,
-    EdgeInsets? marginDescription,
-
-    // Image
-    String? pathImage,
-    double? widthImage,
-    double? heightImage,
-    BoxFit? foregroundImageFit,
-
-    // Center Widget
-    Widget? centerWidget,
-    void Function()? onCenterItemPress,
-
-    // Background color
-    Color? backgroundColor,
-    Color? colorBegin,
-    Color? colorEnd,
-    AlignmentGeometry? directionColorBegin,
-    AlignmentGeometry? directionColorEnd,
-
-    // Background image
-    String? backgroundImage,
-    BoxFit? backgroundImageFit,
-    String? backgroundNetworkImage,
-    double? backgroundOpacity,
-    Color? backgroundOpacityColor,
-    BlendMode? backgroundBlendMode,
-  ) {
-    final listView = ListView(
-      controller: scrollController,
-      children: <Widget>[
-        Container(
-          // Title
-          margin: marginTitle ?? const EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
-          child: widgetTitle ??
-              Text(
-                title ?? '',
-                style: styleTitle ??
-                    const TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 30.0,
-                    ),
-                maxLines: maxLineTitle ?? 1,
-                textAlign: textAlignTitle ?? TextAlign.center,
-                overflow: textOverFlowTitle ?? TextOverflow.ellipsis,
-              ),
-        ),
-
-        // Image or Center widget
-        GestureDetector(
-          onTap: onCenterItemPress,
-          child: pathImage != null
-              ? Image.asset(
-                  pathImage,
-                  width: widthImage ?? 200.0,
-                  height: heightImage ?? 200.0,
-                  fit: foregroundImageFit ?? BoxFit.contain,
-                )
-              : Center(child: centerWidget ?? const SizedBox.shrink()),
-        ),
-
-        // Description
-        Container(
-          margin: marginDescription ?? const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
-          child: widgetDescription ??
-              Text(
-                description ?? '',
-                style: styleDescription ?? const TextStyle(color: Colors.white, fontSize: 18.0),
-                textAlign: textAlignDescription ?? TextAlign.center,
-                maxLines: maxLineTextDescription ?? 100,
-                overflow: textOverFlowDescription ?? TextOverflow.ellipsis,
-              ),
-        ),
-      ],
-    );
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: backgroundImage == null && backgroundNetworkImage == null
-          ? BoxDecoration(
-              gradient: LinearGradient(
-                colors: backgroundColor != null
-                    ? [backgroundColor, backgroundColor]
-                    : [
-                        colorBegin ?? Colors.transparent,
-                        colorEnd ?? Colors.transparent,
-                      ],
-                begin: directionColorBegin ?? Alignment.topLeft,
-                end: directionColorEnd ?? Alignment.bottomRight,
-              ),
-            )
-          : BoxDecoration(
-              image: DecorationImage(
-              image: backgroundImage != null
-                  ? AssetImage(backgroundImage)
-                  : NetworkImage(backgroundNetworkImage!) as ImageProvider,
-              fit: backgroundImageFit ?? BoxFit.cover,
-              colorFilter: ColorFilter.mode(
-                backgroundOpacityColor != null
-                    ? backgroundOpacityColor.withOpacity(backgroundOpacity ?? 0.5)
-                    : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
-                backgroundBlendMode ?? BlendMode.darken,
-              ),
-            )),
-      child: Container(
-        margin: EdgeInsets.only(
-          top: widget.navPosition == IntroSliderNavPosition.top ? 60 : 0,
-          bottom: widget.navPosition == IntroSliderNavPosition.bottom ? 60 : 0,
-        ),
-        child: verticalScrollbarBehavior != ScrollbarBehavior.hide
-            ? Platform.isIOS
-                ? CupertinoScrollbar(
-                    controller: scrollController,
-                    thumbVisibility: verticalScrollbarBehavior == ScrollbarBehavior.alwaysShow,
-                    child: listView,
-                  )
-                : Scrollbar(
-                    controller: scrollController,
-                    thumbVisibility: verticalScrollbarBehavior == ScrollbarBehavior.alwaysShow,
-                    child: listView,
-                  )
-            : listView,
-      ),
-    );
   }
 
   Widget renderActiveIndicator() {
