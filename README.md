@@ -77,7 +77,6 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
   }
 
   void onDonePress() {
-    // Do what you want
     log("End of slides");
   }
 
@@ -103,6 +102,9 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
 ```dart
 class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   List<Slide> slides = [];
+  Color activeColor = const Color(0xff0BEEF9);
+  Color inactiveColor = const Color(0xff03838b);
+  double sizeIndicator = 20;
 
   @override
   void initState() {
@@ -137,7 +139,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           "Replace this with a custom widget",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundNetworkImage: "https://picsum.photos/200/300",
+        backgroundNetworkImage: "https://picsum.photos/600/900",
         onCenterItemPress: () {},
       ),
     );
@@ -157,8 +159,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontStyle: FontStyle.italic,
           fontFamily: 'Raleway',
         ),
-        colorBegin: Colors.lightBlue,
-        colorEnd: Colors.amber,
+        colorBegin: const Color(0xff89D4CF),
+        colorEnd: const Color(0xff734AE8),
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
       ),
@@ -187,11 +189,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   }
 
   void onDonePress() {
-    // Do what you want
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => HomeScreen()),
-    // );
+    log("onDonePress caught");
   }
 
   void onNextPress() {
@@ -201,30 +199,29 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   Widget renderNextBtn() {
     return const Icon(
       Icons.navigate_next,
-      color: Color(0xffF3B4BA),
-      size: 35.0,
+      size: 25,
     );
   }
 
   Widget renderDoneBtn() {
     return const Icon(
       Icons.done,
-      color: Color(0xffF3B4BA),
+      size: 25,
     );
   }
 
   Widget renderSkipBtn() {
     return const Icon(
       Icons.skip_next,
-      color: Color(0xffF3B4BA),
+      size: 25,
     );
   }
 
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
-      overlayColor: MaterialStateProperty.all<Color>(const Color(0x33FFA8B0)),
+      foregroundColor: MaterialStateProperty.all<Color>(activeColor),
+      backgroundColor: MaterialStateProperty.all<Color>(inactiveColor),
     );
   }
 
@@ -249,16 +246,25 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       onDonePress: onDonePress,
       doneButtonStyle: myButtonStyle(),
 
-      // Dot indicator
-      colorDot: const Color(0x33FFA8B0),
-      colorActiveDot: const Color(0xffFFA8B0),
-      sizeDot: 13.0,
+      // Indicator
+      sizeIndicator: sizeIndicator,
+      indicatorWidget: Container(
+        width: sizeIndicator,
+        height: 10,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: inactiveColor),
+      ),
+      activeIndicatorWidget: Container(
+        width: sizeIndicator,
+        height: 10,
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: activeColor),
+      ),
+      spaceBetweenIndicator: 10,
 
       // Behavior
       hideStatusBar: true,
       backgroundColorAllSlides: Colors.grey,
-      verticalScrollbarBehavior: ScrollbarBehavior.SHOW_ALWAYS,
-      autoScroll: true,
+      verticalScrollbarBehavior: ScrollbarBehavior.alwaysShow,
+      // autoScroll: true,
       loopAutoScroll: true,
       curveScroll: Curves.bounceIn,
     );
@@ -446,10 +452,10 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
       onDonePress: onDonePress,
       doneButtonStyle: myButtonStyle(),
 
-      // Dot indicator
-      colorDot: const Color(0xffffcc5c),
-      sizeDot: 13.0,
-      typeDotAnimation: DotSliderAnimation.SIZE_TRANSITION,
+      // Indicator
+      colorIndicator: const Color(0xffffcc5c),
+      sizeIndicator: 13.0,
+      typeIndicatorAnimation: TypeIndicatorAnimation.sizeTransition,
 
       // Tabs
       listCustomTabs: renderListCustomTabs(),
@@ -513,52 +519,55 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 
 ## IntroSlider widget properties
 
-| Name                                                                                                   | Type                                | Default                                           | Description                                                                                         |
-| ------------------------------------------------------------------------------------------------------ | ----------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| <b>Slide</b>                                                                                           |                                     |                                                   |                                                                                                     |
-| slides                                                                                                 | `Slide`                             | No default, require if listCustomTabs not defined | An array of Slide object                                                                            |
-| <b>Skip Button</b>                                                                                     |                                     |                                                   |                                                                                                     |
-| renderSkipBtn                                                                                          | `Widget?`                           | Button with white text SKIP                       | Render your own widget SKIP button                                                                  |
-| skipButtonStyle                                                                                        | `ButtonStyle?`                      | ButtonStyle()                                     | Style for SKIP button                                                                               |
-| onSkipPress                                                                                            | `void Function()?`                  | Go to last page                                   | Fire when press SKIP button                                                                         |
-| skipButtonStyle                                                                                        | `ButtonStyle?`                      | ButtonStyle()                                     | Style for SKIP button                                                                               |
-| showSkipBtn                                                                                            | `bool?`                             | true                                              | Show or hide SKIP button                                                                            |
-| <b>Previous Button</b>                                                                                 |                                     |                                                   |                                                                                                     |
-| renderPrevBtn                                                                                          | `Widget?`                           | Button with white text PREV                       | Render your own PREV button                                                                         |
-| prevButtonStyle                                                                                        | `ButtonStyle?`                      | ButtonStyle()                                     | Style for PREV button                                                                               |
-| showPrevBtn                                                                                            | `bool?`                             | false                                             | Show or hide PREV, have to set showSkipBtn to false at first if you want to show this button        |
-| <b>Done Button</b>                                                                                     |                                     |                                                   |                                                                                                     |
-| renderDoneBtn                                                                                          | `Widget?`                           | Button with white text DONE                       | Render your own DONE button                                                                         |
-| doneButtonStyle                                                                                        | `ButtonStyle?`                      | ButtonStyle()                                     | Style for DONE button                                                                               |
-| onDonePress                                                                                            | `void Function()?`                  | Do nothing                                        | Fire when press DONE button                                                                         |
-| showDoneBtn                                                                                            | `bool?`                             | true                                              | Show or hide DONE button                                                                            |
-| <b>Next Button                                                                                         |                                     |                                                   |                                                                                                     |
-| renderNextBtn                                                                                          | `Widget?`                           | Button with white text NEXT                       | Render your own NEXT button                                                                         |
-| nextButtonStyle                                                                                        | `ButtonStyle?`                      | ButtonStyle()                                     | Style for NEXT button                                                                               |
-| onNextPress                                                                                            | `void Function()?`                  | Do nothing                                        | Fire when press NEXT button                                                                         |
-| showNextBtn                                                                                            | `bool?`                             | true                                              | Show or hide NEXT button                                                                            |
-| <b>Nav position</b>                                                                                    |                                     |                                                   |                                                                                                     |
-| navPosition                                                                                            | `IntroSliderNavPosition`            | IntroSliderNavPosition.bottom                     | Customize the position of dots and skip/next/done buttons to the top of the screen or the bottom    |
-| <b>Dot Indicator</b>                                                                                   |                                     |                                                   |                                                                                                     |
-| showDotIndicator                                                                                       | `bool?`                             | true                                              | Show or hide dot indicator                                                                          |
-| colorDot                                                                                               | `Color?`                            | Color(0x80000000)                                 | Color for dot when passive                                                                          |
-| colorActiveDot                                                                                         | `Color?`                            | Color(0xffffffff)                                 | Color for dot when active                                                                           |
-| sizeDot                                                                                                | `double?`                           | 8.0                                               | Size of each dot                                                                                    |
-| typeDotAnimation (inactive dots auto have opacity 50%,<br/>dot active has size bigger than 1.5 times ) | `enum DotSliderAnimation?`          | DotSliderAnimation.DOT_MOVEMENT                   | Type dots animation                                                                                 |
-| <b>Tabs</b>                                                                                            |                                     |                                                   |                                                                                                     |
-| listCustomTabs                                                                                         | `List<Widget>?`                     | null                                              | Render your own list tabs (use default tab UI if not defined)                                       |
-| refFuncGoToTab                                                                                         | `void Function(Function function)?` | Do nothing                                        | Send the reference of change tab's function,<br/>then we can move to any tab index programmatically |
-| onTabChangeCompleted                                                                                   | `void Function(int index)?`         | Do nothing                                        | Callback when tab change comleted, return the current tab's index                                   |
-| backgroundColorAllSlides                                                                               | `Color?`                            | Transparent                                       | Background color for all slides (if backgroundColor on each slide not set)                          |
-| <b>Behavior</b>                                                                                        |                                     |                                                   |                                                                                                     |
-| scrollable                                                                                             | `bool?`                             | true                                              | If false, user only scroll by tap nav button                                                        |
-| autoScroll                                                                                             | `bool?`                             | false                                             | Enable auto scroll slides                                                                           |
-| loopAutoScroll                                                                                         | `bool?`                             | false                                             | Loop transition by go to first slide when reach the end                                             |
-| pauseAutoPlayOnTouch                                                                                   | `bool?`                             | true                                              | Auto scroll will be paused if user touch to slide                                                   |
-| autoScrollInterval                                                                                     | `Duration?`                         | 4 seconds                                         | Sets duration to determine the frequency of slides                                                  |
-| curveScroll                                                                                            | `Curve?`                            | Curves.ease                                       | Set transition animation curves.                                                                                                    |
-| scrollPhysics                                                                                          | `ScrollPhysics?`                    | ScrollPhysics()                                   | Determines the physics horizontal scroll for the slides                                             |
-| verticalScrollbarBehavior                                                                              | `enum ScrollbarBehavior?`           | ScrollbarBehavior.HIDE                            | Allow to specify how the vertical scrollbar should behave                                           |
-| hideStatusBar                                                                                          | `bool?`                             | false                                             | Show or hide the status bar                                                                         |
+| Name                      | Type                                | Default                                           | Description                                                                                                                 |
+| ------------------------- | ----------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| <b>Slide</b>              |                                     |                                                   |                                                                                                                             |
+| slides                    | `Slide`                             | No default, require if listCustomTabs not defined | An array of Slide object                                                                                                    |
+| <b>Skip Button</b>        |                                     |                                                   |                                                                                                                             |
+| renderSkipBtn             | `Widget?`                           | Button with white text SKIP                       | Render your own widget SKIP button                                                                                          |
+| skipButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for SKIP button                                                                                                       |
+| onSkipPress               | `void Function()?`                  | Go to last page                                   | Fire when press SKIP button                                                                                                 |
+| skipButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for SKIP button                                                                                                       |
+| showSkipBtn               | `bool?`                             | true                                              | Show or hide SKIP button                                                                                                    |
+| <b>Previous Button</b>    |                                     |                                                   |                                                                                                                             |
+| renderPrevBtn             | `Widget?`                           | Button with white text PREV                       | Render your own PREV button                                                                                                 |
+| prevButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for PREV button                                                                                                       |
+| showPrevBtn               | `bool?`                             | false                                             | Show or hide PREV, have to set showSkipBtn to false at first if you want to show this button                                |
+| <b>Done Button</b>        |                                     |                                                   |                                                                                                                             |
+| renderDoneBtn             | `Widget?`                           | Button with white text DONE                       | Render your own DONE button                                                                                                 |
+| doneButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for DONE button                                                                                                       |
+| onDonePress               | `void Function()?`                  | Do nothing                                        | Fire when press DONE button                                                                                                 |
+| showDoneBtn               | `bool?`                             | true                                              | Show or hide DONE button                                                                                                    |
+| <b>Next Button            |                                     |                                                   |                                                                                                                             |
+| renderNextBtn             | `Widget?`                           | Button with white text NEXT                       | Render your own NEXT button                                                                                                 |
+| nextButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for NEXT button                                                                                                       |
+| onNextPress               | `void Function()?`                  | Do nothing                                        | Fire when press NEXT button                                                                                                 |
+| showNextBtn               | `bool?`                             | true                                              | Show or hide NEXT button                                                                                                    |
+| <b>Nav position</b>       |                                     |                                                   |                                                                                                                             |
+| navPosition               | `IntroSliderNavPosition`            | IntroSliderNavPosition.bottom                     | Customize the position of indicators and skip/next/done buttons to the top or bottom of the screen                          |
+| <b>Indicator</b>          |                                     |                                                   |                                                                                                                             |
+| isShowIndicator           | `bool?`                             | true                                              | Show or hide indicator                                                                                                      |
+| colorIndicator            | `Color?`                            | Color(0x80000000)                                 | Color indicator when passive (ignore if using custom indicator)                                                             |
+| colorActiveIndicator      | `Color?`                            | Color(0xffffffff)                                 | Color indicator when active (ignore if using custom indicator)                                                              |
+| sizeIndicator             | `double?`                           | 8.0                                               | Size of each indicator                                                                                                      |
+| spaceBetweenIndicator     | `double?`                           | The same value of sizeIndicator                   | Space between every indicator (if using custom indicator, please set this value the same width value of your custom widget) |
+| typeIndicatorAnimation    | `enum TypeIndicatorAnimation?`      | TypeIndicatorAnimation.sliding                    | Type indicator animation                                                                                                    |
+| indicatorWidget           | `Widget?`                           | Default dot                                       | Your custom indicator widget                                                                                                |
+| activeIndicatorWidget     | `Widget?`                           | Default dot                                       | Your custom active indicator widget (ignore if using TypeIndicatorAnimation.sizeTransition)                                                                                        |
+| <b>Tabs</b>               |                                     |                                                   |                                                                                                                             |
+| listCustomTabs            | `List<Widget>?`                     | null                                              | Render your own list tabs (use default tab UI if not defined)                                                               |
+| refFuncGoToTab            | `void Function(Function function)?` | Do nothing                                        | Send the reference of change tab's function,<br/>then we can move to any tab index programmatically                         |
+| onTabChangeCompleted      | `void Function(int index)?`         | Do nothing                                        | Callback when tab change comleted, return the current tab's index                                                           |
+| backgroundColorAllSlides  | `Color?`                            | Transparent                                       | Background color for all slides (if backgroundColor on each slide not set)                                                  |
+| <b>Behavior</b>           |                                     |                                                   |                                                                                                                             |
+| scrollable                | `bool?`                             | true                                              | If false, user only scroll by tap nav button                                                                                |
+| autoScroll                | `bool?`                             | false                                             | Enable auto scroll slides                                                                                                   |
+| loopAutoScroll            | `bool?`                             | false                                             | Loop transition by go to first slide when reach the end                                                                     |
+| pauseAutoPlayOnTouch      | `bool?`                             | true                                              | Auto scroll will be paused if user touch to slide                                                                           |
+| autoScrollInterval        | `Duration?`                         | 4 seconds                                         | Sets duration to determine the frequency of slides                                                                          |
+| curveScroll               | `Curve?`                            | Curves.ease                                       | Set transition animation curves.                                                                                            |
+| scrollPhysics             | `ScrollPhysics?`                    | ScrollPhysics()                                   | Determines the physics horizontal scroll for the slides                                                                     |
+| verticalScrollbarBehavior | `enum ScrollbarBehavior?`           | ScrollbarBehavior.HIDE                            | Allow to specify how the vertical scrollbar should behave                                                                   |
+| hideStatusBar             | `bool?`                             | false                                             | Show or hide the status bar                                                                                                 |
 
 ## Pull request and feedback are always appreciated

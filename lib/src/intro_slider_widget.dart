@@ -1,7 +1,5 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intro_slider/intro_slider.dart';
@@ -90,6 +88,7 @@ class IntroSlider extends StatefulWidget {
   /// Size of each indicator
   final double? sizeIndicator;
 
+  /// Space between every indicator
   final double? spaceBetweenIndicator;
 
   /// Type indicator animation
@@ -769,15 +768,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     for (var i = 0; i < lengthSlide; i++) {
       double opacityCurrentIndicator = opacityIndicators[i];
       if (opacityCurrentIndicator >= 0 && opacityCurrentIndicator <= 1) {
-        indicators.add(renderIndicator(sizeIndicators[i], colorIndicator, opacityIndicators[i], i));
+        indicators.add(renderIndicators(sizeIndicators[i], colorIndicator, opacityIndicators[i], i));
       } else {
-        indicators.add(renderIndicator(sizeIndicators[i], colorIndicator, 1, i));
+        indicators.add(renderIndicators(sizeIndicators[i], colorIndicator, 1, i));
       }
     }
     return indicators;
   }
 
-  Widget renderIndicator(double size, Color? color, double opacity, int index) {
+  Widget renderIndicators(double size, Color? color, double opacity, int index) {
     double space = (spaceBetweenIndicator ?? size) / 2;
     return Container(
       margin: EdgeInsets.only(left: space, right: space),
@@ -787,9 +786,16 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         },
         child: Opacity(
           opacity: opacity,
-          child: indicatorWidget ?? renderDefaultDot(size, color),
+          child: indicatorWidget != null ? renderCustomIndicator(size) : renderDefaultDot(size, color),
         ),
       ),
+    );
+  }
+
+  Widget renderCustomIndicator(double size) {
+    return Transform.scale(
+      scale: size / sizeIndicator,
+      child: indicatorWidget,
     );
   }
 

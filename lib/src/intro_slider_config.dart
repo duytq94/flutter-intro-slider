@@ -2,7 +2,6 @@ enum TypeIndicatorAnimation { sizeTransition, sliding }
 
 enum ScrollbarBehavior { hide, show, alwaysShow }
 
-// Indicators & next/done/skip buttons position
 enum IntroSliderNavPosition { top, bottom }
 
 abstract class IntroSliderConfig {
