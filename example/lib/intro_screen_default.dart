@@ -11,35 +11,35 @@ class IntroScreenDefault extends StatefulWidget {
 }
 
 class IntroScreenDefaultState extends State<IntroScreenDefault> {
-  List<Slide> slides = [];
+  List<IntroSliderTab> tabs = [];
 
   @override
   void initState() {
     super.initState();
 
-    slides.add(
-      Slide(
+    tabs.add(
+      const IntroSliderTab(
         title: "ERASER",
         description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         pathImage: "images/photo_eraser.png",
-        backgroundColor: const Color(0xfff5a623),
+        backgroundColor: Color(0xfff5a623),
       ),
     );
-    slides.add(
-      Slide(
+    tabs.add(
+      const IntroSliderTab(
         title: "PENCIL",
         description: "Ye indulgence unreserved connection alteration appearance",
         pathImage: "images/photo_pencil.png",
-        backgroundColor: const Color(0xff203152),
+        backgroundColor: Color(0xff203152),
       ),
     );
-    slides.add(
-      Slide(
+    tabs.add(
+      const IntroSliderTab(
         title: "RULER",
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
         pathImage: "images/photo_ruler.png",
-        backgroundColor: const Color(0xff9932CC),
+        backgroundColor: Color(0xff9932CC),
       ),
     );
   }
@@ -52,7 +52,7 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
   Widget build(BuildContext context) {
     return IntroSlider(
       key: UniqueKey(),
-      slides: slides,
+      tabs: tabs,
       onDonePress: onDonePress,
     );
   }

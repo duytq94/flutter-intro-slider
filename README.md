@@ -10,8 +10,9 @@
   - [Default config](#default-config)
   - [Custom config](#custom-config)
   - [Custom tab](#custom-tab)
-- [Slide object properties](#slide-object-properties) - Modifying your tabs
-- [IntroSlider widget properties](#introslider-widget-properties) - Modifying entire slider
+- [IntroSlider parameter](#introslider-parameter) - Modifying frame slider (next, done btn, scroll behavior...)
+- [IntroSliderTab parameter](#introslidertab-parameter) - Modifying tabs (content show to user, e.g. title, image, description...)
+- [IndicatorConfig parameter](#indicatorconfig-parameter) - Modifying indicators (e.g. dot indicator)
 
 ## Installing
 
@@ -475,99 +476,112 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 
 </details>
 
-## Slide object properties
+## IntroSlider parameter
 
-| Name                    | Type                 | Default                                 | Description                                                                  |
-| ----------------------- | -------------------- | --------------------------------------- | ---------------------------------------------------------------------------- |
-| <b>Title</b>            |                      |                                         |                                                                              |
-| title                   | `String?`            | ""                                      | Change text title at top                                                     |
-| widgetTitle             | `Widget?`            | null                                    | Set a custom widget as the title (ignore `title` if define both)             |
-| maxLineTitle            | `int?`               | 1                                       | Change max number of lines title at top                                      |
-| styleTitle              | `TextStyle?`         | White color, bold and font size is 30.0 | Style for text title                                                         |
-| textAlignTitle          | `TextAlign?`         | TextAlign.center                        | TextAlign for text title                                                     |
-| textOverFlowTitle       | `TextOverflow?`      | TextOverflow.ellipsis                   | TextOverflow for text title                                                  |
-| marginTitle             | `EdgeInsets?`        | top: 70.0, bottom: 50.0                 | Margin for text title                                                        |
-| <b>Image</b>            |                      |                                         |                                                                              |
-| pathImage               | `String?`            | ""                                      | Path to your local image                                                     |
-| widthImage              | `double?`            | 250.0                                   | Width of image                                                               |
-| heightImage             | `double?`            | 250.0                                   | Height of image                                                              |
-| foregroundImageFit      | `BoxFit?`            | BoxFit.contain                          | Foreground image fit                                                         |
-| <b>Center widget</b>    |                      |                                         |                                                                              |
-| centerWidget            | `Widget?`            | null                                    | Your custom's widget                                                         |
-| onCenterItemPress       | `Function()?`        | Do nothing                              | Fire when press center image/widget                                          |
-| <b>Description</b>      |                      |                                         |                                                                              |
-| description             | `String?`            | ""                                      | Change text description at bottom                                            |
-| widgetDescription       | `Widget?`            | null                                    | Set a custom widget as the description (ignore `description` if define both) |
-| maxLineTextDescription  | `int?`               | 100                                     | Maximum line of text description                                             |
-| styleDescription        | `TextStyle?`         | White and font size is 18.0             | Style for text description                                                   |
-| textAlignDescription    | `TextAlign?`         | TextAlign.center                        | TextAlign for text description                                               |
-| textOverFlowDescription | `TextOverflow?`      | TextOverflow.ellipsis                   | TextOverflow for text description                                            |
-| marginDescription       | `EdgeInsets?`        | left, right = 20.0, top, bottom = 50.0  | Margin for text description                                                  |
-| <b>Background Color</b> |                      |                                         |                                                                              |
-| backgroundColor         | `Color?`             | Colors.amberAccent                      | Background tab color (if set, will ignore gradient properties below)         |
-| colorBegin              | `Color?`             | Colors.amberAccent                      | Gradient tab color begin                                                     |
-| colorEnd                | `Color?`             | Colors.amberAccent                      | Gradient tab color end                                                       |
-| directionColorBegin     | `AlignmentGeometry?` | Alignment.topLeft                       | Direction color begin                                                        |
-| directionColorEnd       | `AlignmentGeometry?` | Alignment.bottomRight                   | Direction color end                                                          |
-| <b>Background Image</b> |                      |                                         |                                                                              |
-| backgroundImage         | `String?`            | null                                    | Background tab image                                                         |
-| backgroundNetworkImage  | `String?`            | null                                    | Background tab image (from network)                                          |
-| backgroundImageFit      | `BoxFit?`            | BoxFit.cover                            | Background tab image fit                                                     |
-| backgroundOpacity       | `double?`            | 0.5                                     | Background tab image filter opacity                                          |
-| backgroundOpacityColor  | `Color?`             | Colors.black                            | Background tab image filter color                                            |
-| backgroundBlendMode     | `BlendMode?`         | BlendMode.darken                        | Background tab image filter blend mode                                       |
+| Name                   | Type                                | Default                                      | Description                                                                                        |
+| ---------------------- | ----------------------------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| <b>Tab</b>             |                                     |                                              |                                                                                                    |
+| tabs                   | `List<IntroSliderTab>?`             | [View details](#introslidertab-parameter)    | An array of IntroSliderTab widget, require if *listCustomTabs* not defined                         |
+| listCustomTabs         | `List<Widget>?`                     | Require if *tabs* not defined                | Render your own widget list tabs (meaning you can put your custom widget to in the prebuilt frame) |
+| refFuncGoToTab         | `void Function(Function function)?` | Do nothing                                   | Send the reference of change tab's function, then we can move to any tab index programmatically    |
+| onTabChangeCompleted   | `void Function(int index)?`         | Do nothing                                   | Callback when tab change comleted, return the current tab's index                                  |
+| backgroundColorAllTabs | `Color?`                            | Transparent                                  | Background color for all tabs (if backgroundColor on each tab not set)                             |
+| <b>Skip Button</b>     |                                     |                                              |                                                                                                    |
+| renderSkipBtn          | `Widget?`                           | Button with white text SKIP                  | Render your own widget SKIP button                                                                 |
+| skipButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                | Style for SKIP button                                                                              |
+| onSkipPress            | `void Function()?`                  | Go to last page                              | Fire when press SKIP button                                                                        |
+| showSkipBtn            | `bool?`                             | true                                         | Show or hide SKIP button                                                                           |
+| skipButtonKey          | `Key?`                              |                                              | Assign key to SKIP button                                                                          |
+| <b>Previous Button</b> |                                     |                                              |                                                                                                    |
+| renderPrevBtn          | `Widget?`                           | Button with white text PREV                  | Render your own PREV button                                                                        |
+| prevButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                | Style for PREV button                                                                              |
+| showPrevBtn            | `bool?`                             | false                                        | Show or hide PREV, have to set showSkipBtn to false at first if you want to show this button       |
+| prevButtonKey          | `Key?`                              |                                              | Assign key to PREV button                                                                          |
+| <b>Done Button</b>     |                                     |                                              |                                                                                                    |
+| renderDoneBtn          | `Widget?`                           | Button with white text DONE                  | Render your own DONE button                                                                        |
+| doneButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                | Style for DONE button                                                                              |
+| onDonePress            | `void Function()?`                  | Do nothing                                   | Fire when press DONE button                                                                        |
+| showDoneBtn            | `bool?`                             | true                                         | Show or hide DONE button                                                                           |
+| doneButtonKey          | `Key?`                              |                                              | Assign key to NEXT button                                                                          |
+| <b>Next Button</b>     |                                     |                                              |                                                                                                    |
+| renderNextBtn          | `Widget?`                           | Button with white text NEXT                  | Render your own NEXT button                                                                        |
+| nextButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                | Style for NEXT button                                                                              |
+| onNextPress            | `void Function()?`                  | Do nothing                                   | Fire when press NEXT button                                                                        |
+| showNextBtn            | `bool?`                             | true                                         | Show or hide NEXT button                                                                           |
+| nextButtonKey          | `Key?`                              |                                              | Assign key to NEXT button                                                                          |
+| <b>Indicator</b>       |                                     |                                              |                                                                                                    |
+| indicatorConfig        | `IndicatorConfig?`                  | [View details](#indicatorconfig-parameter)   |
+| <b>Scroll behavior</b> |                                     |                                              |                                                                                                    |
+| scrollable             | `bool?`                             | true                                         | If false, user only scroll by tap nav button                                                       |
+| autoScroll             | `bool?`                             | false                                        | Enable auto scroll slides                                                                          |
+| loopAutoScroll         | `bool?`                             | false                                        | Loop transition by go to first slide when reach the end                                            |
+| pauseAutoPlayOnTouch   | `bool?`                             | true                                         | Auto scroll will be paused if user touch to slide                                                  |
+| autoScrollInterval     | `Duration?`                         | 4 seconds                                    | Sets duration to determine the frequency of slides                                                 |
+| curveScroll            | `Curve?`                            | Curves.ease                                  | Set transition animation curves.                                                                   |
+| scrollPhysics          | `ScrollPhysics?`                    | ScrollPhysics()                              | Determines the physics horizontal scroll for the slides                                            |
+| <b>Others</b>          |                                     |                                              |                                                                                                    |
+| hideStatusBar          | `bool?`                             | false                                        | Show or hide the status bar                                                                        |
+| navPosition            | `NavPosition?`                      | NavPosition.bottom                           | Customize the position of navigation bar to the top or bottom of the screen                        |
+| navMargin              | `double?`                           | Max (MediaQuery.of(context).viewPadding, 10) | Distance of navigation bar from edge screen (top or bottom)                                        |
+| key                    | `Key?`                              |                                              | Assign key to IntroSlider widget                                                                   |
 
-## IntroSlider widget properties
+## IntroSliderTab parameter
 
-| Name                      | Type                                | Default                                           | Description                                                                                                                 |
-| ------------------------- | ----------------------------------- | ------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| <b>Slide</b>              |                                     |                                                   |                                                                                                                             |
-| slides                    | `Slide`                             | No default, require if listCustomTabs not defined | An array of Slide object                                                                                                    |
-| <b>Skip Button</b>        |                                     |                                                   |                                                                                                                             |
-| renderSkipBtn             | `Widget?`                           | Button with white text SKIP                       | Render your own widget SKIP button                                                                                          |
-| skipButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for SKIP button                                                                                                       |
-| onSkipPress               | `void Function()?`                  | Go to last page                                   | Fire when press SKIP button                                                                                                 |
-| skipButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for SKIP button                                                                                                       |
-| showSkipBtn               | `bool?`                             | true                                              | Show or hide SKIP button                                                                                                    |
-| <b>Previous Button</b>    |                                     |                                                   |                                                                                                                             |
-| renderPrevBtn             | `Widget?`                           | Button with white text PREV                       | Render your own PREV button                                                                                                 |
-| prevButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for PREV button                                                                                                       |
-| showPrevBtn               | `bool?`                             | false                                             | Show or hide PREV, have to set showSkipBtn to false at first if you want to show this button                                |
-| <b>Done Button</b>        |                                     |                                                   |                                                                                                                             |
-| renderDoneBtn             | `Widget?`                           | Button with white text DONE                       | Render your own DONE button                                                                                                 |
-| doneButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for DONE button                                                                                                       |
-| onDonePress               | `void Function()?`                  | Do nothing                                        | Fire when press DONE button                                                                                                 |
-| showDoneBtn               | `bool?`                             | true                                              | Show or hide DONE button                                                                                                    |
-| <b>Next Button            |                                     |                                                   |                                                                                                                             |
-| renderNextBtn             | `Widget?`                           | Button with white text NEXT                       | Render your own NEXT button                                                                                                 |
-| nextButtonStyle           | `ButtonStyle?`                      | ButtonStyle()                                     | Style for NEXT button                                                                                                       |
-| onNextPress               | `void Function()?`                  | Do nothing                                        | Fire when press NEXT button                                                                                                 |
-| showNextBtn               | `bool?`                             | true                                              | Show or hide NEXT button                                                                                                    |
-| <b>Nav position</b>       |                                     |                                                   |                                                                                                                             |
-| navPosition               | `IntroSliderNavPosition`            | IntroSliderNavPosition.bottom                     | Customize the position of indicators and skip/next/done buttons to the top or bottom of the screen                          |
-| <b>Indicator</b>          |                                     |                                                   |                                                                                                                             |
-| isShowIndicator           | `bool?`                             | true                                              | Show or hide indicator                                                                                                      |
-| colorIndicator            | `Color?`                            | Color(0x80000000)                                 | Color indicator when passive (ignore if using custom indicator)                                                             |
-| colorActiveIndicator      | `Color?`                            | Color(0xffffffff)                                 | Color indicator when active (ignore if using custom indicator)                                                              |
-| sizeIndicator             | `double?`                           | 8.0                                               | Size of each indicator                                                                                                      |
-| spaceBetweenIndicator     | `double?`                           | The same value of sizeIndicator                   | Space between every indicator (if using custom indicator, please set this value the same width value of your custom widget) |
-| typeIndicatorAnimation    | `enum TypeIndicatorAnimation?`      | TypeIndicatorAnimation.sliding                    | Type indicator animation                                                                                                    |
-| indicatorWidget           | `Widget?`                           | Default dot                                       | Your custom indicator widget                                                                                                |
-| activeIndicatorWidget     | `Widget?`                           | Default dot                                       | Your custom active indicator widget (ignore if using TypeIndicatorAnimation.sizeTransition)                                                                                        |
-| <b>Tabs</b>               |                                     |                                                   |                                                                                                                             |
-| listCustomTabs            | `List<Widget>?`                     | null                                              | Render your own list tabs (use default tab UI if not defined)                                                               |
-| refFuncGoToTab            | `void Function(Function function)?` | Do nothing                                        | Send the reference of change tab's function,<br/>then we can move to any tab index programmatically                         |
-| onTabChangeCompleted      | `void Function(int index)?`         | Do nothing                                        | Callback when tab change comleted, return the current tab's index                                                           |
-| backgroundColorAllSlides  | `Color?`                            | Transparent                                       | Background color for all slides (if backgroundColor on each slide not set)                                                  |
-| <b>Behavior</b>           |                                     |                                                   |                                                                                                                             |
-| scrollable                | `bool?`                             | true                                              | If false, user only scroll by tap nav button                                                                                |
-| autoScroll                | `bool?`                             | false                                             | Enable auto scroll slides                                                                                                   |
-| loopAutoScroll            | `bool?`                             | false                                             | Loop transition by go to first slide when reach the end                                                                     |
-| pauseAutoPlayOnTouch      | `bool?`                             | true                                              | Auto scroll will be paused if user touch to slide                                                                           |
-| autoScrollInterval        | `Duration?`                         | 4 seconds                                         | Sets duration to determine the frequency of slides                                                                          |
-| curveScroll               | `Curve?`                            | Curves.ease                                       | Set transition animation curves.                                                                                            |
-| scrollPhysics             | `ScrollPhysics?`                    | ScrollPhysics()                                   | Determines the physics horizontal scroll for the slides                                                                     |
-| verticalScrollbarBehavior | `enum ScrollbarBehavior?`           | ScrollbarBehavior.HIDE                            | Allow to specify how the vertical scrollbar should behave                                                                   |
-| hideStatusBar             | `bool?`                             | false                                             | Show or hide the status bar                                                                                                 |
+| Name                      | Type                      | Default                                 | Description                                                                                                                      |
+| ------------------------- | ------------------------- | --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| <b>Title</b>              |                           |                                         |                                                                                                                                  |
+| title                     | `String?`                 | ""                                      | Change text title at top                                                                                                         |
+| widgetTitle               | `Widget?`                 | null                                    | Set a custom widget as the title (ignore `title` if define both)                                                                 |
+| maxLineTitle              | `int?`                    | 1                                       | Change max number of lines title at top                                                                                          |
+| styleTitle                | `TextStyle?`              | White color, bold and font size is 30.0 | Style for text title                                                                                                             |
+| textAlignTitle            | `TextAlign?`              | TextAlign.center                        | TextAlign for text title                                                                                                         |
+| textOverFlowTitle         | `TextOverflow?`           | TextOverflow.ellipsis                   | TextOverflow for text title                                                                                                      |
+| marginTitle               | `EdgeInsets?`             | top: 70.0, bottom: 50.0                 | Margin for text title                                                                                                            |
+| <b>Image</b>              |                           |                                         |                                                                                                                                  |
+| pathImage                 | `String?`                 | ""                                      | Path to your local image                                                                                                         |
+| widthImage                | `double?`                 | 250.0                                   | Width of image                                                                                                                   |
+| heightImage               | `double?`                 | 250.0                                   | Height of image                                                                                                                  |
+| foregroundImageFit        | `BoxFit?`                 | BoxFit.contain                          | Foreground image fit                                                                                                             |
+| <b>Center widget</b>      |                           |                                         |                                                                                                                                  |
+| centerWidget              | `Widget?`                 | null                                    | Your custom's widget                                                                                                             |
+| onCenterItemPress         | `Function()?`             | Do nothing                              | Fire when press center image/widget                                                                                              |
+| <b>Description</b>        |                           |                                         |                                                                                                                                  |
+| description               | `String?`                 | ""                                      | Change text description at bottom                                                                                                |
+| widgetDescription         | `Widget?`                 | null                                    | Set a custom widget as the description (ignore `description` if define both)                                                     |
+| maxLineTextDescription    | `int?`                    | 100                                     | Maximum line of text description                                                                                                 |
+| styleDescription          | `TextStyle?`              | White and font size is 18.0             | Style for text description                                                                                                       |
+| textAlignDescription      | `TextAlign?`              | TextAlign.center                        | TextAlign for text description                                                                                                   |
+| textOverFlowDescription   | `TextOverflow?`           | TextOverflow.ellipsis                   | TextOverflow for text description                                                                                                |
+| marginDescription         | `EdgeInsets?`             | left, right = 20.0, top, bottom = 50.0  | Margin for text description                                                                                                      |
+| <b>Background Color</b>   |                           |                                         |                                                                                                                                  |
+| backgroundColor           | `Color?`                  | Colors.amberAccent                      | Background tab color (if set, will ignore gradient properties below)                                                             |
+| colorBegin                | `Color?`                  | Colors.amberAccent                      | Gradient tab color begin                                                                                                         |
+| colorEnd                  | `Color?`                  | Colors.amberAccent                      | Gradient tab color end                                                                                                           |
+| directionColorBegin       | `AlignmentGeometry?`      | Alignment.topLeft                       | Direction color begin                                                                                                            |
+| directionColorEnd         | `AlignmentGeometry?`      | Alignment.bottomRight                   | Direction color end                                                                                                              |
+| <b>Background Image</b>   |                           |                                         |                                                                                                                                  |
+| backgroundImage           | `String?`                 | null                                    | Background tab image                                                                                                             |
+| backgroundNetworkImage    | `String?`                 | null                                    | Background tab image (from network)                                                                                              |
+| backgroundImageFit        | `BoxFit?`                 | BoxFit.cover                            | Background tab image fit                                                                                                         |
+| backgroundOpacity         | `double?`                 | 0.5                                     | Background tab image filter opacity                                                                                              |
+| backgroundOpacityColor    | `Color?`                  | Colors.black                            | Background tab image filter color                                                                                                |
+| backgroundBlendMode       | `BlendMode?`              | BlendMode.darken                        | Background tab image filter blend mode                                                                                           |
+| <b>Others</b>             |                           |                                         |                                                                                                                                  |
+| verticalScrollbarBehavior | `enum ScrollbarBehavior?` | ScrollbarBehavior.HIDE                  | Allow to specify how the vertical scrollbar should behave <br>(scroll enable when content length is greater than screen length ) |
+| navPosition               | `NavPosition?`            | NavPosition.bottom                      | This should be the same navPosition value at *IntroSlider* (so I can set right padding content)                                  |
+| navMargin                 | `double?`                 | 60                                      | This should be sum of navMargin value at *IntroSlider* & navigation bar height                                                   |
+| key                       | `Key?`                    |                                         | Assign key to IntroSliderTab widget                                                                                              |
+
+## IndicatorConfig parameter
+| Name                   | Type                           | Default                         | Description                                                                                                                 |
+| ---------------------- | ------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| isShowIndicator        | `bool?`                        | true                            | Show or hide indicator                                                                                                      |
+| colorIndicator         | `Color?`                       | Color(0x80000000)               | Color indicator when passive, note: ignore if using custom indicator                                                        |
+| colorActiveIndicator   | `Color?`                       | Color(0xffffffff)               | Color indicator when active (focusing), note: ignore if using custom indicator or TypeIndicatorAnimation.sizeTransition     |
+| sizeIndicator          | `double?`                      | 8.0                             | Size of each indicator                                                                                                      |
+| spaceBetweenIndicator  | `double?`                      | The same value of sizeIndicator | Space between every indicator (if using custom indicator, please set this value the same width value of your custom widget) |
+| typeIndicatorAnimation | `enum TypeIndicatorAnimation?` | TypeIndicatorAnimation.sliding  | Type indicator animation                                                                                                    |
+| indicatorWidget        | `Widget?`                      | Default dot                     | Your custom indicator widget                                                                                                |
+| activeIndicatorWidget  | `Widget?`                      | Default dot                     | Your custom active (focusing) indicator widget, note: ignore if using TypeIndicatorAnimation.sizeTransition                 |
 
 ## Pull request and feedback are always appreciated

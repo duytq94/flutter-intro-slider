@@ -7,9 +7,9 @@ import 'package:intro_slider/intro_slider.dart';
 class IntroSliderTab extends StatelessWidget {
   const IntroSliderTab({
     super.key,
-    required this.scrollController,
-    required this.navPosition,
-    required this.verticalScrollbarBehavior,
+    this.navPosition,
+    this.navMargin,
+    this.verticalScrollbarBehavior,
 
     // Title
     this.widgetTitle,
@@ -20,15 +20,6 @@ class IntroSliderTab extends StatelessWidget {
     this.textOverFlowTitle,
     this.marginTitle,
 
-    // Description
-    this.widgetDescription,
-    this.description,
-    this.maxLineTextDescription,
-    this.styleDescription,
-    this.textAlignDescription,
-    this.textOverFlowDescription,
-    this.marginDescription,
-
     // Image
     this.pathImage,
     this.widthImage,
@@ -38,6 +29,15 @@ class IntroSliderTab extends StatelessWidget {
     // Center Widget
     this.centerWidget,
     this.onCenterItemPress,
+
+    // Description
+    this.widgetDescription,
+    this.description,
+    this.maxLineTextDescription,
+    this.styleDescription,
+    this.textAlignDescription,
+    this.textOverFlowDescription,
+    this.marginDescription,
 
     // Background color
     this.backgroundColor,
@@ -55,9 +55,9 @@ class IntroSliderTab extends StatelessWidget {
     this.backgroundBlendMode,
   });
 
-  final ScrollController scrollController;
-  final IntroSliderNavPosition navPosition;
-  final ScrollbarBehavior verticalScrollbarBehavior;
+  final NavPosition? navPosition;
+  final ScrollbarBehavior? verticalScrollbarBehavior;
+  final double? navMargin;
 
   // Title
   final Widget? widgetTitle;
@@ -105,7 +105,6 @@ class IntroSliderTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final listView = ListView(
-      controller: scrollController,
       children: <Widget>[
         Container(
           // Title
@@ -183,18 +182,16 @@ class IntroSliderTab extends StatelessWidget {
             )),
       child: Container(
         margin: EdgeInsets.only(
-          top: navPosition == IntroSliderNavPosition.top ? 60 : 0,
-          bottom: navPosition == IntroSliderNavPosition.bottom ? 60 : 0,
+          top: navPosition == NavPosition.top ? navMargin ?? 60 : 0,
+          bottom: navPosition == NavPosition.bottom ? navMargin ?? 60 : 0,
         ),
         child: verticalScrollbarBehavior != ScrollbarBehavior.hide
             ? Platform.isIOS
                 ? CupertinoScrollbar(
-                    controller: scrollController,
                     thumbVisibility: verticalScrollbarBehavior == ScrollbarBehavior.alwaysShow,
                     child: listView,
                   )
                 : Scrollbar(
-                    controller: scrollController,
                     thumbVisibility: verticalScrollbarBehavior == ScrollbarBehavior.alwaysShow,
                     child: listView,
                   )

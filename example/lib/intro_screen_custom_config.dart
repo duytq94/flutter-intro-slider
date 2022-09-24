@@ -12,7 +12,7 @@ class IntroScreenCustomConfig extends StatefulWidget {
 
 // ------------------ Custom config ------------------
 class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
-  List<Slide> slides = [];
+  List<IntroSliderTab> tabs = [];
   Color activeColor = const Color(0xff0BEEF9);
   Color inactiveColor = const Color(0xff03838b);
   double sizeIndicator = 20;
@@ -21,8 +21,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   void initState() {
     super.initState();
 
-    slides.add(
-      Slide(
+    tabs.add(
+      IntroSliderTab(
         title:
             "A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE",
         maxLineTitle: 2,
@@ -52,34 +52,37 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         ),
         backgroundNetworkImage: "https://picsum.photos/600/900",
         onCenterItemPress: () {},
+        navPosition: NavPosition.top,
+        navMargin: 80,
       ),
     );
-    slides.add(
-      Slide(
+    tabs.add(
+      const IntroSliderTab(
         title: "CITY",
-        styleTitle: const TextStyle(
+        styleTitle: TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
           fontFamily: 'RobotoMono',
         ),
         description: "Ye indulgence unreserved connection alteration appearance",
-        styleDescription: const TextStyle(
+        styleDescription: TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 20.0,
           fontStyle: FontStyle.italic,
           fontFamily: 'Raleway',
         ),
-        colorBegin: const Color(0xff89D4CF),
-        colorEnd: const Color(0xff734AE8),
+        colorBegin: Color(0xff89D4CF),
+        colorEnd: Color(0xff734AE8),
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
+        navPosition: NavPosition.top,
       ),
     );
-    slides.add(
-      Slide(
+    tabs.add(
+      const IntroSliderTab(
         title: "BEACH",
-        styleTitle: const TextStyle(
+        styleTitle: TextStyle(
           color: Color(0xffFFDAB9),
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
@@ -87,7 +90,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         ),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription: const TextStyle(
+        styleDescription: TextStyle(
           color: Color(0xffFFDAB9),
           fontSize: 20.0,
           fontStyle: FontStyle.italic,
@@ -95,6 +98,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         ),
         backgroundImage: "images/beach.jpeg",
         maxLineTextDescription: 3,
+        navPosition: NavPosition.top,
       ),
     );
   }
@@ -140,8 +144,9 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   Widget build(BuildContext context) {
     return IntroSlider(
       key: UniqueKey(),
-      // List slides
-      slides: slides,
+      // List tab
+      tabs: tabs,
+      backgroundColorAllTabs: Colors.grey,
 
       // Skip button
       renderSkipBtn: renderSkipBtn(),
@@ -158,27 +163,31 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       doneButtonStyle: myButtonStyle(),
 
       // Indicator
-      sizeIndicator: sizeIndicator,
-      indicatorWidget: Container(
-        width: sizeIndicator,
-        height: 10,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: inactiveColor),
+      indicatorConfig: IndicatorConfig(
+        sizeIndicator: sizeIndicator,
+        indicatorWidget: Container(
+          width: sizeIndicator,
+          height: 10,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: inactiveColor),
+        ),
+        activeIndicatorWidget: Container(
+          width: sizeIndicator,
+          height: 10,
+          decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: activeColor),
+        ),
+        spaceBetweenIndicator: 10,
+        typeIndicatorAnimation: TypeIndicatorAnimation.sliding,
       ),
-      activeIndicatorWidget: Container(
-        width: sizeIndicator,
-        height: 10,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: activeColor),
-      ),
-      spaceBetweenIndicator: 10,
 
-      // Behavior
-      hideStatusBar: true,
-      backgroundColorAllSlides: Colors.grey,
-      verticalScrollbarBehavior: ScrollbarBehavior.alwaysShow,
-      typeIndicatorAnimation: TypeIndicatorAnimation.sliding,
-      autoScroll: true,
+      // Scroll behavior
+      // autoScroll: true,
       loopAutoScroll: true,
       curveScroll: Curves.bounceIn,
+
+      // Others
+      hideStatusBar: true,
+      navPosition: NavPosition.top,
+      navMargin: 20,
     );
   }
 }

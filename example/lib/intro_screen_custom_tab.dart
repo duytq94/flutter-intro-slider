@@ -12,82 +12,13 @@ class IntroScreenCustomTab extends StatefulWidget {
 
 // ------------------ Customize your own tabs ------------------
 class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
-  List<Slide> slides = [];
-
   late Function goToTab;
 
-  @override
-  void initState() {
-    super.initState();
-
-    slides.add(
-      Slide(
-        title: "SCHOOL",
-        styleTitle: const TextStyle(
-          color: Color(0xff3da4ab),
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'RobotoMono',
-        ),
-        description:
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa.",
-        styleDescription: const TextStyle(
-          color: Color(0xfffe9c8f),
-          fontSize: 20.0,
-          fontStyle: FontStyle.italic,
-          fontFamily: 'Raleway',
-        ),
-        pathImage: "images/photo_school.png",
-      ),
-    );
-    slides.add(
-      Slide(
-        title: "MUSEUM",
-        styleTitle: const TextStyle(
-          color: Color(0xff3da4ab),
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'RobotoMono',
-        ),
-        description: "Ye indulgence unreserved connection alteration appearance",
-        styleDescription: const TextStyle(
-          color: Color(0xfffe9c8f),
-          fontSize: 20.0,
-          fontStyle: FontStyle.italic,
-          fontFamily: 'Raleway',
-        ),
-        pathImage: "images/photo_museum.png",
-      ),
-    );
-    slides.add(
-      Slide(
-        title: "COFFEE SHOP",
-        styleTitle: const TextStyle(
-          color: Color(0xff3da4ab),
-          fontSize: 30.0,
-          fontWeight: FontWeight.bold,
-          fontFamily: 'RobotoMono',
-        ),
-        description:
-            "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription: const TextStyle(
-          color: Color(0xfffe9c8f),
-          fontSize: 20.0,
-          fontStyle: FontStyle.italic,
-          fontFamily: 'Raleway',
-        ),
-        pathImage: "images/photo_coffee_shop.png",
-      ),
-    );
-  }
-
   void onDonePress() {
-    // Back to the first tab
     goToTab(0);
   }
 
   void onTabChangeCompleted(index) {
-    // Index of current tab is focused
     log("onTabChangeCompleted, index: $index");
   }
 
@@ -121,9 +52,9 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
     );
   }
 
-  List<Widget> renderListCustomTabs() {
+  List<Widget> generateListCustomTabs() {
     return List.generate(
-      slides.length,
+      3,
       (index) => SizedBox(
         width: double.infinity,
         height: double.infinity,
@@ -131,30 +62,37 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
           margin: const EdgeInsets.only(bottom: 60.0, top: 60.0),
           child: ListView(
             children: <Widget>[
-              GestureDetector(
-                child: Image.asset(
-                  slides[index].pathImage!,
-                  width: 200.0,
-                  height: 200.0,
-                  fit: BoxFit.contain,
-                ),
+              Image.network(
+                "https://picsum.photos/300",
+                width: 300.0,
+                height: 300.0,
               ),
               Container(
-                margin: const EdgeInsets.only(top: 20.0),
+                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                 child: Text(
-                  slides[index].title!,
-                  style: slides[index].styleTitle,
+                  "Title $index",
                   textAlign: TextAlign.center,
+                  style: const TextStyle(
+                    color: Color(0xff3da4ab),
+                    fontSize: 30.0,
+                    fontWeight: FontWeight.bold,
+                    fontFamily: 'RobotoMono',
+                  ),
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 20.0),
+                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
                 child: Text(
-                  slides[index].description ?? '',
-                  style: slides[index].styleDescription,
+                  "Description $index Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
                   textAlign: TextAlign.center,
                   maxLines: 5,
                   overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    color: Color(0xfffe9c8f),
+                    fontSize: 20.0,
+                    fontStyle: FontStyle.italic,
+                    fontFamily: 'Raleway',
+                  ),
                 ),
               ),
             ],
@@ -182,13 +120,15 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
       doneButtonStyle: myButtonStyle(),
 
       // Indicator
-      colorIndicator: const Color(0xffffcc5c),
-      sizeIndicator: 13.0,
-      typeIndicatorAnimation: TypeIndicatorAnimation.sizeTransition,
+      indicatorConfig: const IndicatorConfig(
+        colorIndicator: Color(0xffffcc5c),
+        sizeIndicator: 13.0,
+        typeIndicatorAnimation: TypeIndicatorAnimation.sizeTransition,
+      ),
 
-      // Tabs
-      listCustomTabs: renderListCustomTabs(),
-      backgroundColorAllSlides: Colors.white,
+      // Custom tabs
+      listCustomTabs: generateListCustomTabs(),
+      backgroundColorAllTabs: Colors.white,
       refFuncGoToTab: (refFunc) {
         goToTab = refFunc;
       },
