@@ -1,3 +1,9 @@
+## 4.0.0
+* Restructure some parameter to make clearer
+* Customizable indicator
+* Customizable position navigation bar
+* Optimize code flow
+
 ## 3.0.10
 * Fix disable auto scroll not working
 * Fix can not set text color navigate buttons

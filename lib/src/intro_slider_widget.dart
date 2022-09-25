@@ -162,7 +162,8 @@ class IntroSlider extends StatefulWidget {
     // Others
     this.hideStatusBar,
   }) : assert(
-          (listContentConfig?.length ?? 0) > 0 || (listCustomTabs?.length ?? 0) > 0,
+          (listContentConfig?.length ?? 0) > 0 ||
+              (listCustomTabs?.length ?? 0) > 0,
           "You must define at least listContentConfig or listCustomTabs",
         );
 
@@ -170,7 +171,8 @@ class IntroSlider extends StatefulWidget {
   IntroSliderState createState() => IntroSliderState();
 }
 
-class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider>
+    with SingleTickerProviderStateMixin {
   // ---------- Tabs ----------
   List<Widget>? listCustomTabs;
   Function? onTabChangeCompleted;
@@ -251,11 +253,13 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     doneButtonKey = widget.doneButtonKey;
     nextButtonKey = widget.nextButtonKey;
 
-    lengthSlide = widget.listContentConfig?.length ?? widget.listCustomTabs?.length ?? 0;
+    lengthSlide =
+        widget.listContentConfig?.length ?? widget.listCustomTabs?.length ?? 0;
     autoScroll = widget.autoScroll ?? false;
     loopAutoScroll = widget.loopAutoScroll ?? false;
     pauseAutoPlayOnTouch = widget.pauseAutoPlayOnTouch ?? true;
-    autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
+    autoScrollInterval =
+        widget.autoScrollInterval ?? const Duration(seconds: 4);
     curveScroll = widget.curveScroll ?? Curves.ease;
 
     onTabChangeCompleted = widget.onTabChangeCompleted;
@@ -279,11 +283,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
     // Indicator
     isShowIndicator = widget.indicatorConfig?.isShowIndicator ?? true;
-    colorIndicator = widget.indicatorConfig?.colorIndicator ?? const Color(0x80000000);
-    colorActiveIndicator = widget.indicatorConfig?.colorActiveIndicator ?? colorIndicator;
+    colorIndicator =
+        widget.indicatorConfig?.colorIndicator ?? const Color(0x80000000);
+    colorActiveIndicator =
+        widget.indicatorConfig?.colorActiveIndicator ?? colorIndicator;
     sizeIndicator = widget.indicatorConfig?.sizeIndicator ?? 8;
-    spaceBetweenIndicator = widget.indicatorConfig?.spaceBetweenIndicator ?? sizeIndicator;
-    typeIndicatorAnimation = widget.indicatorConfig?.typeIndicatorAnimation ?? TypeIndicatorAnimation.sliding;
+    spaceBetweenIndicator =
+        widget.indicatorConfig?.spaceBetweenIndicator ?? sizeIndicator;
+    typeIndicatorAnimation = widget.indicatorConfig?.typeIndicatorAnimation ??
+        TypeIndicatorAnimation.sliding;
     indicatorWidget = widget.indicatorConfig?.indicatorWidget;
     activeIndicatorWidget = widget.indicatorConfig?.activeIndicatorWidget;
 
@@ -295,7 +303,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       navigationBarConfig = NavigationBarConfig();
     }
 
-    double initValueMarginRight = (sizeIndicator + spaceBetweenIndicator) * (lengthSlide - 1);
+    double initValueMarginRight =
+        (sizeIndicator + spaceBetweenIndicator) * (lengthSlide - 1);
 
     switch (typeIndicatorAnimation) {
       case TypeIndicatorAnimation.sliding:
@@ -326,40 +335,54 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             double spaceAvg = (sizeIndicator + spaceBetweenIndicator) / 2;
 
             marginLeftIndicatorFocused = animationValue * spaceAvg * 2;
-            marginRightIndicatorFocused = initValueMarginRight - (animationValue * spaceAvg * 2);
+            marginRightIndicatorFocused =
+                initValueMarginRight - (animationValue * spaceAvg * 2);
             break;
           case TypeIndicatorAnimation.sizeTransition:
             if (animationValue == currentAnimationValue) {
               break;
             }
 
-            var diffValueAnimation = (animationValue - currentAnimationValue).abs();
-            final diffValueIndex = (currentTabIndex - tabController.index).abs();
+            var diffValueAnimation =
+                (animationValue - currentAnimationValue).abs();
+            final diffValueIndex =
+                (currentTabIndex - tabController.index).abs();
 
             // When press skip button
-            if (tabController.indexIsChanging && (tabController.index - tabController.previousIndex).abs() > 1) {
+            if (tabController.indexIsChanging &&
+                (tabController.index - tabController.previousIndex).abs() > 1) {
               if (diffValueAnimation < 1) {
                 diffValueAnimation = 1;
               }
-              sizeIndicators[currentTabIndex] =
-                  sizeIndicator * 1.5 - (sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-              sizeIndicators[tabController.index] =
-                  sizeIndicator + (sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-              opacityIndicators[currentTabIndex] = 1 - (diffValueAnimation / diffValueIndex) / 2;
-              opacityIndicators[tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
+              sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 -
+                  (sizeIndicator / 2) *
+                      (1 - (diffValueIndex - diffValueAnimation));
+              sizeIndicators[tabController.index] = sizeIndicator +
+                  (sizeIndicator / 2) *
+                      (1 - (diffValueIndex - diffValueAnimation));
+              opacityIndicators[currentTabIndex] =
+                  1 - (diffValueAnimation / diffValueIndex) / 2;
+              opacityIndicators[tabController.index] =
+                  0.5 + (diffValueAnimation / diffValueIndex) / 2;
             } else {
               if (animationValue > currentAnimationValue) {
                 // Swipe left
-                sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 - (sizeIndicator / 2) * diffValueAnimation;
-                sizeIndicators[currentTabIndex + 1] = sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
+                sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 -
+                    (sizeIndicator / 2) * diffValueAnimation;
+                sizeIndicators[currentTabIndex + 1] =
+                    sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
                 opacityIndicators[currentTabIndex] = 1 - diffValueAnimation / 2;
-                opacityIndicators[currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
+                opacityIndicators[currentTabIndex + 1] =
+                    0.5 + diffValueAnimation / 2;
               } else {
                 // Swipe right
-                sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 - (sizeIndicator / 2) * diffValueAnimation;
-                sizeIndicators[currentTabIndex - 1] = sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
+                sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 -
+                    (sizeIndicator / 2) * diffValueAnimation;
+                sizeIndicators[currentTabIndex - 1] =
+                    sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
                 opacityIndicators[currentTabIndex] = 1 - diffValueAnimation / 2;
-                opacityIndicators[currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
+                opacityIndicators[currentTabIndex - 1] =
+                    0.5 + diffValueAnimation / 2;
               }
             }
             break;
@@ -372,7 +395,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
     setupButtonDefaultValues();
 
-    tabs = widget.listCustomTabs ?? renderTabsFromContentConfig(widget.listContentConfig!);
+    tabs = widget.listCustomTabs ??
+        renderTabsFromContentConfig(widget.listContentConfig!);
   }
 
   @override
@@ -382,7 +406,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     super.dispose();
   }
 
-  List<Widget> renderTabsFromContentConfig(List<ContentConfig> listContentConfig) {
+  List<Widget> renderTabsFromContentConfig(
+      List<ContentConfig> listContentConfig) {
     List<Widget> tempTabs = [];
     for (var element in listContentConfig) {
       tempTabs.add(
@@ -503,7 +528,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
               },
               child: TabBarView(
                 controller: tabController,
-                physics: scrollable ? scrollPhysics : const NeverScrollableScrollPhysics(),
+                physics: scrollable
+                    ? scrollPhysics
+                    : const NeverScrollableScrollPhysics(),
                 children: tabs,
               ),
             ),
@@ -545,7 +572,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         key: prevButtonKey,
         onPressed: () {
           if (!isAnimating()) {
-            tabController.animateTo(tabController.index - 1, curve: curveScroll);
+            tabController.animateTo(tabController.index - 1,
+                curve: curveScroll);
           }
         },
         style: prevButtonStyle,
@@ -583,7 +611,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             Container(
               alignment: Alignment.center,
               width: MediaQuery.of(context).size.width / 4,
-              child: showSkipBtn ? buildSkipButton() : (showPrevBtn ? buildPrevButton() : const SizedBox.shrink()),
+              child: showSkipBtn
+                  ? buildSkipButton()
+                  : (showPrevBtn ? buildPrevButton() : const SizedBox.shrink()),
             ),
 
             // Indicator
@@ -633,7 +663,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             ? marginLeftIndicatorFocused
             : marginRightIndicatorFocused,
       ),
-      child: activeIndicatorWidget ?? indicatorWidget ?? renderDefaultDot(sizeIndicator, colorActiveIndicator),
+      child: activeIndicatorWidget ??
+          indicatorWidget ??
+          renderDefaultDot(sizeIndicator, colorActiveIndicator),
     );
   }
 
@@ -642,15 +674,18 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     for (var i = 0; i < lengthSlide; i++) {
       double opacityCurrentIndicator = opacityIndicators[i];
       if (opacityCurrentIndicator >= 0 && opacityCurrentIndicator <= 1) {
-        indicators.add(renderIndicators(sizeIndicators[i], colorIndicator, opacityIndicators[i], i));
+        indicators.add(renderIndicators(
+            sizeIndicators[i], colorIndicator, opacityIndicators[i], i));
       } else {
-        indicators.add(renderIndicators(sizeIndicators[i], colorIndicator, 1, i));
+        indicators
+            .add(renderIndicators(sizeIndicators[i], colorIndicator, 1, i));
       }
     }
     return indicators;
   }
 
-  Widget renderIndicators(double size, Color? color, double opacity, int index) {
+  Widget renderIndicators(
+      double size, Color? color, double opacity, int index) {
     double space = spaceBetweenIndicator / 2;
     return Container(
       margin: EdgeInsets.only(left: space, right: space),
@@ -660,7 +695,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         },
         child: Opacity(
           opacity: opacity,
-          child: indicatorWidget != null ? renderCustomIndicator(size) : renderDefaultDot(size, color),
+          child: indicatorWidget != null
+              ? renderCustomIndicator(size)
+              : renderDefaultDot(size, color),
         ),
       ),
     );
@@ -675,7 +712,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   Widget renderDefaultDot(double size, Color? color) {
     return Container(
-      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(size / 2)),
+      decoration: BoxDecoration(
+          color: color, borderRadius: BorderRadius.circular(size / 2)),
       width: size,
       height: size,
     );
