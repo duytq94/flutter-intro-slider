@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -6,8 +7,8 @@ import 'package:intro_slider/intro_slider.dart';
 
 class IntroSlider extends StatefulWidget {
   // ---------- Tabs ----------
-  /// An array of IntroSliderTab widget
-  final List<IntroSliderTab>? tabs;
+  /// An array of ContentConfig
+  final List<ContentConfig>? listContentConfig;
 
   /// Render your own widget list tabs
   final List<Widget>? listCustomTabs;
@@ -86,6 +87,10 @@ class IntroSlider extends StatefulWidget {
   /// Custom indicators
   final IndicatorConfig? indicatorConfig;
 
+  // ---------- Navigation bar ----------
+  /// Custom the position of navigation bar
+  final NavigationBarConfig? navigationBarConfig;
+
   // ---------- Scroll behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
   final bool? scrollable;
@@ -102,17 +107,11 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide status bar
   final bool? hideStatusBar;
 
-  /// Customize the position of navigation bar to the top or bottom of the screen
-  final NavPosition? navPosition;
-
-  /// Distance of navigation bar from edge
-  final double? navMargin;
-
   // Constructor
   const IntroSlider({
     super.key,
     // Tabs
-    this.tabs,
+    this.listContentConfig,
     this.backgroundColorAllTabs,
     this.listCustomTabs,
     this.onTabChangeCompleted,
@@ -148,6 +147,9 @@ class IntroSlider extends StatefulWidget {
     // Indicator
     this.indicatorConfig,
 
+    // Navigation bar
+    this.navigationBarConfig,
+
     // Scroll behavior
     this.scrollable,
     this.autoScroll,
@@ -159,11 +161,9 @@ class IntroSlider extends StatefulWidget {
 
     // Others
     this.hideStatusBar,
-    this.navPosition,
-    this.navMargin,
   }) : assert(
-          (tabs?.length ?? 0) > 0 || (listCustomTabs?.length ?? 0) > 0,
-          "You must define at least tabs or listCustomTabs",
+          (listContentConfig?.length ?? 0) > 0 || (listCustomTabs?.length ?? 0) > 0,
+          "You must define at least listContentConfig or listCustomTabs",
         );
 
   @override
@@ -172,7 +172,6 @@ class IntroSlider extends StatefulWidget {
 
 class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
   // ---------- Tabs ----------
-  late final List<IntroSliderTab>? slides;
   List<Widget>? listCustomTabs;
   Function? onTabChangeCompleted;
 
@@ -222,9 +221,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   late final Duration autoScrollInterval;
   late final Curve curveScroll;
 
-  /// Customize the position of navigation bar to the top or bottom of the screen
-  late final NavPosition navPosition;
-  late final double? navMargin;
+  // ---------- Navigation bar ----------
+  /// Custom the position of navigation bar
+  late final NavigationBarConfig navigationBarConfig;
 
   late TabController tabController;
 
@@ -247,22 +246,17 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   @override
   void initState() {
     super.initState();
-    slides = widget.tabs;
-
     skipButtonKey = widget.skipButtonKey;
     prevButtonKey = widget.prevButtonKey;
     doneButtonKey = widget.doneButtonKey;
     nextButtonKey = widget.nextButtonKey;
 
-    lengthSlide = slides?.length ?? widget.listCustomTabs?.length ?? 0;
+    lengthSlide = widget.listContentConfig?.length ?? widget.listCustomTabs?.length ?? 0;
     autoScroll = widget.autoScroll ?? false;
     loopAutoScroll = widget.loopAutoScroll ?? false;
     pauseAutoPlayOnTouch = widget.pauseAutoPlayOnTouch ?? true;
     autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
     curveScroll = widget.curveScroll ?? Curves.ease;
-
-    navPosition = widget.navPosition ?? NavPosition.bottom;
-    navMargin = widget.navMargin;
 
     onTabChangeCompleted = widget.onTabChangeCompleted;
     tabController = TabController(length: lengthSlide, vsync: this);
@@ -292,6 +286,14 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     typeIndicatorAnimation = widget.indicatorConfig?.typeIndicatorAnimation ?? TypeIndicatorAnimation.sliding;
     indicatorWidget = widget.indicatorConfig?.indicatorWidget;
     activeIndicatorWidget = widget.indicatorConfig?.activeIndicatorWidget;
+
+    // Navigation bar
+    NavigationBarConfig? tempNavigationBarConfig = widget.navigationBarConfig;
+    if (tempNavigationBarConfig != null) {
+      navigationBarConfig = tempNavigationBarConfig;
+    } else {
+      navigationBarConfig = NavigationBarConfig();
+    }
 
     double initValueMarginRight = (sizeIndicator + spaceBetweenIndicator) * (lengthSlide - 1);
 
@@ -370,11 +372,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
     setupButtonDefaultValues();
 
-    if (widget.listCustomTabs == null) {
-      tabs = widget.tabs!;
-    } else {
-      tabs = widget.listCustomTabs!;
-    }
+    tabs = widget.listCustomTabs ?? renderTabsFromContentConfig(widget.listContentConfig!);
   }
 
   @override
@@ -382,6 +380,19 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     tabController.dispose();
     clearTimerAutoScroll();
     super.dispose();
+  }
+
+  List<Widget> renderTabsFromContentConfig(List<ContentConfig> listContentConfig) {
+    List<Widget> tempTabs = [];
+    for (var element in listContentConfig) {
+      tempTabs.add(
+        IntroSliderTab(
+          navigationBarConfig: navigationBarConfig,
+          contentConfig: element,
+        ),
+      );
+    }
+    return tempTabs;
   }
 
   void startTimerAutoScroll() {
@@ -496,7 +507,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 children: tabs,
               ),
             ),
-            renderNav(),
+            renderNavigationBar(),
           ],
         ),
       ),
@@ -557,56 +568,57 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     );
   }
 
-  Widget renderNav() {
-    double safePaddingTop = MediaQuery.of(context).viewPadding.top > 10 ? MediaQuery.of(context).viewPadding.top : 10;
-    double safePaddingBottom =
-        MediaQuery.of(context).viewPadding.bottom > 10 ? MediaQuery.of(context).viewPadding.bottom : 10;
+  Widget renderNavigationBar() {
     return Positioned(
-      top: navPosition == NavPosition.top ? (navMargin ?? safePaddingTop) : null,
-      bottom: navPosition == NavPosition.bottom ? (navMargin ?? safePaddingBottom) : null,
-      left: 10,
-      right: 10,
-      child: Row(
-        children: <Widget>[
-          // Skip button
-          Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width / 4,
-            child: showSkipBtn ? buildSkipButton() : (showPrevBtn ? buildPrevButton() : const SizedBox.shrink()),
-          ),
+      top: navigationBarConfig.navPosition == NavPosition.top ? 0 : null,
+      bottom: navigationBarConfig.navPosition == NavPosition.bottom ? 0 : null,
+      left: 0,
+      right: 0,
+      child: Container(
+        padding: navigationBarConfig.padding,
+        color: navigationBarConfig.backgroundColor,
+        child: Row(
+          children: <Widget>[
+            // Skip button
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width / 4,
+              child: showSkipBtn ? buildSkipButton() : (showPrevBtn ? buildPrevButton() : const SizedBox.shrink()),
+            ),
 
-          // Indicator
-          Flexible(
-            child: isShowIndicator
-                ? Stack(
-                    alignment: Alignment.center,
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: renderListIndicator(),
-                      ),
-                      typeIndicatorAnimation == TypeIndicatorAnimation.sliding
-                          ? renderActiveIndicator()
-                          : const SizedBox.shrink()
-                    ],
-                  )
-                : const SizedBox.shrink(),
-          ),
+            // Indicator
+            Flexible(
+              child: isShowIndicator
+                  ? Stack(
+                      alignment: Alignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: renderListIndicator(),
+                        ),
+                        typeIndicatorAnimation == TypeIndicatorAnimation.sliding
+                            ? renderActiveIndicator()
+                            : const SizedBox.shrink()
+                      ],
+                    )
+                  : const SizedBox.shrink(),
+            ),
 
-          // Next, Done button
-          Container(
-            alignment: Alignment.center,
-            width: MediaQuery.of(context).size.width / 4,
-            height: 50,
-            child: tabController.index + 1 == lengthSlide
-                ? showDoneBtn
-                    ? buildDoneButton()
-                    : const SizedBox.shrink()
-                : showNextBtn
-                    ? buildNextButton()
-                    : const SizedBox.shrink(),
-          ),
-        ],
+            // Next, Done button
+            Container(
+              alignment: Alignment.center,
+              width: MediaQuery.of(context).size.width / 4,
+              height: 50,
+              child: tabController.index + 1 == lengthSlide
+                  ? showDoneBtn
+                      ? buildDoneButton()
+                      : const SizedBox.shrink()
+                  : showNextBtn
+                      ? buildNextButton()
+                      : const SizedBox.shrink(),
+            ),
+          ],
+        ),
       ),
     );
   }

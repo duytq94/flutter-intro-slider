@@ -12,7 +12,7 @@ class IntroScreenCustomConfig extends StatefulWidget {
 
 // ------------------ Custom config ------------------
 class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
-  List<IntroSliderTab> tabs = [];
+  List<ContentConfig> listContentConfig = [];
   Color activeColor = const Color(0xff0BEEF9);
   Color inactiveColor = const Color(0xff03838b);
   double sizeIndicator = 20;
@@ -21,8 +21,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   void initState() {
     super.initState();
 
-    tabs.add(
-      IntroSliderTab(
+    listContentConfig.add(
+      ContentConfig(
         title:
             "A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE",
         maxLineTitle: 2,
@@ -52,12 +52,10 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         ),
         backgroundNetworkImage: "https://picsum.photos/600/900",
         onCenterItemPress: () {},
-        navPosition: NavPosition.top,
-        navMargin: 80,
       ),
     );
-    tabs.add(
-      const IntroSliderTab(
+    listContentConfig.add(
+      const ContentConfig(
         title: "CITY",
         styleTitle: TextStyle(
           color: Color(0xff7FFFD4),
@@ -76,11 +74,10 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         colorEnd: Color(0xff734AE8),
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
-        navPosition: NavPosition.top,
       ),
     );
-    tabs.add(
-      const IntroSliderTab(
+    listContentConfig.add(
+      const ContentConfig(
         title: "BEACH",
         styleTitle: TextStyle(
           color: Color(0xffFFDAB9),
@@ -98,7 +95,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         ),
         backgroundImage: "images/beach.jpeg",
         maxLineTextDescription: 3,
-        navPosition: NavPosition.top,
       ),
     );
   }
@@ -144,9 +140,10 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   Widget build(BuildContext context) {
     return IntroSlider(
       key: UniqueKey(),
-      // List tab
-      tabs: tabs,
+      // Content config
+      listContentConfig: listContentConfig,
       backgroundColorAllTabs: Colors.grey,
+      hideStatusBar: true,
 
       // Skip button
       renderSkipBtn: renderSkipBtn(),
@@ -179,15 +176,20 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         typeIndicatorAnimation: TypeIndicatorAnimation.sliding,
       ),
 
+      // Navigation bar
+      navigationBarConfig: NavigationBarConfig(
+        navPosition: NavPosition.bottom,
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).viewPadding.top > 0 ? 20 : 10,
+          bottom: MediaQuery.of(context).viewPadding.bottom > 0 ? 20 : 10,
+        ),
+        backgroundColor: Colors.black.withOpacity(0.5),
+      ),
+
       // Scroll behavior
-      // autoScroll: true,
+      autoScroll: true,
       loopAutoScroll: true,
       curveScroll: Curves.bounceIn,
-
-      // Others
-      hideStatusBar: true,
-      navPosition: NavPosition.top,
-      navMargin: 20,
     );
   }
 }

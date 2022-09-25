@@ -7,100 +7,12 @@ import 'package:intro_slider/intro_slider.dart';
 class IntroSliderTab extends StatelessWidget {
   const IntroSliderTab({
     super.key,
-    this.navPosition,
-    this.navMargin,
-    this.verticalScrollbarBehavior,
-
-    // Title
-    this.widgetTitle,
-    this.title,
-    this.maxLineTitle,
-    this.styleTitle,
-    this.textAlignTitle,
-    this.textOverFlowTitle,
-    this.marginTitle,
-
-    // Image
-    this.pathImage,
-    this.widthImage,
-    this.heightImage,
-    this.foregroundImageFit,
-
-    // Center Widget
-    this.centerWidget,
-    this.onCenterItemPress,
-
-    // Description
-    this.widgetDescription,
-    this.description,
-    this.maxLineTextDescription,
-    this.styleDescription,
-    this.textAlignDescription,
-    this.textOverFlowDescription,
-    this.marginDescription,
-
-    // Background color
-    this.backgroundColor,
-    this.colorBegin,
-    this.colorEnd,
-    this.directionColorBegin,
-    this.directionColorEnd,
-
-    // Background image
-    this.backgroundImage,
-    this.backgroundImageFit,
-    this.backgroundNetworkImage,
-    this.backgroundOpacity,
-    this.backgroundOpacityColor,
-    this.backgroundBlendMode,
+    required this.navigationBarConfig,
+    this.contentConfig,
   });
 
-  final NavPosition? navPosition;
-  final ScrollbarBehavior? verticalScrollbarBehavior;
-  final double? navMargin;
-
-  // Title
-  final Widget? widgetTitle;
-  final String? title;
-  final int? maxLineTitle;
-  final TextStyle? styleTitle;
-  final TextAlign? textAlignTitle;
-  final TextOverflow? textOverFlowTitle;
-  final EdgeInsets? marginTitle;
-
-  // Description
-  final Widget? widgetDescription;
-  final String? description;
-  final int? maxLineTextDescription;
-  final TextStyle? styleDescription;
-  final TextAlign? textAlignDescription;
-  final TextOverflow? textOverFlowDescription;
-  final EdgeInsets? marginDescription;
-
-  // Image
-  final String? pathImage;
-  final double? widthImage;
-  final double? heightImage;
-  final BoxFit? foregroundImageFit;
-
-  // Center Widget
-  final Widget? centerWidget;
-  final void Function()? onCenterItemPress;
-
-  // Background color
-  final Color? backgroundColor;
-  final Color? colorBegin;
-  final Color? colorEnd;
-  final AlignmentGeometry? directionColorBegin;
-  final AlignmentGeometry? directionColorEnd;
-
-  // Background image
-  final String? backgroundImage;
-  final BoxFit? backgroundImageFit;
-  final String? backgroundNetworkImage;
-  final double? backgroundOpacity;
-  final Color? backgroundOpacityColor;
-  final BlendMode? backgroundBlendMode;
+  final NavigationBarConfig navigationBarConfig;
+  final ContentConfig? contentConfig;
 
   @override
   Widget build(BuildContext context) {
@@ -108,49 +20,55 @@ class IntroSliderTab extends StatelessWidget {
       children: <Widget>[
         Container(
           // Title
-          margin: marginTitle ?? const EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
-          child: widgetTitle ??
+          margin: contentConfig?.marginTitle ?? const EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+          child: contentConfig?.widgetTitle ??
               Text(
-                title ?? '',
-                style: styleTitle ??
+                contentConfig?.title ?? '',
+                style: contentConfig?.styleTitle ??
                     const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
                       fontSize: 30.0,
                     ),
-                maxLines: maxLineTitle ?? 1,
-                textAlign: textAlignTitle ?? TextAlign.center,
-                overflow: textOverFlowTitle ?? TextOverflow.ellipsis,
+                maxLines: contentConfig?.maxLineTitle ?? 1,
+                textAlign: contentConfig?.textAlignTitle ?? TextAlign.center,
+                overflow: contentConfig?.textOverFlowTitle ?? TextOverflow.ellipsis,
               ),
         ),
 
         // Image or Center widget
         GestureDetector(
-          onTap: onCenterItemPress,
-          child: pathImage != null
+          onTap: contentConfig?.onCenterItemPress,
+          child: contentConfig?.pathImage != null
               ? Image.asset(
-                  pathImage!,
-                  width: widthImage ?? 200.0,
-                  height: heightImage ?? 200.0,
-                  fit: foregroundImageFit ?? BoxFit.contain,
+                  (contentConfig?.pathImage)!,
+                  width: contentConfig?.widthImage ?? 200.0,
+                  height: contentConfig?.heightImage ?? 200.0,
+                  fit: contentConfig?.foregroundImageFit ?? BoxFit.contain,
                 )
-              : Center(child: centerWidget ?? const SizedBox.shrink()),
+              : Center(child: contentConfig?.centerWidget ?? const SizedBox.shrink()),
         ),
 
         // Description
         Container(
-          margin: marginDescription ?? const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
-          child: widgetDescription ??
+          margin: contentConfig?.marginDescription ?? const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+          child: contentConfig?.widgetDescription ??
               Text(
-                description ?? '',
-                style: styleDescription ?? const TextStyle(color: Colors.white, fontSize: 18.0),
-                textAlign: textAlignDescription ?? TextAlign.center,
-                maxLines: maxLineTextDescription ?? 100,
-                overflow: textOverFlowDescription ?? TextOverflow.ellipsis,
+                contentConfig?.description ?? '',
+                style: contentConfig?.styleDescription ?? const TextStyle(color: Colors.white, fontSize: 18.0),
+                textAlign: contentConfig?.textAlignDescription ?? TextAlign.center,
+                maxLines: contentConfig?.maxLineTextDescription ?? 100,
+                overflow: contentConfig?.textOverFlowDescription ?? TextOverflow.ellipsis,
               ),
         ),
       ],
     );
+    Color? backgroundColor = contentConfig?.backgroundColor;
+    String? backgroundImage = contentConfig?.backgroundImage;
+    String? backgroundNetworkImage = contentConfig?.backgroundNetworkImage;
+    Color? backgroundOpacityColor = contentConfig?.backgroundOpacityColor;
+    ScrollbarBehavior? verticalScrollbarBehavior = contentConfig?.verticalScrollbarBehavior;
+    double safeMarginContent = navigationBarConfig.padding.along(Axis.vertical) + 50;
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -158,32 +76,32 @@ class IntroSliderTab extends StatelessWidget {
           ? BoxDecoration(
               gradient: LinearGradient(
                 colors: backgroundColor != null
-                    ? [backgroundColor!, backgroundColor!]
+                    ? [backgroundColor, backgroundColor]
                     : [
-                        colorBegin ?? Colors.transparent,
-                        colorEnd ?? Colors.transparent,
+                        contentConfig?.colorBegin ?? Colors.transparent,
+                        contentConfig?.colorEnd ?? Colors.transparent,
                       ],
-                begin: directionColorBegin ?? Alignment.topLeft,
-                end: directionColorEnd ?? Alignment.bottomRight,
+                begin: contentConfig?.directionColorBegin ?? Alignment.topLeft,
+                end: contentConfig?.directionColorEnd ?? Alignment.bottomRight,
               ),
             )
           : BoxDecoration(
               image: DecorationImage(
               image: backgroundImage != null
-                  ? AssetImage(backgroundImage!)
+                  ? AssetImage(backgroundImage)
                   : NetworkImage(backgroundNetworkImage!) as ImageProvider,
-              fit: backgroundImageFit ?? BoxFit.cover,
+              fit: contentConfig?.backgroundImageFit ?? BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 backgroundOpacityColor != null
-                    ? backgroundOpacityColor!.withOpacity(backgroundOpacity ?? 0.5)
-                    : Colors.black.withOpacity(backgroundOpacity ?? 0.5),
-                backgroundBlendMode ?? BlendMode.darken,
+                    ? backgroundOpacityColor.withOpacity(contentConfig?.backgroundOpacity ?? 0.5)
+                    : Colors.black.withOpacity(contentConfig?.backgroundOpacity ?? 0.5),
+                contentConfig?.backgroundBlendMode ?? BlendMode.darken,
               ),
             )),
       child: Container(
         margin: EdgeInsets.only(
-          top: navPosition == NavPosition.top ? navMargin ?? 60 : 0,
-          bottom: navPosition == NavPosition.bottom ? navMargin ?? 60 : 0,
+          top: navigationBarConfig.navPosition == NavPosition.top ? safeMarginContent : 0,
+          bottom: navigationBarConfig.navPosition == NavPosition.bottom ? safeMarginContent : 0,
         ),
         child: verticalScrollbarBehavior != ScrollbarBehavior.hide
             ? Platform.isIOS

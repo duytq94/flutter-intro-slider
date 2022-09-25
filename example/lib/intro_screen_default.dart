@@ -11,30 +11,30 @@ class IntroScreenDefault extends StatefulWidget {
 }
 
 class IntroScreenDefaultState extends State<IntroScreenDefault> {
-  List<IntroSliderTab> tabs = [];
+  List<ContentConfig> listContentConfig = [];
 
   @override
   void initState() {
     super.initState();
 
-    tabs.add(
-      const IntroSliderTab(
+    listContentConfig.add(
+      const ContentConfig(
         title: "ERASER",
         description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         pathImage: "images/photo_eraser.png",
         backgroundColor: Color(0xfff5a623),
       ),
     );
-    tabs.add(
-      const IntroSliderTab(
+    listContentConfig.add(
+      const ContentConfig(
         title: "PENCIL",
         description: "Ye indulgence unreserved connection alteration appearance",
         pathImage: "images/photo_pencil.png",
         backgroundColor: Color(0xff203152),
       ),
     );
-    tabs.add(
-      const IntroSliderTab(
+    listContentConfig.add(
+      const ContentConfig(
         title: "RULER",
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
@@ -52,7 +52,7 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
   Widget build(BuildContext context) {
     return IntroSlider(
       key: UniqueKey(),
-      tabs: tabs,
+      listContentConfig: listContentConfig,
       onDonePress: onDonePress,
     );
   }
