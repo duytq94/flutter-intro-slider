@@ -12,14 +12,17 @@ class IntroScreenCustomConfig extends StatefulWidget {
 
 // ------------------ Custom config ------------------
 class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
-  List<Slide> slides = [];
+  List<ContentConfig> listContentConfig = [];
+  Color activeColor = const Color(0xff0BEEF9);
+  Color inactiveColor = const Color(0xff03838b);
+  double sizeIndicator = 20;
 
   @override
   void initState() {
     super.initState();
 
-    slides.add(
-      Slide(
+    listContentConfig.add(
+      ContentConfig(
         title:
             "A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE A VERY LONG TITLE",
         maxLineTitle: 2,
@@ -47,14 +50,14 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           "Replace this with a custom widget",
           style: TextStyle(color: Colors.white),
         ),
-        backgroundNetworkImage: "https://picsum.photos/200/300",
+        backgroundNetworkImage: "https://picsum.photos/600/900",
         onCenterItemPress: () {},
       ),
     );
-    slides.add(
-      Slide(
+    listContentConfig.add(
+      const ContentConfig(
         title: "CITY",
-        styleTitle: const TextStyle(
+        styleTitle: TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
@@ -62,22 +65,22 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         ),
         description:
             "Ye indulgence unreserved connection alteration appearance",
-        styleDescription: const TextStyle(
+        styleDescription: TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 20.0,
           fontStyle: FontStyle.italic,
           fontFamily: 'Raleway',
         ),
-        colorBegin: Colors.lightBlue,
-        colorEnd: Colors.amber,
+        colorBegin: Color(0xff89D4CF),
+        colorEnd: Color(0xff734AE8),
         directionColorBegin: Alignment.topRight,
         directionColorEnd: Alignment.bottomLeft,
       ),
     );
-    slides.add(
-      Slide(
+    listContentConfig.add(
+      const ContentConfig(
         title: "BEACH",
-        styleTitle: const TextStyle(
+        styleTitle: TextStyle(
           color: Color(0xffFFDAB9),
           fontSize: 30.0,
           fontWeight: FontWeight.bold,
@@ -85,7 +88,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         ),
         description:
             "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-        styleDescription: const TextStyle(
+        styleDescription: TextStyle(
           color: Color(0xffFFDAB9),
           fontSize: 20.0,
           fontStyle: FontStyle.italic,
@@ -98,11 +101,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   }
 
   void onDonePress() {
-    // Do what you want
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => HomeScreen()),
-    // );
+    log("onDonePress caught");
   }
 
   void onNextPress() {
@@ -112,39 +111,40 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   Widget renderNextBtn() {
     return const Icon(
       Icons.navigate_next,
-      color: Color(0xffF3B4BA),
-      size: 35.0,
+      size: 25,
     );
   }
 
   Widget renderDoneBtn() {
     return const Icon(
       Icons.done,
-      color: Color(0xffF3B4BA),
+      size: 25,
     );
   }
 
   Widget renderSkipBtn() {
     return const Icon(
       Icons.skip_next,
-      color: Color(0xffF3B4BA),
+      size: 25,
     );
   }
 
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor:
-          MaterialStateProperty.all<Color>(const Color(0x33F3B4BA)),
-      overlayColor: MaterialStateProperty.all<Color>(const Color(0x33FFA8B0)),
+      foregroundColor: MaterialStateProperty.all<Color>(activeColor),
+      backgroundColor: MaterialStateProperty.all<Color>(inactiveColor),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
-      // List slides
-      slides: slides,
+      key: UniqueKey(),
+      // Content config
+      listContentConfig: listContentConfig,
+      backgroundColorAllTabs: Colors.grey,
+      hideStatusBar: true,
 
       // Skip button
       renderSkipBtn: renderSkipBtn(),
@@ -160,15 +160,36 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       onDonePress: onDonePress,
       doneButtonStyle: myButtonStyle(),
 
-      // Dot indicator
-      colorDot: const Color(0x33FFA8B0),
-      colorActiveDot: const Color(0xffFFA8B0),
-      sizeDot: 13.0,
+      // Indicator
+      indicatorConfig: IndicatorConfig(
+        sizeIndicator: sizeIndicator,
+        indicatorWidget: Container(
+          width: sizeIndicator,
+          height: 10,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4), color: inactiveColor),
+        ),
+        activeIndicatorWidget: Container(
+          width: sizeIndicator,
+          height: 10,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4), color: activeColor),
+        ),
+        spaceBetweenIndicator: 10,
+        typeIndicatorAnimation: TypeIndicatorAnimation.sliding,
+      ),
 
-      // Behavior
-      hideStatusBar: true,
-      backgroundColorAllSlides: Colors.grey,
-      verticalScrollbarBehavior: ScrollbarBehavior.SHOW_ALWAYS,
+      // Navigation bar
+      navigationBarConfig: NavigationBarConfig(
+        navPosition: NavPosition.bottom,
+        padding: EdgeInsets.only(
+          top: MediaQuery.of(context).viewPadding.top > 0 ? 20 : 10,
+          bottom: MediaQuery.of(context).viewPadding.bottom > 0 ? 20 : 10,
+        ),
+        backgroundColor: Colors.black.withOpacity(0.5),
+      ),
+
+      // Scroll behavior
       autoScroll: true,
       loopAutoScroll: true,
       curveScroll: Curves.bounceIn,

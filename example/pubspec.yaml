@@ -20,15 +20,7 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - images/photo_eraser.png
-    - images/photo_pencil.png
-    - images/photo_ruler.png
-    - images/photo_school.png
-    - images/photo_museum.png
-    - images/photo_coffee_shop.png
-    - images/forest.png
-    - images/beach.jpeg
-    - images/city.jpeg
+    - images/
 
   fonts:
     - family: RobotoMono
