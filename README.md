@@ -308,8 +308,11 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
   <summary>Code example (click to expand)</summary>
 
 ```dart
-class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
+class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
   late Function goToTab;
+
+  Color primaryColor = const Color(0xffffcc5c);
+  Color secondColor = const Color(0xff3da4ab);
 
   void onDonePress() {
     goToTab(0);
@@ -320,24 +323,24 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
   }
 
   Widget renderNextBtn() {
-    return const Icon(
+    return Icon(
       Icons.navigate_next,
-      color: Color(0xffffcc5c),
+      color: primaryColor,
       size: 35.0,
     );
   }
 
   Widget renderDoneBtn() {
-    return const Icon(
+    return Icon(
       Icons.done,
-      color: Color(0xffffcc5c),
+      color: primaryColor,
     );
   }
 
   Widget renderSkipBtn() {
-    return const Icon(
+    return Icon(
       Icons.skip_next,
-      color: Color(0xffffcc5c),
+      color: primaryColor,
     );
   }
 
@@ -355,45 +358,49 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
       (index) => SizedBox(
         width: double.infinity,
         height: double.infinity,
-        child: Container(
-          margin: const EdgeInsets.only(bottom: 60.0, top: 60.0),
-          child: ListView(
-            children: <Widget>[
-              Image.network(
-                "https://picsum.photos/300",
-                width: 300.0,
-                height: 300.0,
+        child: ListView(
+          children: <Widget>[
+            const SizedBox(height: 20),
+            Center(
+              child: DropdownButton<String>(
+                value: index.toString(),
+                icon: Icon(Icons.arrow_downward, color: secondColor, size: 20),
+                elevation: 16,
+                style: TextStyle(color: primaryColor),
+                underline: Container(
+                  height: 2,
+                  color: secondColor,
+                ),
+                onChanged: (String? value) {},
+                items: ["0", "1", "2"].map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value, style: TextStyle(color: secondColor, fontSize: 20)),
+                  );
+                }).toList(),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                child: Text(
-                  "Title $index",
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    color: Color(0xff3da4ab),
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                    fontFamily: 'RobotoMono',
-                  ),
+            ),
+            const SizedBox(height: 20),
+            Image.network(
+              "https://picsum.photos/${300 + index}",
+              width: 300.0,
+              height: 300.0,
+            ),
+            const SizedBox(height: 20),
+            Container(
+              margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+              child: Text(
+                "Title at index $index",
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: secondColor,
+                  fontSize: 30.0,
+                  fontWeight: FontWeight.bold,
+                  fontFamily: 'RobotoMono',
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
-                child: Text(
-                  "Description $index Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                  textAlign: TextAlign.center,
-                  maxLines: 5,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: Color(0xfffe9c8f),
-                    fontSize: 20.0,
-                    fontStyle: FontStyle.italic,
-                    fontFamily: 'Raleway',
-                  ),
-                ),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -445,51 +452,51 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 
 ## IntroSlider parameter
 
-| Name                   | Type                                | Default                                        | Description                                                                                        |
-| ---------------------- | ----------------------------------- | ---------------------------------------------- | -------------------------------------------------------------------------------------------------- |
-| <b>Tab</b>             |                                     |                                                |                                                                                                    |
-| key                    | `Key?`                              |                                                | Assign key to IntroSlider widget                                                                   |
-| tabs                   | `List<IntroSliderTab>?`             | [View details](#contentconfig-parameter)       | An array of IntroSliderTab widget, require if *listCustomTabs* not defined                         |
-| listCustomTabs         | `List<Widget>?`                     | Require if *tabs* not defined                  | Render your own widget list tabs (meaning you can put your custom widget to in the prebuilt frame) |
-| refFuncGoToTab         | `void Function(Function function)?` | Do nothing                                     | Send the reference of change tab's function, then we can move to any tab index programmatically    |
-| onTabChangeCompleted   | `void Function(int index)?`         | Do nothing                                     | Callback when tab change comleted, return the current tab's index                                  |
-| backgroundColorAllTabs | `Color?`                            | Transparent                                    | Background color for all tabs (if backgroundColor on each tab not set)                             |
-| hideStatusBar          | `bool?`                             | false                                          | Show or hide the status bar                                                                        |
-| <b>Skip Button</b>     |                                     |                                                |                                                                                                    |
-| renderSkipBtn          | `Widget?`                           | Button with white text SKIP                    | Render your own widget SKIP button                                                                 |
-| skipButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                  | Style for SKIP button                                                                              |
-| onSkipPress            | `void Function()?`                  | Go to last page                                | Fire when press SKIP button                                                                        |
-| showSkipBtn            | `bool?`                             | true                                           | Show or hide SKIP button                                                                           |
-| skipButtonKey          | `Key?`                              |                                                | Assign key to SKIP button                                                                          |
-| <b>Previous Button</b> |                                     |                                                |                                                                                                    |
-| renderPrevBtn          | `Widget?`                           | Button with white text PREV                    | Render your own PREV button                                                                        |
-| prevButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                  | Style for PREV button                                                                              |
-| showPrevBtn            | `bool?`                             | false                                          | Show or hide PREV, have to set showSkipBtn to false at first if you want to show this button       |
-| prevButtonKey          | `Key?`                              |                                                | Assign key to PREV button                                                                          |
-| <b>Done Button</b>     |                                     |                                                |                                                                                                    |
-| renderDoneBtn          | `Widget?`                           | Button with white text DONE                    | Render your own DONE button                                                                        |
-| doneButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                  | Style for DONE button                                                                              |
-| onDonePress            | `void Function()?`                  | Do nothing                                     | Fire when press DONE button                                                                        |
-| showDoneBtn            | `bool?`                             | true                                           | Show or hide DONE button                                                                           |
-| doneButtonKey          | `Key?`                              |                                                | Assign key to NEXT button                                                                          |
-| <b>Next Button</b>     |                                     |                                                |                                                                                                    |
-| renderNextBtn          | `Widget?`                           | Button with white text NEXT                    | Render your own NEXT button                                                                        |
-| nextButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                  | Style for NEXT button                                                                              |
-| onNextPress            | `void Function()?`                  | Do nothing                                     | Fire when press NEXT button                                                                        |
-| showNextBtn            | `bool?`                             | true                                           | Show or hide NEXT button                                                                           |
-| nextButtonKey          | `Key?`                              |                                                | Assign key to NEXT button                                                                          |
-| <b>Indicator</b>       |                                     |                                                |                                                                                                    |
-| indicatorConfig        | `IndicatorConfig?`                  | [View details](#indicatorconfig-parameter)     | Custom indicator                                                                                   |
-| <b>Navigation bar</b>  |                                     |                                                |                                                                                                    |
-| navigationBarConfig    | `NavigationBarConfig?`              | [View details](#navigationbarconfig-parameter) | Custom position navigation bar                                                                     |
-| <b>Scroll behavior</b> |                                     |                                                |                                                                                                    |
-| scrollable             | `bool?`                             | true                                           | If false, user only scroll by tap nav button                                                       |
-| autoScroll             | `bool?`                             | false                                          | Enable auto scroll slides                                                                          |
-| loopAutoScroll         | `bool?`                             | false                                          | Loop transition by go to first slide when reach the end                                            |
-| pauseAutoPlayOnTouch   | `bool?`                             | true                                           | Auto scroll will be paused if user touch to slide                                                  |
-| autoScrollInterval     | `Duration?`                         | 4 seconds                                      | Sets duration to determine the frequency of slides                                                 |
-| curveScroll            | `Curve?`                            | Curves.ease                                    | Set transition animation curves.                                                                   |
-| scrollPhysics          | `ScrollPhysics?`                    | ScrollPhysics()                                | Determines the physics horizontal scroll for the slides                                            |
+| Name                   | Type                                | Default                                        | Description                                                                                       |
+| ---------------------- | ----------------------------------- | ---------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| <b>Tab</b>             |                                     |                                                |                                                                                                   |
+| key                    | `Key?`                              |                                                | Assign key to IntroSlider widget                                                                  |
+| listContentConfig      | `List<ContentConfig>?`              | [View details](#contentconfig-parameter)       | An array of ContentConfig, require if *listCustomTabs* not defined                                |
+| listCustomTabs         | `List<Widget>?`                     | Require if *listContentConfig* not defined     | Render your own widget list tabs (meaning you can put your custom widget into the prebuilt frame) |
+| refFuncGoToTab         | `void Function(Function function)?` | Do nothing                                     | Send the reference of change tab's function, then we can move to any tab index programmatically   |
+| onTabChangeCompleted   | `void Function(int index)?`         | Do nothing                                     | Callback when tab change comleted, return the current tab's index                                 |
+| backgroundColorAllTabs | `Color?`                            | Transparent                                    | Background color for all tabs (if backgroundColor on each tab not set)                            |
+| hideStatusBar          | `bool?`                             | false                                          | Show or hide the status bar                                                                       |
+| <b>Skip Button</b>     |                                     |                                                |                                                                                                   |
+| renderSkipBtn          | `Widget?`                           | Button with white text SKIP                    | Render your own widget SKIP button                                                                |
+| skipButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                  | Style for SKIP button                                                                             |
+| onSkipPress            | `void Function()?`                  | Go to last page                                | Fire when press SKIP button                                                                       |
+| showSkipBtn            | `bool?`                             | true                                           | Show or hide SKIP button                                                                          |
+| skipButtonKey          | `Key?`                              |                                                | Assign key to SKIP button                                                                         |
+| <b>Previous Button</b> |                                     |                                                |                                                                                                   |
+| renderPrevBtn          | `Widget?`                           | Button with white text PREV                    | Render your own PREV button                                                                       |
+| prevButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                  | Style for PREV button                                                                             |
+| showPrevBtn            | `bool?`                             | false                                          | Show or hide PREV, have to set showSkipBtn to false at first if you want to show this button      |
+| prevButtonKey          | `Key?`                              |                                                | Assign key to PREV button                                                                         |
+| <b>Done Button</b>     |                                     |                                                |                                                                                                   |
+| renderDoneBtn          | `Widget?`                           | Button with white text DONE                    | Render your own DONE button                                                                       |
+| doneButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                  | Style for DONE button                                                                             |
+| onDonePress            | `void Function()?`                  | Do nothing                                     | Fire when press DONE button                                                                       |
+| showDoneBtn            | `bool?`                             | true                                           | Show or hide DONE button                                                                          |
+| doneButtonKey          | `Key?`                              |                                                | Assign key to NEXT button                                                                         |
+| <b>Next Button</b>     |                                     |                                                |                                                                                                   |
+| renderNextBtn          | `Widget?`                           | Button with white text NEXT                    | Render your own NEXT button                                                                       |
+| nextButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                  | Style for NEXT button                                                                             |
+| onNextPress            | `void Function()?`                  | Do nothing                                     | Fire when press NEXT button                                                                       |
+| showNextBtn            | `bool?`                             | true                                           | Show or hide NEXT button                                                                          |
+| nextButtonKey          | `Key?`                              |                                                | Assign key to NEXT button                                                                         |
+| <b>Indicator</b>       |                                     |                                                |                                                                                                   |
+| indicatorConfig        | `IndicatorConfig?`                  | [View details](#indicatorconfig-parameter)     | Custom indicator                                                                                  |
+| <b>Navigation bar</b>  |                                     |                                                |                                                                                                   |
+| navigationBarConfig    | `NavigationBarConfig?`              | [View details](#navigationbarconfig-parameter) | Custom position navigation bar                                                                    |
+| <b>Scroll behavior</b> |                                     |                                                |                                                                                                   |
+| scrollable             | `bool?`                             | true                                           | If false, user only scroll by tap nav button                                                      |
+| autoScroll             | `bool?`                             | false                                          | Enable auto scroll slides                                                                         |
+| loopAutoScroll         | `bool?`                             | false                                          | Loop transition by go to first slide when reach the end                                           |
+| pauseAutoPlayOnTouch   | `bool?`                             | true                                           | Auto scroll will be paused if user touch to slide                                                 |
+| autoScrollInterval     | `Duration?`                         | 4 seconds                                      | Sets duration to determine the frequency of slides                                                |
+| curveScroll            | `Curve?`                            | Curves.ease                                    | Set transition animation curves.                                                                  |
+| scrollPhysics          | `ScrollPhysics?`                    | ScrollPhysics()                                | Determines the physics horizontal scroll for the slides                                           |
 
 <br>
 
@@ -540,16 +547,16 @@ class IntroScreenCustomTabState extends State<IntroScreenCustomTab> {
 <br>
 
 ## IndicatorConfig parameter
-| Name                   | Type                           | Default                         | Description                                                                                                                 |
-| ---------------------- | ------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| isShowIndicator        | `bool?`                        | true                            | Show or hide indicator                                                                                                      |
-| colorIndicator         | `Color?`                       | Color(0x80000000)               | Color indicator when passive, note: ignore if using custom indicator                                                        |
-| colorActiveIndicator   | `Color?`                       | Color(0xffffffff)               | Color indicator when active (focusing), note: ignore if using custom indicator or TypeIndicatorAnimation.sizeTransition     |
-| sizeIndicator          | `double?`                      | 8.0                             | Size of each indicator                                                                                                      |
-| spaceBetweenIndicator  | `double?`                      | The same value of sizeIndicator | Space between every indicator (if using custom indicator, please set this value the same width value of your custom widget) |
-| typeIndicatorAnimation | `enum TypeIndicatorAnimation?` | TypeIndicatorAnimation.sliding  | Type indicator animation                                                                                                    |
-| indicatorWidget        | `Widget?`                      | Default dot                     | Your custom indicator widget                                                                                                |
-| activeIndicatorWidget  | `Widget?`                      | Default dot                     | Your custom active (focusing) indicator widget, note: ignore if using TypeIndicatorAnimation.sizeTransition                 |
+| Name                   | Type                           | Default                         | Description                                                                                                                     |
+| ---------------------- | ------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| isShowIndicator        | `bool?`                        | true                            | Show or hide indicator                                                                                                          |
+| colorIndicator         | `Color?`                       | Color(0x80000000)               | Color indicator when passive, note: ignore if using custom indicator                                                            |
+| colorActiveIndicator   | `Color?`                       | Color(0xffffffff)               | Color indicator when active (focusing), <br>note: ignore if using custom indicator or TypeIndicatorAnimation.sizeTransition     |
+| sizeIndicator          | `double?`                      | 8.0                             | Size of each indicator                                                                                                          |
+| spaceBetweenIndicator  | `double?`                      | The same value of sizeIndicator | Space between every indicator <br>(if using custom indicator, please set this value the same width value of your custom widget) |
+| typeIndicatorAnimation | `enum TypeIndicatorAnimation?` | TypeIndicatorAnimation.sliding  | Type indicator animation                                                                                                        |
+| indicatorWidget        | `Widget?`                      | Default dot                     | Your custom indicator widget                                                                                                    |
+| activeIndicatorWidget  | `Widget?`                      | Default dot                     | Your custom active (focusing) indicator widget, <br>note: ignore if using TypeIndicatorAnimation.sizeTransition                 |
 
 <br>
 
