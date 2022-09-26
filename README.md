@@ -493,13 +493,13 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
 | <b>Navigation bar</b>  |                                     |                                                |                                                                                                   |
 | navigationBarConfig    | `NavigationBarConfig?`              | [View details](#navigationbarconfig-parameter) | Custom position navigation bar                                                                    |
 | <b>Scroll behavior</b> |                                     |                                                |                                                                                                   |
-| scrollable             | `bool?`                             | true                                           | If false, user only scroll by tap nav button                                                      |
+| scrollable             | `bool?`                             | true                                           | Whether or not the slider is scrollable (or controlled only by buttons)                           |
+| curveScroll            | `Curve?`                            | Curves.ease                                    | Set transition animation curves (also effect to indicator when it's sliding)                      |
+| scrollPhysics          | `ScrollPhysics?`                    | ScrollPhysics()                                | Determines the physics horizontal scroll for the slides                                           |
 | autoScroll             | `bool?`                             | false                                          | Enable auto scroll slides                                                                         |
 | loopAutoScroll         | `bool?`                             | false                                          | Loop transition by go to first slide when reach the end                                           |
 | pauseAutoPlayOnTouch   | `bool?`                             | true                                           | Auto scroll will be paused if user touch to slide                                                 |
 | autoScrollInterval     | `Duration?`                         | 4 seconds                                      | Sets duration to determine the frequency of slides                                                |
-| curveScroll            | `Curve?`                            | Curves.ease                                    | Set transition animation curves (also effect to indicator when it's sliding)                      |
-| scrollPhysics          | `ScrollPhysics?`                    | ScrollPhysics()                                | Determines the physics horizontal scroll for the slides                                           |
 
 <br>
 
