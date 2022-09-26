@@ -1,8 +1,7 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
+import 'package:universal_io/io.dart';
 
 class IntroSliderTab extends StatelessWidget {
   const IntroSliderTab({
@@ -75,7 +74,7 @@ class IntroSliderTab extends StatelessWidget {
     Color? backgroundColor = contentConfig?.backgroundColor;
     String? backgroundImage = contentConfig?.backgroundImage;
     String? backgroundNetworkImage = contentConfig?.backgroundNetworkImage;
-    Color? backgroundOpacityColor = contentConfig?.backgroundOpacityColor;
+    Color? backgroundFilterColor = contentConfig?.backgroundFilterColor;
     ScrollbarBehavior? verticalScrollbarBehavior =
         contentConfig?.verticalScrollbarBehavior;
     double safeMarginContent =
@@ -103,11 +102,11 @@ class IntroSliderTab extends StatelessWidget {
                   : NetworkImage(backgroundNetworkImage!) as ImageProvider,
               fit: contentConfig?.backgroundImageFit ?? BoxFit.cover,
               colorFilter: ColorFilter.mode(
-                backgroundOpacityColor != null
-                    ? backgroundOpacityColor
-                        .withOpacity(contentConfig?.backgroundOpacity ?? 0.5)
-                    : Colors.black
-                        .withOpacity(contentConfig?.backgroundOpacity ?? 0.5),
+                backgroundFilterColor != null
+                    ? backgroundFilterColor.withOpacity(
+                        contentConfig?.backgroundFilterOpacity ?? 0.5)
+                    : Colors.black.withOpacity(
+                        contentConfig?.backgroundFilterOpacity ?? 0.5),
                 contentConfig?.backgroundBlendMode ?? BlendMode.darken,
               ),
             )),

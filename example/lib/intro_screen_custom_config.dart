@@ -51,6 +51,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundNetworkImage: "https://picsum.photos/600/900",
+        backgroundFilterOpacity: 0.5,
+        backgroundFilterColor: Colors.redAccent,
         onCenterItemPress: () {},
       ),
     );
@@ -144,7 +146,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       // Content config
       listContentConfig: listContentConfig,
       backgroundColorAllTabs: Colors.grey,
-      hideStatusBar: true,
 
       // Skip button
       renderSkipBtn: renderSkipBtn(),

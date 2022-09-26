@@ -1,3 +1,8 @@
+## 4.1.0
+* Add support web
+* Fix some wrong parameter at readme
+* Remove hideStatusBar (should be config by main page, not by this widget)
+
 ## 4.0.0
 * Restructure some parameter to make clearer
 * Customizable indicator

@@ -23,7 +23,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^4.0.0
+  intro_slider: ^4.1.0
 ```
 
 Import
@@ -152,6 +152,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundNetworkImage: "https://picsum.photos/600/900",
+        backgroundFilterOpacity: 0.5,
+        backgroundFilterColor: Colors.redAccent,
         onCenterItemPress: () {},
       ),
     );
@@ -244,7 +246,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       // Content config
       listContentConfig: listContentConfig,
       backgroundColorAllTabs: Colors.grey,
-      hideStatusBar: true,
 
       // Skip button
       renderSkipBtn: renderSkipBtn(),
@@ -347,7 +348,8 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
+      backgroundColor:
+          MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
       overlayColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
     );
   }
@@ -373,10 +375,12 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
                   color: secondColor,
                 ),
                 onChanged: (String? value) {},
-                items: ["0", "1", "2"].map<DropdownMenuItem<String>>((String value) {
+                items: ["0", "1", "2"]
+                    .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value, style: TextStyle(color: secondColor, fontSize: 20)),
+                    child: Text(value,
+                        style: TextStyle(color: secondColor, fontSize: 20)),
                   );
                 }).toList(),
               ),
@@ -440,7 +444,6 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
 
       // Behavior
       scrollPhysics: const BouncingScrollPhysics(),
-      hideStatusBar: true,
       onTabChangeCompleted: onTabChangeCompleted,
     );
   }
@@ -462,7 +465,6 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
 | refFuncGoToTab         | `void Function(Function function)?` | Do nothing                                     | Send the reference of change tab's function, then we can move to any tab index programmatically   |
 | onTabChangeCompleted   | `void Function(int index)?`         | Do nothing                                     | Callback when tab change comleted, return the current tab's index                                 |
 | backgroundColorAllTabs | `Color?`                            | Transparent                                    | Background color for all tabs (if backgroundColor on each tab not set)                            |
-| hideStatusBar          | `bool?`                             | false                                          | Show or hide the status bar                                                                       |
 | <b>Skip Button</b>     |                                     |                                                |                                                                                                   |
 | renderSkipBtn          | `Widget?`                           | Button with white text SKIP                    | Render your own widget SKIP button                                                                |
 | skipButtonStyle        | `ButtonStyle?`                      | ButtonStyle()                                  | Style for SKIP button                                                                             |
@@ -536,12 +538,12 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
 | directionColorBegin       | `AlignmentGeometry?`      | Alignment.topLeft                       | Direction color begin                                                                                                           |
 | directionColorEnd         | `AlignmentGeometry?`      | Alignment.bottomRight                   | Direction color end                                                                                                             |
 | <b>Background Image</b>   |                           |                                         |                                                                                                                                 |
-| backgroundImage           | `String?`                 | null                                    | Background tab image                                                                                                            |
-| backgroundNetworkImage    | `String?`                 | null                                    | Background tab image (from network)                                                                                             |
-| backgroundImageFit        | `BoxFit?`                 | BoxFit.cover                            | Background tab image fit                                                                                                        |
-| backgroundOpacity         | `double?`                 | 0.5                                     | Background tab image filter opacity                                                                                             |
-| backgroundOpacityColor    | `Color?`                  | Colors.black                            | Background tab image filter color                                                                                               |
-| backgroundBlendMode       | `BlendMode?`              | BlendMode.darken                        | Background tab image filter blend mode                                                                                          |
+| backgroundImage           | `String?`                 | null                                    | Set image for background (if set, will ignore all parameter at `Background Color` above)                                        |
+| backgroundNetworkImage    | `String?`                 | null                                    | Set image (from network) for background                                                                                         |
+| backgroundImageFit        | `BoxFit?`                 | BoxFit.cover                            | Background image fit                                                                                                            |
+| backgroundFilterColor     | `Color?`                  | Colors.black                            | A color filter to apply to the image background before painting it                                                              |
+| backgroundFilterOpacity   | `double?`                 | 0.5                                     | Opacity for `backgroundFilterColor`                                                                                             |
+| backgroundBlendMode       | `BlendMode?`              | BlendMode.darken                        | Background blend mode                                                                                                           |
 | <b>Others</b>             |                           |                                         |                                                                                                                                 |
 | verticalScrollbarBehavior | `enum ScrollbarBehavior?` | ScrollbarBehavior.HIDE                  | Allow to specify how the vertical scrollbar should behave <br>(scroll enable when content length is greater than screen length) |
 

@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:intro_slider/intro_slider.dart';
 
 class IntroSlider extends StatefulWidget {
@@ -103,10 +101,6 @@ class IntroSlider extends StatefulWidget {
   final bool? pauseAutoPlayOnTouch;
   final Duration? autoScrollInterval;
 
-  // ---------- Others ----------
-  /// Show or hide status bar
-  final bool? hideStatusBar;
-
   // Constructor
   const IntroSlider({
     super.key,
@@ -158,9 +152,6 @@ class IntroSlider extends StatefulWidget {
     this.autoScrollInterval,
     this.curveScroll,
     this.scrollPhysics,
-
-    // Others
-    this.hideStatusBar,
   }) : assert(
           (listContentConfig?.length ?? 0) > 0 ||
               (listCustomTabs?.length ?? 0) > 0,
@@ -502,11 +493,6 @@ class IntroSliderState extends State<IntroSlider>
 
   @override
   Widget build(BuildContext context) {
-    // Full screen view
-    if (widget.hideStatusBar == true) {
-      SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual, overlays: []);
-    }
-
     return Scaffold(
       body: DefaultTabController(
         length: lengthSlide,
