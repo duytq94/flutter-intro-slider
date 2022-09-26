@@ -23,7 +23,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^4.0.0
+  intro_slider: ^4.1.0
 ```
 
 Import
@@ -152,6 +152,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           style: TextStyle(color: Colors.white),
         ),
         backgroundNetworkImage: "https://picsum.photos/600/900",
+        backgroundFilterOpacity: 0.5,
+        backgroundFilterColor: Colors.redAccent,
         onCenterItemPress: () {},
       ),
     );
@@ -244,7 +246,6 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       // Content config
       listContentConfig: listContentConfig,
       backgroundColorAllTabs: Colors.grey,
-      hideStatusBar: true,
 
       // Skip button
       renderSkipBtn: renderSkipBtn(),
@@ -347,7 +348,8 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
+      backgroundColor:
+          MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
       overlayColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
     );
   }
@@ -373,10 +375,12 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
                   color: secondColor,
                 ),
                 onChanged: (String? value) {},
-                items: ["0", "1", "2"].map<DropdownMenuItem<String>>((String value) {
+                items: ["0", "1", "2"]
+                    .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value, style: TextStyle(color: secondColor, fontSize: 20)),
+                    child: Text(value,
+                        style: TextStyle(color: secondColor, fontSize: 20)),
                   );
                 }).toList(),
               ),
@@ -440,7 +444,6 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
 
       // Behavior
       scrollPhysics: const BouncingScrollPhysics(),
-      hideStatusBar: true,
       onTabChangeCompleted: onTabChangeCompleted,
     );
   }

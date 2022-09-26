@@ -152,7 +152,6 @@ class IntroSlider extends StatefulWidget {
     this.autoScrollInterval,
     this.curveScroll,
     this.scrollPhysics,
-
   }) : assert(
           (listContentConfig?.length ?? 0) > 0 ||
               (listCustomTabs?.length ?? 0) > 0,

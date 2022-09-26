@@ -65,7 +65,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontWeight: FontWeight.bold,
           fontFamily: 'RobotoMono',
         ),
-        description: "Ye indulgence unreserved connection alteration appearance",
+        description:
+            "Ye indulgence unreserved connection alteration appearance",
         styleDescription: TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 20.0,
@@ -166,12 +167,14 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         indicatorWidget: Container(
           width: sizeIndicator,
           height: 10,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: inactiveColor),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4), color: inactiveColor),
         ),
         activeIndicatorWidget: Container(
           width: sizeIndicator,
           height: 10,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: activeColor),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4), color: activeColor),
         ),
         spaceBetweenIndicator: 10,
         typeIndicatorAnimation: TypeIndicatorAnimation.sliding,

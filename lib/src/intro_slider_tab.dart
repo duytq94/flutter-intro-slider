@@ -19,7 +19,9 @@ class IntroSliderTab extends StatelessWidget {
       children: <Widget>[
         Container(
           // Title
-          margin: contentConfig?.marginTitle ?? const EdgeInsets.only(top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+          margin: contentConfig?.marginTitle ??
+              const EdgeInsets.only(
+                  top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
           child: contentConfig?.widgetTitle ??
               Text(
                 contentConfig?.title ?? '',
@@ -31,7 +33,8 @@ class IntroSliderTab extends StatelessWidget {
                     ),
                 maxLines: contentConfig?.maxLineTitle ?? 1,
                 textAlign: contentConfig?.textAlignTitle ?? TextAlign.center,
-                overflow: contentConfig?.textOverFlowTitle ?? TextOverflow.ellipsis,
+                overflow:
+                    contentConfig?.textOverFlowTitle ?? TextOverflow.ellipsis,
               ),
         ),
 
@@ -45,19 +48,25 @@ class IntroSliderTab extends StatelessWidget {
                   height: contentConfig?.heightImage ?? 200.0,
                   fit: contentConfig?.foregroundImageFit ?? BoxFit.contain,
                 )
-              : Center(child: contentConfig?.centerWidget ?? const SizedBox.shrink()),
+              : Center(
+                  child:
+                      contentConfig?.centerWidget ?? const SizedBox.shrink()),
         ),
 
         // Description
         Container(
-          margin: contentConfig?.marginDescription ?? const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
+          margin: contentConfig?.marginDescription ??
+              const EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 50.0),
           child: contentConfig?.widgetDescription ??
               Text(
                 contentConfig?.description ?? '',
-                style: contentConfig?.styleDescription ?? const TextStyle(color: Colors.white, fontSize: 18.0),
-                textAlign: contentConfig?.textAlignDescription ?? TextAlign.center,
+                style: contentConfig?.styleDescription ??
+                    const TextStyle(color: Colors.white, fontSize: 18.0),
+                textAlign:
+                    contentConfig?.textAlignDescription ?? TextAlign.center,
                 maxLines: contentConfig?.maxLineTextDescription ?? 100,
-                overflow: contentConfig?.textOverFlowDescription ?? TextOverflow.ellipsis,
+                overflow: contentConfig?.textOverFlowDescription ??
+                    TextOverflow.ellipsis,
               ),
         ),
       ],
@@ -66,8 +75,10 @@ class IntroSliderTab extends StatelessWidget {
     String? backgroundImage = contentConfig?.backgroundImage;
     String? backgroundNetworkImage = contentConfig?.backgroundNetworkImage;
     Color? backgroundFilterColor = contentConfig?.backgroundFilterColor;
-    ScrollbarBehavior? verticalScrollbarBehavior = contentConfig?.verticalScrollbarBehavior;
-    double safeMarginContent = navigationBarConfig.padding.along(Axis.vertical) + 50;
+    ScrollbarBehavior? verticalScrollbarBehavior =
+        contentConfig?.verticalScrollbarBehavior;
+    double safeMarginContent =
+        navigationBarConfig.padding.along(Axis.vertical) + 50;
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -92,24 +103,32 @@ class IntroSliderTab extends StatelessWidget {
               fit: contentConfig?.backgroundImageFit ?? BoxFit.cover,
               colorFilter: ColorFilter.mode(
                 backgroundFilterColor != null
-                    ? backgroundFilterColor.withOpacity(contentConfig?.backgroundFilterOpacity ?? 0.5)
-                    : Colors.black.withOpacity(contentConfig?.backgroundFilterOpacity ?? 0.5),
+                    ? backgroundFilterColor.withOpacity(
+                        contentConfig?.backgroundFilterOpacity ?? 0.5)
+                    : Colors.black.withOpacity(
+                        contentConfig?.backgroundFilterOpacity ?? 0.5),
                 contentConfig?.backgroundBlendMode ?? BlendMode.darken,
               ),
             )),
       child: Container(
         margin: EdgeInsets.only(
-          top: navigationBarConfig.navPosition == NavPosition.top ? safeMarginContent : 0,
-          bottom: navigationBarConfig.navPosition == NavPosition.bottom ? safeMarginContent : 0,
+          top: navigationBarConfig.navPosition == NavPosition.top
+              ? safeMarginContent
+              : 0,
+          bottom: navigationBarConfig.navPosition == NavPosition.bottom
+              ? safeMarginContent
+              : 0,
         ),
         child: verticalScrollbarBehavior != ScrollbarBehavior.hide
             ? Platform.isIOS
                 ? CupertinoScrollbar(
-                    thumbVisibility: verticalScrollbarBehavior == ScrollbarBehavior.alwaysShow,
+                    thumbVisibility: verticalScrollbarBehavior ==
+                        ScrollbarBehavior.alwaysShow,
                     child: listView,
                   )
                 : Scrollbar(
-                    thumbVisibility: verticalScrollbarBehavior == ScrollbarBehavior.alwaysShow,
+                    thumbVisibility: verticalScrollbarBehavior ==
+                        ScrollbarBehavior.alwaysShow,
                     child: listView,
                   )
             : listView,
