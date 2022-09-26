@@ -19,18 +19,6 @@ abstract class IntroSliderConfig {
 }
 
 class IndicatorConfig {
-  const IndicatorConfig({
-    this.isShowIndicator,
-    this.colorIndicator,
-    this.colorActiveIndicator,
-    this.sizeIndicator,
-    this.spaceBetweenIndicator,
-    this.typeIndicatorAnimation,
-    this.indicatorWidget,
-    this.activeIndicatorWidget,
-  })  : assert(sizeIndicator == null || sizeIndicator >= 0),
-        assert(spaceBetweenIndicator == null || spaceBetweenIndicator >= 0);
-
   /// Show or hide indicator
   final bool? isShowIndicator;
 
@@ -54,11 +42,126 @@ class IndicatorConfig {
 
   /// Custom active (focusing) indicator
   final Widget? activeIndicatorWidget;
+
+  const IndicatorConfig({
+    this.isShowIndicator,
+    this.colorIndicator,
+    this.colorActiveIndicator,
+    this.sizeIndicator,
+    this.spaceBetweenIndicator,
+    this.typeIndicatorAnimation,
+    this.indicatorWidget,
+    this.activeIndicatorWidget,
+  })  : assert(sizeIndicator == null || sizeIndicator >= 0),
+        assert(spaceBetweenIndicator == null || spaceBetweenIndicator >= 0);
 }
 
 class ContentConfig {
+  // ---------- Title ----------
+  /// Change text title at top
+  final String? title;
+
+  /// Set a custom widget as the title (ignore `title` if define both)
+  final Widget? widgetTitle;
+
+  /// Change max number of lines title at top
+  final int? maxLineTitle;
+
+  /// Style for text title
+  final TextStyle? styleTitle;
+
+  /// TextAlign for text title
+  final TextAlign? textAlignTitle;
+
+  /// TextOverflow for text title
+  final TextOverflow? textOverFlowTitle;
+
+  /// Margin for text title
+  final EdgeInsets? marginTitle;
+
+  // ---------- Image ----------
+  /// Path to your local image
+  final String? pathImage;
+
+  /// Width of image
+  final double? widthImage;
+
+  /// Height of image
+  final double? heightImage;
+
+  /// Foreground image fit
+  final BoxFit? foregroundImageFit;
+
+  // ---------- Center Widget ----------
+  /// Your custom's widget
+  final Widget? centerWidget;
+
+  /// Fire when press center image/widge
+  final void Function()? onCenterItemPress;
+
+  // ---------- Description ----------
+  /// Change text description at bottom
+  final String? description;
+
+  ///  Set a custom widget as the description (ignore `description` if define both)
+  final Widget? widgetDescription;
+
+  /// Maximum line of text description
+  final int? maxLineTextDescription;
+
+  /// Style for text description
+  final TextStyle? styleDescription;
+
+  /// TextAlign for text description
+  final TextAlign? textAlignDescription;
+
+  /// TextOverflow for text description
+  final TextOverflow? textOverFlowDescription;
+
+  /// Margin for text description
+  final EdgeInsets? marginDescription;
+
+  // ---------- Background color ----------
+  /// Background tab color (if set, will ignore gradient properties below)
+  final Color? backgroundColor;
+
+  /// Gradient tab color begin
+  final Color? colorBegin;
+
+  /// Gradient tab color end
+  final Color? colorEnd;
+
+  /// Direction color begin
+  final AlignmentGeometry? directionColorBegin;
+
+  /// Direction color end
+  final AlignmentGeometry? directionColorEnd;
+
+  // ---------- Background image ----------
+  /// Set image for background (if set, will ignore all parameter at `Background Color` above)
+  final String? backgroundImage;
+
+  /// Set image (from network) for background
+  final String? backgroundNetworkImage;
+
+  /// Background image fit
+  final BoxFit? backgroundImageFit;
+
+  /// A color filter to apply to the image background before painting it
+  final Color? backgroundFilterColor;
+
+  /// Opacity for `backgroundFilterColor`
+  final double? backgroundFilterOpacity;
+
+  /// Background blend mode
+  final BlendMode? backgroundBlendMode;
+
+  /// Allow to specify how the vertical scrollbar should behave
+  /// (scroll enable when content length is greater than screen length)
+  final ScrollbarBehavior? verticalScrollbarBehavior;
+
   const ContentConfig({
-    // Title
+    // ---------- Title ----------
     this.widgetTitle,
     this.title,
     this.maxLineTitle,
@@ -67,17 +170,17 @@ class ContentConfig {
     this.textOverFlowTitle,
     this.marginTitle,
 
-    // Image
+    // ---------- Image ----------
     this.pathImage,
     this.widthImage,
     this.heightImage,
     this.foregroundImageFit,
 
-    // Center Widget
+    // ---------- Center Widget ----------
     this.centerWidget,
     this.onCenterItemPress,
 
-    // Description
+    // ---------- Description ----------
     this.widgetDescription,
     this.description,
     this.maxLineTextDescription,
@@ -86,72 +189,32 @@ class ContentConfig {
     this.textOverFlowDescription,
     this.marginDescription,
 
-    // Background color
+    // ---------- Background color ----------
     this.backgroundColor,
     this.colorBegin,
     this.colorEnd,
     this.directionColorBegin,
     this.directionColorEnd,
 
-    // Background image
+    // ---------- Background image ----------
     this.backgroundImage,
     this.backgroundImageFit,
     this.backgroundNetworkImage,
-    this.backgroundOpacity,
-    this.backgroundOpacityColor,
+    this.backgroundFilterOpacity,
+    this.backgroundFilterColor,
     this.backgroundBlendMode,
     this.verticalScrollbarBehavior,
   });
-
-  // Title
-  final Widget? widgetTitle;
-  final String? title;
-  final int? maxLineTitle;
-  final TextStyle? styleTitle;
-  final TextAlign? textAlignTitle;
-  final TextOverflow? textOverFlowTitle;
-  final EdgeInsets? marginTitle;
-
-  // Description
-  final Widget? widgetDescription;
-  final String? description;
-  final int? maxLineTextDescription;
-  final TextStyle? styleDescription;
-  final TextAlign? textAlignDescription;
-  final TextOverflow? textOverFlowDescription;
-  final EdgeInsets? marginDescription;
-
-  // Image
-  final String? pathImage;
-  final double? widthImage;
-  final double? heightImage;
-  final BoxFit? foregroundImageFit;
-
-  // Center Widget
-  final Widget? centerWidget;
-  final void Function()? onCenterItemPress;
-
-  // Background color
-  final Color? backgroundColor;
-  final Color? colorBegin;
-  final Color? colorEnd;
-  final AlignmentGeometry? directionColorBegin;
-  final AlignmentGeometry? directionColorEnd;
-
-  // Background image
-  final String? backgroundImage;
-  final BoxFit? backgroundImageFit;
-  final String? backgroundNetworkImage;
-  final double? backgroundOpacity;
-  final Color? backgroundOpacityColor;
-  final BlendMode? backgroundBlendMode;
-
-  final ScrollbarBehavior? verticalScrollbarBehavior;
 }
 
 class NavigationBarConfig {
+  /// Padding
   EdgeInsets padding;
+
+  /// Move navigation bar to top or bottom page
   NavPosition navPosition;
+
+  /// Background color
   Color backgroundColor;
 
   NavigationBarConfig({

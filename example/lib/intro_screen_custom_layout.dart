@@ -146,7 +146,6 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
 
       // Behavior
       scrollPhysics: const BouncingScrollPhysics(),
-      hideStatusBar: true,
       onTabChangeCompleted: onTabChangeCompleted,
     );
   }
