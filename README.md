@@ -23,7 +23,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^4.1.0
+  intro_slider: ^4.2.0
 ```
 
 Import
@@ -62,7 +62,8 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
     listContentConfig.add(
       const ContentConfig(
         title: "ERASER",
-        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+        description:
+            "Allow miles wound place the leave had. To sitting subject no improve studied limited",
         pathImage: "images/photo_eraser.png",
         backgroundColor: Color(0xfff5a623),
       ),
@@ -70,7 +71,8 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
     listContentConfig.add(
       const ContentConfig(
         title: "PENCIL",
-        description: "Ye indulgence unreserved connection alteration appearance",
+        description:
+            "Ye indulgence unreserved connection alteration appearance",
         pathImage: "images/photo_pencil.png",
         backgroundColor: Color(0xff203152),
       ),
@@ -166,7 +168,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           fontWeight: FontWeight.bold,
           fontFamily: 'RobotoMono',
         ),
-        description: "Ye indulgence unreserved connection alteration appearance",
+        description:
+            "Ye indulgence unreserved connection alteration appearance",
         styleDescription: TextStyle(
           color: Color(0xff7FFFD4),
           fontSize: 20.0,
@@ -267,12 +270,14 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
         indicatorWidget: Container(
           width: sizeIndicator,
           height: 10,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: inactiveColor),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4), color: inactiveColor),
         ),
         activeIndicatorWidget: Container(
           width: sizeIndicator,
           height: 10,
-          decoration: BoxDecoration(borderRadius: BorderRadius.circular(4), color: activeColor),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(4), color: activeColor),
         ),
         spaceBetweenIndicator: 10,
         typeIndicatorAnimation: TypeIndicatorAnimation.sliding,
@@ -289,8 +294,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       ),
 
       // Scroll behavior
-      autoScroll: true,
-      loopAutoScroll: true,
+      isAutoScroll: true,
+      isLoopAutoScroll: true,
       curveScroll: Curves.bounceIn,
     );
   }

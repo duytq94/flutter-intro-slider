@@ -1,3 +1,8 @@
+## 4.2.0
+* Optimize render
+* Remove some unnecessary code
+* Fix some wrong info from docs
+
 ## 4.1.0
 * Add support web
 * Fix some wrong parameter at readme
