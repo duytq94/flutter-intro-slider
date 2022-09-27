@@ -18,6 +18,20 @@ abstract class IntroSliderConfig {
   ];
 }
 
+class PairIndicatorMargin<T1, T2> {
+  final double left;
+  final double right;
+
+  PairIndicatorMargin(this.left, this.right);
+}
+
+class PairIndicatorDecoration<T1, T2> {
+  final List<double> size;
+  final List<double> opacity;
+
+  PairIndicatorDecoration(this.size, this.opacity);
+}
+
 class IndicatorConfig {
   /// Show or hide indicator
   final bool? isShowIndicator;

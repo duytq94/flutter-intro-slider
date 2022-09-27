@@ -223,21 +223,16 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   late final Curve curveScroll;
 
   // ---------- Navigation bar ----------
-  /// Custom the position of navigation bar
   late final NavigationBarConfig navigationBarConfig;
 
+  // ---------- Internal variable  ----------
   late TabController tabController;
 
   List<Widget> tabs = [];
-  List<Widget> indicators = [];
-  List<double> sizeIndicators = [];
-  List<double> opacityIndicators = [];
 
-  // For indicator movement
-  double marginLeftIndicatorFocused = 0;
-  double marginRightIndicatorFocused = 0;
+  final streamDecoIndicator = StreamController<PairIndicatorDecoration>();
+  final streamMarginIndicatorFocusing = StreamController<PairIndicatorMargin>();
 
-  // For indicator sizeTransition
   double currentAnimationValue = 0;
   int currentTabIndex = 0;
 
@@ -297,6 +292,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     }
 
     double initValueMarginRight = (sizeIndicator + spaceBetweenIndicator) * (lengthSlide - 1);
+    List<double> sizeIndicators = [];
+    List<double> opacityIndicators = [];
 
     switch (typeIndicatorAnimation) {
       case TypeIndicatorAnimation.sliding:
@@ -304,7 +301,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           sizeIndicators.add(sizeIndicator);
           opacityIndicators.add(1);
         }
-        marginRightIndicatorFocused = initValueMarginRight;
+        streamMarginIndicatorFocusing.add(PairIndicatorMargin(0.0, initValueMarginRight));
         break;
       case TypeIndicatorAnimation.sizeTransition:
         for (var i = 0; i < lengthSlide; i++) {
@@ -316,56 +313,57 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             opacityIndicators.add(0.5);
           }
         }
+        break;
     }
+    streamDecoIndicator.add(PairIndicatorDecoration(sizeIndicators, opacityIndicators));
 
     tabController.animation?.addListener(() {
       if (tabController.animation == null) return;
-      setState(() {
-        double animationValue = tabController.animation!.value;
-        switch (typeIndicatorAnimation) {
-          case TypeIndicatorAnimation.sliding:
-            double spaceAvg = (sizeIndicator + spaceBetweenIndicator) / 2;
-
-            marginLeftIndicatorFocused = animationValue * spaceAvg * 2;
-            marginRightIndicatorFocused = initValueMarginRight - (animationValue * spaceAvg * 2);
+      double animationValue = tabController.animation!.value;
+      switch (typeIndicatorAnimation) {
+        case TypeIndicatorAnimation.sliding:
+          double spaceAvg = (sizeIndicator + spaceBetweenIndicator) / 2;
+          double marginLeft = animationValue * spaceAvg * 2;
+          double marginRight = initValueMarginRight - (animationValue * spaceAvg * 2);
+          streamMarginIndicatorFocusing.add(PairIndicatorMargin(marginLeft, marginRight));
+          break;
+        case TypeIndicatorAnimation.sizeTransition:
+          if (animationValue == currentAnimationValue) {
             break;
-          case TypeIndicatorAnimation.sizeTransition:
-            if (animationValue == currentAnimationValue) {
-              break;
-            }
+          }
 
-            var diffValueAnimation = (animationValue - currentAnimationValue).abs();
-            final diffValueIndex = (currentTabIndex - tabController.index).abs();
+          double diffValueAnimation = (animationValue - currentAnimationValue).abs();
+          final diffValueIndex = (currentTabIndex - tabController.index).abs();
 
+          if (tabController.indexIsChanging && (tabController.index - tabController.previousIndex).abs() > 1) {
             // When press skip button
-            if (tabController.indexIsChanging && (tabController.index - tabController.previousIndex).abs() > 1) {
-              if (diffValueAnimation < 1) {
-                diffValueAnimation = 1;
-              }
-              sizeIndicators[currentTabIndex] =
-                  sizeIndicator * 1.5 - (sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-              sizeIndicators[tabController.index] =
-                  sizeIndicator + (sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-              opacityIndicators[currentTabIndex] = 1 - (diffValueAnimation / diffValueIndex) / 2;
-              opacityIndicators[tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
-            } else {
-              if (animationValue > currentAnimationValue) {
-                // Swipe left
-                sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 - (sizeIndicator / 2) * diffValueAnimation;
-                sizeIndicators[currentTabIndex + 1] = sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
-                opacityIndicators[currentTabIndex] = 1 - diffValueAnimation / 2;
-                opacityIndicators[currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
-              } else {
-                // Swipe right
-                sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 - (sizeIndicator / 2) * diffValueAnimation;
-                sizeIndicators[currentTabIndex - 1] = sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
-                opacityIndicators[currentTabIndex] = 1 - diffValueAnimation / 2;
-                opacityIndicators[currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
-              }
+            if (diffValueAnimation < 1) {
+              diffValueAnimation = 1;
             }
-            break;
-        }
-      });
+            sizeIndicators[currentTabIndex] =
+                sizeIndicator * 1.5 - (sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
+            sizeIndicators[tabController.index] =
+                sizeIndicator + (sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
+            opacityIndicators[currentTabIndex] = 1 - (diffValueAnimation / diffValueIndex) / 2;
+            opacityIndicators[tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
+          } else {
+            if (animationValue > currentAnimationValue) {
+              // Swipe left
+              sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 - (sizeIndicator / 2) * diffValueAnimation;
+              sizeIndicators[currentTabIndex + 1] = sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
+              opacityIndicators[currentTabIndex] = 1 - diffValueAnimation / 2;
+              opacityIndicators[currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
+            } else {
+              // Swipe right
+              sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 - (sizeIndicator / 2) * diffValueAnimation;
+              sizeIndicators[currentTabIndex - 1] = sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
+              opacityIndicators[currentTabIndex] = 1 - diffValueAnimation / 2;
+              opacityIndicators[currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
+            }
+          }
+          streamDecoIndicator.add(PairIndicatorDecoration(sizeIndicators, opacityIndicators));
+          break;
+      }
     });
 
     scrollable = widget.scrollable ?? true;
@@ -379,6 +377,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   @override
   void dispose() {
     tabController.dispose();
+    streamDecoIndicator.close();
+    streamMarginIndicatorFocusing.close();
     clearTimerAutoScroll();
     super.dispose();
   }
@@ -588,10 +588,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                   ? Stack(
                       alignment: Alignment.center,
                       children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: renderListIndicator(),
-                        ),
+                        renderListIndicator(),
                         typeIndicatorAnimation == TypeIndicatorAnimation.sliding
                             ? renderActiveIndicator()
                             : const SizedBox.shrink()
@@ -620,21 +617,41 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   }
 
   Widget renderActiveIndicator() {
-    return Container(
-      margin: EdgeInsets.only(
-        left: isRTLLanguage(Localizations.localeOf(context).languageCode)
-            ? marginRightIndicatorFocused
-            : marginLeftIndicatorFocused,
-        right: isRTLLanguage(Localizations.localeOf(context).languageCode)
-            ? marginLeftIndicatorFocused
-            : marginRightIndicatorFocused,
-      ),
-      child: activeIndicatorWidget ?? indicatorWidget ?? renderDefaultDot(sizeIndicator, colorActiveIndicator),
+    return StreamBuilder<PairIndicatorMargin>(
+      stream: streamMarginIndicatorFocusing.stream,
+      builder: (context, snapshot) {
+        PairIndicatorMargin? pairMargin = snapshot.data;
+        if (pairMargin == null) return const SizedBox.shrink();
+        return Container(
+          margin: EdgeInsets.only(
+            left: isRTLLanguage(Localizations.localeOf(context).languageCode) ? pairMargin.right : pairMargin.left,
+            right: isRTLLanguage(Localizations.localeOf(context).languageCode) ? pairMargin.left : pairMargin.right,
+          ),
+          child: activeIndicatorWidget ?? indicatorWidget ?? renderDefaultDot(sizeIndicator, colorActiveIndicator),
+        );
+      },
     );
   }
 
-  List<Widget> renderListIndicator() {
-    indicators.clear();
+  Widget renderListIndicator() {
+    return StreamBuilder<PairIndicatorDecoration>(
+      stream: streamDecoIndicator.stream,
+      builder: (context, snapshot) {
+        PairIndicatorDecoration? pairIndicator = snapshot.data;
+        if (pairIndicator != null) {
+          return Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: generateListIndicator(pairIndicator.opacity, pairIndicator.size),
+          );
+        } else {
+          return const SizedBox.shrink();
+        }
+      },
+    );
+  }
+
+  List<Widget> generateListIndicator(List<double> opacityIndicators, List<double> sizeIndicators) {
+    List<Widget> indicators = [];
     for (var i = 0; i < lengthSlide; i++) {
       double opacityCurrentIndicator = opacityIndicators[i];
       if (opacityCurrentIndicator >= 0 && opacityCurrentIndicator <= 1) {
