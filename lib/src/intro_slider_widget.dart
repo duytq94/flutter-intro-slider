@@ -31,7 +31,7 @@ class IntroSlider extends StatefulWidget {
   final void Function()? onSkipPress;
 
   /// Show or hide SKIP button
-  final bool? showSkipBtn;
+  final bool? isShowSkipBtn;
 
   /// Assign key to SKIP button
   final Key? skipButtonKey;
@@ -44,7 +44,7 @@ class IntroSlider extends StatefulWidget {
   final ButtonStyle? prevButtonStyle;
 
   /// Show or hide PREV button (only visible if skip is hidden)
-  final bool? showPrevBtn;
+  final bool? isShowPrevBtn;
 
   /// Assign key to PREV button
   final Key? prevButtonKey;
@@ -57,7 +57,7 @@ class IntroSlider extends StatefulWidget {
   final ButtonStyle? nextButtonStyle;
 
   /// Show or hide NEXT button
-  final bool? showNextBtn;
+  final bool? isShowNextBtn;
 
   /// Fire when press NEXT button
   final Function()? onNextPress;
@@ -76,7 +76,7 @@ class IntroSlider extends StatefulWidget {
   final void Function()? onDonePress;
 
   /// Show or hide DONE button
-  final bool? showDoneBtn;
+  final bool? isShowDoneBtn;
 
   /// Assign key to DONE button
   final Key? doneButtonKey;
@@ -91,7 +91,7 @@ class IntroSlider extends StatefulWidget {
 
   // ---------- Scroll behavior ----------
   /// Whether or not the slider is scrollable (or controlled only by buttons)
-  final bool? scrollable;
+  final bool? isScrollable;
 
   /// Determines the physics horizontal scroll for the slides
   final ScrollPhysics? scrollPhysics;
@@ -100,13 +100,13 @@ class IntroSlider extends StatefulWidget {
   final Curve? curveScroll;
 
   /// Enable auto scroll slides
-  final bool? autoScroll;
+  final bool? isAutoScroll;
 
   /// Loop transition by go to first slide when reach the end
-  final bool? loopAutoScroll;
+  final bool? isLoopAutoScroll;
 
   /// Auto scroll will be paused if user touch to slide
-  final bool? pauseAutoPlayOnTouch;
+  final bool? isPauseAutoPlayOnTouch;
 
   /// Sets duration to determine the frequency of slides
   final Duration? autoScrollInterval;
@@ -125,26 +125,26 @@ class IntroSlider extends StatefulWidget {
     this.renderSkipBtn,
     this.skipButtonStyle,
     this.onSkipPress,
-    this.showSkipBtn,
+    this.isShowSkipBtn,
     this.skipButtonKey,
 
     // Prev
     this.renderPrevBtn,
     this.prevButtonStyle,
-    this.showPrevBtn,
+    this.isShowPrevBtn,
     this.prevButtonKey,
 
     // Done
     this.renderDoneBtn,
     this.onDonePress,
     this.doneButtonStyle,
-    this.showDoneBtn,
+    this.isShowDoneBtn,
     this.doneButtonKey,
 
     // Next
     this.renderNextBtn,
     this.nextButtonStyle,
-    this.showNextBtn,
+    this.isShowNextBtn,
     this.onNextPress,
     this.nextButtonKey,
 
@@ -155,10 +155,10 @@ class IntroSlider extends StatefulWidget {
     this.navigationBarConfig,
 
     // Scroll behavior
-    this.scrollable,
-    this.autoScroll,
-    this.loopAutoScroll,
-    this.pauseAutoPlayOnTouch,
+    this.isScrollable,
+    this.isAutoScroll,
+    this.isLoopAutoScroll,
+    this.isPauseAutoPlayOnTouch,
     this.autoScrollInterval,
     this.curveScroll,
     this.scrollPhysics,
@@ -180,26 +180,26 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   late final Widget renderSkipBtn;
   late final void Function()? onSkipPress;
   late final ButtonStyle skipButtonStyle;
-  late final bool showSkipBtn;
+  late final bool isShowSkipBtn;
   late final Key? skipButtonKey;
 
   // ---------- PREV button ----------
   late final Widget renderPrevBtn;
   late final ButtonStyle prevButtonStyle;
-  late final bool showPrevBtn;
+  late final bool isShowPrevBtn;
   late final Key? prevButtonKey;
 
   // ---------- DONE button ----------
   late final Widget renderDoneBtn;
   late final void Function()? onDonePress;
   late final ButtonStyle doneButtonStyle;
-  late final bool showDoneBtn;
+  late final bool isShowDoneBtn;
   late final Key? doneButtonKey;
 
   // ---------- NEXT button ----------
   late final Widget renderNextBtn;
   late final ButtonStyle nextButtonStyle;
-  late final bool showNextBtn;
+  late final bool isShowNextBtn;
   late final void Function()? onNextPress;
   late final Key? nextButtonKey;
 
@@ -214,11 +214,11 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   late final Widget? activeIndicatorWidget;
 
   // ---------- Scroll behavior ----------
-  late final bool scrollable;
+  late final bool isScrollable;
   late final ScrollPhysics scrollPhysics;
-  late final bool autoScroll;
-  late final bool loopAutoScroll;
-  late final bool pauseAutoPlayOnTouch;
+  late final bool isAutoScroll;
+  late final bool isLoopAutoScroll;
+  late final bool isPauseAutoPlayOnTouch;
   late final Duration autoScrollInterval;
   late final Curve curveScroll;
 
@@ -250,9 +250,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     nextButtonKey = widget.nextButtonKey;
 
     lengthSlide = widget.listContentConfig?.length ?? widget.listCustomTabs?.length ?? 0;
-    autoScroll = widget.autoScroll ?? false;
-    loopAutoScroll = widget.loopAutoScroll ?? false;
-    pauseAutoPlayOnTouch = widget.pauseAutoPlayOnTouch ?? true;
+    isAutoScroll = widget.isAutoScroll ?? false;
+    isLoopAutoScroll = widget.isLoopAutoScroll ?? false;
+    isPauseAutoPlayOnTouch = widget.isPauseAutoPlayOnTouch ?? true;
     autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
     curveScroll = widget.curveScroll ?? Curves.ease;
 
@@ -260,10 +260,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     onTabChangeCompleted = widget.onTabChangeCompleted;
     tabController = TabController(length: lengthSlide, vsync: this);
     tabController.addListener(() {
-      if (tabController.indexIsChanging) {
-        currentTabIndex = tabController.previousIndex;
-        streamCurrentTabIndex.add(currentTabIndex);
-      } else {
+      if (!tabController.indexIsChanging) {
         currentTabIndex = tabController.index;
         streamCurrentTabIndex.add(currentTabIndex);
         onTabChangeCompleted?.call(tabController.index);
@@ -271,7 +268,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       currentAnimationValue = tabController.animation?.value ?? 0;
     });
 
-    if (autoScroll) {
+    if (isAutoScroll) {
       startTimerAutoScroll();
     }
 
@@ -280,7 +277,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
     // Indicator
     isShowIndicator = widget.indicatorConfig?.isShowIndicator ?? true;
-    colorIndicator = widget.indicatorConfig?.colorIndicator ?? const Color(0x80000000);
+    colorIndicator = widget.indicatorConfig?.colorIndicator ?? Colors.black54;
     colorActiveIndicator = widget.indicatorConfig?.colorActiveIndicator ?? colorIndicator;
     sizeIndicator = widget.indicatorConfig?.sizeIndicator ?? 8;
     spaceBetweenIndicator = widget.indicatorConfig?.spaceBetweenIndicator ?? sizeIndicator;
@@ -336,10 +333,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           if (animationValue == currentAnimationValue) {
             break;
           }
-
           double diffValueAnimation = (animationValue - currentAnimationValue).abs();
           final diffValueIndex = (currentTabIndex - tabController.index).abs();
-
           if (tabController.indexIsChanging && (tabController.index - tabController.previousIndex).abs() > 1) {
             // When press skip button
             if (diffValueAnimation < 1) {
@@ -371,7 +366,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       }
     });
 
-    scrollable = widget.scrollable ?? true;
+    isScrollable = widget.isScrollable ?? true;
     scrollPhysics = widget.scrollPhysics ?? const ScrollPhysics();
 
     setupButtonDefaultValues();
@@ -409,7 +404,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
           tabController.animateTo(tabController.index + 1, curve: curveScroll);
         }
       } else {
-        if (loopAutoScroll) {
+        if (isLoopAutoScroll) {
           if (!isAnimating()) {
             tabController.animateTo(0, curve: curveScroll);
           }
@@ -433,29 +428,27 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             }
           }
         };
-
-    showSkipBtn = widget.showSkipBtn ?? true;
-
+    isShowSkipBtn = widget.isShowSkipBtn ?? true;
     renderSkipBtn = widget.renderSkipBtn ?? const Text("SKIP");
     skipButtonStyle = widget.skipButtonStyle ?? const ButtonStyle();
 
     // Prev button
-    if (showSkipBtn) {
-      showPrevBtn = false;
+    if (isShowSkipBtn) {
+      isShowPrevBtn = false;
     } else {
-      showPrevBtn = widget.showPrevBtn ?? true;
+      isShowPrevBtn = widget.isShowPrevBtn ?? true;
     }
 
     renderPrevBtn = widget.renderPrevBtn ?? const Text("PREV");
     prevButtonStyle = widget.prevButtonStyle ?? const ButtonStyle();
 
-    showNextBtn = widget.showNextBtn ?? true;
+    isShowNextBtn = widget.isShowNextBtn ?? true;
 
     // Done button
     onDonePress = widget.onDonePress ?? () {};
     renderDoneBtn = widget.renderDoneBtn ?? const Text("DONE");
     doneButtonStyle = widget.doneButtonStyle ?? const ButtonStyle();
-    showDoneBtn = widget.showDoneBtn ?? true;
+    isShowDoneBtn = widget.isShowDoneBtn ?? true;
 
     // Next button
     onNextPress = widget.onNextPress ?? () {};
@@ -495,18 +488,18 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 clearTimerAutoScroll();
               },
               onTapUp: (a) {
-                if (autoScroll) {
+                if (isAutoScroll) {
                   startTimerAutoScroll();
                 }
               },
               onTapCancel: () {
-                if (autoScroll) {
+                if (isAutoScroll) {
                   startTimerAutoScroll();
                 }
               },
               child: TabBarView(
                 controller: tabController,
-                physics: scrollable ? scrollPhysics : const NeverScrollableScrollPhysics(),
+                physics: isScrollable ? scrollPhysics : const NeverScrollableScrollPhysics(),
                 children: tabs,
               ),
             ),
@@ -537,9 +530,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                   return Container(
                     alignment: Alignment.center,
                     width: widthDevice / 4,
-                    child: showSkipBtn
+                    child: isShowSkipBtn
                         ? buildSkipButton(currentTabIndex)
-                        : (showPrevBtn ? buildPrevButton(currentTabIndex) : const SizedBox.shrink()),
+                        : (isShowPrevBtn ? buildPrevButton(currentTabIndex) : const SizedBox.shrink()),
                   );
                 }),
 
@@ -568,10 +561,10 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                     width: widthDevice / 4,
                     height: 50,
                     child: currentTabIndex + 1 == lengthSlide
-                        ? showDoneBtn
+                        ? isShowDoneBtn
                             ? buildDoneButton()
                             : const SizedBox.shrink()
-                        : showNextBtn
+                        : isShowNextBtn
                             ? buildNextButton()
                             : const SizedBox.shrink(),
                   );
