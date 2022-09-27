@@ -191,8 +191,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       ),
 
       // Scroll behavior
-      autoScroll: true,
-      loopAutoScroll: true,
+      isAutoScroll: true,
+      isLoopAutoScroll: true,
       curveScroll: Curves.bounceIn,
     );
   }

@@ -1,7 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
-import 'package:universal_io/io.dart';
 
 class IntroSliderTab extends StatelessWidget {
   const IntroSliderTab({
@@ -120,17 +118,11 @@ class IntroSliderTab extends StatelessWidget {
               : 0,
         ),
         child: verticalScrollbarBehavior != ScrollbarBehavior.hide
-            ? Platform.isIOS
-                ? CupertinoScrollbar(
-                    thumbVisibility: verticalScrollbarBehavior ==
-                        ScrollbarBehavior.alwaysShow,
-                    child: listView,
-                  )
-                : Scrollbar(
-                    thumbVisibility: verticalScrollbarBehavior ==
-                        ScrollbarBehavior.alwaysShow,
-                    child: listView,
-                  )
+            ? Scrollbar(
+                thumbVisibility:
+                    verticalScrollbarBehavior == ScrollbarBehavior.alwaysShow,
+                child: listView,
+              )
             : listView,
       ),
     );
