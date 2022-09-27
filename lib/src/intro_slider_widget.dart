@@ -232,11 +232,13 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   final streamDecoIndicator = StreamController<PairIndicatorDecoration>();
   final streamMarginIndicatorFocusing = StreamController<PairIndicatorMargin>();
+  final streamCurrentTabIndex = StreamController<int>.broadcast();
 
   double currentAnimationValue = 0;
   int currentTabIndex = 0;
 
   late final int lengthSlide;
+  late double widthDevice;
   Timer? timerAutoScroll;
 
   @override
@@ -254,13 +256,16 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
     curveScroll = widget.curveScroll ?? Curves.ease;
 
+    streamCurrentTabIndex.add(0);
     onTabChangeCompleted = widget.onTabChangeCompleted;
     tabController = TabController(length: lengthSlide, vsync: this);
     tabController.addListener(() {
       if (tabController.indexIsChanging) {
         currentTabIndex = tabController.previousIndex;
+        streamCurrentTabIndex.add(currentTabIndex);
       } else {
         currentTabIndex = tabController.index;
+        streamCurrentTabIndex.add(currentTabIndex);
         onTabChangeCompleted?.call(tabController.index);
       }
       currentAnimationValue = tabController.animation?.value ?? 0;
@@ -379,6 +384,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     tabController.dispose();
     streamDecoIndicator.close();
     streamMarginIndicatorFocusing.close();
+    streamCurrentTabIndex.close();
     clearTimerAutoScroll();
     super.dispose();
   }
@@ -478,6 +484,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   @override
   Widget build(BuildContext context) {
+    print("Aaaaa");
+    widthDevice = MediaQuery.of(context).size.width;
     return Scaffold(
       body: DefaultTabController(
         length: lengthSlide,
@@ -511,9 +519,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     );
   }
 
-  Widget buildSkipButton() {
-    if (tabController.index + 1 == lengthSlide) {
-      return Container(width: MediaQuery.of(context).size.width / 4);
+  Widget buildSkipButton(currentTabIndex) {
+    if (currentTabIndex + 1 == lengthSlide) {
+      return Container(width: widthDevice / 4);
     } else {
       return TextButton(
         key: skipButtonKey,
@@ -524,18 +532,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     }
   }
 
-  Widget buildDoneButton() {
-    return TextButton(
-      key: doneButtonKey,
-      onPressed: onDonePress,
-      style: doneButtonStyle,
-      child: renderDoneBtn,
-    );
-  }
-
-  Widget buildPrevButton() {
-    if (tabController.index == 0) {
-      return Container(width: MediaQuery.of(context).size.width / 4);
+  Widget buildPrevButton(currentTabIndex) {
+    if (currentTabIndex == 0) {
+      return Container(width: widthDevice / 4);
     } else {
       return TextButton(
         key: prevButtonKey,
@@ -548,6 +547,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         child: renderPrevBtn,
       );
     }
+  }
+
+  Widget buildDoneButton() {
+    return TextButton(
+      key: doneButtonKey,
+      onPressed: onDonePress,
+      style: doneButtonStyle,
+      child: renderDoneBtn,
+    );
   }
 
   Widget buildNextButton() {
@@ -576,11 +584,18 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         child: Row(
           children: <Widget>[
             // Skip button
-            Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width / 4,
-              child: showSkipBtn ? buildSkipButton() : (showPrevBtn ? buildPrevButton() : const SizedBox.shrink()),
-            ),
+            StreamBuilder<int>(
+                stream: streamCurrentTabIndex.stream,
+                builder: (context, snapshot) {
+                  int currentTabIndex = snapshot.data ?? 0;
+                  return Container(
+                    alignment: Alignment.center,
+                    width: widthDevice / 4,
+                    child: showSkipBtn
+                        ? buildSkipButton(currentTabIndex)
+                        : (showPrevBtn ? buildPrevButton(currentTabIndex) : const SizedBox.shrink()),
+                  );
+                }),
 
             // Indicator
             Flexible(
@@ -598,18 +613,23 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
             ),
 
             // Next, Done button
-            Container(
-              alignment: Alignment.center,
-              width: MediaQuery.of(context).size.width / 4,
-              height: 50,
-              child: tabController.index + 1 == lengthSlide
-                  ? showDoneBtn
-                      ? buildDoneButton()
-                      : const SizedBox.shrink()
-                  : showNextBtn
-                      ? buildNextButton()
-                      : const SizedBox.shrink(),
-            ),
+            StreamBuilder<int>(
+                stream: streamCurrentTabIndex.stream,
+                builder: (context, snapshot) {
+                  int currentTabIndex = snapshot.data ?? 0;
+                  return Container(
+                    alignment: Alignment.center,
+                    width: widthDevice / 4,
+                    height: 50,
+                    child: currentTabIndex + 1 == lengthSlide
+                        ? showDoneBtn
+                            ? buildDoneButton()
+                            : const SizedBox.shrink()
+                        : showNextBtn
+                            ? buildNextButton()
+                            : const SizedBox.shrink(),
+                  );
+                }),
           ],
         ),
       ),
