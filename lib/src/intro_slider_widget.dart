@@ -484,7 +484,6 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   @override
   Widget build(BuildContext context) {
-    print("Aaaaa");
     widthDevice = MediaQuery.of(context).size.width;
     return Scaffold(
       body: DefaultTabController(
@@ -516,59 +515,6 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         ),
       ),
       backgroundColor: widget.backgroundColorAllTabs ?? Colors.transparent,
-    );
-  }
-
-  Widget buildSkipButton(currentTabIndex) {
-    if (currentTabIndex + 1 == lengthSlide) {
-      return Container(width: widthDevice / 4);
-    } else {
-      return TextButton(
-        key: skipButtonKey,
-        onPressed: onSkipPress,
-        style: skipButtonStyle,
-        child: renderSkipBtn,
-      );
-    }
-  }
-
-  Widget buildPrevButton(currentTabIndex) {
-    if (currentTabIndex == 0) {
-      return Container(width: widthDevice / 4);
-    } else {
-      return TextButton(
-        key: prevButtonKey,
-        onPressed: () {
-          if (!isAnimating()) {
-            tabController.animateTo(tabController.index - 1, curve: curveScroll);
-          }
-        },
-        style: prevButtonStyle,
-        child: renderPrevBtn,
-      );
-    }
-  }
-
-  Widget buildDoneButton() {
-    return TextButton(
-      key: doneButtonKey,
-      onPressed: onDonePress,
-      style: doneButtonStyle,
-      child: renderDoneBtn,
-    );
-  }
-
-  Widget buildNextButton() {
-    return TextButton(
-      key: nextButtonKey,
-      onPressed: () {
-        onNextPress?.call();
-        if (!isAnimating()) {
-          tabController.animateTo(tabController.index + 1, curve: curveScroll);
-        }
-      },
-      style: nextButtonStyle,
-      child: renderNextBtn,
     );
   }
 
@@ -636,16 +582,73 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     );
   }
 
+  Widget buildSkipButton(currentTabIndex) {
+    if (currentTabIndex + 1 == lengthSlide) {
+      return Container(width: widthDevice / 4);
+    } else {
+      return TextButton(
+        key: skipButtonKey,
+        onPressed: onSkipPress,
+        style: skipButtonStyle,
+        child: renderSkipBtn,
+      );
+    }
+  }
+
+  Widget buildPrevButton(currentTabIndex) {
+    if (currentTabIndex == 0) {
+      return Container(width: widthDevice / 4);
+    } else {
+      return TextButton(
+        key: prevButtonKey,
+        onPressed: () {
+          if (!isAnimating()) {
+            tabController.animateTo(tabController.index - 1, curve: curveScroll);
+          }
+        },
+        style: prevButtonStyle,
+        child: renderPrevBtn,
+      );
+    }
+  }
+
+  Widget buildDoneButton() {
+    return TextButton(
+      key: doneButtonKey,
+      onPressed: onDonePress,
+      style: doneButtonStyle,
+      child: renderDoneBtn,
+    );
+  }
+
+  Widget buildNextButton() {
+    return TextButton(
+      key: nextButtonKey,
+      onPressed: () {
+        onNextPress?.call();
+        if (!isAnimating()) {
+          tabController.animateTo(tabController.index + 1, curve: curveScroll);
+        }
+      },
+      style: nextButtonStyle,
+      child: renderNextBtn,
+    );
+  }
+
   Widget renderActiveIndicator() {
     return StreamBuilder<PairIndicatorMargin>(
       stream: streamMarginIndicatorFocusing.stream,
       builder: (context, snapshot) {
-        PairIndicatorMargin? pairMargin = snapshot.data;
-        if (pairMargin == null) return const SizedBox.shrink();
+        var pairIndicatorMargin = snapshot.data;
+        if (pairIndicatorMargin == null) return const SizedBox.shrink();
         return Container(
           margin: EdgeInsets.only(
-            left: isRTLLanguage(Localizations.localeOf(context).languageCode) ? pairMargin.right : pairMargin.left,
-            right: isRTLLanguage(Localizations.localeOf(context).languageCode) ? pairMargin.left : pairMargin.right,
+            left: isRTLLanguage(Localizations.localeOf(context).languageCode)
+                ? pairIndicatorMargin.right
+                : pairIndicatorMargin.left,
+            right: isRTLLanguage(Localizations.localeOf(context).languageCode)
+                ? pairIndicatorMargin.left
+                : pairIndicatorMargin.right,
           ),
           child: activeIndicatorWidget ?? indicatorWidget ?? renderDefaultDot(sizeIndicator, colorActiveIndicator),
         );
@@ -657,15 +660,12 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     return StreamBuilder<PairIndicatorDecoration>(
       stream: streamDecoIndicator.stream,
       builder: (context, snapshot) {
-        PairIndicatorDecoration? pairIndicator = snapshot.data;
-        if (pairIndicator != null) {
-          return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: generateListIndicator(pairIndicator.opacity, pairIndicator.size),
-          );
-        } else {
-          return const SizedBox.shrink();
-        }
+        var pairIndicatorDecoration = snapshot.data;
+        if (pairIndicatorDecoration == null) return const SizedBox.shrink();
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: generateListIndicator(pairIndicatorDecoration.opacity, pairIndicatorDecoration.size),
+        );
       },
     );
   }
@@ -675,15 +675,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     for (var i = 0; i < lengthSlide; i++) {
       double opacityCurrentIndicator = opacityIndicators[i];
       if (opacityCurrentIndicator >= 0 && opacityCurrentIndicator <= 1) {
-        indicators.add(renderIndicators(sizeIndicators[i], colorIndicator, opacityIndicators[i], i));
+        indicators.add(renderIndicator(sizeIndicators[i], colorIndicator, opacityIndicators[i], i));
       } else {
-        indicators.add(renderIndicators(sizeIndicators[i], colorIndicator, 1, i));
+        indicators.add(renderIndicator(sizeIndicators[i], colorIndicator, 1, i));
       }
     }
     return indicators;
   }
 
-  Widget renderIndicators(double size, Color? color, double opacity, int index) {
+  Widget renderIndicator(double size, Color? color, double opacity, int index) {
     double space = spaceBetweenIndicator / 2;
     return Container(
       margin: EdgeInsets.only(left: space, right: space),
