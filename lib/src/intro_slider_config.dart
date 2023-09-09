@@ -25,11 +25,12 @@ class PairIndicatorMargin<T1, T2> {
   PairIndicatorMargin(this.left, this.right);
 }
 
-class PairIndicatorDecoration<T1, T2> {
-  final List<double> size;
-  final List<double> opacity;
+class TripIndicatorDecoration<T1, T2, T3> {
+  final List<double> sizes;
+  final List<double> opacities;
+  final List<bool> isActives;
 
-  PairIndicatorDecoration(this.size, this.opacity);
+  TripIndicatorDecoration(this.sizes, this.opacities, this.isActives);
 }
 
 class IndicatorConfig {

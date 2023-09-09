@@ -23,7 +23,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^4.2.0
+  intro_slider: ^4.2.1
 ```
 
 Import
@@ -555,16 +555,16 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
 <br>
 
 ## IndicatorConfig parameter
-| Name                   | Type                           | Default                         | Description                                                                                                                 |
-| ---------------------- | ------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| isShowIndicator        | `bool?`                        | true                            | Show or hide indicator                                                                                                      |
-| colorIndicator         | `Color?`                       | Colors.black54                  | Color indicator when passive, note: ignore if using custom indicator                                                        |
-| colorActiveIndicator   | `Color?`                       | colorIndicator                  | Color indicator when active (focusing), <br>note: ignore if using custom indicator or TypeIndicatorAnimation.sizeTransition |
-| sizeIndicator          | `double?`                      | 8.0                             | Size of each indicator                                                                                                      |
-| spaceBetweenIndicator  | `double?`                      | The same value of sizeIndicator | Space between every indicator                                                                                               |
-| typeIndicatorAnimation | `enum TypeIndicatorAnimation?` | TypeIndicatorAnimation.sliding  | Type indicator animation                                                                                                    |
-| indicatorWidget        | `Widget?`                      | Default dot                     | Your custom indicator widget                                                                                                |
-| activeIndicatorWidget  | `Widget?`                      | Default dot                     | Your custom active (focusing) indicator widget, <br>note: ignore if using TypeIndicatorAnimation.sizeTransition             |
+| Name                   | Type                           | Default                         | Description                                                                                                     |
+| ---------------------- | ------------------------------ | ------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| isShowIndicator        | `bool?`                        | true                            | Show or hide indicator                                                                                          |
+| colorIndicator         | `Color?`                       | Colors.black54                  | Color indicator when passive, note: ignore if using custom indicator                                            |
+| colorActiveIndicator   | `Color?`                       | value of colorIndicator         | Color indicator when active (focusing), note: ignore if using custom indicator                                  |
+| sizeIndicator          | `double?`                      | 8.0                             | Size of each indicator                                                                                          |
+| spaceBetweenIndicator  | `double?`                      | The same value of sizeIndicator | Space between every indicator                                                                                   |
+| typeIndicatorAnimation | `enum TypeIndicatorAnimation?` | TypeIndicatorAnimation.sliding  | Type indicator animation                                                                                        |
+| indicatorWidget        | `Widget?`                      | Default dot                     | Your custom indicator widget                                                                                    |
+| activeIndicatorWidget  | `Widget?`                      | Default dot                     | Your custom active (focusing) indicator widget, <br>note: ignore if using TypeIndicatorAnimation.sizeTransition |
 
 <br>
 

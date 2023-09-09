@@ -1,3 +1,6 @@
+## 4.2.1
+* Make able to use colorActiveIndicator when using TypeIndicatorAnimation.sizeTransition
+
 ## 4.2.0
 * Optimize render
 * Remove some unnecessary code

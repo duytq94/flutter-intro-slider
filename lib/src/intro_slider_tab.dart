@@ -19,7 +19,7 @@ class IntroSliderTab extends StatelessWidget {
           // Title
           margin: contentConfig?.marginTitle ??
               const EdgeInsets.only(
-                  top: 70.0, bottom: 50.0, left: 20.0, right: 20.0),
+                  top: 70.0, bottom: 50.0, left: 20.0, right: 20.0,),
           child: contentConfig?.widgetTitle ??
               Text(
                 contentConfig?.title ?? '',

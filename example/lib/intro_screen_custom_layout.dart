@@ -50,8 +50,7 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
       shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor:
-          MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
+      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
       overlayColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
     );
   }
@@ -77,12 +76,10 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
                   color: secondColor,
                 ),
                 onChanged: (String? value) {},
-                items: ["0", "1", "2"]
-                    .map<DropdownMenuItem<String>>((String value) {
+                items: ["0", "1", "2"].map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value,
-                        style: TextStyle(color: secondColor, fontSize: 20)),
+                    child: Text(value, style: TextStyle(color: secondColor, fontSize: 20)),
                   );
                 }).toList(),
               ),
@@ -133,6 +130,7 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
       // Indicator
       indicatorConfig: const IndicatorConfig(
         colorIndicator: Color(0xffffcc5c),
+        colorActiveIndicator: Colors.blue,
         sizeIndicator: 13.0,
         typeIndicatorAnimation: TypeIndicatorAnimation.sizeTransition,
       ),
