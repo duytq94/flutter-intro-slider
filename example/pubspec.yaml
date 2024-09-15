@@ -1,8 +1,8 @@
 name: intro_slider_example
-description: Demonstrates how to use the intro_slider plugin.
+description: This is the example using intro_slider
 
 environment:
-  sdk: ">=2.17.0 <3.0.0"
+  sdk: ^3.5.3
 
 dependencies:
   cupertino_icons: ^1.0.4
