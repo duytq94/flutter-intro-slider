@@ -1,3 +1,6 @@
+## 4.2.3
+* Fix deprecated attributes
+
 ## 4.2.2
 * Support hot reload
 

@@ -23,7 +23,7 @@ Add to pubspec.yaml file
 
 ```sh
 dependencies:
-  intro_slider: ^4.2.2
+  intro_slider: ^4.2.3
 ```
 
 Import
@@ -290,7 +290,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           top: MediaQuery.of(context).viewPadding.top > 0 ? 20 : 10,
           bottom: MediaQuery.of(context).viewPadding.bottom > 0 ? 20 : 10,
         ),
-        backgroundColor: Colors.black.withOpacity(0.5),
+        backgroundColor: Colors.black.withValues(alpha: 0.5),
       ),
 
       // Scroll behavior
