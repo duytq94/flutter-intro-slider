@@ -51,7 +51,6 @@ class IntroScreenDefaultState extends State<IntroScreenDefault> {
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
-      key: UniqueKey(),
       listContentConfig: listContentConfig,
       onDonePress: onDonePress,
     );

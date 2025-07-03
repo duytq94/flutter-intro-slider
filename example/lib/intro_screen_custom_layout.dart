@@ -49,9 +49,9 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
 
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
-      shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      backgroundColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
-      overlayColor: MaterialStateProperty.all<Color>(const Color(0x33ffcc5c)),
+      shape: WidgetStateProperty.all<OutlinedBorder>(const StadiumBorder()),
+      backgroundColor: WidgetStateProperty.all<Color>(const Color(0x33ffcc5c)),
+      overlayColor: WidgetStateProperty.all<Color>(const Color(0x33ffcc5c)),
     );
   }
 
@@ -113,7 +113,6 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
-      key: UniqueKey(),
       // Skip button
       renderSkipBtn: renderSkipBtn(),
       skipButtonStyle: myButtonStyle(),

@@ -1,3 +1,6 @@
+## 4.2.2
+* Support hot reload
+
 ## 4.2.1
 * Make able to use colorActiveIndicator when using TypeIndicatorAnimation.sizeTransition
 

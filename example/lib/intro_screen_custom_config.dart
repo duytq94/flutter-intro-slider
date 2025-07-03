@@ -132,16 +132,15 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
 
   ButtonStyle myButtonStyle() {
     return ButtonStyle(
-      shape: MaterialStateProperty.all<OutlinedBorder>(const StadiumBorder()),
-      foregroundColor: MaterialStateProperty.all<Color>(activeColor),
-      backgroundColor: MaterialStateProperty.all<Color>(inactiveColor),
+      shape: WidgetStateProperty.all<OutlinedBorder>(const StadiumBorder()),
+      foregroundColor: WidgetStateProperty.all<Color>(activeColor),
+      backgroundColor: WidgetStateProperty.all<Color>(inactiveColor),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return IntroSlider(
-      key: UniqueKey(),
       // Content config
       listContentConfig: listContentConfig,
       backgroundColorAllTabs: Colors.grey,
@@ -184,7 +183,7 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
           top: MediaQuery.of(context).viewPadding.top > 0 ? 20 : 10,
           bottom: MediaQuery.of(context).viewPadding.bottom > 0 ? 20 : 10,
         ),
-        backgroundColor: Colors.black.withOpacity(0.5),
+        backgroundColor: Colors.black.withValues(alpha: 0.5),
       ),
 
       // Scroll behavior

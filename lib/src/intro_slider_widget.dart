@@ -171,104 +171,108 @@ class IntroSlider extends StatefulWidget {
   IntroSliderState createState() => IntroSliderState();
 }
 
-class IntroSliderState extends State<IntroSlider> with SingleTickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin {
   // ---------- Tabs ----------
-  List<Widget>? listCustomTabs;
-  Function? onTabChangeCompleted;
+  List<ContentConfig>? _listContentConfig;
+  List<Widget>? _listCustomTabs;
+  Function? _onTabChangeCompleted;
 
   // ---------- SKIP button ----------
-  late final Widget renderSkipBtn;
-  late final void Function()? onSkipPress;
-  late final ButtonStyle skipButtonStyle;
-  late final bool isShowSkipBtn;
-  late final Key? skipButtonKey;
+  late Widget _renderSkipBtn;
+  late void Function()? _onSkipPress;
+  late ButtonStyle _skipButtonStyle;
+  late bool _isShowSkipBtn;
+  late final Key? _skipButtonKey;
 
   // ---------- PREV button ----------
-  late final Widget renderPrevBtn;
-  late final ButtonStyle prevButtonStyle;
-  late final bool isShowPrevBtn;
-  late final Key? prevButtonKey;
+  late Widget _renderPrevBtn;
+  late ButtonStyle _prevButtonStyle;
+  late bool _isShowPrevBtn;
+  late final Key? _prevButtonKey;
 
   // ---------- DONE button ----------
-  late final Widget renderDoneBtn;
-  late final void Function()? onDonePress;
-  late final ButtonStyle doneButtonStyle;
-  late final bool isShowDoneBtn;
-  late final Key? doneButtonKey;
+  late Widget _renderDoneBtn;
+  late void Function()? _onDonePress;
+  late ButtonStyle _doneButtonStyle;
+  late bool _isShowDoneBtn;
+  late final Key? _doneButtonKey;
 
   // ---------- NEXT button ----------
-  late final Widget renderNextBtn;
-  late final ButtonStyle nextButtonStyle;
-  late final bool isShowNextBtn;
-  late final void Function()? onNextPress;
-  late final Key? nextButtonKey;
+  late Widget _renderNextBtn;
+  late ButtonStyle _nextButtonStyle;
+  late bool _isShowNextBtn;
+  late void Function()? _onNextPress;
+  late final Key? _nextButtonKey;
 
   // ---------- Indicator ----------
-  late final bool isShowIndicator;
-  late final Color colorIndicator;
-  late final Color colorActiveIndicator;
-  late final double sizeIndicator;
-  late final double spaceBetweenIndicator;
-  late final TypeIndicatorAnimation typeIndicatorAnimation;
-  late final Widget? indicatorWidget;
-  late final Widget? activeIndicatorWidget;
+  late bool _isShowIndicator;
+  late Color _colorIndicator;
+  late Color _colorActiveIndicator;
+  late double _sizeIndicator;
+  late double _spaceBetweenIndicator;
+  late TypeIndicatorAnimation _typeIndicatorAnimation;
+  late Widget? _indicatorWidget;
+  late Widget? _activeIndicatorWidget;
 
   // ---------- Scroll behavior ----------
-  late final bool isScrollable;
-  late final ScrollPhysics scrollPhysics;
-  late final bool isAutoScroll;
-  late final bool isLoopAutoScroll;
-  late final bool isPauseAutoPlayOnTouch;
-  late final Duration autoScrollInterval;
-  late final Curve curveScroll;
+  late bool _isScrollable;
+  late ScrollPhysics _scrollPhysics;
+  late bool _isAutoScroll;
+  late bool _isLoopAutoScroll;
+  late bool _isPauseAutoPlayOnTouch;
+  late Duration _autoScrollInterval;
+  late Curve _curveScroll;
 
   // ---------- Navigation bar ----------
-  late final NavigationBarConfig navigationBarConfig;
+  late NavigationBarConfig _navigationBarConfig;
 
   // ---------- Internal variable  ----------
-  late TabController tabController;
+  late TabController _tabController;
 
   List<Widget> tabs = [];
 
-  final streamDecoIndicator = StreamController<TripIndicatorDecoration>();
-  final streamMarginIndicatorFocusing = StreamController<PairIndicatorMargin>();
-  final streamCurrentTabIndex = StreamController<int>.broadcast();
+  final _streamDecorIndicator = StreamController<TripIndicatorDecoration>();
+  final _streamMarginIndicatorFocusing = StreamController<PairIndicatorMargin>();
+  final _streamCurrentTabIndex = StreamController<int>.broadcast();
 
-  double currentAnimationValue = 0;
-  int currentTabIndex = 0;
+  double _currentAnimationValue = 0;
+  int _currentTabIndex = 0;
 
-  late final int lengthSlide;
-  late double widthDevice;
-  Timer? timerAutoScroll;
+  late int _lengthSlide;
+  late double _widthDevice;
+  Timer? _timerAutoScroll;
 
   @override
   void initState() {
     super.initState();
-    skipButtonKey = widget.skipButtonKey;
-    prevButtonKey = widget.prevButtonKey;
-    doneButtonKey = widget.doneButtonKey;
-    nextButtonKey = widget.nextButtonKey;
+    _skipButtonKey = widget.skipButtonKey;
+    _prevButtonKey = widget.prevButtonKey;
+    _doneButtonKey = widget.doneButtonKey;
+    _nextButtonKey = widget.nextButtonKey;
 
-    lengthSlide = widget.listContentConfig?.length ?? widget.listCustomTabs?.length ?? 0;
-    isAutoScroll = widget.isAutoScroll ?? false;
-    isLoopAutoScroll = widget.isLoopAutoScroll ?? false;
-    isPauseAutoPlayOnTouch = widget.isPauseAutoPlayOnTouch ?? true;
-    autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
-    curveScroll = widget.curveScroll ?? Curves.ease;
+    _listContentConfig = widget.listContentConfig != null ? [...widget.listContentConfig!] : null;
+    _listCustomTabs = widget.listCustomTabs != null ? [...widget.listCustomTabs!] : null;
 
-    streamCurrentTabIndex.add(0);
-    onTabChangeCompleted = widget.onTabChangeCompleted;
-    tabController = TabController(length: lengthSlide, vsync: this);
-    tabController.addListener(() {
-      if (!tabController.indexIsChanging) {
-        currentTabIndex = tabController.index;
-        streamCurrentTabIndex.add(currentTabIndex);
-        onTabChangeCompleted?.call(tabController.index);
+    _lengthSlide = _listContentConfig?.length ?? _listCustomTabs?.length ?? 0;
+    _isAutoScroll = widget.isAutoScroll ?? false;
+    _isLoopAutoScroll = widget.isLoopAutoScroll ?? false;
+    _isPauseAutoPlayOnTouch = widget.isPauseAutoPlayOnTouch ?? true;
+    _autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
+    _curveScroll = widget.curveScroll ?? Curves.ease;
+
+    _streamCurrentTabIndex.add(0);
+    _onTabChangeCompleted = widget.onTabChangeCompleted;
+    _tabController = TabController(length: _lengthSlide, vsync: this);
+    _tabController.addListener(() {
+      if (!_tabController.indexIsChanging) {
+        _currentTabIndex = _tabController.index;
+        _streamCurrentTabIndex.add(_currentTabIndex);
+        _onTabChangeCompleted?.call(_tabController.index);
       }
-      currentAnimationValue = tabController.animation?.value ?? 0;
+      _currentAnimationValue = _tabController.animation?.value ?? 0;
     });
 
-    if (isAutoScroll) {
+    if (_isAutoScroll) {
       _startTimerAutoScroll();
     }
 
@@ -276,130 +280,120 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     widget.refFuncGoToTab?.call(_goToTab);
 
     // Indicator
-    isShowIndicator = widget.indicatorConfig?.isShowIndicator ?? true;
-    colorIndicator = widget.indicatorConfig?.colorIndicator ?? Colors.black54;
-    colorActiveIndicator = widget.indicatorConfig?.colorActiveIndicator ?? colorIndicator;
-    sizeIndicator = widget.indicatorConfig?.sizeIndicator ?? 8;
-    spaceBetweenIndicator = widget.indicatorConfig?.spaceBetweenIndicator ?? sizeIndicator;
-    typeIndicatorAnimation = widget.indicatorConfig?.typeIndicatorAnimation ?? TypeIndicatorAnimation.sliding;
-    indicatorWidget = widget.indicatorConfig?.indicatorWidget;
-    activeIndicatorWidget = widget.indicatorConfig?.activeIndicatorWidget;
+    _isShowIndicator = widget.indicatorConfig?.isShowIndicator ?? true;
+    _colorIndicator = widget.indicatorConfig?.colorIndicator ?? Colors.black54;
+    _colorActiveIndicator = widget.indicatorConfig?.colorActiveIndicator ?? _colorIndicator;
+    _sizeIndicator = widget.indicatorConfig?.sizeIndicator ?? 8;
+    _spaceBetweenIndicator = widget.indicatorConfig?.spaceBetweenIndicator ?? _sizeIndicator;
+    _typeIndicatorAnimation = widget.indicatorConfig?.typeIndicatorAnimation ?? TypeIndicatorAnimation.sliding;
+    _indicatorWidget = widget.indicatorConfig?.indicatorWidget;
+    _activeIndicatorWidget = widget.indicatorConfig?.activeIndicatorWidget;
 
     // Navigation bar
     NavigationBarConfig? tempNavigationBarConfig = widget.navigationBarConfig;
     if (tempNavigationBarConfig != null) {
-      navigationBarConfig = tempNavigationBarConfig;
+      _navigationBarConfig = tempNavigationBarConfig;
     } else {
-      navigationBarConfig = NavigationBarConfig();
+      _navigationBarConfig = NavigationBarConfig();
     }
 
-    double initValueMarginRight = (sizeIndicator + spaceBetweenIndicator) * (lengthSlide - 1);
+    double initValueMarginRight = (_sizeIndicator + _spaceBetweenIndicator) * (_lengthSlide - 1);
     List<double> sizeIndicators = [];
     List<double> opacityIndicators = [];
     List<bool> isActives = [];
 
-    switch (typeIndicatorAnimation) {
+    switch (_typeIndicatorAnimation) {
       case TypeIndicatorAnimation.sliding:
-        for (var i = 0; i < lengthSlide; i++) {
-          sizeIndicators.add(sizeIndicator);
+        for (var i = 0; i < _lengthSlide; i++) {
+          sizeIndicators.add(_sizeIndicator);
           opacityIndicators.add(1);
           isActives.add(false);
         }
-        streamMarginIndicatorFocusing.add(PairIndicatorMargin(0.0, initValueMarginRight));
+        _streamMarginIndicatorFocusing.add(PairIndicatorMargin(0.0, initValueMarginRight));
         break;
       case TypeIndicatorAnimation.sizeTransition:
-        for (var i = 0; i < lengthSlide; i++) {
+        for (var i = 0; i < _lengthSlide; i++) {
           if (i == 0) {
-            sizeIndicators.add(sizeIndicator * 1.5);
+            sizeIndicators.add(_sizeIndicator * 1.5);
             opacityIndicators.add(1);
             isActives.add(true);
           } else {
-            sizeIndicators.add(sizeIndicator);
+            sizeIndicators.add(_sizeIndicator);
             opacityIndicators.add(0.5);
             isActives.add(false);
           }
         }
         break;
     }
-    streamDecoIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
+    _streamDecorIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
 
-    tabController.animation?.addListener(() {
-      if (tabController.animation == null) return;
-      double animationValue = tabController.animation!.value;
-      switch (typeIndicatorAnimation) {
+    _tabController.animation?.addListener(() {
+      if (_tabController.animation == null) return;
+      double animationValue = _tabController.animation!.value;
+      switch (_typeIndicatorAnimation) {
         case TypeIndicatorAnimation.sliding:
-          double spaceAvg = (sizeIndicator + spaceBetweenIndicator) / 2;
+          double spaceAvg = (_sizeIndicator + _spaceBetweenIndicator) / 2;
           double marginLeft = animationValue * spaceAvg * 2;
           double marginRight = initValueMarginRight - (animationValue * spaceAvg * 2);
-          streamMarginIndicatorFocusing.add(PairIndicatorMargin(marginLeft, marginRight));
+          _streamMarginIndicatorFocusing.add(PairIndicatorMargin(marginLeft, marginRight));
           break;
         case TypeIndicatorAnimation.sizeTransition:
-          if (animationValue == currentAnimationValue) {
+          if (animationValue == _currentAnimationValue) {
             break;
           }
-          double diffValueAnimation = (animationValue - currentAnimationValue).abs();
-          final diffValueIndex = (currentTabIndex - tabController.index).abs();
-          if (tabController.indexIsChanging && (tabController.index - tabController.previousIndex).abs() > 1) {
+          double diffValueAnimation = (animationValue - _currentAnimationValue).abs();
+          final diffValueIndex = (_currentTabIndex - _tabController.index).abs();
+          if (_tabController.indexIsChanging && (_tabController.index - _tabController.previousIndex).abs() > 1) {
             // When press skip button
             if (diffValueAnimation < 1) {
               diffValueAnimation = 1;
             }
-            sizeIndicators[currentTabIndex] =
-                sizeIndicator * 1.5 - (sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-            sizeIndicators[tabController.index] =
-                sizeIndicator + (sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-            opacityIndicators[currentTabIndex] = 1 - (diffValueAnimation / diffValueIndex) / 2;
-            opacityIndicators[tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
-            isActives[currentTabIndex] = false;
-            isActives[tabController.index] = true;
+            sizeIndicators[_currentTabIndex] =
+                _sizeIndicator * 1.5 - (_sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
+            sizeIndicators[_tabController.index] =
+                _sizeIndicator + (_sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
+            opacityIndicators[_currentTabIndex] = 1 - (diffValueAnimation / diffValueIndex) / 2;
+            opacityIndicators[_tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
+            isActives[_currentTabIndex] = false;
+            isActives[_tabController.index] = true;
           } else {
-            if (animationValue > currentAnimationValue) {
+            if (animationValue > _currentAnimationValue) {
               // Swipe left
-              sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 - (sizeIndicator / 2) * diffValueAnimation;
-              sizeIndicators[currentTabIndex + 1] = sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
-              opacityIndicators[currentTabIndex] = 1 - diffValueAnimation / 2;
-              opacityIndicators[currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
-              isActives[currentTabIndex] = false;
-              isActives[tabController.index] = true;
+              sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 - (_sizeIndicator / 2) * diffValueAnimation;
+              sizeIndicators[_currentTabIndex + 1] = _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
+              opacityIndicators[_currentTabIndex] = 1 - diffValueAnimation / 2;
+              opacityIndicators[_currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
+              isActives[_currentTabIndex] = false;
+              isActives[_tabController.index] = true;
             } else {
               // Swipe right
-              sizeIndicators[currentTabIndex] = sizeIndicator * 1.5 - (sizeIndicator / 2) * diffValueAnimation;
-              sizeIndicators[currentTabIndex - 1] = sizeIndicator + (sizeIndicator / 2) * diffValueAnimation;
-              opacityIndicators[currentTabIndex] = 1 - diffValueAnimation / 2;
-              opacityIndicators[currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
-              isActives[currentTabIndex] = false;
-              isActives[tabController.index] = true;
+              sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 - (_sizeIndicator / 2) * diffValueAnimation;
+              sizeIndicators[_currentTabIndex - 1] = _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
+              opacityIndicators[_currentTabIndex] = 1 - diffValueAnimation / 2;
+              opacityIndicators[_currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
+              isActives[_currentTabIndex] = false;
+              isActives[_tabController.index] = true;
             }
           }
-          streamDecoIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
+          _streamDecorIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
           break;
       }
     });
 
-    isScrollable = widget.isScrollable ?? true;
-    scrollPhysics = widget.scrollPhysics ?? const ScrollPhysics();
+    _isScrollable = widget.isScrollable ?? true;
+    _scrollPhysics = widget.scrollPhysics ?? const ScrollPhysics();
 
     _setupButtonDefaultValues();
 
-    tabs = widget.listCustomTabs ?? _renderTabsFromContentConfig(widget.listContentConfig!);
+    tabs = _listCustomTabs ?? _renderTabsFromContentConfig();
   }
 
-  @override
-  void dispose() {
-    tabController.dispose();
-    streamDecoIndicator.close();
-    streamMarginIndicatorFocusing.close();
-    streamCurrentTabIndex.close();
-    _clearTimerAutoScroll();
-    super.dispose();
-  }
-
-  List<Widget> _renderTabsFromContentConfig(List<ContentConfig> listContentConfig) {
+  List<Widget> _renderTabsFromContentConfig() {
     List<Widget> tempTabs = [];
-    for (var element in listContentConfig) {
+    for (var element in _listContentConfig!) {
       tempTabs.add(
         IntroSliderTab(
-          navigationBarConfig: navigationBarConfig,
+          navigationBarConfig: _navigationBarConfig,
           contentConfig: element,
         ),
       );
@@ -408,15 +402,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   }
 
   void _startTimerAutoScroll() {
-    timerAutoScroll = Timer.periodic(autoScrollInterval, (Timer timer) {
-      if (tabController.index < lengthSlide - 1) {
+    _timerAutoScroll = Timer.periodic(_autoScrollInterval, (Timer timer) {
+      if (_tabController.index < _lengthSlide - 1) {
         if (!_checkIsAnimating()) {
-          tabController.animateTo(tabController.index + 1, curve: curveScroll);
+          _tabController.animateTo(_tabController.index + 1, curve: _curveScroll);
         }
       } else {
-        if (isLoopAutoScroll) {
+        if (_isLoopAutoScroll) {
           if (!_checkIsAnimating()) {
-            tabController.animateTo(0, curve: curveScroll);
+            _tabController.animateTo(0, curve: _curveScroll);
           }
         }
       }
@@ -424,56 +418,56 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   }
 
   void _clearTimerAutoScroll() {
-    timerAutoScroll?.cancel();
-    timerAutoScroll = null;
+    _timerAutoScroll?.cancel();
+    _timerAutoScroll = null;
   }
 
   void _setupButtonDefaultValues() {
     // Skip button
-    onSkipPress = widget.onSkipPress ??
+    _onSkipPress = widget.onSkipPress ??
         () {
           if (!_checkIsAnimating()) {
-            if (lengthSlide > 0) {
-              tabController.animateTo(lengthSlide - 1, curve: curveScroll);
+            if (_lengthSlide > 0) {
+              _tabController.animateTo(_lengthSlide - 1, curve: _curveScroll);
             }
           }
         };
-    isShowSkipBtn = widget.isShowSkipBtn ?? true;
-    renderSkipBtn = widget.renderSkipBtn ?? const Text("SKIP");
-    skipButtonStyle = widget.skipButtonStyle ?? const ButtonStyle();
+    _isShowSkipBtn = widget.isShowSkipBtn ?? true;
+    _renderSkipBtn = widget.renderSkipBtn ?? const Text("SKIP");
+    _skipButtonStyle = widget.skipButtonStyle ?? const ButtonStyle();
 
     // Prev button
-    if (isShowSkipBtn) {
-      isShowPrevBtn = false;
+    if (_isShowSkipBtn) {
+      _isShowPrevBtn = false;
     } else {
-      isShowPrevBtn = widget.isShowPrevBtn ?? true;
+      _isShowPrevBtn = widget.isShowPrevBtn ?? true;
     }
 
-    renderPrevBtn = widget.renderPrevBtn ?? const Text("PREV");
-    prevButtonStyle = widget.prevButtonStyle ?? const ButtonStyle();
+    _renderPrevBtn = widget.renderPrevBtn ?? const Text("PREV");
+    _prevButtonStyle = widget.prevButtonStyle ?? const ButtonStyle();
 
-    isShowNextBtn = widget.isShowNextBtn ?? true;
+    _isShowNextBtn = widget.isShowNextBtn ?? true;
 
     // Done button
-    onDonePress = widget.onDonePress ?? () {};
-    renderDoneBtn = widget.renderDoneBtn ?? const Text("DONE");
-    doneButtonStyle = widget.doneButtonStyle ?? const ButtonStyle();
-    isShowDoneBtn = widget.isShowDoneBtn ?? true;
+    _onDonePress = widget.onDonePress ?? () {};
+    _renderDoneBtn = widget.renderDoneBtn ?? const Text("DONE");
+    _doneButtonStyle = widget.doneButtonStyle ?? const ButtonStyle();
+    _isShowDoneBtn = widget.isShowDoneBtn ?? true;
 
     // Next button
-    onNextPress = widget.onNextPress ?? () {};
-    renderNextBtn = widget.renderNextBtn ?? const Text("NEXT");
-    nextButtonStyle = widget.nextButtonStyle ?? const ButtonStyle();
+    _onNextPress = widget.onNextPress ?? () {};
+    _renderNextBtn = widget.renderNextBtn ?? const Text("NEXT");
+    _nextButtonStyle = widget.nextButtonStyle ?? const ButtonStyle();
   }
 
   void _goToTab(int index) {
-    if (index < tabController.length) {
-      tabController.animateTo(index, curve: curveScroll);
+    if (index < _tabController.length) {
+      _tabController.animateTo(index, curve: _curveScroll);
     }
   }
 
   bool _checkIsAnimating() {
-    Animation<double>? animation = tabController.animation;
+    Animation<double>? animation = _tabController.animation;
     if (animation != null) {
       return animation.value - animation.value.truncate() != 0;
     } else {
@@ -485,31 +479,65 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     return IntroSliderConfig.rtlLanguages.contains(language);
   }
 
+  void _reinitializeIndicatorStreams() {
+    double initValueMarginRight = (_sizeIndicator + _spaceBetweenIndicator) * (_lengthSlide - 1);
+    List<double> sizeIndicators = [];
+    List<double> opacityIndicators = [];
+    List<bool> isActives = [];
+
+    switch (_typeIndicatorAnimation) {
+      case TypeIndicatorAnimation.sliding:
+        for (var i = 0; i < _lengthSlide; i++) {
+          sizeIndicators.add(_sizeIndicator);
+          opacityIndicators.add(1);
+          isActives.add(false);
+        }
+        _streamMarginIndicatorFocusing.add(PairIndicatorMargin(0.0, initValueMarginRight));
+        break;
+      case TypeIndicatorAnimation.sizeTransition:
+        for (var i = 0; i < _lengthSlide; i++) {
+          if (i == 0) {
+            sizeIndicators.add(_sizeIndicator * 1.5);
+            opacityIndicators.add(1);
+            isActives.add(true);
+          } else {
+            sizeIndicators.add(_sizeIndicator);
+            opacityIndicators.add(0.5);
+            isActives.add(false);
+          }
+        }
+        break;
+    }
+    _streamDecorIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
+  }
+
   @override
   Widget build(BuildContext context) {
-    widthDevice = MediaQuery.of(context).size.width;
+    _widthDevice = MediaQuery.of(context).size.width;
     return Scaffold(
       body: DefaultTabController(
-        length: lengthSlide,
+        length: _lengthSlide,
         child: Stack(
           children: <Widget>[
             GestureDetector(
               onTapDown: (a) {
-                _clearTimerAutoScroll();
+                if (_isPauseAutoPlayOnTouch) {
+                  _clearTimerAutoScroll();
+                }
               },
               onTapUp: (a) {
-                if (isAutoScroll) {
+                if (_isAutoScroll && _isPauseAutoPlayOnTouch) {
                   _startTimerAutoScroll();
                 }
               },
               onTapCancel: () {
-                if (isAutoScroll) {
+                if (_isAutoScroll && _isPauseAutoPlayOnTouch) {
                   _startTimerAutoScroll();
                 }
               },
               child: TabBarView(
-                controller: tabController,
-                physics: isScrollable ? scrollPhysics : const NeverScrollableScrollPhysics(),
+                controller: _tabController,
+                physics: _isScrollable ? _scrollPhysics : const NeverScrollableScrollPhysics(),
                 children: tabs,
               ),
             ),
@@ -523,37 +551,37 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   Widget _buildNavigationBar() {
     return Positioned(
-      top: navigationBarConfig.navPosition == NavPosition.top ? 0 : null,
-      bottom: navigationBarConfig.navPosition == NavPosition.bottom ? 0 : null,
+      top: _navigationBarConfig.navPosition == NavPosition.top ? 0 : null,
+      bottom: _navigationBarConfig.navPosition == NavPosition.bottom ? 0 : null,
       left: 0,
       right: 0,
       child: Container(
-        padding: navigationBarConfig.padding,
-        color: navigationBarConfig.backgroundColor,
+        padding: _navigationBarConfig.padding,
+        color: _navigationBarConfig.backgroundColor,
         child: Row(
           children: <Widget>[
             // Skip button
             StreamBuilder<int>(
-                stream: streamCurrentTabIndex.stream,
+                stream: _streamCurrentTabIndex.stream,
                 builder: (context, snapshot) {
                   int currentTabIndex = snapshot.data ?? 0;
                   return Container(
                     alignment: Alignment.center,
-                    width: widthDevice / 4,
-                    child: isShowSkipBtn
+                    width: _widthDevice / 4,
+                    child: _isShowSkipBtn
                         ? _buildSkipButton(currentTabIndex)
-                        : (isShowPrevBtn ? _buildPrevButton(currentTabIndex) : const SizedBox.shrink()),
+                        : (_isShowPrevBtn ? _buildPrevButton(currentTabIndex) : const SizedBox.shrink()),
                   );
                 }),
 
             // Indicator
             Flexible(
-              child: isShowIndicator
+              child: _isShowIndicator
                   ? Stack(
                       alignment: Alignment.center,
                       children: <Widget>[
                         _buildListIndicator(),
-                        typeIndicatorAnimation == TypeIndicatorAnimation.sliding
+                        _typeIndicatorAnimation == TypeIndicatorAnimation.sliding
                             ? _buildActiveIndicator()
                             : const SizedBox.shrink()
                       ],
@@ -563,18 +591,18 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
             // Next, Done button
             StreamBuilder<int>(
-                stream: streamCurrentTabIndex.stream,
+                stream: _streamCurrentTabIndex.stream,
                 builder: (context, snapshot) {
                   int currentTabIndex = snapshot.data ?? 0;
                   return Container(
                     alignment: Alignment.center,
-                    width: widthDevice / 4,
+                    width: _widthDevice / 4,
                     height: 50,
-                    child: currentTabIndex + 1 == lengthSlide
-                        ? isShowDoneBtn
+                    child: currentTabIndex + 1 == _lengthSlide
+                        ? _isShowDoneBtn
                             ? _buildDoneButton()
                             : const SizedBox.shrink()
-                        : isShowNextBtn
+                        : _isShowNextBtn
                             ? _buildNextButton()
                             : const SizedBox.shrink(),
                   );
@@ -586,61 +614,61 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
   }
 
   Widget _buildSkipButton(currentTabIndex) {
-    if (currentTabIndex + 1 == lengthSlide) {
-      return Container(width: widthDevice / 4);
+    if (currentTabIndex + 1 == _lengthSlide) {
+      return Container(width: _widthDevice / 4);
     } else {
       return TextButton(
-        key: skipButtonKey,
-        onPressed: onSkipPress,
-        style: skipButtonStyle,
-        child: renderSkipBtn,
+        key: _skipButtonKey,
+        onPressed: _onSkipPress,
+        style: _skipButtonStyle,
+        child: _renderSkipBtn,
       );
     }
   }
 
   Widget _buildPrevButton(currentTabIndex) {
     if (currentTabIndex == 0) {
-      return Container(width: widthDevice / 4);
+      return Container(width: _widthDevice / 4);
     } else {
       return TextButton(
-        key: prevButtonKey,
+        key: _prevButtonKey,
         onPressed: () {
           if (!_checkIsAnimating()) {
-            tabController.animateTo(tabController.index - 1, curve: curveScroll);
+            _tabController.animateTo(_tabController.index - 1, curve: _curveScroll);
           }
         },
-        style: prevButtonStyle,
-        child: renderPrevBtn,
+        style: _prevButtonStyle,
+        child: _renderPrevBtn,
       );
     }
   }
 
   Widget _buildDoneButton() {
     return TextButton(
-      key: doneButtonKey,
-      onPressed: onDonePress,
-      style: doneButtonStyle,
-      child: renderDoneBtn,
+      key: _doneButtonKey,
+      onPressed: _onDonePress,
+      style: _doneButtonStyle,
+      child: _renderDoneBtn,
     );
   }
 
   Widget _buildNextButton() {
     return TextButton(
-      key: nextButtonKey,
+      key: _nextButtonKey,
       onPressed: () {
-        onNextPress?.call();
+        _onNextPress?.call();
         if (!_checkIsAnimating()) {
-          tabController.animateTo(tabController.index + 1, curve: curveScroll);
+          _tabController.animateTo(_tabController.index + 1, curve: _curveScroll);
         }
       },
-      style: nextButtonStyle,
-      child: renderNextBtn,
+      style: _nextButtonStyle,
+      child: _renderNextBtn,
     );
   }
 
   Widget _buildActiveIndicator() {
     return StreamBuilder<PairIndicatorMargin>(
-      stream: streamMarginIndicatorFocusing.stream,
+      stream: _streamMarginIndicatorFocusing.stream,
       builder: (context, snapshot) {
         var pairIndicatorMargin = snapshot.data;
         if (pairIndicatorMargin == null) return const SizedBox.shrink();
@@ -653,9 +681,9 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
                 ? pairIndicatorMargin.left
                 : pairIndicatorMargin.right,
           ),
-          child: activeIndicatorWidget ??
-              indicatorWidget ??
-              _buildDefaultDot(size: sizeIndicator, color: colorActiveIndicator),
+          child: _activeIndicatorWidget ??
+              _indicatorWidget ??
+              _buildDefaultDot(size: _sizeIndicator, color: _colorActiveIndicator),
         );
       },
     );
@@ -663,7 +691,7 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
 
   Widget _buildListIndicator() {
     return StreamBuilder<TripIndicatorDecoration>(
-      stream: streamDecoIndicator.stream,
+      stream: _streamDecorIndicator.stream,
       builder: (context, snapshot) {
         var tripIndicatorDecoration = snapshot.data;
         if (tripIndicatorDecoration == null) return const SizedBox.shrink();
@@ -685,13 +713,13 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     List<bool> isActiveIndicators,
   ) {
     List<Widget> indicators = [];
-    for (var i = 0; i < lengthSlide; i++) {
+    for (var i = 0; i < _lengthSlide; i++) {
       double opacityCurrentIndicator = opacityIndicators[i];
-      if (opacityCurrentIndicator >= 0 && opacityCurrentIndicator <= 1 && colorActiveIndicator == colorIndicator) {
+      if (opacityCurrentIndicator >= 0 && opacityCurrentIndicator <= 1 && _colorActiveIndicator == _colorIndicator) {
         indicators.add(
           _buildOpacityIndicator(
             size: sizeIndicators[i],
-            color: colorIndicator,
+            color: _colorIndicator,
             opacity: opacityIndicators[i],
             index: i,
           ),
@@ -700,8 +728,8 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
         indicators.add(
           _buildIndicator(
             size: sizeIndicators[i],
-            color: colorIndicator,
-            colorActive: colorActiveIndicator,
+            color: _colorIndicator,
+            colorActive: _colorActiveIndicator,
             isActive: isActiveIndicators[i],
             index: i,
           ),
@@ -718,15 +746,15 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     required bool isActive,
     required int index,
   }) {
-    double space = spaceBetweenIndicator / 2;
+    double space = _spaceBetweenIndicator / 2;
     return Container(
       margin: EdgeInsets.only(left: space, right: space),
       child: GestureDetector(
         onTap: () {
-          tabController.animateTo(index, curve: curveScroll);
+          _tabController.animateTo(index, curve: _curveScroll);
         },
-        child: indicatorWidget != null
-            ? _buildCustomIndicator(currentSize: size, originSize: sizeIndicator, child: indicatorWidget!)
+        child: _indicatorWidget != null
+            ? _buildCustomIndicator(currentSize: size, originSize: _sizeIndicator, child: _indicatorWidget!)
             : _buildDefaultDot(size: size, color: isActive ? colorActive : color),
       ),
     );
@@ -738,17 +766,17 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
     required double opacity,
     required int index,
   }) {
-    double space = spaceBetweenIndicator / 2;
+    double space = _spaceBetweenIndicator / 2;
     return Container(
       margin: EdgeInsets.only(left: space, right: space),
       child: GestureDetector(
         onTap: () {
-          tabController.animateTo(index, curve: curveScroll);
+          _tabController.animateTo(index, curve: _curveScroll);
         },
         child: Opacity(
           opacity: opacity,
-          child: indicatorWidget != null
-              ? _buildCustomIndicator(currentSize: size, originSize: sizeIndicator, child: indicatorWidget!)
+          child: _indicatorWidget != null
+              ? _buildCustomIndicator(currentSize: size, originSize: _sizeIndicator, child: _indicatorWidget!)
               : _buildDefaultDot(size: size, color: color),
         ),
       ),
@@ -768,5 +796,212 @@ class IntroSliderState extends State<IntroSlider> with SingleTickerProviderState
       width: size,
       height: size,
     );
+  }
+
+  @override
+  void didUpdateWidget(covariant IntroSlider oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    bool needsRebuild = false;
+
+    // Check if tabs content changed
+    if (_listContentConfig != widget.listContentConfig || _listCustomTabs != widget.listCustomTabs) {
+      _listContentConfig = widget.listContentConfig != null ? [...widget.listContentConfig!] : null;
+      _listCustomTabs = widget.listCustomTabs != null ? [...widget.listCustomTabs!] : null;
+
+      // Update length if it changed
+      int newLengthSlide = widget.listContentConfig?.length ?? widget.listCustomTabs?.length ?? 0;
+      if (newLengthSlide != _lengthSlide) {
+        _lengthSlide = newLengthSlide;
+
+        // Recreate tab controller with new length
+        _tabController.dispose();
+        _tabController = TabController(length: _lengthSlide, vsync: this);
+        _tabController.addListener(() {
+          if (!_tabController.indexIsChanging) {
+            _currentTabIndex = _tabController.index;
+            _streamCurrentTabIndex.add(_currentTabIndex);
+            _onTabChangeCompleted?.call(_tabController.index);
+          }
+          _currentAnimationValue = _tabController.animation?.value ?? 0;
+        });
+
+        // Add animation listener for indicators
+        _tabController.animation?.addListener(() {
+          if (_tabController.animation == null) return;
+          double animationValue = _tabController.animation!.value;
+          switch (_typeIndicatorAnimation) {
+            case TypeIndicatorAnimation.sliding:
+              double spaceAvg = (_sizeIndicator + _spaceBetweenIndicator) / 2;
+              double marginLeft = animationValue * spaceAvg * 2;
+              double marginRight =
+                  (_sizeIndicator + _spaceBetweenIndicator) * (_lengthSlide - 1) - (animationValue * spaceAvg * 2);
+              _streamMarginIndicatorFocusing.add(PairIndicatorMargin(marginLeft, marginRight));
+              break;
+            case TypeIndicatorAnimation.sizeTransition:
+              if (animationValue == _currentAnimationValue) {
+                break;
+              }
+              double diffValueAnimation = (animationValue - _currentAnimationValue).abs();
+              final diffValueIndex = (_currentTabIndex - _tabController.index).abs();
+              List<double> sizeIndicators = List.generate(_lengthSlide, (index) => _sizeIndicator);
+              List<double> opacityIndicators = List.generate(_lengthSlide, (index) => 0.5);
+              List<bool> isActives = List.generate(_lengthSlide, (index) => false);
+
+              if (_tabController.indexIsChanging && (_tabController.index - _tabController.previousIndex).abs() > 1) {
+                // When press skip button
+                if (diffValueAnimation < 1) {
+                  diffValueAnimation = 1;
+                }
+                sizeIndicators[_currentTabIndex] =
+                    _sizeIndicator * 1.5 - (_sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
+                sizeIndicators[_tabController.index] =
+                    _sizeIndicator + (_sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
+                opacityIndicators[_currentTabIndex] = 1 - (diffValueAnimation / diffValueIndex) / 2;
+                opacityIndicators[_tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
+                isActives[_currentTabIndex] = false;
+                isActives[_tabController.index] = true;
+              } else {
+                if (animationValue > _currentAnimationValue) {
+                  // Swipe left
+                  if (_currentTabIndex + 1 < _lengthSlide) {
+                    sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 - (_sizeIndicator / 2) * diffValueAnimation;
+                    sizeIndicators[_currentTabIndex + 1] = _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
+                    opacityIndicators[_currentTabIndex] = 1 - diffValueAnimation / 2;
+                    opacityIndicators[_currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
+                    isActives[_currentTabIndex] = false;
+                    isActives[_tabController.index] = true;
+                  }
+                } else {
+                  // Swipe right
+                  if (_currentTabIndex - 1 >= 0) {
+                    sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 - (_sizeIndicator / 2) * diffValueAnimation;
+                    sizeIndicators[_currentTabIndex - 1] = _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
+                    opacityIndicators[_currentTabIndex] = 1 - diffValueAnimation / 2;
+                    opacityIndicators[_currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
+                    isActives[_currentTabIndex] = false;
+                    isActives[_tabController.index] = true;
+                  }
+                }
+              }
+              _streamDecorIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
+              break;
+          }
+        });
+
+        // Reset current tab index if it's out of bounds
+        if (_currentTabIndex >= _lengthSlide) {
+          _currentTabIndex = _lengthSlide > 0 ? _lengthSlide - 1 : 0;
+          _streamCurrentTabIndex.add(_currentTabIndex);
+        }
+
+        // Reinitialize indicator streams with new length
+        _reinitializeIndicatorStreams();
+      }
+
+      tabs = _listCustomTabs ?? _renderTabsFromContentConfig();
+      needsRebuild = true;
+    }
+
+    // Update button configurations
+    if (oldWidget.renderSkipBtn != widget.renderSkipBtn ||
+        oldWidget.skipButtonStyle != widget.skipButtonStyle ||
+        oldWidget.onSkipPress != widget.onSkipPress ||
+        oldWidget.isShowSkipBtn != widget.isShowSkipBtn ||
+        oldWidget.renderPrevBtn != widget.renderPrevBtn ||
+        oldWidget.prevButtonStyle != widget.prevButtonStyle ||
+        oldWidget.isShowPrevBtn != widget.isShowPrevBtn ||
+        oldWidget.renderNextBtn != widget.renderNextBtn ||
+        oldWidget.nextButtonStyle != widget.nextButtonStyle ||
+        oldWidget.onNextPress != widget.onNextPress ||
+        oldWidget.isShowNextBtn != widget.isShowNextBtn ||
+        oldWidget.renderDoneBtn != widget.renderDoneBtn ||
+        oldWidget.doneButtonStyle != widget.doneButtonStyle ||
+        oldWidget.onDonePress != widget.onDonePress ||
+        oldWidget.isShowDoneBtn != widget.isShowDoneBtn) {
+      _setupButtonDefaultValues();
+      needsRebuild = true;
+    }
+
+    // Update auto scroll behavior
+    if (oldWidget.isAutoScroll != widget.isAutoScroll ||
+        oldWidget.isLoopAutoScroll != widget.isLoopAutoScroll ||
+        oldWidget.isPauseAutoPlayOnTouch != widget.isPauseAutoPlayOnTouch ||
+        oldWidget.autoScrollInterval != widget.autoScrollInterval) {
+      _clearTimerAutoScroll();
+
+      // Update auto scroll properties (need to make these non-final)
+      _isAutoScroll = widget.isAutoScroll ?? false;
+      _isLoopAutoScroll = widget.isLoopAutoScroll ?? false;
+      _isPauseAutoPlayOnTouch = widget.isPauseAutoPlayOnTouch ?? true;
+      _autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
+
+      if (_isAutoScroll) {
+        _startTimerAutoScroll();
+      }
+      needsRebuild = true;
+    }
+
+    // Update scroll behavior
+    if (oldWidget.isScrollable != widget.isScrollable ||
+        oldWidget.scrollPhysics != widget.scrollPhysics ||
+        oldWidget.curveScroll != widget.curveScroll) {
+      _isScrollable = widget.isScrollable ?? true;
+      _scrollPhysics = widget.scrollPhysics ?? const ScrollPhysics();
+      _curveScroll = widget.curveScroll ?? Curves.ease;
+      needsRebuild = true;
+    }
+
+    // Update indicator configuration
+    if (oldWidget.indicatorConfig != widget.indicatorConfig) {
+      _isShowIndicator = widget.indicatorConfig?.isShowIndicator ?? true;
+      _colorIndicator = widget.indicatorConfig?.colorIndicator ?? Colors.black54;
+      _colorActiveIndicator = widget.indicatorConfig?.colorActiveIndicator ?? _colorIndicator;
+      _sizeIndicator = widget.indicatorConfig?.sizeIndicator ?? 8;
+      _spaceBetweenIndicator = widget.indicatorConfig?.spaceBetweenIndicator ?? _sizeIndicator;
+      _typeIndicatorAnimation = widget.indicatorConfig?.typeIndicatorAnimation ?? TypeIndicatorAnimation.sliding;
+      _indicatorWidget = widget.indicatorConfig?.indicatorWidget;
+      _activeIndicatorWidget = widget.indicatorConfig?.activeIndicatorWidget;
+      needsRebuild = true;
+    }
+
+    // Update navigation bar configuration
+    if (oldWidget.navigationBarConfig != widget.navigationBarConfig) {
+      NavigationBarConfig? tempNavigationBarConfig = widget.navigationBarConfig;
+      if (tempNavigationBarConfig != null) {
+        _navigationBarConfig = tempNavigationBarConfig;
+      } else {
+        _navigationBarConfig = NavigationBarConfig();
+      }
+      needsRebuild = true;
+    }
+
+    // Update callback
+    if (oldWidget.onTabChangeCompleted != widget.onTabChangeCompleted) {
+      _onTabChangeCompleted = widget.onTabChangeCompleted;
+      needsRebuild = true;
+    }
+
+    // Update reference function
+    if (oldWidget.refFuncGoToTab != widget.refFuncGoToTab) {
+      widget.refFuncGoToTab?.call(_goToTab);
+    }
+
+    // Trigger rebuild if any changes detected
+    if (needsRebuild || oldWidget.backgroundColorAllTabs != widget.backgroundColorAllTabs) {
+      setState(() {
+        // State is updated in the logic above
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    _streamDecorIndicator.close();
+    _streamMarginIndicatorFocusing.close();
+    _streamCurrentTabIndex.close();
+    _clearTimerAutoScroll();
+    super.dispose();
   }
 }
