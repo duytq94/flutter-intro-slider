@@ -46,6 +46,9 @@ class IntroSlider extends StatefulWidget {
   /// Show or hide PREV button (only visible if skip is hidden)
   final bool? isShowPrevBtn;
 
+  /// Fire when press PREV button
+  final void Function(int index)? onPrevPress;
+
   /// Assign key to PREV button
   final Key? prevButtonKey;
 
@@ -60,7 +63,7 @@ class IntroSlider extends StatefulWidget {
   final bool? isShowNextBtn;
 
   /// Fire when press NEXT button
-  final Function()? onNextPress;
+  final Function(int index)? onNextPress;
 
   /// Assign key to NEXT button
   final Key? nextButtonKey;
@@ -111,6 +114,10 @@ class IntroSlider extends StatefulWidget {
   /// Sets duration to determine the frequency of slides
   final Duration? autoScrollInterval;
 
+  /// Fire when user swipes between slides
+  final void Function(int previousIndex, int currentIndex, String direction)?
+      onSwipeCompleted;
+
   // Constructor
   const IntroSlider({
     super.key,
@@ -119,6 +126,7 @@ class IntroSlider extends StatefulWidget {
     this.backgroundColorAllTabs,
     this.listCustomTabs,
     this.onTabChangeCompleted,
+    this.onSwipeCompleted,
     this.refFuncGoToTab,
 
     // Skip
@@ -132,6 +140,7 @@ class IntroSlider extends StatefulWidget {
     this.renderPrevBtn,
     this.prevButtonStyle,
     this.isShowPrevBtn,
+    this.onPrevPress,
     this.prevButtonKey,
 
     // Done
@@ -163,7 +172,8 @@ class IntroSlider extends StatefulWidget {
     this.curveScroll,
     this.scrollPhysics,
   }) : assert(
-          (listContentConfig?.length ?? 0) > 0 || (listCustomTabs?.length ?? 0) > 0,
+          (listContentConfig?.length ?? 0) > 0 ||
+              (listCustomTabs?.length ?? 0) > 0,
           "You must define at least listContentConfig or listCustomTabs",
         );
 
@@ -171,11 +181,13 @@ class IntroSlider extends StatefulWidget {
   IntroSliderState createState() => IntroSliderState();
 }
 
-class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin {
+class IntroSliderState extends State<IntroSlider>
+    with TickerProviderStateMixin {
   // ---------- Tabs ----------
   List<ContentConfig>? _listContentConfig;
   List<Widget>? _listCustomTabs;
   Function? _onTabChangeCompleted;
+  Function(int previousIndex, int currentIndex, String direction)? _onSwipe;
 
   // ---------- SKIP button ----------
   late Widget _renderSkipBtn;
@@ -188,6 +200,7 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
   late Widget _renderPrevBtn;
   late ButtonStyle _prevButtonStyle;
   late bool _isShowPrevBtn;
+  late Function(int index)? _onPrevPress;
   late final Key? _prevButtonKey;
 
   // ---------- DONE button ----------
@@ -201,7 +214,7 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
   late Widget _renderNextBtn;
   late ButtonStyle _nextButtonStyle;
   late bool _isShowNextBtn;
-  late void Function()? _onNextPress;
+  late Function(int index)? _onNextPress;
   late final Key? _nextButtonKey;
 
   // ---------- Indicator ----------
@@ -232,11 +245,14 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
   List<Widget> tabs = [];
 
   final _streamDecorIndicator = StreamController<TripIndicatorDecoration>();
-  final _streamMarginIndicatorFocusing = StreamController<PairIndicatorMargin>();
+  final _streamMarginIndicatorFocusing =
+      StreamController<PairIndicatorMargin>();
   final _streamCurrentTabIndex = StreamController<int>.broadcast();
 
   double _currentAnimationValue = 0;
   int _currentTabIndex = 0;
+  int _previousTabIndex = 0;
+  bool _isProgrammaticNavigation = false;
 
   late int _lengthSlide;
   late double _widthDevice;
@@ -250,24 +266,41 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
     _doneButtonKey = widget.doneButtonKey;
     _nextButtonKey = widget.nextButtonKey;
 
-    _listContentConfig = widget.listContentConfig != null ? [...widget.listContentConfig!] : null;
-    _listCustomTabs = widget.listCustomTabs != null ? [...widget.listCustomTabs!] : null;
+    _listContentConfig = widget.listContentConfig != null
+        ? [...widget.listContentConfig!]
+        : null;
+    _listCustomTabs =
+        widget.listCustomTabs != null ? [...widget.listCustomTabs!] : null;
 
     _lengthSlide = _listContentConfig?.length ?? _listCustomTabs?.length ?? 0;
     _isAutoScroll = widget.isAutoScroll ?? false;
     _isLoopAutoScroll = widget.isLoopAutoScroll ?? false;
     _isPauseAutoPlayOnTouch = widget.isPauseAutoPlayOnTouch ?? true;
-    _autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
+    _autoScrollInterval =
+        widget.autoScrollInterval ?? const Duration(seconds: 4);
     _curveScroll = widget.curveScroll ?? Curves.ease;
 
     _streamCurrentTabIndex.add(0);
     _onTabChangeCompleted = widget.onTabChangeCompleted;
+    _onSwipe = widget.onSwipeCompleted;
     _tabController = TabController(length: _lengthSlide, vsync: this);
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
+        _previousTabIndex = _currentTabIndex;
         _currentTabIndex = _tabController.index;
         _streamCurrentTabIndex.add(_currentTabIndex);
         _onTabChangeCompleted?.call(_tabController.index);
+
+        // Detect swipe vs programmatic navigation
+        if (!_isProgrammaticNavigation &&
+            _previousTabIndex != _currentTabIndex) {
+          String direction =
+              _currentTabIndex > _previousTabIndex ? 'left' : 'right';
+          _onSwipe?.call(_previousTabIndex, _currentTabIndex, direction);
+        }
+
+        // Reset programmatic navigation flag
+        _isProgrammaticNavigation = false;
       }
       _currentAnimationValue = _tabController.animation?.value ?? 0;
     });
@@ -282,10 +315,13 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
     // Indicator
     _isShowIndicator = widget.indicatorConfig?.isShowIndicator ?? true;
     _colorIndicator = widget.indicatorConfig?.colorIndicator ?? Colors.black54;
-    _colorActiveIndicator = widget.indicatorConfig?.colorActiveIndicator ?? _colorIndicator;
+    _colorActiveIndicator =
+        widget.indicatorConfig?.colorActiveIndicator ?? _colorIndicator;
     _sizeIndicator = widget.indicatorConfig?.sizeIndicator ?? 8;
-    _spaceBetweenIndicator = widget.indicatorConfig?.spaceBetweenIndicator ?? _sizeIndicator;
-    _typeIndicatorAnimation = widget.indicatorConfig?.typeIndicatorAnimation ?? TypeIndicatorAnimation.sliding;
+    _spaceBetweenIndicator =
+        widget.indicatorConfig?.spaceBetweenIndicator ?? _sizeIndicator;
+    _typeIndicatorAnimation = widget.indicatorConfig?.typeIndicatorAnimation ??
+        TypeIndicatorAnimation.sliding;
     _indicatorWidget = widget.indicatorConfig?.indicatorWidget;
     _activeIndicatorWidget = widget.indicatorConfig?.activeIndicatorWidget;
 
@@ -297,7 +333,8 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
       _navigationBarConfig = NavigationBarConfig();
     }
 
-    double initValueMarginRight = (_sizeIndicator + _spaceBetweenIndicator) * (_lengthSlide - 1);
+    double initValueMarginRight =
+        (_sizeIndicator + _spaceBetweenIndicator) * (_lengthSlide - 1);
     List<double> sizeIndicators = [];
     List<double> opacityIndicators = [];
     List<bool> isActives = [];
@@ -309,7 +346,8 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
           opacityIndicators.add(1);
           isActives.add(false);
         }
-        _streamMarginIndicatorFocusing.add(PairIndicatorMargin(0.0, initValueMarginRight));
+        _streamMarginIndicatorFocusing
+            .add(PairIndicatorMargin(0.0, initValueMarginRight));
         break;
       case TypeIndicatorAnimation.sizeTransition:
         for (var i = 0; i < _lengthSlide; i++) {
@@ -325,7 +363,8 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
         }
         break;
     }
-    _streamDecorIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
+    _streamDecorIndicator.add(
+        TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
 
     _tabController.animation?.addListener(() {
       if (_tabController.animation == null) return;
@@ -334,48 +373,64 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
         case TypeIndicatorAnimation.sliding:
           double spaceAvg = (_sizeIndicator + _spaceBetweenIndicator) / 2;
           double marginLeft = animationValue * spaceAvg * 2;
-          double marginRight = initValueMarginRight - (animationValue * spaceAvg * 2);
-          _streamMarginIndicatorFocusing.add(PairIndicatorMargin(marginLeft, marginRight));
+          double marginRight =
+              initValueMarginRight - (animationValue * spaceAvg * 2);
+          _streamMarginIndicatorFocusing
+              .add(PairIndicatorMargin(marginLeft, marginRight));
           break;
         case TypeIndicatorAnimation.sizeTransition:
           if (animationValue == _currentAnimationValue) {
             break;
           }
-          double diffValueAnimation = (animationValue - _currentAnimationValue).abs();
-          final diffValueIndex = (_currentTabIndex - _tabController.index).abs();
-          if (_tabController.indexIsChanging && (_tabController.index - _tabController.previousIndex).abs() > 1) {
+          double diffValueAnimation =
+              (animationValue - _currentAnimationValue).abs();
+          final diffValueIndex =
+              (_currentTabIndex - _tabController.index).abs();
+          if (_tabController.indexIsChanging &&
+              (_tabController.index - _tabController.previousIndex).abs() > 1) {
             // When press skip button
             if (diffValueAnimation < 1) {
               diffValueAnimation = 1;
             }
-            sizeIndicators[_currentTabIndex] =
-                _sizeIndicator * 1.5 - (_sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-            sizeIndicators[_tabController.index] =
-                _sizeIndicator + (_sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-            opacityIndicators[_currentTabIndex] = 1 - (diffValueAnimation / diffValueIndex) / 2;
-            opacityIndicators[_tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
+            sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 -
+                (_sizeIndicator / 2) *
+                    (1 - (diffValueIndex - diffValueAnimation));
+            sizeIndicators[_tabController.index] = _sizeIndicator +
+                (_sizeIndicator / 2) *
+                    (1 - (diffValueIndex - diffValueAnimation));
+            opacityIndicators[_currentTabIndex] =
+                1 - (diffValueAnimation / diffValueIndex) / 2;
+            opacityIndicators[_tabController.index] =
+                0.5 + (diffValueAnimation / diffValueIndex) / 2;
             isActives[_currentTabIndex] = false;
             isActives[_tabController.index] = true;
           } else {
             if (animationValue > _currentAnimationValue) {
               // Swipe left
-              sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 - (_sizeIndicator / 2) * diffValueAnimation;
-              sizeIndicators[_currentTabIndex + 1] = _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
+              sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 -
+                  (_sizeIndicator / 2) * diffValueAnimation;
+              sizeIndicators[_currentTabIndex + 1] =
+                  _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
               opacityIndicators[_currentTabIndex] = 1 - diffValueAnimation / 2;
-              opacityIndicators[_currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
+              opacityIndicators[_currentTabIndex + 1] =
+                  0.5 + diffValueAnimation / 2;
               isActives[_currentTabIndex] = false;
               isActives[_tabController.index] = true;
             } else {
               // Swipe right
-              sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 - (_sizeIndicator / 2) * diffValueAnimation;
-              sizeIndicators[_currentTabIndex - 1] = _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
+              sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 -
+                  (_sizeIndicator / 2) * diffValueAnimation;
+              sizeIndicators[_currentTabIndex - 1] =
+                  _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
               opacityIndicators[_currentTabIndex] = 1 - diffValueAnimation / 2;
-              opacityIndicators[_currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
+              opacityIndicators[_currentTabIndex - 1] =
+                  0.5 + diffValueAnimation / 2;
               isActives[_currentTabIndex] = false;
               isActives[_tabController.index] = true;
             }
           }
-          _streamDecorIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
+          _streamDecorIndicator.add(TripIndicatorDecoration(
+              sizeIndicators, opacityIndicators, isActives));
           break;
       }
     });
@@ -405,11 +460,14 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
     _timerAutoScroll = Timer.periodic(_autoScrollInterval, (Timer timer) {
       if (_tabController.index < _lengthSlide - 1) {
         if (!_checkIsAnimating()) {
-          _tabController.animateTo(_tabController.index + 1, curve: _curveScroll);
+          _isProgrammaticNavigation = true;
+          _tabController.animateTo(_tabController.index + 1,
+              curve: _curveScroll);
         }
       } else {
         if (_isLoopAutoScroll) {
           if (!_checkIsAnimating()) {
+            _isProgrammaticNavigation = true;
             _tabController.animateTo(0, curve: _curveScroll);
           }
         }
@@ -428,6 +486,7 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
         () {
           if (!_checkIsAnimating()) {
             if (_lengthSlide > 0) {
+              _isProgrammaticNavigation = true;
               _tabController.animateTo(_lengthSlide - 1, curve: _curveScroll);
             }
           }
@@ -443,6 +502,7 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
       _isShowPrevBtn = widget.isShowPrevBtn ?? true;
     }
 
+    _onPrevPress = widget.onPrevPress ?? (index) {};
     _renderPrevBtn = widget.renderPrevBtn ?? const Text("PREV");
     _prevButtonStyle = widget.prevButtonStyle ?? const ButtonStyle();
 
@@ -455,13 +515,14 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
     _isShowDoneBtn = widget.isShowDoneBtn ?? true;
 
     // Next button
-    _onNextPress = widget.onNextPress ?? () {};
+    _onNextPress = widget.onNextPress ?? (index) {};
     _renderNextBtn = widget.renderNextBtn ?? const Text("NEXT");
     _nextButtonStyle = widget.nextButtonStyle ?? const ButtonStyle();
   }
 
   void _goToTab(int index) {
     if (index < _tabController.length) {
+      _isProgrammaticNavigation = true;
       _tabController.animateTo(index, curve: _curveScroll);
     }
   }
@@ -480,7 +541,8 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
   }
 
   void _reinitializeIndicatorStreams() {
-    double initValueMarginRight = (_sizeIndicator + _spaceBetweenIndicator) * (_lengthSlide - 1);
+    double initValueMarginRight =
+        (_sizeIndicator + _spaceBetweenIndicator) * (_lengthSlide - 1);
     List<double> sizeIndicators = [];
     List<double> opacityIndicators = [];
     List<bool> isActives = [];
@@ -492,7 +554,8 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
           opacityIndicators.add(1);
           isActives.add(false);
         }
-        _streamMarginIndicatorFocusing.add(PairIndicatorMargin(0.0, initValueMarginRight));
+        _streamMarginIndicatorFocusing
+            .add(PairIndicatorMargin(0.0, initValueMarginRight));
         break;
       case TypeIndicatorAnimation.sizeTransition:
         for (var i = 0; i < _lengthSlide; i++) {
@@ -508,7 +571,8 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
         }
         break;
     }
-    _streamDecorIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
+    _streamDecorIndicator.add(
+        TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
   }
 
   @override
@@ -537,7 +601,9 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
               },
               child: TabBarView(
                 controller: _tabController,
-                physics: _isScrollable ? _scrollPhysics : const NeverScrollableScrollPhysics(),
+                physics: _isScrollable
+                    ? _scrollPhysics
+                    : const NeverScrollableScrollPhysics(),
                 children: tabs,
               ),
             ),
@@ -570,7 +636,9 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
                     width: _widthDevice / 4,
                     child: _isShowSkipBtn
                         ? _buildSkipButton(currentTabIndex)
-                        : (_isShowPrevBtn ? _buildPrevButton(currentTabIndex) : const SizedBox.shrink()),
+                        : (_isShowPrevBtn
+                            ? _buildPrevButton(currentTabIndex)
+                            : const SizedBox.shrink()),
                   );
                 }),
 
@@ -581,7 +649,8 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
                       alignment: Alignment.center,
                       children: <Widget>[
                         _buildListIndicator(),
-                        _typeIndicatorAnimation == TypeIndicatorAnimation.sliding
+                        _typeIndicatorAnimation ==
+                                TypeIndicatorAnimation.sliding
                             ? _buildActiveIndicator()
                             : const SizedBox.shrink()
                       ],
@@ -633,9 +702,11 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
       return TextButton(
         key: _prevButtonKey,
         onPressed: () {
-          if (!_checkIsAnimating()) {
-            _tabController.animateTo(_tabController.index - 1, curve: _curveScroll);
-          }
+          if (_checkIsAnimating()) return;
+          final targetIndex = _tabController.index - 1;
+          _onPrevPress?.call(targetIndex);
+          _isProgrammaticNavigation = true;
+          _tabController.animateTo(targetIndex, curve: _curveScroll);
         },
         style: _prevButtonStyle,
         child: _renderPrevBtn,
@@ -656,10 +727,11 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
     return TextButton(
       key: _nextButtonKey,
       onPressed: () {
-        _onNextPress?.call();
-        if (!_checkIsAnimating()) {
-          _tabController.animateTo(_tabController.index + 1, curve: _curveScroll);
-        }
+        if (_checkIsAnimating()) return;
+        final targetIndex = _tabController.index + 1;
+        _onNextPress?.call(targetIndex);
+        _isProgrammaticNavigation = true;
+        _tabController.animateTo(targetIndex, curve: _curveScroll);
       },
       style: _nextButtonStyle,
       child: _renderNextBtn,
@@ -674,16 +746,19 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
         if (pairIndicatorMargin == null) return const SizedBox.shrink();
         return Container(
           margin: EdgeInsets.only(
-            left: _checkIsRTLLanguage(Localizations.localeOf(context).languageCode)
+            left: _checkIsRTLLanguage(
+                    Localizations.localeOf(context).languageCode)
                 ? pairIndicatorMargin.right
                 : pairIndicatorMargin.left,
-            right: _checkIsRTLLanguage(Localizations.localeOf(context).languageCode)
+            right: _checkIsRTLLanguage(
+                    Localizations.localeOf(context).languageCode)
                 ? pairIndicatorMargin.left
                 : pairIndicatorMargin.right,
           ),
           child: _activeIndicatorWidget ??
               _indicatorWidget ??
-              _buildDefaultDot(size: _sizeIndicator, color: _colorActiveIndicator),
+              _buildDefaultDot(
+                  size: _sizeIndicator, color: _colorActiveIndicator),
         );
       },
     );
@@ -715,7 +790,9 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
     List<Widget> indicators = [];
     for (var i = 0; i < _lengthSlide; i++) {
       double opacityCurrentIndicator = opacityIndicators[i];
-      if (opacityCurrentIndicator >= 0 && opacityCurrentIndicator <= 1 && _colorActiveIndicator == _colorIndicator) {
+      if (opacityCurrentIndicator >= 0 &&
+          opacityCurrentIndicator <= 1 &&
+          _colorActiveIndicator == _colorIndicator) {
         indicators.add(
           _buildOpacityIndicator(
             size: sizeIndicators[i],
@@ -751,11 +828,16 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
       margin: EdgeInsets.only(left: space, right: space),
       child: GestureDetector(
         onTap: () {
+          _isProgrammaticNavigation = true;
           _tabController.animateTo(index, curve: _curveScroll);
         },
         child: _indicatorWidget != null
-            ? _buildCustomIndicator(currentSize: size, originSize: _sizeIndicator, child: _indicatorWidget!)
-            : _buildDefaultDot(size: size, color: isActive ? colorActive : color),
+            ? _buildCustomIndicator(
+                currentSize: size,
+                originSize: _sizeIndicator,
+                child: _indicatorWidget!)
+            : _buildDefaultDot(
+                size: size, color: isActive ? colorActive : color),
       ),
     );
   }
@@ -771,19 +853,26 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
       margin: EdgeInsets.only(left: space, right: space),
       child: GestureDetector(
         onTap: () {
+          _isProgrammaticNavigation = true;
           _tabController.animateTo(index, curve: _curveScroll);
         },
         child: Opacity(
           opacity: opacity,
           child: _indicatorWidget != null
-              ? _buildCustomIndicator(currentSize: size, originSize: _sizeIndicator, child: _indicatorWidget!)
+              ? _buildCustomIndicator(
+                  currentSize: size,
+                  originSize: _sizeIndicator,
+                  child: _indicatorWidget!)
               : _buildDefaultDot(size: size, color: color),
         ),
       ),
     );
   }
 
-  Widget _buildCustomIndicator({required double currentSize, required double originSize, required Widget child}) {
+  Widget _buildCustomIndicator(
+      {required double currentSize,
+      required double originSize,
+      required Widget child}) {
     return Transform.scale(
       scale: currentSize / originSize,
       child: child,
@@ -792,7 +881,8 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
 
   Widget _buildDefaultDot({required double size, Color? color}) {
     return Container(
-      decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(size / 2)),
+      decoration: BoxDecoration(
+          color: color, borderRadius: BorderRadius.circular(size / 2)),
       width: size,
       height: size,
     );
@@ -805,12 +895,18 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
     bool needsRebuild = false;
 
     // Check if tabs content changed
-    if (_listContentConfig != widget.listContentConfig || _listCustomTabs != widget.listCustomTabs) {
-      _listContentConfig = widget.listContentConfig != null ? [...widget.listContentConfig!] : null;
-      _listCustomTabs = widget.listCustomTabs != null ? [...widget.listCustomTabs!] : null;
+    if (_listContentConfig != widget.listContentConfig ||
+        _listCustomTabs != widget.listCustomTabs) {
+      _listContentConfig = widget.listContentConfig != null
+          ? [...widget.listContentConfig!]
+          : null;
+      _listCustomTabs =
+          widget.listCustomTabs != null ? [...widget.listCustomTabs!] : null;
 
       // Update length if it changed
-      int newLengthSlide = widget.listContentConfig?.length ?? widget.listCustomTabs?.length ?? 0;
+      int newLengthSlide = widget.listContentConfig?.length ??
+          widget.listCustomTabs?.length ??
+          0;
       if (newLengthSlide != _lengthSlide) {
         _lengthSlide = newLengthSlide;
 
@@ -819,9 +915,21 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
         _tabController = TabController(length: _lengthSlide, vsync: this);
         _tabController.addListener(() {
           if (!_tabController.indexIsChanging) {
+            _previousTabIndex = _currentTabIndex;
             _currentTabIndex = _tabController.index;
             _streamCurrentTabIndex.add(_currentTabIndex);
             _onTabChangeCompleted?.call(_tabController.index);
+
+            // Detect swipe vs programmatic navigation
+            if (!_isProgrammaticNavigation &&
+                _previousTabIndex != _currentTabIndex) {
+              String direction =
+                  _currentTabIndex > _previousTabIndex ? 'left' : 'right';
+              _onSwipe?.call(_previousTabIndex, _currentTabIndex, direction);
+            }
+
+            // Reset programmatic navigation flag
+            _isProgrammaticNavigation = false;
           }
           _currentAnimationValue = _tabController.animation?.value ?? 0;
         });
@@ -834,57 +942,79 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
             case TypeIndicatorAnimation.sliding:
               double spaceAvg = (_sizeIndicator + _spaceBetweenIndicator) / 2;
               double marginLeft = animationValue * spaceAvg * 2;
-              double marginRight =
-                  (_sizeIndicator + _spaceBetweenIndicator) * (_lengthSlide - 1) - (animationValue * spaceAvg * 2);
-              _streamMarginIndicatorFocusing.add(PairIndicatorMargin(marginLeft, marginRight));
+              double marginRight = (_sizeIndicator + _spaceBetweenIndicator) *
+                      (_lengthSlide - 1) -
+                  (animationValue * spaceAvg * 2);
+              _streamMarginIndicatorFocusing
+                  .add(PairIndicatorMargin(marginLeft, marginRight));
               break;
             case TypeIndicatorAnimation.sizeTransition:
               if (animationValue == _currentAnimationValue) {
                 break;
               }
-              double diffValueAnimation = (animationValue - _currentAnimationValue).abs();
-              final diffValueIndex = (_currentTabIndex - _tabController.index).abs();
-              List<double> sizeIndicators = List.generate(_lengthSlide, (index) => _sizeIndicator);
-              List<double> opacityIndicators = List.generate(_lengthSlide, (index) => 0.5);
-              List<bool> isActives = List.generate(_lengthSlide, (index) => false);
+              double diffValueAnimation =
+                  (animationValue - _currentAnimationValue).abs();
+              final diffValueIndex =
+                  (_currentTabIndex - _tabController.index).abs();
+              List<double> sizeIndicators =
+                  List.generate(_lengthSlide, (index) => _sizeIndicator);
+              List<double> opacityIndicators =
+                  List.generate(_lengthSlide, (index) => 0.5);
+              List<bool> isActives =
+                  List.generate(_lengthSlide, (index) => false);
 
-              if (_tabController.indexIsChanging && (_tabController.index - _tabController.previousIndex).abs() > 1) {
+              if (_tabController.indexIsChanging &&
+                  (_tabController.index - _tabController.previousIndex).abs() >
+                      1) {
                 // When press skip button
                 if (diffValueAnimation < 1) {
                   diffValueAnimation = 1;
                 }
-                sizeIndicators[_currentTabIndex] =
-                    _sizeIndicator * 1.5 - (_sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-                sizeIndicators[_tabController.index] =
-                    _sizeIndicator + (_sizeIndicator / 2) * (1 - (diffValueIndex - diffValueAnimation));
-                opacityIndicators[_currentTabIndex] = 1 - (diffValueAnimation / diffValueIndex) / 2;
-                opacityIndicators[_tabController.index] = 0.5 + (diffValueAnimation / diffValueIndex) / 2;
+                sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 -
+                    (_sizeIndicator / 2) *
+                        (1 - (diffValueIndex - diffValueAnimation));
+                sizeIndicators[_tabController.index] = _sizeIndicator +
+                    (_sizeIndicator / 2) *
+                        (1 - (diffValueIndex - diffValueAnimation));
+                opacityIndicators[_currentTabIndex] =
+                    1 - (diffValueAnimation / diffValueIndex) / 2;
+                opacityIndicators[_tabController.index] =
+                    0.5 + (diffValueAnimation / diffValueIndex) / 2;
                 isActives[_currentTabIndex] = false;
                 isActives[_tabController.index] = true;
               } else {
                 if (animationValue > _currentAnimationValue) {
                   // Swipe left
                   if (_currentTabIndex + 1 < _lengthSlide) {
-                    sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 - (_sizeIndicator / 2) * diffValueAnimation;
-                    sizeIndicators[_currentTabIndex + 1] = _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
-                    opacityIndicators[_currentTabIndex] = 1 - diffValueAnimation / 2;
-                    opacityIndicators[_currentTabIndex + 1] = 0.5 + diffValueAnimation / 2;
+                    sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 -
+                        (_sizeIndicator / 2) * diffValueAnimation;
+                    sizeIndicators[_currentTabIndex + 1] = _sizeIndicator +
+                        (_sizeIndicator / 2) * diffValueAnimation;
+                    opacityIndicators[_currentTabIndex] =
+                        1 - diffValueAnimation / 2;
+                    opacityIndicators[_currentTabIndex + 1] =
+                        0.5 + diffValueAnimation / 2;
                     isActives[_currentTabIndex] = false;
                     isActives[_tabController.index] = true;
                   }
                 } else {
                   // Swipe right
                   if (_currentTabIndex - 1 >= 0) {
-                    sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 - (_sizeIndicator / 2) * diffValueAnimation;
-                    sizeIndicators[_currentTabIndex - 1] = _sizeIndicator + (_sizeIndicator / 2) * diffValueAnimation;
-                    opacityIndicators[_currentTabIndex] = 1 - diffValueAnimation / 2;
-                    opacityIndicators[_currentTabIndex - 1] = 0.5 + diffValueAnimation / 2;
+                    sizeIndicators[_currentTabIndex] = _sizeIndicator * 1.5 -
+                        (_sizeIndicator / 2) * diffValueAnimation;
+                    sizeIndicators[_currentTabIndex - 1] = _sizeIndicator +
+                        (_sizeIndicator / 2) * diffValueAnimation;
+                    opacityIndicators[_currentTabIndex] =
+                        1 - diffValueAnimation / 2;
+                    opacityIndicators[_currentTabIndex - 1] =
+                        0.5 + diffValueAnimation / 2;
                     isActives[_currentTabIndex] = false;
                     isActives[_tabController.index] = true;
                   }
                 }
               }
-              _streamDecorIndicator.add(TripIndicatorDecoration(sizeIndicators, opacityIndicators, isActives));
+              _streamDecorIndicator.add(TripIndicatorDecoration(
+                  sizeIndicators, opacityIndicators, isActives));
               break;
           }
         });
@@ -910,6 +1040,7 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
         oldWidget.isShowSkipBtn != widget.isShowSkipBtn ||
         oldWidget.renderPrevBtn != widget.renderPrevBtn ||
         oldWidget.prevButtonStyle != widget.prevButtonStyle ||
+        oldWidget.onPrevPress != widget.onPrevPress ||
         oldWidget.isShowPrevBtn != widget.isShowPrevBtn ||
         oldWidget.renderNextBtn != widget.renderNextBtn ||
         oldWidget.nextButtonStyle != widget.nextButtonStyle ||
@@ -934,7 +1065,8 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
       _isAutoScroll = widget.isAutoScroll ?? false;
       _isLoopAutoScroll = widget.isLoopAutoScroll ?? false;
       _isPauseAutoPlayOnTouch = widget.isPauseAutoPlayOnTouch ?? true;
-      _autoScrollInterval = widget.autoScrollInterval ?? const Duration(seconds: 4);
+      _autoScrollInterval =
+          widget.autoScrollInterval ?? const Duration(seconds: 4);
 
       if (_isAutoScroll) {
         _startTimerAutoScroll();
@@ -955,11 +1087,16 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
     // Update indicator configuration
     if (oldWidget.indicatorConfig != widget.indicatorConfig) {
       _isShowIndicator = widget.indicatorConfig?.isShowIndicator ?? true;
-      _colorIndicator = widget.indicatorConfig?.colorIndicator ?? Colors.black54;
-      _colorActiveIndicator = widget.indicatorConfig?.colorActiveIndicator ?? _colorIndicator;
+      _colorIndicator =
+          widget.indicatorConfig?.colorIndicator ?? Colors.black54;
+      _colorActiveIndicator =
+          widget.indicatorConfig?.colorActiveIndicator ?? _colorIndicator;
       _sizeIndicator = widget.indicatorConfig?.sizeIndicator ?? 8;
-      _spaceBetweenIndicator = widget.indicatorConfig?.spaceBetweenIndicator ?? _sizeIndicator;
-      _typeIndicatorAnimation = widget.indicatorConfig?.typeIndicatorAnimation ?? TypeIndicatorAnimation.sliding;
+      _spaceBetweenIndicator =
+          widget.indicatorConfig?.spaceBetweenIndicator ?? _sizeIndicator;
+      _typeIndicatorAnimation =
+          widget.indicatorConfig?.typeIndicatorAnimation ??
+              TypeIndicatorAnimation.sliding;
       _indicatorWidget = widget.indicatorConfig?.indicatorWidget;
       _activeIndicatorWidget = widget.indicatorConfig?.activeIndicatorWidget;
       needsRebuild = true;
@@ -982,13 +1119,20 @@ class IntroSliderState extends State<IntroSlider> with TickerProviderStateMixin 
       needsRebuild = true;
     }
 
+    // Update swipe callback
+    if (oldWidget.onSwipeCompleted != widget.onSwipeCompleted) {
+      _onSwipe = widget.onSwipeCompleted;
+      needsRebuild = true;
+    }
+
     // Update reference function
     if (oldWidget.refFuncGoToTab != widget.refFuncGoToTab) {
       widget.refFuncGoToTab?.call(_goToTab);
     }
 
     // Trigger rebuild if any changes detected
-    if (needsRebuild || oldWidget.backgroundColorAllTabs != widget.backgroundColorAllTabs) {
+    if (needsRebuild ||
+        oldWidget.backgroundColorAllTabs != widget.backgroundColorAllTabs) {
       setState(() {
         // State is updated in the logic above
       });

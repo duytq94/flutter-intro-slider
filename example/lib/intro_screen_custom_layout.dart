@@ -76,10 +76,12 @@ class IntroScreenCustomLayoutState extends State<IntroScreenCustomLayout> {
                   color: secondColor,
                 ),
                 onChanged: (String? value) {},
-                items: ["0", "1", "2"].map<DropdownMenuItem<String>>((String value) {
+                items: ["0", "1", "2"]
+                    .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text(value, style: TextStyle(color: secondColor, fontSize: 20)),
+                    child: Text(value,
+                        style: TextStyle(color: secondColor, fontSize: 20)),
                   );
                 }).toList(),
               ),

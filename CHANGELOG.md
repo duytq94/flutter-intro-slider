@@ -1,3 +1,8 @@
+## 4.2.4
+* Add onPrevPress
+* Return index param when press next
+* Add onSwipeCompleted
+
 ## 4.2.3
 * Fix deprecated attributes
 
