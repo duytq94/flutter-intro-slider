@@ -118,6 +118,12 @@ class IntroSlider extends StatefulWidget {
   final void Function(int previousIndex, int currentIndex, String direction)?
       onSwipeCompleted;
 
+  /// Fire when user swipes beyond the last slide
+  final void Function()? onSwipeBeyondEnd;
+
+  /// Minimum swipe distance to trigger onSwipeBeyondEnd callback (default: 50)
+  final double? swipeBeyondEndThreshold;
+
   // Constructor
   const IntroSlider({
     super.key,
@@ -127,7 +133,7 @@ class IntroSlider extends StatefulWidget {
     this.listCustomTabs,
     this.onTabChangeCompleted,
     this.onSwipeCompleted,
-    this.refFuncGoToTab,
+    this.onSwipeBeyondEnd,
 
     // Skip
     this.renderSkipBtn,
@@ -171,6 +177,8 @@ class IntroSlider extends StatefulWidget {
     this.autoScrollInterval,
     this.curveScroll,
     this.scrollPhysics,
+    this.swipeBeyondEndThreshold,
+    this.refFuncGoToTab,
   }) : assert(
           (listContentConfig?.length ?? 0) > 0 ||
               (listCustomTabs?.length ?? 0) > 0,
@@ -187,7 +195,8 @@ class IntroSliderState extends State<IntroSlider>
   List<ContentConfig>? _listContentConfig;
   List<Widget>? _listCustomTabs;
   Function? _onTabChangeCompleted;
-  Function(int previousIndex, int currentIndex, String direction)? _onSwipe;
+  Function(int previousIndex, int currentIndex, String direction)?
+      _onSwipeCompleted;
 
   // ---------- SKIP button ----------
   late Widget _renderSkipBtn;
@@ -235,6 +244,8 @@ class IntroSliderState extends State<IntroSlider>
   late bool _isPauseAutoPlayOnTouch;
   late Duration _autoScrollInterval;
   late Curve _curveScroll;
+  Function()? _onSwipeBeyondEnd;
+  late double _swipeBeyondEndThreshold;
 
   // ---------- Navigation bar ----------
   late NavigationBarConfig _navigationBarConfig;
@@ -257,6 +268,9 @@ class IntroSliderState extends State<IntroSlider>
   late int _lengthSlide;
   late double _widthDevice;
   Timer? _timerAutoScroll;
+  Timer? _debounceTimer;
+  bool _isPointerDown = false;
+  Offset? _pointerStartPosition;
 
   @override
   void initState() {
@@ -282,7 +296,9 @@ class IntroSliderState extends State<IntroSlider>
 
     _streamCurrentTabIndex.add(0);
     _onTabChangeCompleted = widget.onTabChangeCompleted;
-    _onSwipe = widget.onSwipeCompleted;
+    _onSwipeCompleted = widget.onSwipeCompleted;
+    _onSwipeBeyondEnd = widget.onSwipeBeyondEnd;
+    _swipeBeyondEndThreshold = widget.swipeBeyondEndThreshold ?? 50.0;
     _tabController = TabController(length: _lengthSlide, vsync: this);
     _tabController.addListener(() {
       if (!_tabController.indexIsChanging) {
@@ -296,7 +312,8 @@ class IntroSliderState extends State<IntroSlider>
             _previousTabIndex != _currentTabIndex) {
           String direction =
               _currentTabIndex > _previousTabIndex ? 'left' : 'right';
-          _onSwipe?.call(_previousTabIndex, _currentTabIndex, direction);
+          _onSwipeCompleted?.call(
+              _previousTabIndex, _currentTabIndex, direction);
         }
 
         // Reset programmatic navigation flag
@@ -583,21 +600,39 @@ class IntroSliderState extends State<IntroSlider>
         length: _lengthSlide,
         child: Stack(
           children: <Widget>[
-            GestureDetector(
-              onTapDown: (a) {
+            Listener(
+              onPointerDown: (event) {
                 if (_isPauseAutoPlayOnTouch) {
                   _clearTimerAutoScroll();
                 }
+
+                _isPointerDown = true;
+                _pointerStartPosition = event.position;
               },
-              onTapUp: (a) {
+              onPointerUp: (event) {
                 if (_isAutoScroll && _isPauseAutoPlayOnTouch) {
                   _startTimerAutoScroll();
                 }
-              },
-              onTapCancel: () {
-                if (_isAutoScroll && _isPauseAutoPlayOnTouch) {
-                  _startTimerAutoScroll();
+
+                if (_isPointerDown && _pointerStartPosition != null) {
+                  final swipeDistance =
+                      event.position.dx - _pointerStartPosition!.dx;
+
+                  // If we're at the last page and user swiped left with significant distance
+                  if (_currentTabIndex == _lengthSlide - 1 &&
+                      swipeDistance < 0 &&
+                      swipeDistance.abs() > _swipeBeyondEndThreshold) {
+                    // Debounce to prevent multiple triggers
+                    _debounceTimer?.cancel();
+                    _debounceTimer =
+                        Timer(const Duration(milliseconds: 300), () {
+                      _onSwipeBeyondEnd?.call();
+                    });
+                  }
                 }
+
+                _isPointerDown = false;
+                _pointerStartPosition = null;
               },
               child: TabBarView(
                 controller: _tabController,
@@ -925,7 +960,8 @@ class IntroSliderState extends State<IntroSlider>
                 _previousTabIndex != _currentTabIndex) {
               String direction =
                   _currentTabIndex > _previousTabIndex ? 'left' : 'right';
-              _onSwipe?.call(_previousTabIndex, _currentTabIndex, direction);
+              _onSwipeCompleted?.call(
+                  _previousTabIndex, _currentTabIndex, direction);
             }
 
             // Reset programmatic navigation flag
@@ -1121,7 +1157,15 @@ class IntroSliderState extends State<IntroSlider>
 
     // Update swipe callback
     if (oldWidget.onSwipeCompleted != widget.onSwipeCompleted) {
-      _onSwipe = widget.onSwipeCompleted;
+      _onSwipeCompleted = widget.onSwipeCompleted;
+      needsRebuild = true;
+    }
+
+    // Update swipe beyond end callback
+    if (oldWidget.onSwipeBeyondEnd != widget.onSwipeBeyondEnd ||
+        oldWidget.swipeBeyondEndThreshold != widget.swipeBeyondEndThreshold) {
+      _onSwipeBeyondEnd = widget.onSwipeBeyondEnd;
+      _swipeBeyondEndThreshold = widget.swipeBeyondEndThreshold ?? 50.0;
       needsRebuild = true;
     }
 
@@ -1146,6 +1190,7 @@ class IntroSliderState extends State<IntroSlider>
     _streamMarginIndicatorFocusing.close();
     _streamCurrentTabIndex.close();
     _clearTimerAutoScroll();
+    _debounceTimer?.cancel();
     super.dispose();
   }
 }

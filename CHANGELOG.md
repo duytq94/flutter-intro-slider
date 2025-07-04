@@ -1,3 +1,6 @@
+## 4.2.5
+* Add onSwipeBeyondEnd with custom threshold value to trigger
+
 ## 4.2.4
 * Add onPrevPress
 * Return index param when press next

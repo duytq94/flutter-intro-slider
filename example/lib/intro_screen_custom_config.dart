@@ -114,6 +114,10 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
     log("onNextPress caught $index");
   }
 
+  void onSwipeBeyondEnd() {
+    log("onSwipeBeyondEnd caught - User swiped beyond the last slide!");
+  }
+
   Widget renderNextBtn() {
     return const Icon(
       Icons.navigate_next,
@@ -198,6 +202,8 @@ class IntroScreenCustomConfigState extends State<IntroScreenCustomConfig> {
       isLoopAutoScroll: true,
       curveScroll: Curves.bounceIn,
       onSwipeCompleted: onSwipeCompleted,
+      onSwipeBeyondEnd: onSwipeBeyondEnd,
+      swipeBeyondEndThreshold: 100.0,
     );
   }
 }
